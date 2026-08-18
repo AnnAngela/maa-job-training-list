@@ -1,0 +1,6611 @@
+{
+  "generatedAt": "2026-08-18T16:51:54.094Z",
+  "spriteUrl": "https://cos.yituliu.cn/arknights/sprite/skills2026-08-01-10-12-39.jpg",
+  "size": 128,
+  "entries": {
+    "skchr_clour_2": {
+      "x": 0,
+      "y": 2560
+    },
+    "sktok_xb2ospk": {
+      "x": 896,
+      "y": 20096
+    },
+    "skchr_mcnist_2": {
+      "x": 256,
+      "y": 6272
+    },
+    "skchr_mcnist_1": {
+      "x": 128,
+      "y": 6272
+    },
+    "sktok_mhwrbg": {
+      "x": 384,
+      "y": 17024
+    },
+    "sktok_acarm007_1": {
+      "x": 256,
+      "y": 11904
+    },
+    "sktok_acarm007_2": {
+      "x": 384,
+      "y": 11904
+    },
+    "sktok_acarm060_2": {
+      "x": 1152,
+      "y": 13184
+    },
+    "sktok_acarm060_1": {
+      "x": 1024,
+      "y": 13184
+    },
+    "sktok_lhfac": {
+      "x": 128,
+      "y": 16640
+    },
+    "skchr_mcnist_3": {
+      "x": 384,
+      "y": 6272
+    },
+    "skchr_acsupo_1": {
+      "x": 768,
+      "y": 256
+    },
+    "skchr_melnte_1": {
+      "x": 512,
+      "y": 6272
+    },
+    "skchr_leizi_2": {
+      "x": 384,
+      "y": 5632
+    },
+    "sktok_npcsld": {
+      "x": 1024,
+      "y": 17536
+    },
+    "skchr_botany_1": {
+      "x": 384,
+      "y": 1664
+    },
+    "skchr_botany_2": {
+      "x": 512,
+      "y": 1664
+    },
+    "sktok_xb2osqr": {
+      "x": 1024,
+      "y": 20096
+    },
+    "sktok_dyrbox": {
+      "x": 640,
+      "y": 15872
+    },
+    "skchr_acsupo_3": {
+      "x": 1024,
+      "y": 256
+    },
+    "skchr_acsupo_2": {
+      "x": 896,
+      "y": 256
+    },
+    "skchr_cement_1": {
+      "x": 640,
+      "y": 2048
+    },
+    "skchr_cement_2": {
+      "x": 768,
+      "y": 2048
+    },
+    "skchr_platnm_2": {
+      "x": 1152,
+      "y": 7680
+    },
+    "skchr_durnar_2": {
+      "x": 640,
+      "y": 2944
+    },
+    "sktok_pycfly": {
+      "x": 1152,
+      "y": 17792
+    },
+    "sktok_rmtarmn": {
+      "x": 384,
+      "y": 18176
+    },
+    "sktok_rmtarms": {
+      "x": 512,
+      "y": 18176
+    },
+    "sktok_sunmao": {
+      "x": 640,
+      "y": 18816
+    },
+    "sktok_shruin": {
+      "x": 896,
+      "y": 18432
+    },
+    "skchr_ghost2_3": {
+      "x": 0,
+      "y": 3840
+    },
+    "sktok_acarm029_2": {
+      "x": 896,
+      "y": 12416
+    },
+    "skchr_ghost2_2": {
+      "x": 1152,
+      "y": 3712
+    },
+    "sktok_acarm029_1": {
+      "x": 768,
+      "y": 12416
+    },
+    "skchr_ghost2_1": {
+      "x": 1024,
+      "y": 3712
+    },
+    "skchr_melnte_2": {
+      "x": 640,
+      "y": 6272
+    },
+    "skchr_xingzh_1": {
+      "x": 256,
+      "y": 11008
+    },
+    "skchr_xingzh_2": {
+      "x": 384,
+      "y": 11008
+    },
+    "skchr_pianst_2": {
+      "x": 640,
+      "y": 7680
+    },
+    "skchr_savage_2": {
+      "x": 512,
+      "y": 8448
+    },
+    "skchr_pianst_1": {
+      "x": 512,
+      "y": 7680
+    },
+    "skchr_bdhkgt_1": {
+      "x": 1024,
+      "y": 1152
+    },
+    "skchr_bdhkgt_2": {
+      "x": 1152,
+      "y": 1152
+    },
+    "sktok_xb2ostnp": {
+      "x": 128,
+      "y": 20224
+    },
+    "sktok_arctoll": {
+      "x": 640,
+      "y": 14720
+    },
+    "sktok_xb2dstr": {
+      "x": 0,
+      "y": 19584
+    },
+    "sktok_xb2oeqstr": {
+      "x": 896,
+      "y": 19712
+    },
+    "sktok_xb2osta": {
+      "x": 1152,
+      "y": 20096
+    },
+    "sktok_agmbox": {
+      "x": 896,
+      "y": 14464
+    },
+    "sktok_acarm118_1": {
+      "x": 512,
+      "y": 13952
+    },
+    "skchr_kirara_1": {
+      "x": 1024,
+      "y": 5376
+    },
+    "skchr_kirara_2": {
+      "x": 1152,
+      "y": 5376
+    },
+    "skchr_flamtl_3": {
+      "x": 512,
+      "y": 3456
+    },
+    "skcom_powerstrikex5b2x5d": {
+      "x": 128,
+      "y": 11648
+    },
+    "sktok_acarm118_2": {
+      "x": 640,
+      "y": 13952
+    },
+    "sktok_healbf": {
+      "x": 128,
+      "y": 16256
+    },
+    "skcom_magic_ragex5b1x5d": {
+      "x": 896,
+      "y": 11520
+    },
+    "sktok_xbbee": {
+      "x": 1152,
+      "y": 20480
+    },
+    "skchr_flamtl_2": {
+      "x": 384,
+      "y": 3456
+    },
+    "skchr_flamtl_1": {
+      "x": 256,
+      "y": 3456
+    },
+    "sktok_wpnsts": {
+      "x": 768,
+      "y": 19328
+    },
+    "sktok_acarm051_1": {
+      "x": 0,
+      "y": 13056
+    },
+    "sktok_acarm051_2": {
+      "x": 128,
+      "y": 13056
+    },
+    "sktok_cathy_catsld": {
+      "x": 640,
+      "y": 15104
+    },
+    "skchr_robin_1": {
+      "x": 0,
+      "y": 8320
+    },
+    "skchr_robin_2": {
+      "x": 128,
+      "y": 8320
+    },
+    "sktok_xbblure_3": {
+      "x": 256,
+      "y": 20608
+    },
+    "sktok_xbblure_2": {
+      "x": 128,
+      "y": 20608
+    },
+    "sktok_xbblure_1": {
+      "x": 0,
+      "y": 20608
+    },
+    "sktok_cnvfwks": {
+      "x": 768,
+      "y": 15488
+    },
+    "sktok_svash2_eagle": {
+      "x": 1152,
+      "y": 18816
+    },
+    "skchr_warmy_2": {
+      "x": 896,
+      "y": 10624
+    },
+    "skchr_warmy_1": {
+      "x": 768,
+      "y": 10624
+    },
+    "skchr_doberm_2": {
+      "x": 1152,
+      "y": 2816
+    },
+    "sktok_pushtw": {
+      "x": 1024,
+      "y": 17792
+    },
+    "skchr_prove_2": {
+      "x": 768,
+      "y": 7808
+    },
+    "skchr_prove_1": {
+      "x": 640,
+      "y": 7808
+    },
+    "sktok_mound": {
+      "x": 128,
+      "y": 17152
+    },
+    "skchr_ctrail_1": {
+      "x": 256,
+      "y": 2688
+    },
+    "skchr_ctrail_2": {
+      "x": 384,
+      "y": 2688
+    },
+    "skchr_zumama_2": {
+      "x": 896,
+      "y": 11136
+    },
+    "skchr_zumama_3": {
+      "x": 1024,
+      "y": 11136
+    },
+    "sktok_acarm073_1": {
+      "x": 512,
+      "y": 13568
+    },
+    "skchr_milu_1": {
+      "x": 128,
+      "y": 6400
+    },
+    "skchr_milu_2": {
+      "x": 256,
+      "y": 6400
+    },
+    "skchr_zumama_1": {
+      "x": 768,
+      "y": 11136
+    },
+    "sktok_acarm073_2": {
+      "x": 640,
+      "y": 13568
+    },
+    "skchr_shu_3": {
+      "x": 384,
+      "y": 8704
+    },
+    "skchr_shu_1": {
+      "x": 128,
+      "y": 8704
+    },
+    "skchr_shu_2": {
+      "x": 256,
+      "y": 8704
+    },
+    "sktok_lhfarm": {
+      "x": 384,
+      "y": 16640
+    },
+    "sktok_xb2ofnt": {
+      "x": 128,
+      "y": 19968
+    },
+    "skchr_frncat_1": {
+      "x": 1152,
+      "y": 3584
+    },
+    "skchr_frncat_2": {
+      "x": 0,
+      "y": 3712
+    },
+    "skchr_doroth_3": {
+      "x": 512,
+      "y": 2944
+    },
+    "sktok_lhbat": {
+      "x": 0,
+      "y": 16512
+    },
+    "skchr_doroth_1": {
+      "x": 256,
+      "y": 2944
+    },
+    "sktok_nasti_nstchr": {
+      "x": 0,
+      "y": 17536
+    },
+    "skchr_doroth_2": {
+      "x": 384,
+      "y": 2944
+    },
+    "sktok_acarm064_2": {
+      "x": 896,
+      "y": 13312
+    },
+    "sktok_larva": {
+      "x": 768,
+      "y": 16384
+    },
+    "sktok_acarm064_1": {
+      "x": 768,
+      "y": 13312
+    },
+    "skchr_amiya_2": {
+      "x": 640,
+      "y": 640
+    },
+    "skchr_amiya_3": {
+      "x": 768,
+      "y": 640
+    },
+    "skchr_almond_2": {
+      "x": 768,
+      "y": 512
+    },
+    "skchr_glady_2": {
+      "x": 640,
+      "y": 3840
+    },
+    "skchr_glady_3": {
+      "x": 768,
+      "y": 3840
+    },
+    "skchr_almond_1": {
+      "x": 640,
+      "y": 512
+    },
+    "skchr_glady_1": {
+      "x": 512,
+      "y": 3840
+    },
+    "skchr_whitew_2": {
+      "x": 512,
+      "y": 10752
+    },
+    "skchr_whitew_1": {
+      "x": 384,
+      "y": 10752
+    },
+    "skchr_rockr_2": {
+      "x": 512,
+      "y": 8320
+    },
+    "sktok_xb2osit": {
+      "x": 768,
+      "y": 20096
+    },
+    "sktok_sensor": {
+      "x": 768,
+      "y": 18304
+    },
+    "sktok_mhflsb": {
+      "x": 0,
+      "y": 17024
+    },
+    "sktok_achplat": {
+      "x": 512,
+      "y": 14208
+    },
+    "skchr_turdus_2": {
+      "x": 1024,
+      "y": 10112
+    },
+    "skchr_turdus_1": {
+      "x": 896,
+      "y": 10112
+    },
+    "skchr_acnipe_1": {
+      "x": 896,
+      "y": 128
+    },
+    "skchr_acnipe_2": {
+      "x": 1024,
+      "y": 128
+    },
+    "skchr_kroos2_2": {
+      "x": 256,
+      "y": 5504
+    },
+    "sktok_xbfortress": {
+      "x": 384,
+      "y": 20864
+    },
+    "skchr_kroos2_1": {
+      "x": 128,
+      "y": 5504
+    },
+    "skchr_texas2_1": {
+      "x": 384,
+      "y": 9728
+    },
+    "skchr_texas2_3": {
+      "x": 640,
+      "y": 9728
+    },
+    "skchr_texas2_2": {
+      "x": 512,
+      "y": 9728
+    },
+    "skchr_acnipe_3": {
+      "x": 1152,
+      "y": 128
+    },
+    "sktok_xb2ofnc2": {
+      "x": 0,
+      "y": 19968
+    },
+    "sktok_acarm109_2": {
+      "x": 384,
+      "y": 13824
+    },
+    "sktok_acarm109_1": {
+      "x": 256,
+      "y": 13824
+    },
+    "sktok_dplant": {
+      "x": 256,
+      "y": 15744
+    },
+    "sktok_eradio": {
+      "x": 512,
+      "y": 16000
+    },
+    "sktok_bondtw": {
+      "x": 256,
+      "y": 14976
+    },
+    "skchr_wanqin_2": {
+      "x": 640,
+      "y": 10624
+    },
+    "sktok_arcexpd": {
+      "x": 896,
+      "y": 14592
+    },
+    "sktok_acarm020_1": {
+      "x": 1024,
+      "y": 12160
+    },
+    "sktok_acarm020_2": {
+      "x": 1152,
+      "y": 12160
+    },
+    "sktok_muruinf": {
+      "x": 1024,
+      "y": 17280
+    },
+    "sktok_xb2obch": {
+      "x": 256,
+      "y": 19712
+    },
+    "sktok_muruinb": {
+      "x": 896,
+      "y": 17280
+    },
+    "sktok_cdcvrta": {
+      "x": 640,
+      "y": 15232
+    },
+    "sktok_cdcvrtb": {
+      "x": 768,
+      "y": 15232
+    },
+    "sktok_xbwfg": {
+      "x": 256,
+      "y": 21248
+    },
+    "sktok_acarm055_2": {
+      "x": 1152,
+      "y": 13056
+    },
+    "skchr_svash2_1": {
+      "x": 1152,
+      "y": 9344
+    },
+    "sktok_xb2obdg": {
+      "x": 384,
+      "y": 19712
+    },
+    "sktok_acarm055_1": {
+      "x": 1024,
+      "y": 13056
+    },
+    "skchr_fmout_2": {
+      "x": 0,
+      "y": 3584
+    },
+    "skchr_svash2_3": {
+      "x": 128,
+      "y": 9472
+    },
+    "skchr_svash2_2": {
+      "x": 0,
+      "y": 9472
+    },
+    "sktok_xb2oflr": {
+      "x": 256,
+      "y": 19840
+    },
+    "skchr_leizi2_1": {
+      "x": 0,
+      "y": 5632
+    },
+    "skchr_leizi2_2": {
+      "x": 128,
+      "y": 5632
+    },
+    "sktok_lhport": {
+      "x": 1152,
+      "y": 16640
+    },
+    "skchr_leizi2_3": {
+      "x": 256,
+      "y": 5632
+    },
+    "sktok_xb2obds": {
+      "x": 512,
+      "y": 19712
+    },
+    "sktok_dynbox": {
+      "x": 512,
+      "y": 15872
+    },
+    "skchr_jcinta_2": {
+      "x": 512,
+      "y": 5120
+    },
+    "sktok_muruino": {
+      "x": 1152,
+      "y": 17280
+    },
+    "skchr_beewax_1": {
+      "x": 0,
+      "y": 1280
+    },
+    "skchr_beewax_2": {
+      "x": 128,
+      "y": 1280
+    },
+    "sktok_acarm042_2": {
+      "x": 384,
+      "y": 12800
+    },
+    "sktok_xb2ofmf": {
+      "x": 640,
+      "y": 19840
+    },
+    "sktok_muruinw": {
+      "x": 0,
+      "y": 17408
+    },
+    "sktok_acarm042_1": {
+      "x": 256,
+      "y": 12800
+    },
+    "sktok_xb2ofmr": {
+      "x": 896,
+      "y": 19840
+    },
+    "sktok_xbarok": {
+      "x": 512,
+      "y": 20480
+    },
+    "skchr_etlchi_1": {
+      "x": 128,
+      "y": 3200
+    },
+    "skchr_cetsyr_2": {
+      "x": 128,
+      "y": 2176
+    },
+    "sktok_acspell008_1": {
+      "x": 768,
+      "y": 14336
+    },
+    "sktok_xbwall": {
+      "x": 128,
+      "y": 21248
+    },
+    "skchr_cetsyr_1": {
+      "x": 0,
+      "y": 2176
+    },
+    "skchr_etlchi_2": {
+      "x": 256,
+      "y": 3200
+    },
+    "skchr_etlchi_3": {
+      "x": 384,
+      "y": 3200
+    },
+    "sktok_xb2ofnc": {
+      "x": 1152,
+      "y": 19840
+    },
+    "sktok_canoe": {
+      "x": 512,
+      "y": 15104
+    },
+    "skchr_cetsyr_3": {
+      "x": 256,
+      "y": 2176
+    },
+    "sktok_acarm077_2": {
+      "x": 384,
+      "y": 13696
+    },
+    "skchr_surfer_2": {
+      "x": 512,
+      "y": 9344
+    },
+    "skchr_surfer_1": {
+      "x": 384,
+      "y": 9344
+    },
+    "sktok_acarm077_1": {
+      "x": 256,
+      "y": 13696
+    },
+    "sktok_mlyss_wtrman": {
+      "x": 896,
+      "y": 17024
+    },
+    "skchr_grabds_2": {
+      "x": 896,
+      "y": 3968
+    },
+    "skchr_cqbw_2": {
+      "x": 384,
+      "y": 2560
+    },
+    "skchr_cqbw_3": {
+      "x": 512,
+      "y": 2560
+    },
+    "sktok_smtree": {
+      "x": 640,
+      "y": 18688
+    },
+    "sktok_pycstp": {
+      "x": 128,
+      "y": 17920
+    },
+    "sktok_roadblock": {
+      "x": 768,
+      "y": 18176
+    },
+    "skchr_cqbw_1": {
+      "x": 256,
+      "y": 2560
+    },
+    "skchr_chyue_1": {
+      "x": 512,
+      "y": 2432
+    },
+    "skchr_chyue_2": {
+      "x": 640,
+      "y": 2432
+    },
+    "skcom_atk_upx5b3x5d": {
+      "x": 768,
+      "y": 11264
+    },
+    "skchr_chyue_3": {
+      "x": 768,
+      "y": 2432
+    },
+    "sktok_acarm068_2": {
+      "x": 640,
+      "y": 13440
+    },
+    "sktok_acarm068_1": {
+      "x": 512,
+      "y": 13440
+    },
+    "sktok_sniper": {
+      "x": 896,
+      "y": 18688
+    },
+    "skchr_grabds_1": {
+      "x": 768,
+      "y": 3968
+    },
+    "sktok_aegiret": {
+      "x": 768,
+      "y": 14464
+    },
+    "sktok_muftbl": {
+      "x": 256,
+      "y": 17280
+    },
+    "sktok_acspell007_1": {
+      "x": 640,
+      "y": 14336
+    },
+    "sktok_wulfen_mine": {
+      "x": 896,
+      "y": 19328
+    },
+    "sktok_xbroadblock": {
+      "x": 896,
+      "y": 20992
+    },
+    "sktok_acarm011_2": {
+      "x": 128,
+      "y": 12032
+    },
+    "skchr_amiya2_2": {
+      "x": 256,
+      "y": 640
+    },
+    "skchr_amiya2_1": {
+      "x": 128,
+      "y": 640
+    },
+    "skchr_amoris_1": {
+      "x": 896,
+      "y": 640
+    },
+    "skchr_fang2_1": {
+      "x": 256,
+      "y": 3328
+    },
+    "skchr_fang2_2": {
+      "x": 384,
+      "y": 3328
+    },
+    "skchr_amoris_2": {
+      "x": 1024,
+      "y": 640
+    },
+    "sktok_acarm011_1": {
+      "x": 0,
+      "y": 12032
+    },
+    "sktok_vodfox_token": {
+      "x": 128,
+      "y": 19200
+    },
+    "skchr_robrta_2": {
+      "x": 384,
+      "y": 8320
+    },
+    "skchr_robrta_1": {
+      "x": 256,
+      "y": 8320
+    },
+    "skchr_peacok_1": {
+      "x": 640,
+      "y": 7424
+    },
+    "sktok_bgarmn": {
+      "x": 384,
+      "y": 14848
+    },
+    "skchr_peacok_2": {
+      "x": 768,
+      "y": 7424
+    },
+    "sktok_bgarms": {
+      "x": 512,
+      "y": 14848
+    },
+    "skchr_blkngt_2": {
+      "x": 1024,
+      "y": 1536
+    },
+    "skchr_blkngt_1": {
+      "x": 896,
+      "y": 1536
+    },
+    "sktok_acshopfr_1": {
+      "x": 768,
+      "y": 14208
+    },
+    "sktok_sglink": {
+      "x": 896,
+      "y": 18304
+    },
+    "skcom_withdraw": {
+      "x": 896,
+      "y": 11648
+    },
+    "skchr_brownb_2": {
+      "x": 768,
+      "y": 1792
+    },
+    "skchr_brownb_1": {
+      "x": 640,
+      "y": 1792
+    },
+    "sktok_arcsum1": {
+      "x": 256,
+      "y": 14720
+    },
+    "skchr_liesel_1": {
+      "x": 0,
+      "y": 5760
+    },
+    "sktok_arcsum2": {
+      "x": 384,
+      "y": 14720
+    },
+    "skchr_liesel_2": {
+      "x": 128,
+      "y": 5760
+    },
+    "sktok_arcsum3": {
+      "x": 512,
+      "y": 14720
+    },
+    "sktok_ltnova": {
+      "x": 384,
+      "y": 16896
+    },
+    "skchr_acguad_1": {
+      "x": 128,
+      "y": 128
+    },
+    "sktok_acarm033_2": {
+      "x": 640,
+      "y": 12544
+    },
+    "sktok_acarm033_1": {
+      "x": 512,
+      "y": 12544
+    },
+    "skchr_acguad_2": {
+      "x": 256,
+      "y": 128
+    },
+    "skchr_acguad_3": {
+      "x": 384,
+      "y": 128
+    },
+    "skchr_iris_2": {
+      "x": 1024,
+      "y": 4992
+    },
+    "skchr_iris_1": {
+      "x": 896,
+      "y": 4992
+    },
+    "sktok_acarm024_1": {
+      "x": 768,
+      "y": 12288
+    },
+    "skchr_cerber_1": {
+      "x": 896,
+      "y": 2048
+    },
+    "sktok_acarm024_2": {
+      "x": 896,
+      "y": 12288
+    },
+    "sktok_xbaaro": {
+      "x": 0,
+      "y": 20480
+    },
+    "skchr_cerber_2": {
+      "x": 1024,
+      "y": 2048
+    },
+    "skchr_cerber_3": {
+      "x": 1152,
+      "y": 2048
+    },
+    "skchr_aglina_3": {
+      "x": 128,
+      "y": 384
+    },
+    "skchr_franka_2": {
+      "x": 1024,
+      "y": 3584
+    },
+    "sktok_xb2owdp": {
+      "x": 1024,
+      "y": 20224
+    },
+    "skchr_franka_1": {
+      "x": 896,
+      "y": 3584
+    },
+    "skchr_aglina_1": {
+      "x": 1152,
+      "y": 256
+    },
+    "sktok_xblrsh": {
+      "x": 0,
+      "y": 20992
+    },
+    "skchr_aglina_2": {
+      "x": 0,
+      "y": 384
+    },
+    "sktok_hiddenstone": {
+      "x": 384,
+      "y": 16256
+    },
+    "sktok_xb2omkstr": {
+      "x": 768,
+      "y": 19968
+    },
+    "sktok_emperor": {
+      "x": 256,
+      "y": 16000
+    },
+    "sktok_slent2_protrb": {
+      "x": 1024,
+      "y": 18560
+    },
+    "skcom_charge_costx5b1x5d": {
+      "x": 128,
+      "y": 11392
+    },
+    "sktok_murjet": {
+      "x": 512,
+      "y": 17280
+    },
+    "sktok_acarm059_1": {
+      "x": 768,
+      "y": 13184
+    },
+    "skchr_scave_2": {
+      "x": 1024,
+      "y": 8448
+    },
+    "sktok_xb2ofct": {
+      "x": 128,
+      "y": 19840
+    },
+    "sktok_xbaask": {
+      "x": 128,
+      "y": 20480
+    },
+    "skchr_nightm_1": {
+      "x": 384,
+      "y": 7040
+    },
+    "skchr_nightm_2": {
+      "x": 512,
+      "y": 7040
+    },
+    "sktok_xbaasm": {
+      "x": 256,
+      "y": 20480
+    },
+    "sktok_acarm059_2": {
+      "x": 896,
+      "y": 13184
+    },
+    "sktok_mcnist_mcgraf": {
+      "x": 896,
+      "y": 16896
+    },
+    "skchr_sophia_1": {
+      "x": 1024,
+      "y": 9088
+    },
+    "skchr_sophia_2": {
+      "x": 1152,
+      "y": 9088
+    },
+    "skchr_flwr2_1": {
+      "x": 1024,
+      "y": 3456
+    },
+    "skchr_flwr2_2": {
+      "x": 1152,
+      "y": 3456
+    },
+    "sktok_buffcard": {
+      "x": 1152,
+      "y": 14976
+    },
+    "sktok_wfactory": {
+      "x": 0,
+      "y": 19328
+    },
+    "sktok_amblls": {
+      "x": 512,
+      "y": 14592
+    },
+    "sktok_acspell016_1": {
+      "x": 384,
+      "y": 14464
+    },
+    "sktok_acarm046_2": {
+      "x": 128,
+      "y": 12928
+    },
+    "sktok_acarm046_1": {
+      "x": 0,
+      "y": 12928
+    },
+    "sktok_common": {
+      "x": 896,
+      "y": 15488
+    },
+    "sktok_lheqp": {
+      "x": 0,
+      "y": 16640
+    },
+    "skchr_skadi2_3": {
+      "x": 768,
+      "y": 8832
+    },
+    "skchr_skadi2_2": {
+      "x": 640,
+      "y": 8832
+    },
+    "skchr_skadi2_1": {
+      "x": 512,
+      "y": 8832
+    },
+    "sktok_acarm122_2": {
+      "x": 384,
+      "y": 14080
+    },
+    "sktok_acarm122_1": {
+      "x": 256,
+      "y": 14080
+    },
+    "sktok_ela_grzmot": {
+      "x": 1152,
+      "y": 15872
+    },
+    "sktok_pycgp": {
+      "x": 0,
+      "y": 17920
+    },
+    "sktok_tnkspk": {
+      "x": 640,
+      "y": 18944
+    },
+    "skchr_sharp2_1": {
+      "x": 640,
+      "y": 8576
+    },
+    "sktok_weedy_token": {
+      "x": 1152,
+      "y": 19200
+    },
+    "sktok_lhrift": {
+      "x": 0,
+      "y": 16768
+    },
+    "skchr_akkord_1": {
+      "x": 128,
+      "y": 512
+    },
+    "skchr_akkord_2": {
+      "x": 256,
+      "y": 512
+    },
+    "skchr_lionhd_2": {
+      "x": 1024,
+      "y": 5760
+    },
+    "sktok_acspell003_1": {
+      "x": 128,
+      "y": 14336
+    },
+    "skchr_gravel_2": {
+      "x": 256,
+      "y": 4096
+    },
+    "skchr_gravel_1": {
+      "x": 128,
+      "y": 4096
+    },
+    "sktok_lrcore": {
+      "x": 128,
+      "y": 16896
+    },
+    "sktok_shmbmb": {
+      "x": 512,
+      "y": 18432
+    },
+    "sktok_machst": {
+      "x": 640,
+      "y": 16896
+    },
+    "skchr_thorns_3": {
+      "x": 128,
+      "y": 9856
+    },
+    "sktok_xbprsh": {
+      "x": 768,
+      "y": 20992
+    },
+    "skchr_spuria_2": {
+      "x": 768,
+      "y": 9216
+    },
+    "skchr_spuria_1": {
+      "x": 640,
+      "y": 9216
+    },
+    "skchr_thorns_2": {
+      "x": 0,
+      "y": 9856
+    },
+    "sktok_xbabal": {
+      "x": 384,
+      "y": 20480
+    },
+    "sktok_magiccircle": {
+      "x": 768,
+      "y": 16896
+    },
+    "skchr_lolxh_1": {
+      "x": 0,
+      "y": 6016
+    },
+    "skchr_lolxh_2": {
+      "x": 128,
+      "y": 6016
+    },
+    "sktok_robrta": {
+      "x": 1152,
+      "y": 18176
+    },
+    "sktok_kalts2_mtship": {
+      "x": 512,
+      "y": 16384
+    },
+    "sktok_lhhe": {
+      "x": 640,
+      "y": 16640
+    },
+    "sktok_murbas": {
+      "x": 384,
+      "y": 17280
+    },
+    "sktok_acarm015_1": {
+      "x": 1024,
+      "y": 12032
+    },
+    "sktok_mufrprn": {
+      "x": 896,
+      "y": 17152
+    },
+    "sktok_acarm015_2": {
+      "x": 1152,
+      "y": 12032
+    },
+    "skcom_def_upx5b2x5d": {
+      "x": 640,
+      "y": 11392
+    },
+    "skchr_amgoat_1": {
+      "x": 1024,
+      "y": 512
+    },
+    "skchr_amgoat_2": {
+      "x": 1152,
+      "y": 512
+    },
+    "skchr_amgoat_3": {
+      "x": 0,
+      "y": 640
+    },
+    "sktok_xbtent": {
+      "x": 640,
+      "y": 21120
+    },
+    "sktok_xbgldn": {
+      "x": 512,
+      "y": 20864
+    },
+    "skchr_aphris_1": {
+      "x": 768,
+      "y": 768
+    },
+    "skchr_sensi_2": {
+      "x": 128,
+      "y": 8576
+    },
+    "skchr_sensi_1": {
+      "x": 0,
+      "y": 8576
+    },
+    "skchr_skfire_2": {
+      "x": 1152,
+      "y": 8832
+    },
+    "skchr_estell_2": {
+      "x": 1024,
+      "y": 3072
+    },
+    "skchr_flower_2": {
+      "x": 896,
+      "y": 3456
+    },
+    "skchr_aphris_3": {
+      "x": 1024,
+      "y": 768
+    },
+    "skchr_chen3_2": {
+      "x": 128,
+      "y": 2304
+    },
+    "sktok_acarm113_2": {
+      "x": 640,
+      "y": 13824
+    },
+    "skchr_aphris_2": {
+      "x": 896,
+      "y": 768
+    },
+    "skchr_chen3_3": {
+      "x": 256,
+      "y": 2304
+    },
+    "sktok_acarm113_1": {
+      "x": 512,
+      "y": 13824
+    },
+    "skchr_chen3_1": {
+      "x": 0,
+      "y": 2304
+    },
+    "skchr_excu_1": {
+      "x": 896,
+      "y": 3200
+    },
+    "skchr_glider_1": {
+      "x": 128,
+      "y": 3968
+    },
+    "sktok_acarm002_1": {
+      "x": 256,
+      "y": 11776
+    },
+    "sktok_acarm002_2": {
+      "x": 384,
+      "y": 11776
+    },
+    "sktok_xb2ohwstr": {
+      "x": 384,
+      "y": 19968
+    },
+    "skchr_excu_2": {
+      "x": 1024,
+      "y": 3200
+    },
+    "skchr_glider_2": {
+      "x": 256,
+      "y": 3968
+    },
+    "sktok_xb2ofb3": {
+      "x": 1152,
+      "y": 19712
+    },
+    "sktok_xb2ofb2": {
+      "x": 1024,
+      "y": 19712
+    },
+    "skchr_ines_1": {
+      "x": 1152,
+      "y": 4864
+    },
+    "sktok_shielder": {
+      "x": 384,
+      "y": 18432
+    },
+    "sktok_xb2ofb4": {
+      "x": 0,
+      "y": 19840
+    },
+    "skchr_ines_2": {
+      "x": 0,
+      "y": 4992
+    },
+    "skchr_ines_3": {
+      "x": 128,
+      "y": 4992
+    },
+    "sktok_xbfdtion": {
+      "x": 1152,
+      "y": 20736
+    },
+    "skchr_rosesa_2": {
+      "x": 1024,
+      "y": 8320
+    },
+    "skchr_rosesa_1": {
+      "x": 896,
+      "y": 8320
+    },
+    "sktok_dyldlz": {
+      "x": 384,
+      "y": 15872
+    },
+    "sktok_garage": {
+      "x": 640,
+      "y": 16128
+    },
+    "sktok_acarm037_1": {
+      "x": 256,
+      "y": 12672
+    },
+    "sktok_acarm037_2": {
+      "x": 384,
+      "y": 12672
+    },
+    "sktok_cdsoul": {
+      "x": 128,
+      "y": 15488
+    },
+    "sktok_supspt": {
+      "x": 1024,
+      "y": 18816
+    },
+    "sktok_xbtiro": {
+      "x": 768,
+      "y": 21120
+    },
+    "skchr_delphn_2": {
+      "x": 256,
+      "y": 2816
+    },
+    "sktok_xb2rgi": {
+      "x": 128,
+      "y": 20352
+    },
+    "skchr_nasti_1": {
+      "x": 896,
+      "y": 6784
+    },
+    "skchr_nasti_3": {
+      "x": 1152,
+      "y": 6784
+    },
+    "skchr_threye_2": {
+      "x": 384,
+      "y": 9856
+    },
+    "skchr_nasti_2": {
+      "x": 1024,
+      "y": 6784
+    },
+    "skchr_billro_3": {
+      "x": 128,
+      "y": 1408
+    },
+    "sktok_acarm028_1": {
+      "x": 512,
+      "y": 12416
+    },
+    "sktok_xb2rgs": {
+      "x": 256,
+      "y": 20352
+    },
+    "skchr_billro_1": {
+      "x": 1152,
+      "y": 1280
+    },
+    "skchr_billro_2": {
+      "x": 0,
+      "y": 1408
+    },
+    "sktok_acarm028_2": {
+      "x": 640,
+      "y": 12416
+    },
+    "skchr_bubble_2": {
+      "x": 0,
+      "y": 1920
+    },
+    "skchr_slchan_2": {
+      "x": 896,
+      "y": 8960
+    },
+    "sktok_xb2rgw": {
+      "x": 384,
+      "y": 20352
+    },
+    "skchr_threye_1": {
+      "x": 256,
+      "y": 9856
+    },
+    "sktok_bunker": {
+      "x": 0,
+      "y": 15104
+    },
+    "sktok_xb2als": {
+      "x": 1024,
+      "y": 19328
+    },
+    "skchr_qiubai_2": {
+      "x": 640,
+      "y": 7936
+    },
+    "sktok_skzwyx": {
+      "x": 768,
+      "y": 18560
+    },
+    "skchr_qiubai_3": {
+      "x": 768,
+      "y": 7936
+    },
+    "skchr_slchan_1": {
+      "x": 768,
+      "y": 8960
+    },
+    "skchr_qiubai_1": {
+      "x": 512,
+      "y": 7936
+    },
+    "skchr_aosta_2": {
+      "x": 640,
+      "y": 768
+    },
+    "skcom_heal_ragex5b3x5d": {
+      "x": 0,
+      "y": 11520
+    },
+    "skchr_vendla_2": {
+      "x": 640,
+      "y": 10368
+    },
+    "skchr_lunacu_1": {
+      "x": 640,
+      "y": 6016
+    },
+    "skchr_lunacu_2": {
+      "x": 768,
+      "y": 6016
+    },
+    "skchr_ashlok_2": {
+      "x": 640,
+      "y": 1024
+    },
+    "sktok_acspell012_1": {
+      "x": 0,
+      "y": 14464
+    },
+    "sktok_cdroneaa": {
+      "x": 896,
+      "y": 15360
+    },
+    "sktok_acchal_1": {
+      "x": 0,
+      "y": 14208
+    },
+    "sktok_lhtown": {
+      "x": 512,
+      "y": 16768
+    },
+    "skcom_heal_upx5b1x5d": {
+      "x": 512,
+      "y": 11520
+    },
+    "sktok_skzbox": {
+      "x": 128,
+      "y": 18560
+    },
+    "skchr_bstalk_1": {
+      "x": 1024,
+      "y": 1792
+    },
+    "skchr_tachak_2": {
+      "x": 256,
+      "y": 9600
+    },
+    "skchr_kalts_1": {
+      "x": 128,
+      "y": 5376
+    },
+    "skchr_tachak_1": {
+      "x": 128,
+      "y": 9600
+    },
+    "skchr_kalts_2": {
+      "x": 256,
+      "y": 5376
+    },
+    "skchr_bstalk_2": {
+      "x": 1152,
+      "y": 1792
+    },
+    "skchr_kalts_3": {
+      "x": 384,
+      "y": 5376
+    },
+    "sktok_lhcamp": {
+      "x": 384,
+      "y": 16512
+    },
+    "sktok_lasher_mcbird_2": {
+      "x": 1024,
+      "y": 16384
+    },
+    "sktok_lasher_mcbird_1": {
+      "x": 896,
+      "y": 16384
+    },
+    "sktok_xblfen": {
+      "x": 1024,
+      "y": 20864
+    },
+    "sktok_xdmac2": {
+      "x": 768,
+      "y": 21248
+    },
+    "sktok_xdmac3": {
+      "x": 896,
+      "y": 21248
+    },
+    "sktok_xdmac1": {
+      "x": 640,
+      "y": 21248
+    },
+    "skchr_mostma_2": {
+      "x": 896,
+      "y": 6656
+    },
+    "sktok_bomb": {
+      "x": 128,
+      "y": 14976
+    },
+    "skchr_mostma_3": {
+      "x": 1024,
+      "y": 6656
+    },
+    "sktok_vegetation": {
+      "x": 1152,
+      "y": 19072
+    },
+    "skchr_delphn_1": {
+      "x": 128,
+      "y": 2816
+    },
+    "skchr_wang_1": {
+      "x": 256,
+      "y": 10624
+    },
+    "skchr_wang_3": {
+      "x": 512,
+      "y": 10624
+    },
+    "skchr_wang_2": {
+      "x": 384,
+      "y": 10624
+    },
+    "sktok_rfrost_1": {
+      "x": 1024,
+      "y": 18048
+    },
+    "sktok_rfrost_2": {
+      "x": 1152,
+      "y": 18048
+    },
+    "skchr_wintim_2": {
+      "x": 384,
+      "y": 10880
+    },
+    "skchr_wintim_1": {
+      "x": 256,
+      "y": 10880
+    },
+    "skchr_frostl_2": {
+      "x": 256,
+      "y": 3712
+    },
+    "skchr_frostl_1": {
+      "x": 128,
+      "y": 3712
+    },
+    "skchr_ascln_3": {
+      "x": 512,
+      "y": 1024
+    },
+    "sktok_vigil_wolf": {
+      "x": 0,
+      "y": 19200
+    },
+    "skchr_ascln_2": {
+      "x": 384,
+      "y": 1024
+    },
+    "skchr_ascln_1": {
+      "x": 256,
+      "y": 1024
+    },
+    "skchr_spikes_2": {
+      "x": 384,
+      "y": 9216
+    },
+    "skchr_spikes_1": {
+      "x": 256,
+      "y": 9216
+    },
+    "skchr_noirc2_1": {
+      "x": 768,
+      "y": 7040
+    },
+    "sktok_xbtrok": {
+      "x": 896,
+      "y": 21120
+    },
+    "skchr_noirc2_2": {
+      "x": 896,
+      "y": 7040
+    },
+    "sktok_enhancer": {
+      "x": 384,
+      "y": 16000
+    },
+    "sktok_dancdol": {
+      "x": 768,
+      "y": 15616
+    },
+    "sktok_giacan_1": {
+      "x": 1024,
+      "y": 16128
+    },
+    "skchr_haak_1": {
+      "x": 1152,
+      "y": 4096
+    },
+    "skchr_haak_2": {
+      "x": 0,
+      "y": 4224
+    },
+    "skchr_haak_3": {
+      "x": 128,
+      "y": 4224
+    },
+    "sktok_spblls": {
+      "x": 1152,
+      "y": 18688
+    },
+    "sktok_mercha": {
+      "x": 1024,
+      "y": 16896
+    },
+    "sktok_archook": {
+      "x": 0,
+      "y": 14720
+    },
+    "skcom_heal_ragex5b2x5d": {
+      "x": 1152,
+      "y": 11392
+    },
+    "skcom_heal_selfx5b1x5d": {
+      "x": 128,
+      "y": 11520
+    },
+    "sktok_xbasky": {
+      "x": 640,
+      "y": 20480
+    },
+    "sktok_xbasmi": {
+      "x": 768,
+      "y": 20480
+    },
+    "sktok_acdisney_1": {
+      "x": 384,
+      "y": 14208
+    },
+    "skchr_hsguma_3": {
+      "x": 896,
+      "y": 4736
+    },
+    "skchr_hsguma_2": {
+      "x": 768,
+      "y": 4736
+    },
+    "skchr_hsguma_1": {
+      "x": 640,
+      "y": 4736
+    },
+    "skchr_provs_2": {
+      "x": 1024,
+      "y": 7808
+    },
+    "skchr_provs_1": {
+      "x": 896,
+      "y": 7808
+    },
+    "sktok_candle": {
+      "x": 128,
+      "y": 15104
+    },
+    "skchr_acast_1": {
+      "x": 256,
+      "y": 0
+    },
+    "skchr_bena_2": {
+      "x": 384,
+      "y": 1280
+    },
+    "skchr_bena_1": {
+      "x": 256,
+      "y": 1280
+    },
+    "skchr_forcer_1": {
+      "x": 640,
+      "y": 3584
+    },
+    "skchr_nearl2_3": {
+      "x": 512,
+      "y": 6912
+    },
+    "skchr_forcer_2": {
+      "x": 768,
+      "y": 3584
+    },
+    "skchr_nearl2_2": {
+      "x": 384,
+      "y": 6912
+    },
+    "skchr_nearl2_1": {
+      "x": 256,
+      "y": 6912
+    },
+    "skcom_quickattackx5b3x5d": {
+      "x": 640,
+      "y": 11648
+    },
+    "skchr_dagda_1": {
+      "x": 896,
+      "y": 2688
+    },
+    "skchr_monstr_1": {
+      "x": 0,
+      "y": 6656
+    },
+    "sktok_xb2otph3": {
+      "x": 768,
+      "y": 20224
+    },
+    "sktok_xb2otph2": {
+      "x": 640,
+      "y": 20224
+    },
+    "skchr_monstr_3": {
+      "x": 256,
+      "y": 6656
+    },
+    "skchr_monstr_2": {
+      "x": 128,
+      "y": 6656
+    },
+    "sktok_lhdoor": {
+      "x": 1152,
+      "y": 16512
+    },
+    "skchr_takila_2": {
+      "x": 512,
+      "y": 9600
+    },
+    "skchr_takila_1": {
+      "x": 384,
+      "y": 9600
+    },
+    "sktok_dhsb": {
+      "x": 896,
+      "y": 15616
+    },
+    "skchr_aprot2_1": {
+      "x": 256,
+      "y": 896
+    },
+    "skchr_aprot2_2": {
+      "x": 384,
+      "y": 896
+    },
+    "skchr_dagda_2": {
+      "x": 1024,
+      "y": 2688
+    },
+    "skchr_blackd_2": {
+      "x": 384,
+      "y": 1408
+    },
+    "sktok_rnfcar": {
+      "x": 640,
+      "y": 18176
+    },
+    "sktok_xb2orm2": {
+      "x": 640,
+      "y": 20096
+    },
+    "sktok_dhtl": {
+      "x": 1024,
+      "y": 15616
+    },
+    "skchr_wyvern_1": {
+      "x": 128,
+      "y": 11008
+    },
+    "sktok_aclasert": {
+      "x": 640,
+      "y": 14208
+    },
+    "sktok_acarm074_2": {
+      "x": 896,
+      "y": 13568
+    },
+    "sktok_acarm074_1": {
+      "x": 768,
+      "y": 13568
+    },
+    "sktok_truamr": {
+      "x": 768,
+      "y": 19072
+    },
+    "skchr_phatm2_1": {
+      "x": 384,
+      "y": 7552
+    },
+    "skchr_phatm2_2": {
+      "x": 512,
+      "y": 7552
+    },
+    "sktok_xbistorm": {
+      "x": 896,
+      "y": 20864
+    },
+    "skchr_phatm2_3": {
+      "x": 640,
+      "y": 7552
+    },
+    "sktok_acarm008_2": {
+      "x": 640,
+      "y": 11904
+    },
+    "skchr_taraxa_2": {
+      "x": 0,
+      "y": 9728
+    },
+    "skchr_taraxa_1": {
+      "x": 1152,
+      "y": 9600
+    },
+    "sktok_acarm119_2": {
+      "x": 896,
+      "y": 13952
+    },
+    "sktok_acarm008_1": {
+      "x": 512,
+      "y": 11904
+    },
+    "sktok_acarm119_1": {
+      "x": 768,
+      "y": 13952
+    },
+    "sktok_acarm061_2": {
+      "x": 128,
+      "y": 13312
+    },
+    "sktok_nearl2_3": {
+      "x": 256,
+      "y": 17536
+    },
+    "sktok_acarm061_1": {
+      "x": 0,
+      "y": 13312
+    },
+    "sktok_xbmire": {
+      "x": 384,
+      "y": 20992
+    },
+    "skchr_amedic_1": {
+      "x": 896,
+      "y": 512
+    },
+    "skchr_hsgma2_1": {
+      "x": 256,
+      "y": 4736
+    },
+    "skchr_hsgma2_2": {
+      "x": 384,
+      "y": 4736
+    },
+    "skchr_hsgma2_3": {
+      "x": 512,
+      "y": 4736
+    },
+    "sktok_xbiron": {
+      "x": 768,
+      "y": 20864
+    },
+    "sktok_xbmrcl": {
+      "x": 512,
+      "y": 20992
+    },
+    "skchr_vodfox_1": {
+      "x": 0,
+      "y": 10496
+    },
+    "skchr_vodfox_2": {
+      "x": 128,
+      "y": 10496
+    },
+    "skcom_magic_ragex5b2x5d": {
+      "x": 1024,
+      "y": 11520
+    },
+    "skchr_rfalcn_2": {
+      "x": 512,
+      "y": 8192
+    },
+    "sktok_allydonq": {
+      "x": 384,
+      "y": 14592
+    },
+    "skchr_ling_3": {
+      "x": 512,
+      "y": 5760
+    },
+    "skchr_nowell_1": {
+      "x": 0,
+      "y": 7168
+    },
+    "skchr_ju_2": {
+      "x": 384,
+      "y": 5248
+    },
+    "skchr_nowell_2": {
+      "x": 128,
+      "y": 7168
+    },
+    "skchr_oblvns_3": {
+      "x": 896,
+      "y": 7168
+    },
+    "skchr_ling_1": {
+      "x": 256,
+      "y": 5760
+    },
+    "skchr_ling_2": {
+      "x": 384,
+      "y": 5760
+    },
+    "sktok_xbtwal": {
+      "x": 1152,
+      "y": 21120
+    },
+    "skchr_oblvns_2": {
+      "x": 768,
+      "y": 7168
+    },
+    "skchr_oblvns_1": {
+      "x": 640,
+      "y": 7168
+    },
+    "skchr_cuttle_2": {
+      "x": 768,
+      "y": 2688
+    },
+    "skchr_typhon_2": {
+      "x": 128,
+      "y": 10240
+    },
+    "sktok_rift": {
+      "x": 256,
+      "y": 18176
+    },
+    "skchr_typhon_3": {
+      "x": 256,
+      "y": 10240
+    },
+    "skchr_mudrok_2": {
+      "x": 1152,
+      "y": 6656
+    },
+    "skchr_halo_2": {
+      "x": 0,
+      "y": 4352
+    },
+    "skchr_halo_1": {
+      "x": 1152,
+      "y": 4224
+    },
+    "sktok_cdshield": {
+      "x": 1152,
+      "y": 15360
+    },
+    "skchr_mudrok_3": {
+      "x": 0,
+      "y": 6784
+    },
+    "sktok_toolore": {
+      "x": 1024,
+      "y": 18944
+    },
+    "sktok_ore_friend": {
+      "x": 0,
+      "y": 17664
+    },
+    "sktok_oxygen": {
+      "x": 256,
+      "y": 17664
+    },
+    "sktok_redtower": {
+      "x": 640,
+      "y": 18048
+    },
+    "skchr_crosly_3": {
+      "x": 896,
+      "y": 2560
+    },
+    "skchr_crosly_1": {
+      "x": 640,
+      "y": 2560
+    },
+    "skchr_humus_2": {
+      "x": 128,
+      "y": 4864
+    },
+    "skchr_crosly_2": {
+      "x": 768,
+      "y": 2560
+    },
+    "skchr_humus_1": {
+      "x": 0,
+      "y": 4864
+    },
+    "sktok_muworkg": {
+      "x": 1024,
+      "y": 17408
+    },
+    "skchr_jesica_2": {
+      "x": 1024,
+      "y": 5120
+    },
+    "sktok_acarm030_1": {
+      "x": 1024,
+      "y": 12416
+    },
+    "sktok_acarm030_2": {
+      "x": 1152,
+      "y": 12416
+    },
+    "sktok_poison_1": {
+      "x": 384,
+      "y": 17792
+    },
+    "sktok_poison_2": {
+      "x": 512,
+      "y": 17792
+    },
+    "sktok_bqrnge": {
+      "x": 896,
+      "y": 14976
+    },
+    "sktok_stmpq": {
+      "x": 256,
+      "y": 18816
+    },
+    "skchr_skybx_1": {
+      "x": 256,
+      "y": 8960
+    },
+    "skchr_whitw2_2": {
+      "x": 768,
+      "y": 10752
+    },
+    "skchr_whitw2_3": {
+      "x": 896,
+      "y": 10752
+    },
+    "sktok_wdescp": {
+      "x": 896,
+      "y": 19200
+    },
+    "skchr_skybx_2": {
+      "x": 384,
+      "y": 8960
+    },
+    "skchr_whitw2_1": {
+      "x": 640,
+      "y": 10752
+    },
+    "skchr_red_2": {
+      "x": 128,
+      "y": 8192
+    },
+    "skchr_ela_3": {
+      "x": 512,
+      "y": 3072
+    },
+    "skchr_red_1": {
+      "x": 0,
+      "y": 8192
+    },
+    "skchr_ela_1": {
+      "x": 256,
+      "y": 3072
+    },
+    "skchr_ela_2": {
+      "x": 384,
+      "y": 3072
+    },
+    "skcom_powerstrikex5b1x5d": {
+      "x": 0,
+      "y": 11648
+    },
+    "sktok_skzthx": {
+      "x": 512,
+      "y": 18560
+    },
+    "skcom_assist_costx5b3x5d": {
+      "x": 384,
+      "y": 11264
+    },
+    "sktok_acarm052_1": {
+      "x": 256,
+      "y": 13056
+    },
+    "sktok_acarm052_2": {
+      "x": 384,
+      "y": 13056
+    },
+    "skchr_ghost_2": {
+      "x": 128,
+      "y": 3840
+    },
+    "skchr_gyuki_2": {
+      "x": 1024,
+      "y": 4096
+    },
+    "sktok_trpot_1": {
+      "x": 512,
+      "y": 19072
+    },
+    "sktok_lhpad": {
+      "x": 768,
+      "y": 16640
+    },
+    "skchr_orchd2_1": {
+      "x": 0,
+      "y": 7296
+    },
+    "skchr_orchd2_2": {
+      "x": 128,
+      "y": 7296
+    },
+    "skchr_orchd2_3": {
+      "x": 256,
+      "y": 7296
+    },
+    "sktok_acarm043_1": {
+      "x": 512,
+      "y": 12800
+    },
+    "skchr_akafyu_1": {
+      "x": 1152,
+      "y": 384
+    },
+    "sktok_acarm043_2": {
+      "x": 640,
+      "y": 12800
+    },
+    "skchr_skadi_3": {
+      "x": 1024,
+      "y": 8832
+    },
+    "skchr_akafyu_2": {
+      "x": 0,
+      "y": 512
+    },
+    "skchr_accast_1": {
+      "x": 384,
+      "y": 0
+    },
+    "skchr_kalts2_3": {
+      "x": 0,
+      "y": 5376
+    },
+    "skchr_catap2_2": {
+      "x": 896,
+      "y": 1920
+    },
+    "skchr_kalts2_2": {
+      "x": 1152,
+      "y": 5248
+    },
+    "skchr_accast_3": {
+      "x": 640,
+      "y": 0
+    },
+    "skchr_catap2_1": {
+      "x": 768,
+      "y": 1920
+    },
+    "skchr_kalts2_1": {
+      "x": 1024,
+      "y": 5248
+    },
+    "skchr_accast_2": {
+      "x": 512,
+      "y": 0
+    },
+    "skchr_bobb_2": {
+      "x": 256,
+      "y": 1664
+    },
+    "skchr_bobb_1": {
+      "x": 128,
+      "y": 1664
+    },
+    "sktok_acspell009_1": {
+      "x": 896,
+      "y": 14336
+    },
+    "skchr_lisa_2": {
+      "x": 0,
+      "y": 5888
+    },
+    "skchr_lisa_3": {
+      "x": 128,
+      "y": 5888
+    },
+    "sktok_acarm078_2": {
+      "x": 640,
+      "y": 13696
+    },
+    "sktok_acarm078_1": {
+      "x": 512,
+      "y": 13696
+    },
+    "skchr_myrtle_2": {
+      "x": 384,
+      "y": 6784
+    },
+    "skchr_sntlla_2": {
+      "x": 896,
+      "y": 9088
+    },
+    "sktok_cdhvrk": {
+      "x": 0,
+      "y": 15360
+    },
+    "skchr_mgllan_3": {
+      "x": 0,
+      "y": 6400
+    },
+    "skchr_toddi_1": {
+      "x": 128,
+      "y": 10112
+    },
+    "skchr_mgllan_2": {
+      "x": 1152,
+      "y": 6272
+    },
+    "skchr_toddi_2": {
+      "x": 256,
+      "y": 10112
+    },
+    "skchr_mgllan_1": {
+      "x": 1024,
+      "y": 6272
+    },
+    "sktok_electric": {
+      "x": 0,
+      "y": 16000
+    },
+    "skchr_lisa_1": {
+      "x": 1152,
+      "y": 5760
+    },
+    "sktok_xbescp": {
+      "x": 1152,
+      "y": 20608
+    },
+    "sktok_cdcredit": {
+      "x": 384,
+      "y": 15232
+    },
+    "sktok_acarm065_2": {
+      "x": 1152,
+      "y": 13312
+    },
+    "sktok_acarm065_1": {
+      "x": 1024,
+      "y": 13312
+    },
+    "skchr_chnut_2": {
+      "x": 128,
+      "y": 2432
+    },
+    "skchr_breeze_2": {
+      "x": 0,
+      "y": 1792
+    },
+    "skchr_chnut_1": {
+      "x": 0,
+      "y": 2432
+    },
+    "sktok_arcgacha": {
+      "x": 1024,
+      "y": 14592
+    },
+    "sktok_ironmn_pile3": {
+      "x": 0,
+      "y": 16384
+    },
+    "sktok_ironmn_pile2": {
+      "x": 1024,
+      "y": 16256
+    },
+    "sktok_xb2fbw": {
+      "x": 256,
+      "y": 19584
+    },
+    "sktok_xb2org2": {
+      "x": 256,
+      "y": 20096
+    },
+    "sktok_ironmn_pile1": {
+      "x": 768,
+      "y": 16256
+    },
+    "skchr_breeze_1": {
+      "x": 1152,
+      "y": 1664
+    },
+    "sktok_ray_sndbst": {
+      "x": 0,
+      "y": 18048
+    },
+    "skchr_ju_1": {
+      "x": 256,
+      "y": 5248
+    },
+    "sktok_xb2org3": {
+      "x": 384,
+      "y": 20096
+    },
+    "sktok_blower": {
+      "x": 1152,
+      "y": 14848
+    },
+    "sktok_xb2bch": {
+      "x": 128,
+      "y": 19456
+    },
+    "skcom_charge_costx5b2x5d": {
+      "x": 256,
+      "y": 11392
+    },
+    "sktok_shtlbx": {
+      "x": 1152,
+      "y": 18432
+    },
+    "sktok_xbember": {
+      "x": 1024,
+      "y": 20608
+    },
+    "skchr_mm_2": {
+      "x": 896,
+      "y": 6528
+    },
+    "skchr_mm_1": {
+      "x": 768,
+      "y": 6528
+    },
+    "sktok_necras_skeltn": {
+      "x": 512,
+      "y": 17536
+    },
+    "skchr_bpipe_2": {
+      "x": 640,
+      "y": 1664
+    },
+    "skchr_bpipe_3": {
+      "x": 768,
+      "y": 1664
+    },
+    "sktok_xb2bbq": {
+      "x": 0,
+      "y": 19456
+    },
+    "skchr_acmedc_3": {
+      "x": 768,
+      "y": 128
+    },
+    "skchr_acmedc_2": {
+      "x": 640,
+      "y": 128
+    },
+    "skchr_acmedc_1": {
+      "x": 512,
+      "y": 128
+    },
+    "skchr_radian_2": {
+      "x": 128,
+      "y": 8064
+    },
+    "skchr_radian_3": {
+      "x": 256,
+      "y": 8064
+    },
+    "skchr_radian_1": {
+      "x": 0,
+      "y": 8064
+    },
+    "sktok_xb2flr": {
+      "x": 512,
+      "y": 19584
+    },
+    "skchr_reed2_2": {
+      "x": 256,
+      "y": 8192
+    },
+    "skchr_reed2_3": {
+      "x": 384,
+      "y": 8192
+    },
+    "sktok_acarm034_1": {
+      "x": 768,
+      "y": 12544
+    },
+    "sktok_xbfarmm": {
+      "x": 640,
+      "y": 20736
+    },
+    "sktok_acarm034_2": {
+      "x": 896,
+      "y": 12544
+    },
+    "sktok_xb2bas": {
+      "x": 1152,
+      "y": 19328
+    },
+    "skchr_siege2_3": {
+      "x": 0,
+      "y": 8832
+    },
+    "skchr_siege2_2": {
+      "x": 1152,
+      "y": 8704
+    },
+    "skchr_pasngr_2": {
+      "x": 384,
+      "y": 7424
+    },
+    "skchr_siege2_1": {
+      "x": 1024,
+      "y": 8704
+    },
+    "skchr_pasngr_3": {
+      "x": 512,
+      "y": 7424
+    },
+    "sktok_shfort": {
+      "x": 256,
+      "y": 18432
+    },
+    "skchr_erato_1": {
+      "x": 768,
+      "y": 3072
+    },
+    "skchr_pasngr_1": {
+      "x": 256,
+      "y": 7424
+    },
+    "skchr_erato_2": {
+      "x": 896,
+      "y": 3072
+    },
+    "sktok_cannon_1": {
+      "x": 256,
+      "y": 15104
+    },
+    "sktok_cannon_2": {
+      "x": 384,
+      "y": 15104
+    },
+    "skchr_irene_1": {
+      "x": 512,
+      "y": 4992
+    },
+    "skchr_irene_3": {
+      "x": 768,
+      "y": 4992
+    },
+    "skchr_irene_2": {
+      "x": 640,
+      "y": 4992
+    },
+    "skchr_horn_3": {
+      "x": 1152,
+      "y": 4608
+    },
+    "skchr_horn_2": {
+      "x": 1024,
+      "y": 4608
+    },
+    "skchr_horn_1": {
+      "x": 896,
+      "y": 4608
+    },
+    "sktok_dstnta": {
+      "x": 640,
+      "y": 15744
+    },
+    "skchr_deepcl_2": {
+      "x": 0,
+      "y": 2816
+    },
+    "skchr_deepcl_1": {
+      "x": 1152,
+      "y": 2688
+    },
+    "sktok_acarm021_2": {
+      "x": 128,
+      "y": 12288
+    },
+    "sktok_acarm021_1": {
+      "x": 0,
+      "y": 12288
+    },
+    "sktok_mitm_trshrb": {
+      "x": 640,
+      "y": 17024
+    },
+    "skchr_tmslot_2": {
+      "x": 0,
+      "y": 10112
+    },
+    "sktok_xb2fnt": {
+      "x": 640,
+      "y": 19584
+    },
+    "skcom_atk_upx5b2x5d": {
+      "x": 640,
+      "y": 11264
+    },
+    "sktok_godch": {
+      "x": 1152,
+      "y": 16128
+    },
+    "sktok_acarm056_2": {
+      "x": 128,
+      "y": 13184
+    },
+    "sktok_acarm056_1": {
+      "x": 0,
+      "y": 13184
+    },
+    "skchr_ulpia_3": {
+      "x": 896,
+      "y": 10240
+    },
+    "skchr_ulpia_2": {
+      "x": 768,
+      "y": 10240
+    },
+    "skchr_ulpia_1": {
+      "x": 640,
+      "y": 10240
+    },
+    "skchr_helage_1": {
+      "x": 512,
+      "y": 4480
+    },
+    "skchr_gnosis_1": {
+      "x": 384,
+      "y": 3968
+    },
+    "skchr_helage_2": {
+      "x": 640,
+      "y": 4480
+    },
+    "skchr_gnosis_2": {
+      "x": 512,
+      "y": 3968
+    },
+    "skchr_helage_3": {
+      "x": 768,
+      "y": 4480
+    },
+    "sktok_farm": {
+      "x": 896,
+      "y": 16000
+    },
+    "skchr_gnosis_3": {
+      "x": 640,
+      "y": 3968
+    },
+    "sktok_nasti_nstbld": {
+      "x": 1152,
+      "y": 17408
+    },
+    "skchr_kjera_2": {
+      "x": 0,
+      "y": 5504
+    },
+    "sktok_salecard": {
+      "x": 512,
+      "y": 18304
+    },
+    "skchr_christ_1": {
+      "x": 256,
+      "y": 2432
+    },
+    "skchr_christ_2": {
+      "x": 384,
+      "y": 2432
+    },
+    "sktok_acspell017_1": {
+      "x": 512,
+      "y": 14464
+    },
+    "sktok_acarm047_1": {
+      "x": 256,
+      "y": 12928
+    },
+    "sktok_acarm047_2": {
+      "x": 384,
+      "y": 12928
+    },
+    "sktok_sheltk": {
+      "x": 0,
+      "y": 18432
+    },
+    "skchr_angel2_1": {
+      "x": 1152,
+      "y": 640
+    },
+    "skchr_angel2_3": {
+      "x": 128,
+      "y": 768
+    },
+    "sktok_sheltr": {
+      "x": 128,
+      "y": 18432
+    },
+    "skchr_angel2_2": {
+      "x": 0,
+      "y": 768
+    },
+    "sktok_rgcssm": {
+      "x": 0,
+      "y": 18176
+    },
+    "sktok_dyffdd": {
+      "x": 128,
+      "y": 15872
+    },
+    "skchr_bison_2": {
+      "x": 256,
+      "y": 1408
+    },
+    "skchr_sddrag_2": {
+      "x": 1152,
+      "y": 8448
+    },
+    "skchr_spot_1": {
+      "x": 512,
+      "y": 9216
+    },
+    "sktok_cdrone": {
+      "x": 768,
+      "y": 15360
+    },
+    "skchr_headb2_3": {
+      "x": 0,
+      "y": 4480
+    },
+    "skchr_headb2_1": {
+      "x": 1024,
+      "y": 4352
+    },
+    "skchr_headb2_2": {
+      "x": 1152,
+      "y": 4352
+    },
+    "sktok_ore": {
+      "x": 1152,
+      "y": 17536
+    },
+    "sktok_supplycard": {
+      "x": 896,
+      "y": 18816
+    },
+    "sktok_windft_wrench": {
+      "x": 128,
+      "y": 19328
+    },
+    "sktok_smpow": {
+      "x": 384,
+      "y": 18688
+    },
+    "sktok_mptxs": {
+      "x": 256,
+      "y": 17152
+    },
+    "skcom_born_upx5b3x5d": {
+      "x": 0,
+      "y": 11392
+    },
+    "sktok_xbwood": {
+      "x": 384,
+      "y": 21248
+    },
+    "sktok_dyffgd": {
+      "x": 256,
+      "y": 15872
+    },
+    "skchr_wscoot_2": {
+      "x": 1024,
+      "y": 10880
+    },
+    "sktok_acarm069_2": {
+      "x": 896,
+      "y": 13440
+    },
+    "sktok_acarm069_1": {
+      "x": 768,
+      "y": 13440
+    },
+    "sktok_acspell004_1": {
+      "x": 256,
+      "y": 14336
+    },
+    "skchr_wscoot_1": {
+      "x": 896,
+      "y": 10880
+    },
+    "sktok_mufrwl": {
+      "x": 128,
+      "y": 17280
+    },
+    "sktok_cdkzmra": {
+      "x": 256,
+      "y": 15360
+    },
+    "sktok_cdkzmrb": {
+      "x": 384,
+      "y": 15360
+    },
+    "skchr_poca_3": {
+      "x": 256,
+      "y": 7808
+    },
+    "sktok_motter_2": {
+      "x": 0,
+      "y": 17152
+    },
+    "skchr_poca_2": {
+      "x": 128,
+      "y": 7808
+    },
+    "sktok_motter_1": {
+      "x": 1152,
+      "y": 17024
+    },
+    "skchr_cathy_2": {
+      "x": 1152,
+      "y": 1920
+    },
+    "sktok_mhshok": {
+      "x": 256,
+      "y": 17024
+    },
+    "skchr_bryota_2": {
+      "x": 896,
+      "y": 1792
+    },
+    "skchr_cathy_1": {
+      "x": 1024,
+      "y": 1920
+    },
+    "skchr_ebnhlz_1": {
+      "x": 1152,
+      "y": 2944
+    },
+    "skchr_finlpp_2": {
+      "x": 896,
+      "y": 3328
+    },
+    "skchr_ebnhlz_2": {
+      "x": 0,
+      "y": 3072
+    },
+    "skchr_finlpp_1": {
+      "x": 768,
+      "y": 3328
+    },
+    "skchr_ebnhlz_3": {
+      "x": 128,
+      "y": 3072
+    },
+    "sktok_recodr": {
+      "x": 384,
+      "y": 18048
+    },
+    "sktok_xbbase": {
+      "x": 1024,
+      "y": 20480
+    },
+    "sktok_acarm012_2": {
+      "x": 384,
+      "y": 12032
+    },
+    "sktok_acarm012_1": {
+      "x": 256,
+      "y": 12032
+    },
+    "skcom_range_extend": {
+      "x": 768,
+      "y": 11648
+    },
+    "sktok_xb2fke": {
+      "x": 384,
+      "y": 19584
+    },
+    "sktok_lrcage": {
+      "x": 0,
+      "y": 16896
+    },
+    "skchr_nothin_1": {
+      "x": 1024,
+      "y": 7040
+    },
+    "skchr_nothin_2": {
+      "x": 1152,
+      "y": 7040
+    },
+    "skchr_sora_1": {
+      "x": 0,
+      "y": 9216
+    },
+    "sktok_acarm003_1": {
+      "x": 512,
+      "y": 11776
+    },
+    "sktok_acarm003_2": {
+      "x": 640,
+      "y": 11776
+    },
+    "skchr_cairn_1": {
+      "x": 256,
+      "y": 1920
+    },
+    "sktok_pckstp": {
+      "x": 512,
+      "y": 17664
+    },
+    "skchr_cairn_2": {
+      "x": 384,
+      "y": 1920
+    },
+    "skchr_otter_2": {
+      "x": 512,
+      "y": 7296
+    },
+    "skchr_otter_1": {
+      "x": 384,
+      "y": 7296
+    },
+    "sktok_xbflare": {
+      "x": 128,
+      "y": 20864
+    },
+    "skchr_hamoni_1": {
+      "x": 128,
+      "y": 4352
+    },
+    "skchr_hamoni_2": {
+      "x": 256,
+      "y": 4352
+    },
+    "sktok_acarm123_2": {
+      "x": 640,
+      "y": 14080
+    },
+    "sktok_xb2txtl": {
+      "x": 1024,
+      "y": 20352
+    },
+    "sktok_acarm123_1": {
+      "x": 512,
+      "y": 14080
+    },
+    "sktok_xb2fstr": {
+      "x": 896,
+      "y": 19584
+    },
+    "sktok_acarm038_1": {
+      "x": 512,
+      "y": 12672
+    },
+    "sktok_acarm038_2": {
+      "x": 640,
+      "y": 12672
+    },
+    "skchr_branch_1": {
+      "x": 896,
+      "y": 1664
+    },
+    "skchr_branch_2": {
+      "x": 1024,
+      "y": 1664
+    },
+    "sktok_airsup": {
+      "x": 0,
+      "y": 14592
+    },
+    "sktok_skztxy": {
+      "x": 640,
+      "y": 18560
+    },
+    "sktok_xbfarm": {
+      "x": 512,
+      "y": 20736
+    },
+    "sktok_poachr": {
+      "x": 256,
+      "y": 17792
+    },
+    "skchr_ncdeer_1": {
+      "x": 0,
+      "y": 6912
+    },
+    "sktok_acarm025_2": {
+      "x": 1152,
+      "y": 12288
+    },
+    "sktok_acarm025_1": {
+      "x": 1024,
+      "y": 12288
+    },
+    "sktok_cdaltar": {
+      "x": 1024,
+      "y": 15104
+    },
+    "sktok_lhbot": {
+      "x": 256,
+      "y": 16512
+    },
+    "skchr_ncdeer_2": {
+      "x": 128,
+      "y": 6912
+    },
+    "skchr_hmau_2": {
+      "x": 384,
+      "y": 4608
+    },
+    "skchr_hmau_1": {
+      "x": 256,
+      "y": 4608
+    },
+    "skchr_alanna_1": {
+      "x": 384,
+      "y": 512
+    },
+    "skchr_quercu_1": {
+      "x": 1024,
+      "y": 7936
+    },
+    "skchr_sora_2": {
+      "x": 128,
+      "y": 9216
+    },
+    "sktok_xbexbi": {
+      "x": 0,
+      "y": 20736
+    },
+    "skchr_headbr_2": {
+      "x": 128,
+      "y": 4480
+    },
+    "skchr_quercu_2": {
+      "x": 1152,
+      "y": 7936
+    },
+    "skchr_philae_1": {
+      "x": 256,
+      "y": 7680
+    },
+    "skchr_shotst_1": {
+      "x": 1152,
+      "y": 8576
+    },
+    "skchr_philae_2": {
+      "x": 384,
+      "y": 7680
+    },
+    "skchr_swire2_1": {
+      "x": 512,
+      "y": 9472
+    },
+    "skchr_swire2_2": {
+      "x": 640,
+      "y": 9472
+    },
+    "sktok_acarm114_2": {
+      "x": 896,
+      "y": 13824
+    },
+    "sktok_acarm114_1": {
+      "x": 768,
+      "y": 13824
+    },
+    "sktok_bouncy": {
+      "x": 640,
+      "y": 14976
+    },
+    "skchr_alanna_2": {
+      "x": 512,
+      "y": 512
+    },
+    "sktok_xb2sit": {
+      "x": 512,
+      "y": 20352
+    },
+    "skchr_malist_2": {
+      "x": 0,
+      "y": 6144
+    },
+    "skchr_swire2_3": {
+      "x": 768,
+      "y": 9472
+    },
+    "skchr_shotst_2": {
+      "x": 0,
+      "y": 8704
+    },
+    "sktok_badbox": {
+      "x": 768,
+      "y": 14720
+    },
+    "sktok_mjcsdw": {
+      "x": 768,
+      "y": 17024
+    },
+    "skchr_sunbr_2": {
+      "x": 256,
+      "y": 9344
+    },
+    "skchr_sunbr_1": {
+      "x": 128,
+      "y": 9344
+    },
+    "sktok_flame": {
+      "x": 1152,
+      "y": 16000
+    },
+    "skchr_narant_3": {
+      "x": 768,
+      "y": 6784
+    },
+    "skchr_narant_1": {
+      "x": 512,
+      "y": 6784
+    },
+    "skchr_narant_2": {
+      "x": 640,
+      "y": 6784
+    },
+    "skchr_swllow_1": {
+      "x": 1152,
+      "y": 9472
+    },
+    "skchr_swllow_2": {
+      "x": 0,
+      "y": 9600
+    },
+    "sktok_hlnpcb": {
+      "x": 512,
+      "y": 16256
+    },
+    "sktok_mpweak": {
+      "x": 384,
+      "y": 17152
+    },
+    "skchr_grani_2": {
+      "x": 0,
+      "y": 4096
+    },
+    "sktok_repairman": {
+      "x": 768,
+      "y": 18048
+    },
+    "skchr_mizuki_2": {
+      "x": 1024,
+      "y": 6400
+    },
+    "sktok_xbbarir": {
+      "x": 896,
+      "y": 20480
+    },
+    "skchr_mizuki_3": {
+      "x": 1152,
+      "y": 6400
+    },
+    "sktok_lhfacp": {
+      "x": 256,
+      "y": 16640
+    },
+    "skchr_mizuki_1": {
+      "x": 896,
+      "y": 6400
+    },
+    "sktok_supctl": {
+      "x": 768,
+      "y": 18816
+    },
+    "skcom_def_upx5b1x5d": {
+      "x": 512,
+      "y": 11392
+    },
+    "skcom_heal_upx5b2x5d": {
+      "x": 640,
+      "y": 11520
+    },
+    "sktok_beewax": {
+      "x": 128,
+      "y": 14848
+    },
+    "sktok_bounc2": {
+      "x": 512,
+      "y": 14976
+    },
+    "sktok_xbtwod": {
+      "x": 0,
+      "y": 21248
+    },
+    "sktok_sleep": {
+      "x": 896,
+      "y": 18560
+    },
+    "skchr_tinman_2": {
+      "x": 0,
+      "y": 9984
+    },
+    "skchr_tinman_1": {
+      "x": 1152,
+      "y": 9856
+    },
+    "sktok_cdflsb": {
+      "x": 1024,
+      "y": 15232
+    },
+    "skchr_demkni_3": {
+      "x": 1024,
+      "y": 2816
+    },
+    "sktok_duruin": {
+      "x": 1024,
+      "y": 15744
+    },
+    "skchr_demkni_1": {
+      "x": 768,
+      "y": 2816
+    },
+    "skchr_demkni_2": {
+      "x": 896,
+      "y": 2816
+    },
+    "skchr_amiya3_1": {
+      "x": 384,
+      "y": 640
+    },
+    "sktok_acarm016_2": {
+      "x": 128,
+      "y": 12160
+    },
+    "skchr_amiya3_2": {
+      "x": 512,
+      "y": 640
+    },
+    "sktok_acarm016_1": {
+      "x": 0,
+      "y": 12160
+    },
+    "sktok_xbfence": {
+      "x": 0,
+      "y": 20864
+    },
+    "sktok_snflwr": {
+      "x": 768,
+      "y": 18688
+    },
+    "skchr_harold_2": {
+      "x": 384,
+      "y": 4352
+    },
+    "sktok_smokebomb": {
+      "x": 256,
+      "y": 18688
+    },
+    "sktok_acarm116_2": {
+      "x": 128,
+      "y": 13952
+    },
+    "sktok_acarm116_1": {
+      "x": 0,
+      "y": 13952
+    },
+    "skchr_hadiya_2": {
+      "x": 384,
+      "y": 4224
+    },
+    "skchr_hadiya_1": {
+      "x": 256,
+      "y": 4224
+    },
+    "skchr_blkkgt_1": {
+      "x": 512,
+      "y": 1536
+    },
+    "skchr_blkkgt_3": {
+      "x": 768,
+      "y": 1536
+    },
+    "skchr_gdglow_2": {
+      "x": 768,
+      "y": 3712
+    },
+    "sktok_cdkzmr": {
+      "x": 128,
+      "y": 15360
+    },
+    "skchr_blkkgt_2": {
+      "x": 640,
+      "y": 1536
+    },
+    "skchr_gdglow_1": {
+      "x": 640,
+      "y": 3712
+    },
+    "skchr_chilc_1": {
+      "x": 896,
+      "y": 2304
+    },
+    "skchr_chilc_2": {
+      "x": 1024,
+      "y": 2304
+    },
+    "skchr_demetr_1": {
+      "x": 384,
+      "y": 2816
+    },
+    "skchr_demetr_2": {
+      "x": 512,
+      "y": 2816
+    },
+    "skchr_demetr_3": {
+      "x": 640,
+      "y": 2816
+    },
+    "skchr_gdglow_3": {
+      "x": 896,
+      "y": 3712
+    },
+    "skcom_heal_selfx5b2x5d": {
+      "x": 256,
+      "y": 11520
+    },
+    "sktok_acspell010_1": {
+      "x": 1024,
+      "y": 14336
+    },
+    "skchr_heyak_3": {
+      "x": 1152,
+      "y": 4480
+    },
+    "skchr_heyak_2": {
+      "x": 1024,
+      "y": 4480
+    },
+    "skchr_zuole_1": {
+      "x": 1152,
+      "y": 11136
+    },
+    "skchr_heyak_1": {
+      "x": 896,
+      "y": 4480
+    },
+    "sktok_xblight": {
+      "x": 1152,
+      "y": 20864
+    },
+    "skchr_ray_1": {
+      "x": 384,
+      "y": 8064
+    },
+    "skchr_zuole_3": {
+      "x": 128,
+      "y": 11264
+    },
+    "skchr_ray_2": {
+      "x": 512,
+      "y": 8064
+    },
+    "skchr_zuole_2": {
+      "x": 0,
+      "y": 11264
+    },
+    "skchr_ray_3": {
+      "x": 640,
+      "y": 8064
+    },
+    "skchr_chimes_2": {
+      "x": 1152,
+      "y": 2304
+    },
+    "sktok_inverter": {
+      "x": 640,
+      "y": 16256
+    },
+    "skchr_pallas_1": {
+      "x": 640,
+      "y": 7296
+    },
+    "sktok_xbspps": {
+      "x": 256,
+      "y": 21120
+    },
+    "sktok_shnbox": {
+      "x": 640,
+      "y": 18432
+    },
+    "skchr_pallas_3": {
+      "x": 896,
+      "y": 7296
+    },
+    "skchr_pedro_2": {
+      "x": 1024,
+      "y": 7424
+    },
+    "skchr_pallas_2": {
+      "x": 768,
+      "y": 7296
+    },
+    "skchr_pedro_1": {
+      "x": 896,
+      "y": 7424
+    },
+    "sktok_aidkit": {
+      "x": 1024,
+      "y": 14464
+    },
+    "sktok_lhcolb": {
+      "x": 1024,
+      "y": 16512
+    },
+    "skchr_kafka_2": {
+      "x": 640,
+      "y": 5248
+    },
+    "skchr_kafka_1": {
+      "x": 512,
+      "y": 5248
+    },
+    "sktok_acarm018_2": {
+      "x": 640,
+      "y": 12160
+    },
+    "sktok_acarm018_1": {
+      "x": 512,
+      "y": 12160
+    },
+    "sktok_acarm071_2": {
+      "x": 128,
+      "y": 13568
+    },
+    "sktok_acarm071_1": {
+      "x": 0,
+      "y": 13568
+    },
+    "sktok_acshopup_1": {
+      "x": 1024,
+      "y": 14208
+    },
+    "skchr_glassb_1": {
+      "x": 896,
+      "y": 3840
+    },
+    "skchr_glassb_2": {
+      "x": 1024,
+      "y": 3840
+    },
+    "sktok_acarm009_1": {
+      "x": 768,
+      "y": 11904
+    },
+    "sktok_bonore": {
+      "x": 384,
+      "y": 14976
+    },
+    "sktok_xbfato": {
+      "x": 768,
+      "y": 20736
+    },
+    "sktok_acarm009_2": {
+      "x": 896,
+      "y": 11904
+    },
+    "sktok_xb2sqr": {
+      "x": 640,
+      "y": 20352
+    },
+    "skchr_yak_1": {
+      "x": 512,
+      "y": 11008
+    },
+    "skchr_hpsts_2": {
+      "x": 128,
+      "y": 4736
+    },
+    "skchr_absin_1": {
+      "x": 0,
+      "y": 0
+    },
+    "skchr_hpsts_1": {
+      "x": 0,
+      "y": 4736
+    },
+    "skchr_yak_2": {
+      "x": 640,
+      "y": 11008
+    },
+    "sktok_acarm062_1": {
+      "x": 256,
+      "y": 13312
+    },
+    "sktok_prison": {
+      "x": 896,
+      "y": 17792
+    },
+    "skcom_assist_costx5b2x5d": {
+      "x": 256,
+      "y": 11264
+    },
+    "skcom_def_upx5b3x5d": {
+      "x": 768,
+      "y": 11392
+    },
+    "skchr_absin_2": {
+      "x": 128,
+      "y": 0
+    },
+    "sktok_muwork": {
+      "x": 896,
+      "y": 17408
+    },
+    "sktok_slowfd": {
+      "x": 1152,
+      "y": 18560
+    },
+    "skchr_leto_2": {
+      "x": 1152,
+      "y": 5632
+    },
+    "sktok_acarm062_2": {
+      "x": 384,
+      "y": 13312
+    },
+    "skchr_tecno_1": {
+      "x": 128,
+      "y": 9728
+    },
+    "sktok_lhblod": {
+      "x": 128,
+      "y": 16512
+    },
+    "skchr_siege_2": {
+      "x": 128,
+      "y": 8832
+    },
+    "skchr_tecno_2": {
+      "x": 256,
+      "y": 9728
+    },
+    "skchr_siege_3": {
+      "x": 256,
+      "y": 8832
+    },
+    "sktok_dsbell": {
+      "x": 384,
+      "y": 15744
+    },
+    "sktok_ltstat": {
+      "x": 512,
+      "y": 16896
+    },
+    "skchr_marcil_3": {
+      "x": 1024,
+      "y": 6144
+    },
+    "skchr_marcil_2": {
+      "x": 896,
+      "y": 6144
+    },
+    "skchr_marcil_1": {
+      "x": 768,
+      "y": 6144
+    },
+    "sktok_revivecard": {
+      "x": 896,
+      "y": 18048
+    },
+    "skchr_highmo_1": {
+      "x": 0,
+      "y": 4608
+    },
+    "skchr_highmo_2": {
+      "x": 128,
+      "y": 4608
+    },
+    "skchr_veen_1": {
+      "x": 256,
+      "y": 10368
+    },
+    "skchr_veen_2": {
+      "x": 384,
+      "y": 10368
+    },
+    "skchr_veen_3": {
+      "x": 512,
+      "y": 10368
+    },
+    "sktok_xb2brh": {
+      "x": 256,
+      "y": 19456
+    },
+    "skchr_ash_3": {
+      "x": 1024,
+      "y": 1024
+    },
+    "sktok_xb2sta": {
+      "x": 768,
+      "y": 20352
+    },
+    "skchr_ash_2": {
+      "x": 896,
+      "y": 1024
+    },
+    "skchr_ash_1": {
+      "x": 768,
+      "y": 1024
+    },
+    "skcom_heal_ragex5b1x5d": {
+      "x": 1024,
+      "y": 11392
+    },
+    "sktok_bmoney": {
+      "x": 0,
+      "y": 14976
+    },
+    "skchr_tippi_1": {
+      "x": 128,
+      "y": 9984
+    },
+    "skchr_tippi_2": {
+      "x": 256,
+      "y": 9984
+    },
+    "sktok_xdice1": {
+      "x": 512,
+      "y": 21248
+    },
+    "skchr_firwhl_1": {
+      "x": 1024,
+      "y": 3328
+    },
+    "skchr_firwhl_2": {
+      "x": 1152,
+      "y": 3328
+    },
+    "skchr_angel_1": {
+      "x": 256,
+      "y": 768
+    },
+    "skchr_angel_2": {
+      "x": 384,
+      "y": 768
+    },
+    "skchr_angel_3": {
+      "x": 512,
+      "y": 768
+    },
+    "sktok_cnnon": {
+      "x": 640,
+      "y": 15488
+    },
+    "sktok_toolgarage": {
+      "x": 768,
+      "y": 18944
+    },
+    "sktok_arcgrg": {
+      "x": 1152,
+      "y": 14592
+    },
+    "sktok_acarm053_2": {
+      "x": 640,
+      "y": 13056
+    },
+    "sktok_acarm053_1": {
+      "x": 512,
+      "y": 13056
+    },
+    "skchr_talr_1": {
+      "x": 640,
+      "y": 9600
+    },
+    "skchr_talr_2": {
+      "x": 768,
+      "y": 9600
+    },
+    "sktok_mufrst": {
+      "x": 1024,
+      "y": 17152
+    },
+    "skchr_qanik_2": {
+      "x": 384,
+      "y": 7936
+    },
+    "skchr_qanik_1": {
+      "x": 256,
+      "y": 7936
+    },
+    "skchr_aprl_2": {
+      "x": 128,
+      "y": 896
+    },
+    "skchr_aprl_1": {
+      "x": 0,
+      "y": 896
+    },
+    "skchr_vvana_2": {
+      "x": 1024,
+      "y": 10496
+    },
+    "skchr_vvana_1": {
+      "x": 896,
+      "y": 10496
+    },
+    "sktok_acarm040_1": {
+      "x": 1024,
+      "y": 12672
+    },
+    "skchr_vvana_3": {
+      "x": 1152,
+      "y": 10496
+    },
+    "sktok_acarm040_2": {
+      "x": 1152,
+      "y": 12672
+    },
+    "skchr_heidi_2": {
+      "x": 384,
+      "y": 4480
+    },
+    "skchr_heidi_1": {
+      "x": 256,
+      "y": 4480
+    },
+    "skchr_pithst_1": {
+      "x": 1024,
+      "y": 7680
+    },
+    "skchr_serum_1": {
+      "x": 256,
+      "y": 8576
+    },
+    "sktok_mufrtm": {
+      "x": 0,
+      "y": 17280
+    },
+    "skchr_serum_2": {
+      "x": 384,
+      "y": 8576
+    },
+    "sktok_cddiff": {
+      "x": 896,
+      "y": 15232
+    },
+    "sktok_acarm075_2": {
+      "x": 1152,
+      "y": 13568
+    },
+    "sktok_acarm075_1": {
+      "x": 1024,
+      "y": 13568
+    },
+    "sktok_gasbot": {
+      "x": 768,
+      "y": 16128
+    },
+    "sktok_lhcampa": {
+      "x": 512,
+      "y": 16512
+    },
+    "sktok_lhcampb": {
+      "x": 640,
+      "y": 16512
+    },
+    "sktok_lhcampc": {
+      "x": 768,
+      "y": 16512
+    },
+    "sktok_vultres": {
+      "x": 384,
+      "y": 19200
+    },
+    "sktok_xb2fostr": {
+      "x": 768,
+      "y": 19584
+    },
+    "sktok_factory_2": {
+      "x": 768,
+      "y": 16000
+    },
+    "sktok_factory_1": {
+      "x": 640,
+      "y": 16000
+    },
+    "sktok_lhupgd": {
+      "x": 640,
+      "y": 16768
+    },
+    "sktok_xbhydr": {
+      "x": 640,
+      "y": 20864
+    },
+    "sktok_acarm066_2": {
+      "x": 128,
+      "y": 13440
+    },
+    "sktok_xb2ord": {
+      "x": 0,
+      "y": 20096
+    },
+    "sktok_xb2org": {
+      "x": 128,
+      "y": 20096
+    },
+    "sktok_acarm066_1": {
+      "x": 0,
+      "y": 13440
+    },
+    "skchr_cello_2": {
+      "x": 384,
+      "y": 2048
+    },
+    "skchr_cello_3": {
+      "x": 512,
+      "y": 2048
+    },
+    "sktok_xb2orm": {
+      "x": 512,
+      "y": 20096
+    },
+    "skchr_cello_1": {
+      "x": 256,
+      "y": 2048
+    },
+    "sktok_xbfato3": {
+      "x": 1024,
+      "y": 20736
+    },
+    "sktok_xbfato2": {
+      "x": 896,
+      "y": 20736
+    },
+    "sktok_ling_soul3": {
+      "x": 1152,
+      "y": 16768
+    },
+    "sktok_lharen": {
+      "x": 1152,
+      "y": 16384
+    },
+    "sktok_ling_soul2": {
+      "x": 1024,
+      "y": 16768
+    },
+    "sktok_ling_soul1": {
+      "x": 896,
+      "y": 16768
+    },
+    "sktok_swire2_gdtrap": {
+      "x": 0,
+      "y": 18944
+    },
+    "sktok_shrbox": {
+      "x": 768,
+      "y": 18432
+    },
+    "sktok_skzddd": {
+      "x": 256,
+      "y": 18560
+    },
+    "skchr_necras_1": {
+      "x": 896,
+      "y": 6912
+    },
+    "skchr_necras_2": {
+      "x": 1024,
+      "y": 6912
+    },
+    "skchr_closur_1": {
+      "x": 896,
+      "y": 2432
+    },
+    "skchr_necras_3": {
+      "x": 1152,
+      "y": 6912
+    },
+    "skchr_closur_2": {
+      "x": 1024,
+      "y": 2432
+    },
+    "sktok_vtarsn": {
+      "x": 256,
+      "y": 19200
+    },
+    "skchr_closur_3": {
+      "x": 1152,
+      "y": 2432
+    },
+    "sktok_ebnhlz_rcube": {
+      "x": 896,
+      "y": 15872
+    },
+    "sktok_xb2kln": {
+      "x": 1152,
+      "y": 19584
+    },
+    "sktok_xb2cage": {
+      "x": 384,
+      "y": 19456
+    },
+    "sktok_smbbox": {
+      "x": 0,
+      "y": 18688
+    },
+    "sktok_murmag": {
+      "x": 640,
+      "y": 17280
+    },
+    "sktok_xbcage": {
+      "x": 384,
+      "y": 20608
+    },
+    "sktok_acarm031_2": {
+      "x": 128,
+      "y": 12544
+    },
+    "sktok_acarm031_1": {
+      "x": 0,
+      "y": 12544
+    },
+    "sktok_mine": {
+      "x": 512,
+      "y": 17024
+    },
+    "skchr_excu2_3": {
+      "x": 768,
+      "y": 3200
+    },
+    "sktok_aphris_pc": {
+      "x": 768,
+      "y": 14592
+    },
+    "skchr_excu2_2": {
+      "x": 640,
+      "y": 3200
+    },
+    "skchr_excu2_1": {
+      "x": 512,
+      "y": 3200
+    },
+    "skchr_titi_1": {
+      "x": 384,
+      "y": 9984
+    },
+    "sktok_accopy_1": {
+      "x": 128,
+      "y": 14208
+    },
+    "skchr_titi_2": {
+      "x": 512,
+      "y": 9984
+    },
+    "skchr_ccheal_1": {
+      "x": 0,
+      "y": 2048
+    },
+    "skchr_ccheal_2": {
+      "x": 128,
+      "y": 2048
+    },
+    "skchr_plosis_2": {
+      "x": 0,
+      "y": 7808
+    },
+    "skchr_sidero_2": {
+      "x": 896,
+      "y": 8704
+    },
+    "sktok_acarm022_2": {
+      "x": 384,
+      "y": 12288
+    },
+    "sktok_acarm022_1": {
+      "x": 256,
+      "y": 12288
+    },
+    "skchr_iana_1": {
+      "x": 256,
+      "y": 4864
+    },
+    "skchr_vulpis_1": {
+      "x": 512,
+      "y": 10496
+    },
+    "skchr_totter_1": {
+      "x": 640,
+      "y": 10112
+    },
+    "skchr_vulpis_2": {
+      "x": 640,
+      "y": 10496
+    },
+    "skchr_totter_2": {
+      "x": 768,
+      "y": 10112
+    },
+    "skchr_vulpis_3": {
+      "x": 768,
+      "y": 10496
+    },
+    "skchr_surtr_3": {
+      "x": 896,
+      "y": 9344
+    },
+    "skchr_buildr_2": {
+      "x": 128,
+      "y": 1920
+    },
+    "sktok_acarm057_2": {
+      "x": 384,
+      "y": 13184
+    },
+    "sktok_acarm057_1": {
+      "x": 256,
+      "y": 13184
+    },
+    "sktok_blkngt_hypnos": {
+      "x": 768,
+      "y": 14848
+    },
+    "sktok_lrsteam": {
+      "x": 256,
+      "y": 16896
+    },
+    "skchr_titi_3": {
+      "x": 640,
+      "y": 9984
+    },
+    "sktok_winstone": {
+      "x": 384,
+      "y": 19328
+    },
+    "sktok_xb2oltr": {
+      "x": 640,
+      "y": 19968
+    },
+    "skchr_tiger_2": {
+      "x": 1024,
+      "y": 9856
+    },
+    "sktok_ctlspy": {
+      "x": 512,
+      "y": 15616
+    },
+    "sktok_acarm044_2": {
+      "x": 896,
+      "y": 12800
+    },
+    "sktok_rdrepair": {
+      "x": 256,
+      "y": 18048
+    },
+    "skchr_tiger_1": {
+      "x": 896,
+      "y": 9856
+    },
+    "sktok_acarm044_1": {
+      "x": 768,
+      "y": 12800
+    },
+    "sktok_outset": {
+      "x": 128,
+      "y": 17664
+    },
+    "skchr_skadi_2": {
+      "x": 896,
+      "y": 8832
+    },
+    "sktok_xb2chm": {
+      "x": 640,
+      "y": 19456
+    },
+    "sktok_acarm120_2": {
+      "x": 1152,
+      "y": 13952
+    },
+    "sktok_acarm120_1": {
+      "x": 1024,
+      "y": 13952
+    },
+    "sktok_beer": {
+      "x": 0,
+      "y": 14848
+    },
+    "skchr_sqrrel_2": {
+      "x": 1024,
+      "y": 9216
+    },
+    "skchr_sqrrel_1": {
+      "x": 896,
+      "y": 9216
+    },
+    "sktok_tooltree": {
+      "x": 0,
+      "y": 19072
+    },
+    "sktok_xb2ohfct": {
+      "x": 256,
+      "y": 19968
+    },
+    "sktok_acarm079_2": {
+      "x": 896,
+      "y": 13696
+    },
+    "sktok_acarm079_1": {
+      "x": 768,
+      "y": 13696
+    },
+    "skcom_charge_costx5b3x5d": {
+      "x": 384,
+      "y": 11392
+    },
+    "sktok_skzmbx": {
+      "x": 384,
+      "y": 18560
+    },
+    "skchr_vigna_2": {
+      "x": 1152,
+      "y": 10368
+    },
+    "sktok_giacan": {
+      "x": 896,
+      "y": 16128
+    },
+    "skchr_cammou_2": {
+      "x": 512,
+      "y": 1920
+    },
+    "skchr_thumpy_2": {
+      "x": 640,
+      "y": 9856
+    },
+    "sktok_crsbow": {
+      "x": 128,
+      "y": 15616
+    },
+    "skchr_thumpy_3": {
+      "x": 768,
+      "y": 9856
+    },
+    "skchr_lemuen_3": {
+      "x": 768,
+      "y": 5632
+    },
+    "skchr_thumpy_1": {
+      "x": 512,
+      "y": 9856
+    },
+    "sktok_lhcol": {
+      "x": 896,
+      "y": 16512
+    },
+    "skchr_haini_1": {
+      "x": 512,
+      "y": 4224
+    },
+    "skchr_haini_2": {
+      "x": 640,
+      "y": 4224
+    },
+    "skchr_glacus_1": {
+      "x": 256,
+      "y": 3840
+    },
+    "skchr_glacus_2": {
+      "x": 384,
+      "y": 3840
+    },
+    "sktok_bldore": {
+      "x": 640,
+      "y": 14848
+    },
+    "skchr_liskam_2": {
+      "x": 384,
+      "y": 5888
+    },
+    "sktok_xb2opwr": {
+      "x": 1024,
+      "y": 19968
+    },
+    "skchr_liskam_1": {
+      "x": 256,
+      "y": 5888
+    },
+    "skchr_shining_2": {
+      "x": 896,
+      "y": 8576
+    },
+    "sktok_tileblock": {
+      "x": 384,
+      "y": 18944
+    },
+    "skchr_shining_1": {
+      "x": 768,
+      "y": 8576
+    },
+    "skchr_inside_1": {
+      "x": 256,
+      "y": 4992
+    },
+    "skchr_inside_2": {
+      "x": 384,
+      "y": 4992
+    },
+    "skchr_shining_3": {
+      "x": 1024,
+      "y": 8576
+    },
+    "sktok_xb2cbp": {
+      "x": 512,
+      "y": 19456
+    },
+    "skchr_quartz_2": {
+      "x": 896,
+      "y": 7936
+    },
+    "sktok_acspell005_1": {
+      "x": 384,
+      "y": 14336
+    },
+    "sktok_acarm013_1": {
+      "x": 512,
+      "y": 12032
+    },
+    "sktok_phatom_3": {
+      "x": 0,
+      "y": 17792
+    },
+    "sktok_acarm013_2": {
+      "x": 640,
+      "y": 12032
+    },
+    "sktok_phatom_2": {
+      "x": 1152,
+      "y": 17664
+    },
+    "sktok_phatom_1": {
+      "x": 1024,
+      "y": 17664
+    },
+    "skcom_born_upx5b2x5d": {
+      "x": 1152,
+      "y": 11264
+    },
+    "skchr_chen_3": {
+      "x": 640,
+      "y": 2304
+    },
+    "sktok_npc": {
+      "x": 896,
+      "y": 17536
+    },
+    "skchr_chen_1": {
+      "x": 384,
+      "y": 2304
+    },
+    "skchr_chen_2": {
+      "x": 512,
+      "y": 2304
+    },
+    "skchr_tuye_1": {
+      "x": 1152,
+      "y": 10112
+    },
+    "skchr_tuye_2": {
+      "x": 0,
+      "y": 10240
+    },
+    "sktok_spawnp": {
+      "x": 1024,
+      "y": 18688
+    },
+    "skcom_atk_upx5b1x5d": {
+      "x": 512,
+      "y": 11264
+    },
+    "skchr_gvial2_1": {
+      "x": 640,
+      "y": 4096
+    },
+    "skchr_gvial2_2": {
+      "x": 768,
+      "y": 4096
+    },
+    "skchr_gvial2_3": {
+      "x": 896,
+      "y": 4096
+    },
+    "sktok_tree": {
+      "x": 384,
+      "y": 19072
+    },
+    "sktok_acarm000_2": {
+      "x": 1152,
+      "y": 11648
+    },
+    "skchr_surtr_1": {
+      "x": 640,
+      "y": 9344
+    },
+    "skchr_surtr_2": {
+      "x": 768,
+      "y": 9344
+    },
+    "sktok_xb2eqstr": {
+      "x": 128,
+      "y": 19584
+    },
+    "skchr_folivo_2": {
+      "x": 256,
+      "y": 3584
+    },
+    "sktok_cd1punch": {
+      "x": 768,
+      "y": 15104
+    },
+    "skchr_folivo_1": {
+      "x": 128,
+      "y": 3584
+    },
+    "skchr_iana_2": {
+      "x": 384,
+      "y": 4864
+    },
+    "sktok_acarm000_1": {
+      "x": 1024,
+      "y": 11648
+    },
+    "sktok_dychss": {
+      "x": 1152,
+      "y": 15744
+    },
+    "sktok_ctlblk": {
+      "x": 256,
+      "y": 15616
+    },
+    "skchr_snakek_2": {
+      "x": 384,
+      "y": 9088
+    },
+    "skchr_folnic_1": {
+      "x": 384,
+      "y": 3584
+    },
+    "skchr_folnic_2": {
+      "x": 512,
+      "y": 3584
+    },
+    "sktok_bqmlee": {
+      "x": 768,
+      "y": 14976
+    },
+    "skchr_ethan_1": {
+      "x": 1152,
+      "y": 3072
+    },
+    "skchr_lemuen_1": {
+      "x": 512,
+      "y": 5632
+    },
+    "sktok_acarm035_2": {
+      "x": 1152,
+      "y": 12544
+    },
+    "skchr_ethan_2": {
+      "x": 0,
+      "y": 3200
+    },
+    "skchr_lemuen_2": {
+      "x": 640,
+      "y": 5632
+    },
+    "sktok_recyclecard": {
+      "x": 512,
+      "y": 18048
+    },
+    "sktok_acarm035_1": {
+      "x": 1024,
+      "y": 12544
+    },
+    "skchr_indigo_2": {
+      "x": 1024,
+      "y": 4864
+    },
+    "skchr_indigo_1": {
+      "x": 896,
+      "y": 4864
+    },
+    "skchr_phatom_2": {
+      "x": 896,
+      "y": 7552
+    },
+    "skchr_phatom_3": {
+      "x": 1024,
+      "y": 7552
+    },
+    "skchr_phatom_1": {
+      "x": 768,
+      "y": 7552
+    },
+    "skchr_mlyss_2": {
+      "x": 512,
+      "y": 6528
+    },
+    "skchr_mlyss_1": {
+      "x": 384,
+      "y": 6528
+    },
+    "sktok_cdbeacon": {
+      "x": 1152,
+      "y": 15104
+    },
+    "skchr_mlyss_3": {
+      "x": 640,
+      "y": 6528
+    },
+    "skchr_dolris_1": {
+      "x": 0,
+      "y": 2944
+    },
+    "skchr_asbest_1": {
+      "x": 0,
+      "y": 1024
+    },
+    "skchr_snsant_2": {
+      "x": 768,
+      "y": 9088
+    },
+    "sktok_acarm026_1": {
+      "x": 0,
+      "y": 12416
+    },
+    "skchr_asbest_2": {
+      "x": 128,
+      "y": 1024
+    },
+    "skchr_snsant_1": {
+      "x": 640,
+      "y": 9088
+    },
+    "sktok_acarm026_2": {
+      "x": 128,
+      "y": 12416
+    },
+    "skchr_dolris_2": {
+      "x": 128,
+      "y": 2944
+    },
+    "skchr_pudd_2": {
+      "x": 1152,
+      "y": 7808
+    },
+    "skchr_bluep_2": {
+      "x": 0,
+      "y": 1664
+    },
+    "skchr_bluep_1": {
+      "x": 1152,
+      "y": 1536
+    },
+    "sktok_mufrfm": {
+      "x": 768,
+      "y": 17152
+    },
+    "sktok_lhplt": {
+      "x": 1024,
+      "y": 16640
+    },
+    "skchr_kaitou_2": {
+      "x": 896,
+      "y": 5248
+    },
+    "skchr_susuro_2": {
+      "x": 1024,
+      "y": 9344
+    },
+    "skchr_kaitou_1": {
+      "x": 768,
+      "y": 5248
+    },
+    "skcom_quickattackx5b2x5d": {
+      "x": 512,
+      "y": 11648
+    },
+    "sktok_lhflwr": {
+      "x": 512,
+      "y": 16640
+    },
+    "sktok_acspell014_1": {
+      "x": 128,
+      "y": 14464
+    },
+    "skcom_blowrange_upx5b1x5d": {
+      "x": 896,
+      "y": 11264
+    },
+    "sktok_lhswer": {
+      "x": 384,
+      "y": 16768
+    },
+    "skchr_swire_2": {
+      "x": 1024,
+      "y": 9472
+    },
+    "skchr_swire_1": {
+      "x": 896,
+      "y": 9472
+    },
+    "skchr_coldst_2": {
+      "x": 128,
+      "y": 2560
+    },
+    "sktok_dsshell": {
+      "x": 512,
+      "y": 15744
+    },
+    "sktok_gtreasure": {
+      "x": 0,
+      "y": 16256
+    },
+    "sktok_lhpad2": {
+      "x": 896,
+      "y": 16640
+    },
+    "skchr_sbell2_2": {
+      "x": 768,
+      "y": 8448
+    },
+    "skchr_sbell2_1": {
+      "x": 640,
+      "y": 8448
+    },
+    "sktok_acarm048_1": {
+      "x": 512,
+      "y": 12928
+    },
+    "skchr_sbell2_3": {
+      "x": 896,
+      "y": 8448
+    },
+    "sktok_acarm048_2": {
+      "x": 640,
+      "y": 12928
+    },
+    "sktok_cdheal": {
+      "x": 1152,
+      "y": 15232
+    },
+    "skcom_magic_ragex5b3x5d": {
+      "x": 1152,
+      "y": 11520
+    },
+    "sktok_mufrbs": {
+      "x": 640,
+      "y": 17152
+    },
+    "sktok_tooltower": {
+      "x": 1152,
+      "y": 18944
+    },
+    "sktok_acarm124_2": {
+      "x": 896,
+      "y": 14080
+    },
+    "sktok_acarm124_1": {
+      "x": 768,
+      "y": 14080
+    },
+    "skchr_caper_2": {
+      "x": 640,
+      "y": 1920
+    },
+    "sktok_portlexi": {
+      "x": 768,
+      "y": 17792
+    },
+    "skchr_cutter_1": {
+      "x": 512,
+      "y": 2688
+    },
+    "skchr_ironmn_3": {
+      "x": 128,
+      "y": 5120
+    },
+    "skchr_ironmn_2": {
+      "x": 0,
+      "y": 5120
+    },
+    "skchr_ironmn_1": {
+      "x": 1152,
+      "y": 4992
+    },
+    "skcom_heal_upx5b3x5d": {
+      "x": 768,
+      "y": 11520
+    },
+    "skchr_cutter_2": {
+      "x": 640,
+      "y": 2688
+    },
+    "sktok_phatm2_encdool": {
+      "x": 896,
+      "y": 17664
+    },
+    "sktok_neonlamp": {
+      "x": 640,
+      "y": 17536
+    },
+    "sktok_dysbox": {
+      "x": 768,
+      "y": 15872
+    },
+    "sktok_acspell001_1": {
+      "x": 1152,
+      "y": 14208
+    },
+    "sktok_arcsoda": {
+      "x": 128,
+      "y": 14720
+    },
+    "skchr_rdoc_2": {
+      "x": 896,
+      "y": 8064
+    },
+    "skchr_yu_3": {
+      "x": 384,
+      "y": 11136
+    },
+    "skchr_rdoc_1": {
+      "x": 768,
+      "y": 8064
+    },
+    "skchr_yu_1": {
+      "x": 128,
+      "y": 11136
+    },
+    "skchr_yu_2": {
+      "x": 256,
+      "y": 11136
+    },
+    "sktok_xb2oflr3": {
+      "x": 512,
+      "y": 19840
+    },
+    "sktok_xb2oflr2": {
+      "x": 384,
+      "y": 19840
+    },
+    "sktok_mufrbk": {
+      "x": 512,
+      "y": 17152
+    },
+    "skchr_mortis_1": {
+      "x": 640,
+      "y": 6656
+    },
+    "skchr_mortis_2": {
+      "x": 768,
+      "y": 6656
+    },
+    "skchr_elysm_2": {
+      "x": 640,
+      "y": 3072
+    },
+    "skchr_flameb_1": {
+      "x": 0,
+      "y": 3456
+    },
+    "skchr_flameb_2": {
+      "x": 128,
+      "y": 3456
+    },
+    "sktok_acarm102_1": {
+      "x": 1024,
+      "y": 13696
+    },
+    "sktok_acarm102_2": {
+      "x": 1152,
+      "y": 13696
+    },
+    "sktok_toolinvert": {
+      "x": 896,
+      "y": 18944
+    },
+    "skchr_rfrost_1": {
+      "x": 640,
+      "y": 8192
+    },
+    "skchr_rfrost_2": {
+      "x": 768,
+      "y": 8192
+    },
+    "sktok_acarm017_1": {
+      "x": 256,
+      "y": 12160
+    },
+    "sktok_acarm017_2": {
+      "x": 384,
+      "y": 12160
+    },
+    "sktok_acarm070_2": {
+      "x": 1152,
+      "y": 13440
+    },
+    "sktok_rockfl": {
+      "x": 128,
+      "y": 18304
+    },
+    "sktok_acarm070_1": {
+      "x": 1024,
+      "y": 13440
+    },
+    "sktok_alanna_crane": {
+      "x": 128,
+      "y": 14592
+    },
+    "sktok_acarm115_2": {
+      "x": 1152,
+      "y": 13824
+    },
+    "sktok_xb2tml": {
+      "x": 896,
+      "y": 20352
+    },
+    "sktok_acarm115_1": {
+      "x": 1024,
+      "y": 13824
+    },
+    "sktok_xb2oppt": {
+      "x": 896,
+      "y": 19968
+    },
+    "skchr_slbell_2": {
+      "x": 640,
+      "y": 8960
+    },
+    "skchr_slbell_1": {
+      "x": 512,
+      "y": 8960
+    },
+    "sktok_xbmgbird": {
+      "x": 256,
+      "y": 20992
+    },
+    "sktok_acarm004_1": {
+      "x": 768,
+      "y": 11776
+    },
+    "sktok_acarm004_2": {
+      "x": 896,
+      "y": 11776
+    },
+    "skchr_mantic_2": {
+      "x": 256,
+      "y": 6144
+    },
+    "skchr_kroos_1": {
+      "x": 384,
+      "y": 5504
+    },
+    "skchr_mantic_1": {
+      "x": 128,
+      "y": 6144
+    },
+    "sktok_crate": {
+      "x": 0,
+      "y": 15616
+    },
+    "sktok_cdbeaconb": {
+      "x": 128,
+      "y": 15232
+    },
+    "sktok_cdbeacona": {
+      "x": 0,
+      "y": 15232
+    },
+    "sktok_tecno_puppet": {
+      "x": 128,
+      "y": 18944
+    },
+    "skchr_strong_2": {
+      "x": 0,
+      "y": 9344
+    },
+    "sktok_xb2clr": {
+      "x": 896,
+      "y": 19456
+    },
+    "sktok_xb2hwstr": {
+      "x": 1024,
+      "y": 19584
+    },
+    "sktok_streasure": {
+      "x": 512,
+      "y": 18816
+    },
+    "sktok_rarebox": {
+      "x": 1152,
+      "y": 17920
+    },
+    "skchr_strong_1": {
+      "x": 1152,
+      "y": 9216
+    },
+    "skchr_svrash_3": {
+      "x": 384,
+      "y": 9472
+    },
+    "skchr_svrash_2": {
+      "x": 256,
+      "y": 9472
+    },
+    "sktok_acarm039_2": {
+      "x": 896,
+      "y": 12672
+    },
+    "sktok_acarm039_1": {
+      "x": 768,
+      "y": 12672
+    },
+    "skchr_mantra_3": {
+      "x": 640,
+      "y": 6144
+    },
+    "skchr_mantra_2": {
+      "x": 512,
+      "y": 6144
+    },
+    "sktok_xb2cmp": {
+      "x": 1024,
+      "y": 19456
+    },
+    "skchr_mantra_1": {
+      "x": 384,
+      "y": 6144
+    },
+    "sktok_xb2otrk": {
+      "x": 896,
+      "y": 20224
+    },
+    "sktok_xbsighta": {
+      "x": 1024,
+      "y": 20992
+    },
+    "sktok_xbsightc": {
+      "x": 0,
+      "y": 21120
+    },
+    "sktok_xbsightb": {
+      "x": 1152,
+      "y": 20992
+    },
+    "sktok_xb2cve": {
+      "x": 1152,
+      "y": 19456
+    },
+    "sktok_jesca2_jckshd": {
+      "x": 384,
+      "y": 16384
+    },
+    "skchr_bgsnow_3": {
+      "x": 768,
+      "y": 1280
+    },
+    "skchr_bgsnow_1": {
+      "x": 512,
+      "y": 1280
+    },
+    "skchr_bgsnow_2": {
+      "x": 640,
+      "y": 1280
+    },
+    "skchr_pepe_1": {
+      "x": 0,
+      "y": 7552
+    },
+    "skchr_pepe_2": {
+      "x": 128,
+      "y": 7552
+    },
+    "sktok_stone": {
+      "x": 384,
+      "y": 18816
+    },
+    "skchr_cgbird_2": {
+      "x": 640,
+      "y": 2176
+    },
+    "sktok_platre": {
+      "x": 128,
+      "y": 17792
+    },
+    "skchr_cgbird_3": {
+      "x": 768,
+      "y": 2176
+    },
+    "skchr_puzzle_2": {
+      "x": 128,
+      "y": 7936
+    },
+    "skchr_puzzle_1": {
+      "x": 0,
+      "y": 7936
+    },
+    "sktok_xbspgun": {
+      "x": 128,
+      "y": 21120
+    },
+    "skchr_astesi_2": {
+      "x": 128,
+      "y": 1152
+    },
+    "skchr_astesi_1": {
+      "x": 0,
+      "y": 1152
+    },
+    "skchr_greyy_2": {
+      "x": 512,
+      "y": 4096
+    },
+    "sktok_rosmon": {
+      "x": 256,
+      "y": 18304
+    },
+    "skchr_pepe_3": {
+      "x": 256,
+      "y": 7552
+    },
+    "sktok_acarm019_2": {
+      "x": 896,
+      "y": 12160
+    },
+    "sktok_xb2ppt": {
+      "x": 1152,
+      "y": 20224
+    },
+    "skchr_dusk_1": {
+      "x": 768,
+      "y": 2944
+    },
+    "skchr_nights_2": {
+      "x": 640,
+      "y": 7040
+    },
+    "skchr_reckpr_1": {
+      "x": 1024,
+      "y": 8064
+    },
+    "skchr_dusk_3": {
+      "x": 1024,
+      "y": 2944
+    },
+    "skchr_dusk_2": {
+      "x": 896,
+      "y": 2944
+    },
+    "skchr_reckpr_2": {
+      "x": 1152,
+      "y": 8064
+    },
+    "sktok_acarm019_1": {
+      "x": 768,
+      "y": 12160
+    },
+    "skcom_powerstrikex5b3x5d": {
+      "x": 256,
+      "y": 11648
+    },
+    "sktok_acarm072_2": {
+      "x": 384,
+      "y": 13568
+    },
+    "sktok_acarm072_1": {
+      "x": 256,
+      "y": 13568
+    },
+    "sktok_accrate": {
+      "x": 256,
+      "y": 14208
+    },
+    "sktok_xb2ocrv": {
+      "x": 768,
+      "y": 19712
+    },
+    "skchr_mlynar_1": {
+      "x": 0,
+      "y": 6528
+    },
+    "sktok_acarm117_2": {
+      "x": 384,
+      "y": 13952
+    },
+    "sktok_acarm117_1": {
+      "x": 256,
+      "y": 13952
+    },
+    "sktok_lhshop": {
+      "x": 128,
+      "y": 16768
+    },
+    "skchr_mlynar_3": {
+      "x": 256,
+      "y": 6528
+    },
+    "skchr_mlynar_2": {
+      "x": 128,
+      "y": 6528
+    },
+    "sktok_emp": {
+      "x": 128,
+      "y": 16000
+    },
+    "sktok_ctlzog": {
+      "x": 640,
+      "y": 15616
+    },
+    "sktok_acarm006_1": {
+      "x": 0,
+      "y": 11904
+    },
+    "skchr_morgan_2": {
+      "x": 512,
+      "y": 6656
+    },
+    "sktok_acarm006_2": {
+      "x": 128,
+      "y": 11904
+    },
+    "skchr_morgan_1": {
+      "x": 384,
+      "y": 6656
+    },
+    "sktok_paras": {
+      "x": 384,
+      "y": 17664
+    },
+    "skchr_shwaz_3": {
+      "x": 768,
+      "y": 8704
+    },
+    "skchr_shwaz_2": {
+      "x": 640,
+      "y": 8704
+    },
+    "skchr_shwaz_1": {
+      "x": 512,
+      "y": 8704
+    },
+    "sktok_frosts_friend": {
+      "x": 512,
+      "y": 16128
+    },
+    "skchr_weedy_2": {
+      "x": 1152,
+      "y": 10624
+    },
+    "skchr_weedy_1": {
+      "x": 1024,
+      "y": 10624
+    },
+    "sktok_ads": {
+      "x": 640,
+      "y": 14464
+    },
+    "sktok_mgllan_drone": {
+      "x": 1152,
+      "y": 16896
+    },
+    "skchr_weedy_3": {
+      "x": 0,
+      "y": 10752
+    },
+    "skchr_zebra_2": {
+      "x": 640,
+      "y": 11136
+    },
+    "skchr_zebra_1": {
+      "x": 512,
+      "y": 11136
+    },
+    "sktok_xb2oafkp": {
+      "x": 128,
+      "y": 19712
+    },
+    "sktok_dupilr": {
+      "x": 896,
+      "y": 15744
+    },
+    "skcom_enchantx5b1x5d": {
+      "x": 896,
+      "y": 11392
+    },
+    "skchr_chiave_2": {
+      "x": 768,
+      "y": 2304
+    },
+    "sktok_muulrg": {
+      "x": 640,
+      "y": 17408
+    },
+    "skchr_rope_2": {
+      "x": 768,
+      "y": 8320
+    },
+    "skchr_rope_1": {
+      "x": 640,
+      "y": 8320
+    },
+    "sktok_monstr_prosts": {
+      "x": 1024,
+      "y": 17024
+    },
+    "skchr_broca_1": {
+      "x": 384,
+      "y": 1792
+    },
+    "skchr_broca_2": {
+      "x": 512,
+      "y": 1792
+    },
+    "skchr_moeshd_1": {
+      "x": 1024,
+      "y": 6528
+    },
+    "skchr_moeshd_2": {
+      "x": 1152,
+      "y": 6528
+    },
+    "skchr_peper_2": {
+      "x": 1152,
+      "y": 7424
+    },
+    "sktok_xb2ocnl": {
+      "x": 640,
+      "y": 19712
+    },
+    "sktok_xb2otph": {
+      "x": 512,
+      "y": 20224
+    },
+    "sktok_stmbot": {
+      "x": 128,
+      "y": 18816
+    },
+    "skchr_nian_1": {
+      "x": 0,
+      "y": 7040
+    },
+    "skchr_nian_2": {
+      "x": 128,
+      "y": 7040
+    },
+    "skchr_nian_3": {
+      "x": 256,
+      "y": 7040
+    },
+    "skchr_lasher_1": {
+      "x": 768,
+      "y": 5504
+    },
+    "skchr_tknogi_1": {
+      "x": 768,
+      "y": 9984
+    },
+    "skchr_tknogi_2": {
+      "x": 896,
+      "y": 9984
+    },
+    "sktok_allady": {
+      "x": 256,
+      "y": 14592
+    },
+    "sktok_nasti_nstdef": {
+      "x": 128,
+      "y": 17536
+    },
+    "skchr_lasher_2": {
+      "x": 896,
+      "y": 5504
+    },
+    "skchr_logos_3": {
+      "x": 1152,
+      "y": 5888
+    },
+    "skchr_logos_1": {
+      "x": 896,
+      "y": 5888
+    },
+    "skchr_logos_2": {
+      "x": 1024,
+      "y": 5888
+    },
+    "skchr_bldsk_1": {
+      "x": 896,
+      "y": 1408
+    },
+    "skchr_greyy2_2": {
+      "x": 384,
+      "y": 4096
+    },
+    "skchr_asnipe_1": {
+      "x": 1152,
+      "y": 1024
+    },
+    "skchr_bldsk_2": {
+      "x": 1024,
+      "y": 1408
+    },
+    "sktok_xbfort": {
+      "x": 256,
+      "y": 20864
+    },
+    "sktok_skadi2": {
+      "x": 0,
+      "y": 18560
+    },
+    "skchr_hodrer_1": {
+      "x": 512,
+      "y": 4608
+    },
+    "skchr_hodrer_2": {
+      "x": 640,
+      "y": 4608
+    },
+    "sktok_acarm050_1": {
+      "x": 1024,
+      "y": 12928
+    },
+    "sktok_xbcbag": {
+      "x": 640,
+      "y": 20608
+    },
+    "sktok_acarm050_2": {
+      "x": 1152,
+      "y": 12928
+    },
+    "skchr_hodrer_3": {
+      "x": 768,
+      "y": 4608
+    },
+    "skchr_utage_1": {
+      "x": 1024,
+      "y": 10240
+    },
+    "skchr_utage_2": {
+      "x": 1152,
+      "y": 10240
+    },
+    "sktok_trbox_1": {
+      "x": 256,
+      "y": 19072
+    },
+    "skchr_lmlee_1": {
+      "x": 512,
+      "y": 5888
+    },
+    "sktok_xb2pwr": {
+      "x": 0,
+      "y": 20352
+    },
+    "skchr_lmlee_2": {
+      "x": 640,
+      "y": 5888
+    },
+    "skchr_texas_2": {
+      "x": 768,
+      "y": 9728
+    },
+    "skchr_lmlee_3": {
+      "x": 768,
+      "y": 5888
+    },
+    "skchr_acfend_2": {
+      "x": 1152,
+      "y": 0
+    },
+    "skchr_acfend_3": {
+      "x": 0,
+      "y": 128
+    },
+    "skchr_acfend_1": {
+      "x": 1024,
+      "y": 0
+    },
+    "sktok_cjbtow_1": {
+      "x": 384,
+      "y": 15488
+    },
+    "skchr_panda_1": {
+      "x": 1024,
+      "y": 7296
+    },
+    "sktok_acarm041_1": {
+      "x": 0,
+      "y": 12800
+    },
+    "skchr_panda_2": {
+      "x": 1152,
+      "y": 7296
+    },
+    "sktok_acarm041_2": {
+      "x": 128,
+      "y": 12800
+    },
+    "skchr_ctable_1": {
+      "x": 0,
+      "y": 2688
+    },
+    "sktok_sbomb": {
+      "x": 640,
+      "y": 18304
+    },
+    "sktok_frosts": {
+      "x": 384,
+      "y": 16128
+    },
+    "skchr_pinecn_2": {
+      "x": 896,
+      "y": 7680
+    },
+    "sktok_xbcanoe": {
+      "x": 512,
+      "y": 20608
+    },
+    "skchr_pinecn_1": {
+      "x": 768,
+      "y": 7680
+    },
+    "skchr_jesca2_2": {
+      "x": 768,
+      "y": 5120
+    },
+    "skchr_jesca2_1": {
+      "x": 640,
+      "y": 5120
+    },
+    "skchr_jesca2_3": {
+      "x": 896,
+      "y": 5120
+    },
+    "skchr_meteo_1": {
+      "x": 768,
+      "y": 6272
+    },
+    "sktok_acarm076_2": {
+      "x": 128,
+      "y": 13696
+    },
+    "skchr_meteo_2": {
+      "x": 896,
+      "y": 6272
+    },
+    "sktok_acarm076_1": {
+      "x": 0,
+      "y": 13696
+    },
+    "sktok_mhlbmb": {
+      "x": 128,
+      "y": 17024
+    },
+    "sktok_smbox": {
+      "x": 128,
+      "y": 18688
+    },
+    "sktok_xb2mkstr": {
+      "x": 0,
+      "y": 19712
+    },
+    "sktok_acarm063_2": {
+      "x": 640,
+      "y": 13312
+    },
+    "sktok_acarm063_1": {
+      "x": 512,
+      "y": 13312
+    },
+    "skchr_halo2_3": {
+      "x": 1024,
+      "y": 4224
+    },
+    "sktok_xb2otml": {
+      "x": 384,
+      "y": 20224
+    },
+    "skchr_aurora_2": {
+      "x": 384,
+      "y": 1152
+    },
+    "skchr_aurora_1": {
+      "x": 256,
+      "y": 1152
+    },
+    "skchr_halo2_1": {
+      "x": 768,
+      "y": 4224
+    },
+    "skchr_halo2_2": {
+      "x": 896,
+      "y": 4224
+    },
+    "sktok_sgray": {
+      "x": 1024,
+      "y": 18304
+    },
+    "skchr_tmoris_2": {
+      "x": 1152,
+      "y": 9984
+    },
+    "skchr_tmoris_1": {
+      "x": 1024,
+      "y": 9984
+    },
+    "skchr_haruka_3": {
+      "x": 768,
+      "y": 4352
+    },
+    "skchr_saga_3": {
+      "x": 384,
+      "y": 8448
+    },
+    "skchr_saga_2": {
+      "x": 256,
+      "y": 8448
+    },
+    "skchr_silent_2": {
+      "x": 384,
+      "y": 8832
+    },
+    "skchr_haruka_1": {
+      "x": 512,
+      "y": 4352
+    },
+    "skchr_haruka_2": {
+      "x": 640,
+      "y": 4352
+    },
+    "sktok_edd": {
+      "x": 1024,
+      "y": 15872
+    },
+    "sktok_rgdysm": {
+      "x": 128,
+      "y": 18176
+    },
+    "sktok_cdshielda": {
+      "x": 0,
+      "y": 15488
+    },
+    "sktok_pyctrn": {
+      "x": 256,
+      "y": 17920
+    },
+    "sktok_dydfst": {
+      "x": 0,
+      "y": 15872
+    },
+    "skchr_lumen_3": {
+      "x": 512,
+      "y": 6016
+    },
+    "skchr_lumen_2": {
+      "x": 384,
+      "y": 6016
+    },
+    "skchr_lumen_1": {
+      "x": 256,
+      "y": 6016
+    },
+    "skcom_heal_selfx5b3x5d": {
+      "x": 384,
+      "y": 11520
+    },
+    "sktok_xbtrophy": {
+      "x": 1024,
+      "y": 21120
+    },
+    "sktok_lhvlg": {
+      "x": 768,
+      "y": 16768
+    },
+    "sktok_cdabyss": {
+      "x": 896,
+      "y": 15104
+    },
+    "sktok_portlent": {
+      "x": 640,
+      "y": 17792
+    },
+    "sktok_cdcaster": {
+      "x": 256,
+      "y": 15232
+    },
+    "skchr_yuki_2": {
+      "x": 0,
+      "y": 11136
+    },
+    "skchr_luton_2": {
+      "x": 896,
+      "y": 6016
+    },
+    "skchr_yuki_1": {
+      "x": 1152,
+      "y": 11008
+    },
+    "skchr_apionr_1": {
+      "x": 1152,
+      "y": 768
+    },
+    "sktok_xb2wfty": {
+      "x": 1152,
+      "y": 20352
+    },
+    "skchr_odda_2": {
+      "x": 1152,
+      "y": 7168
+    },
+    "skchr_odda_1": {
+      "x": 1024,
+      "y": 7168
+    },
+    "sktok_acarm032_1": {
+      "x": 256,
+      "y": 12544
+    },
+    "sktok_acarm032_2": {
+      "x": 384,
+      "y": 12544
+    },
+    "sktok_murtre": {
+      "x": 768,
+      "y": 17280
+    },
+    "skchr_blemsh_3": {
+      "x": 128,
+      "y": 1536
+    },
+    "skchr_blemsh_2": {
+      "x": 0,
+      "y": 1536
+    },
+    "skchr_blemsh_1": {
+      "x": 1152,
+      "y": 1408
+    },
+    "sktok_xb2ofmf2": {
+      "x": 768,
+      "y": 19840
+    },
+    "skchr_mberry_2": {
+      "x": 0,
+      "y": 6272
+    },
+    "skchr_mberry_1": {
+      "x": 1152,
+      "y": 6144
+    },
+    "sktok_radian_tower1": {
+      "x": 384,
+      "y": 17920
+    },
+    "skchr_wildmn_2": {
+      "x": 1152,
+      "y": 10752
+    },
+    "skchr_tomimi_1": {
+      "x": 384,
+      "y": 10112
+    },
+    "skchr_tomimi_2": {
+      "x": 512,
+      "y": 10112
+    },
+    "skchr_ctable_2": {
+      "x": 128,
+      "y": 2688
+    },
+    "sktok_radian_tower3": {
+      "x": 896,
+      "y": 17920
+    },
+    "sktok_radian_tower2": {
+      "x": 640,
+      "y": 17920
+    },
+    "skchr_snhunt_2": {
+      "x": 512,
+      "y": 9088
+    },
+    "skchr_ceylon_1": {
+      "x": 384,
+      "y": 2176
+    },
+    "skchr_wildmn_1": {
+      "x": 1024,
+      "y": 10752
+    },
+    "skchr_ceylon_2": {
+      "x": 512,
+      "y": 2176
+    },
+    "skchr_mitm_1": {
+      "x": 640,
+      "y": 6400
+    },
+    "skchr_mitm_2": {
+      "x": 768,
+      "y": 6400
+    },
+    "skchr_mint_2": {
+      "x": 512,
+      "y": 6400
+    },
+    "skchr_mint_1": {
+      "x": 384,
+      "y": 6400
+    },
+    "sktok_acarm054_1": {
+      "x": 768,
+      "y": 13056
+    },
+    "sktok_muulwr": {
+      "x": 768,
+      "y": 17408
+    },
+    "sktok_acarm054_2": {
+      "x": 896,
+      "y": 13056
+    },
+    "skchr_aroma_2": {
+      "x": 1152,
+      "y": 896
+    },
+    "skchr_aroma_1": {
+      "x": 1024,
+      "y": 896
+    },
+    "sktok_robin_1": {
+      "x": 896,
+      "y": 18176
+    },
+    "sktok_robin_2": {
+      "x": 1024,
+      "y": 18176
+    },
+    "skchr_windft_1": {
+      "x": 0,
+      "y": 10880
+    },
+    "skchr_windft_2": {
+      "x": 128,
+      "y": 10880
+    },
+    "skchr_laios_1": {
+      "x": 512,
+      "y": 5504
+    },
+    "sktok_acarm045_1": {
+      "x": 1024,
+      "y": 12800
+    },
+    "skchr_laios_2": {
+      "x": 640,
+      "y": 5504
+    },
+    "sktok_acarm045_2": {
+      "x": 1152,
+      "y": 12800
+    },
+    "skchr_kichi_2": {
+      "x": 896,
+      "y": 5376
+    },
+    "skchr_kichi_1": {
+      "x": 768,
+      "y": 5376
+    },
+    "skcom_born_upx5b1x5d": {
+      "x": 1024,
+      "y": 11264
+    },
+    "skchr_bibeak_2": {
+      "x": 1024,
+      "y": 1280
+    },
+    "skchr_bibeak_1": {
+      "x": 896,
+      "y": 1280
+    },
+    "skchr_ifrit_1": {
+      "x": 512,
+      "y": 4864
+    },
+    "skchr_wisdel_1": {
+      "x": 512,
+      "y": 10880
+    },
+    "skchr_ayer_1": {
+      "x": 512,
+      "y": 1152
+    },
+    "skchr_ifrit_2": {
+      "x": 640,
+      "y": 4864
+    },
+    "skchr_wisdel_2": {
+      "x": 640,
+      "y": 10880
+    },
+    "skchr_ayer_2": {
+      "x": 640,
+      "y": 1152
+    },
+    "skchr_ifrit_3": {
+      "x": 768,
+      "y": 4864
+    },
+    "skchr_glaze_1": {
+      "x": 1152,
+      "y": 3840
+    },
+    "sktok_ballis": {
+      "x": 896,
+      "y": 14720
+    },
+    "skchr_glaze_2": {
+      "x": 0,
+      "y": 3968
+    },
+    "skchr_waaifu_1": {
+      "x": 0,
+      "y": 10624
+    },
+    "skchr_waaifu_2": {
+      "x": 128,
+      "y": 10624
+    },
+    "skchr_blaze2_3": {
+      "x": 768,
+      "y": 1408
+    },
+    "skchr_graceb_1": {
+      "x": 1024,
+      "y": 3968
+    },
+    "skchr_graceb_2": {
+      "x": 1152,
+      "y": 3968
+    },
+    "sktok_xboverwatch": {
+      "x": 640,
+      "y": 20992
+    },
+    "skchr_blaze2_1": {
+      "x": 512,
+      "y": 1408
+    },
+    "skchr_blaze2_2": {
+      "x": 640,
+      "y": 1408
+    },
+    "skchr_phenxi_2": {
+      "x": 0,
+      "y": 7680
+    },
+    "sktok_muulcl": {
+      "x": 256,
+      "y": 17408
+    },
+    "skchr_phenxi_1": {
+      "x": 1152,
+      "y": 7552
+    },
+    "sktok_muulct": {
+      "x": 512,
+      "y": 17408
+    },
+    "skchr_phenxi_3": {
+      "x": 128,
+      "y": 7680
+    },
+    "skchr_huang_3": {
+      "x": 1152,
+      "y": 4736
+    },
+    "skchr_sleach_2": {
+      "x": 1024,
+      "y": 8960
+    },
+    "skchr_huang_2": {
+      "x": 1024,
+      "y": 4736
+    },
+    "sktok_muulco": {
+      "x": 384,
+      "y": 17408
+    },
+    "skchr_sleach_3": {
+      "x": 1152,
+      "y": 8960
+    },
+    "sktok_ctlrol": {
+      "x": 384,
+      "y": 15616
+    },
+    "sktok_acarm067_2": {
+      "x": 384,
+      "y": 13440
+    },
+    "sktok_acarm067_1": {
+      "x": 256,
+      "y": 13440
+    },
+    "skchr_acspec_3": {
+      "x": 640,
+      "y": 256
+    },
+    "skchr_acspec_2": {
+      "x": 512,
+      "y": 256
+    },
+    "skchr_acspec_1": {
+      "x": 384,
+      "y": 256
+    },
+    "skchr_crow_1": {
+      "x": 1024,
+      "y": 2560
+    },
+    "skchr_crow_2": {
+      "x": 1152,
+      "y": 2560
+    },
+    "sktok_cqbw_token": {
+      "x": 1152,
+      "y": 15488
+    },
+    "skchr_acpion_2": {
+      "x": 128,
+      "y": 256
+    },
+    "skchr_acpion_1": {
+      "x": 0,
+      "y": 256
+    },
+    "sktok_barrel": {
+      "x": 1024,
+      "y": 14720
+    },
+    "sktok_shsbox": {
+      "x": 1024,
+      "y": 18432
+    },
+    "sktok_turngear": {
+      "x": 896,
+      "y": 19072
+    },
+    "skchr_lava2_1": {
+      "x": 1024,
+      "y": 5504
+    },
+    "skchr_lava2_2": {
+      "x": 1152,
+      "y": 5504
+    },
+    "skchr_tanya_2": {
+      "x": 1024,
+      "y": 9600
+    },
+    "skchr_tanya_1": {
+      "x": 896,
+      "y": 9600
+    },
+    "sktok_acspell006_1": {
+      "x": 512,
+      "y": 14336
+    },
+    "skchr_fuze_2": {
+      "x": 512,
+      "y": 3712
+    },
+    "skchr_fuze_1": {
+      "x": 384,
+      "y": 3712
+    },
+    "sktok_bbombcard": {
+      "x": 1152,
+      "y": 14720
+    },
+    "skchr_yato2_1": {
+      "x": 768,
+      "y": 11008
+    },
+    "sktok_dublst": {
+      "x": 768,
+      "y": 15744
+    },
+    "sktok_acarm010_2": {
+      "x": 1152,
+      "y": 11904
+    },
+    "skchr_acpion_3": {
+      "x": 256,
+      "y": 256
+    },
+    "sktok_acarm010_1": {
+      "x": 1024,
+      "y": 11904
+    },
+    "skchr_yato2_3": {
+      "x": 1024,
+      "y": 11008
+    },
+    "skchr_yato2_2": {
+      "x": 896,
+      "y": 11008
+    },
+    "sktok_cjgtow_1": {
+      "x": 512,
+      "y": 15488
+    },
+    "sktok_folivo_2": {
+      "x": 0,
+      "y": 16128
+    },
+    "sktok_normbox": {
+      "x": 768,
+      "y": 17536
+    },
+    "sktok_izwsdl": {
+      "x": 256,
+      "y": 16384
+    },
+    "sktok_acarm001_1": {
+      "x": 0,
+      "y": 11776
+    },
+    "sktok_acarm001_2": {
+      "x": 128,
+      "y": 11776
+    },
+    "sktok_muulas": {
+      "x": 128,
+      "y": 17408
+    },
+    "skchr_nymph_2": {
+      "x": 384,
+      "y": 7168
+    },
+    "skchr_aglna2_1": {
+      "x": 256,
+      "y": 384
+    },
+    "skchr_nymph_1": {
+      "x": 256,
+      "y": 7168
+    },
+    "skchr_aglna2_2": {
+      "x": 384,
+      "y": 384
+    },
+    "sktok_xb2opwr2": {
+      "x": 1152,
+      "y": 19968
+    },
+    "skchr_aglna2_3": {
+      "x": 512,
+      "y": 384
+    },
+    "skchr_nearl_1": {
+      "x": 640,
+      "y": 6912
+    },
+    "skchr_nearl_2": {
+      "x": 768,
+      "y": 6912
+    },
+    "skchr_nymph_3": {
+      "x": 512,
+      "y": 7168
+    },
+    "sktok_acarm121_1": {
+      "x": 0,
+      "y": 14080
+    },
+    "sktok_wisdel_wward": {
+      "x": 512,
+      "y": 19328
+    },
+    "sktok_acarm121_2": {
+      "x": 128,
+      "y": 14080
+    },
+    "sktok_acarm036_1": {
+      "x": 0,
+      "y": 12672
+    },
+    "sktok_acarm036_2": {
+      "x": 128,
+      "y": 12672
+    },
+    "sktok_xb2chm2": {
+      "x": 768,
+      "y": 19456
+    },
+    "sktok_xbstone": {
+      "x": 512,
+      "y": 21120
+    },
+    "sktok_fowstn": {
+      "x": 256,
+      "y": 16128
+    },
+    "sktok_umbrella": {
+      "x": 1024,
+      "y": 19072
+    },
+    "skchr_fartth_3": {
+      "x": 640,
+      "y": 3328
+    },
+    "skchr_fartth_2": {
+      "x": 512,
+      "y": 3328
+    },
+    "sktok_tentac_1": {
+      "x": 256,
+      "y": 18944
+    },
+    "sktok_mufrst_1": {
+      "x": 1152,
+      "y": 17152
+    },
+    "sktok_acarm023_2": {
+      "x": 640,
+      "y": 12288
+    },
+    "sktok_acarm023_1": {
+      "x": 512,
+      "y": 12288
+    },
+    "skchr_skgoat_2": {
+      "x": 128,
+      "y": 8960
+    },
+    "sktok_acshopre_1": {
+      "x": 896,
+      "y": 14208
+    },
+    "skchr_agoat2_3": {
+      "x": 896,
+      "y": 384
+    },
+    "sktok_lhside": {
+      "x": 256,
+      "y": 16768
+    },
+    "skchr_agoat2_1": {
+      "x": 640,
+      "y": 384
+    },
+    "skchr_skgoat_1": {
+      "x": 0,
+      "y": 8960
+    },
+    "skchr_agoat2_2": {
+      "x": 768,
+      "y": 384
+    },
+    "sktok_acarm058_2": {
+      "x": 640,
+      "y": 13184
+    },
+    "sktok_acspell015_1": {
+      "x": 256,
+      "y": 14464
+    },
+    "sktok_acarm058_1": {
+      "x": 512,
+      "y": 13184
+    },
+    "skchr_lessng_2": {
+      "x": 896,
+      "y": 5632
+    },
+    "skchr_f12yin_1": {
+      "x": 1152,
+      "y": 3200
+    },
+    "skchr_lessng_3": {
+      "x": 1024,
+      "y": 5632
+    },
+    "skchr_f12yin_2": {
+      "x": 0,
+      "y": 3328
+    },
+    "skchr_f12yin_3": {
+      "x": 128,
+      "y": 3328
+    },
+    "skchr_thorn2_1": {
+      "x": 896,
+      "y": 9728
+    },
+    "sktok_healbfb": {
+      "x": 256,
+      "y": 16256
+    },
+    "skchr_podego_2": {
+      "x": 512,
+      "y": 7808
+    },
+    "skchr_podego_1": {
+      "x": 384,
+      "y": 7808
+    },
+    "skchr_chen2_3": {
+      "x": 1152,
+      "y": 2176
+    },
+    "skchr_lin_3": {
+      "x": 896,
+      "y": 5760
+    },
+    "sktok_xbstation": {
+      "x": 384,
+      "y": 21120
+    },
+    "skchr_lin_2": {
+      "x": 768,
+      "y": 5760
+    },
+    "skchr_chen2_1": {
+      "x": 896,
+      "y": 2176
+    },
+    "skchr_lin_1": {
+      "x": 640,
+      "y": 5760
+    },
+    "skchr_chen2_2": {
+      "x": 1024,
+      "y": 2176
+    },
+    "skchr_rmixer_2": {
+      "x": 1024,
+      "y": 8192
+    },
+    "skchr_rmixer_3": {
+      "x": 1152,
+      "y": 8192
+    },
+    "skchr_rmixer_1": {
+      "x": 896,
+      "y": 8192
+    },
+    "skchr_udflow_2": {
+      "x": 512,
+      "y": 10240
+    },
+    "skchr_udflow_1": {
+      "x": 384,
+      "y": 10240
+    },
+    "sktok_acarm049_1": {
+      "x": 768,
+      "y": 12928
+    },
+    "sktok_acarm049_2": {
+      "x": 896,
+      "y": 12928
+    },
+    "skchr_baslin_2": {
+      "x": 896,
+      "y": 1152
+    },
+    "sktok_cdnest": {
+      "x": 512,
+      "y": 15360
+    },
+    "skchr_baslin_1": {
+      "x": 768,
+      "y": 1152
+    },
+    "skchr_thorn2_3": {
+      "x": 1152,
+      "y": 9728
+    },
+    "sktok_cdroneb": {
+      "x": 1024,
+      "y": 15360
+    },
+    "sktok_wang_stone2": {
+      "x": 640,
+      "y": 19200
+    },
+    "skchr_thorn2_2": {
+      "x": 1024,
+      "y": 9728
+    },
+    "sktok_trrbox_1": {
+      "x": 640,
+      "y": 19072
+    },
+    "sktok_wang_stone3": {
+      "x": 768,
+      "y": 19200
+    },
+    "sktok_wang_stone1": {
+      "x": 512,
+      "y": 19200
+    },
+    "skchr_brigid_1": {
+      "x": 128,
+      "y": 1792
+    },
+    "skchr_brigid_2": {
+      "x": 256,
+      "y": 1792
+    },
+    "sktok_fcanon": {
+      "x": 1024,
+      "y": 16000
+    },
+    "sktok_xb2oirnp": {
+      "x": 512,
+      "y": 19968
+    },
+    "sktok_stdurk": {
+      "x": 0,
+      "y": 18816
+    },
+    "skchr_papyrs_2": {
+      "x": 128,
+      "y": 7424
+    },
+    "sktok_antidr": {
+      "x": 640,
+      "y": 14592
+    },
+    "skchr_kazema_1": {
+      "x": 512,
+      "y": 5376
+    },
+    "skchr_hbisc2_2": {
+      "x": 896,
+      "y": 4352
+    },
+    "skchr_kazema_2": {
+      "x": 640,
+      "y": 5376
+    },
+    "skchr_myrrh_2": {
+      "x": 256,
+      "y": 6784
+    },
+    "skchr_papyrs_1": {
+      "x": 0,
+      "y": 7424
+    },
+    "skchr_myrrh_1": {
+      "x": 128,
+      "y": 6784
+    },
+    "skchr_sesa_2": {
+      "x": 512,
+      "y": 8576
+    },
+    "skchr_flint_1": {
+      "x": 640,
+      "y": 3456
+    },
+    "skchr_flint_2": {
+      "x": 768,
+      "y": 3456
+    },
+    "skchr_judge_1": {
+      "x": 1152,
+      "y": 5120
+    },
+    "sktok_airbomb": {
+      "x": 1152,
+      "y": 14464
+    },
+    "sktok_cdcvrt": {
+      "x": 512,
+      "y": 15232
+    },
+    "skcom_quickattackx5b1x5d": {
+      "x": 384,
+      "y": 11648
+    },
+    "skchr_judge_2": {
+      "x": 0,
+      "y": 5248
+    },
+    "skchr_judge_3": {
+      "x": 128,
+      "y": 5248
+    },
+    "sktok_btauntcard": {
+      "x": 1024,
+      "y": 14976
+    },
+    "sktok_acspell002_1": {
+      "x": 0,
+      "y": 14336
+    },
+    "skchr_jaksel_2": {
+      "x": 384,
+      "y": 5120
+    },
+    "skchr_jaksel_1": {
+      "x": 256,
+      "y": 5120
+    },
+    "sktok_xb2ofmr2": {
+      "x": 1024,
+      "y": 19840
+    },
+    "sktok_xbf1g": {
+      "x": 128,
+      "y": 20736
+    },
+    "skchr_whispr_2": {
+      "x": 256,
+      "y": 10752
+    },
+    "skchr_whispr_1": {
+      "x": 128,
+      "y": 10752
+    },
+    "sktok_acarm014_2": {
+      "x": 896,
+      "y": 12032
+    },
+    "sktok_acarm014_1": {
+      "x": 768,
+      "y": 12032
+    },
+    "sktok_shchst": {
+      "x": 1152,
+      "y": 18304
+    },
+    "sktok_tower": {
+      "x": 128,
+      "y": 19072
+    },
+    "sktok_xb2ostn": {
+      "x": 0,
+      "y": 20224
+    },
+    "skchr_rosmon_3": {
+      "x": 128,
+      "y": 8448
+    },
+    "skchr_rosmon_2": {
+      "x": 0,
+      "y": 8448
+    },
+    "sktok_xb2ostr": {
+      "x": 256,
+      "y": 20224
+    },
+    "skchr_rosmon_1": {
+      "x": 1152,
+      "y": 8320
+    },
+    "sktok_xbf2g": {
+      "x": 256,
+      "y": 20736
+    },
+    "skchr_acdrop_1": {
+      "x": 768,
+      "y": 0
+    },
+    "sktok_rdblock": {
+      "x": 128,
+      "y": 18048
+    },
+    "skchr_acdrop_2": {
+      "x": 896,
+      "y": 0
+    },
+    "sktok_acarm005_1": {
+      "x": 1024,
+      "y": 11776
+    },
+    "skchr_aprot_1": {
+      "x": 512,
+      "y": 896
+    },
+    "skchr_blitz_2": {
+      "x": 384,
+      "y": 1536
+    },
+    "sktok_acarm005_2": {
+      "x": 1152,
+      "y": 11776
+    },
+    "sktok_xbdrill": {
+      "x": 896,
+      "y": 20608
+    },
+    "skchr_blitz_1": {
+      "x": 256,
+      "y": 1536
+    },
+    "sktok_smrbox": {
+      "x": 512,
+      "y": 18688
+    },
+    "sktok_condtr": {
+      "x": 1024,
+      "y": 15488
+    },
+    "sktok_doroth_1": {
+      "x": 1152,
+      "y": 15616
+    },
+    "sktok_doroth_2": {
+      "x": 0,
+      "y": 15744
+    },
+    "sktok_doroth_3": {
+      "x": 128,
+      "y": 15744
+    },
+    "skchr_vrdant_1": {
+      "x": 256,
+      "y": 10496
+    },
+    "sktok_acarm125_2": {
+      "x": 1152,
+      "y": 14080
+    },
+    "sktok_acarm125_1": {
+      "x": 1024,
+      "y": 14080
+    },
+    "sktok_xbf3g": {
+      "x": 384,
+      "y": 20736
+    },
+    "skchr_vrdant_2": {
+      "x": 384,
+      "y": 10496
+    },
+    "skchr_archet_3": {
+      "x": 896,
+      "y": 896
+    },
+    "skchr_archet_2": {
+      "x": 768,
+      "y": 896
+    },
+    "skchr_archet_1": {
+      "x": 640,
+      "y": 896
+    },
+    "skchr_varkis_1": {
+      "x": 0,
+      "y": 10368
+    },
+    "skchr_varkis_2": {
+      "x": 128,
+      "y": 10368
+    },
+    "sktok_cdrhine": {
+      "x": 640,
+      "y": 15360
+    },
+    "skchr_slent2_3": {
+      "x": 256,
+      "y": 9088
+    },
+    "skchr_slent2_2": {
+      "x": 128,
+      "y": 9088
+    },
+    "sktok_xbmcv": {
+      "x": 128,
+      "y": 20992
+    },
+    "skchr_slent2_1": {
+      "x": 0,
+      "y": 9088
+    },
+    "sktok_tjgsd": {
+      "x": 512,
+      "y": 18944
+    },
+    "sktok_peacokfool": {
+      "x": 768,
+      "y": 17664
+    },
+    "skchr_makiri_2": {
+      "x": 1152,
+      "y": 6016
+    },
+    "sktok_acarm027_2": {
+      "x": 384,
+      "y": 12416
+    },
+    "sktok_acarm027_1": {
+      "x": 256,
+      "y": 12416
+    },
+    "skchr_makiri_1": {
+      "x": 1024,
+      "y": 6016
+    },
+    "skchr_aguard_1": {
+      "x": 1024,
+      "y": 384
+    },
+    "sktok_xbcore": {
+      "x": 768,
+      "y": 20608
+    },
+    "skchr_wulfen_2": {
+      "x": 0,
+      "y": 11008
+    },
+    "skchr_wisdel_3": {
+      "x": 768,
+      "y": 10880
+    },
+    "skchr_wulfen_1": {
+      "x": 1152,
+      "y": 10880
+    },
+    "sktok_pckzhn": {
+      "x": 640,
+      "y": 17664
+    },
+    "skchr_vigil_1": {
+      "x": 768,
+      "y": 10368
+    },
+    "skchr_vigil_2": {
+      "x": 896,
+      "y": 10368
+    },
+    "skchr_vigil_3": {
+      "x": 1024,
+      "y": 10368
+    },
+    "sktok_winfire": {
+      "x": 256,
+      "y": 19328
+    },
+    "sktok_acarm103_2": {
+      "x": 128,
+      "y": 13824
+    },
+    "sktok_acarm103_1": {
+      "x": 0,
+      "y": 13824
+    },
+    "sktok_acspell011_1": {
+      "x": 1152,
+      "y": 14336
+    }
+  }
+}

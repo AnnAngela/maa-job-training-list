@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>萨拉托加作业练度分析与培养清单</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-title">
+      <h1>萨拉托加作业练度分析</h1>
+      <p>对比你的森空岛干员练度与作业站「萨拉托加」作业要求，生成从高到低的培养优先级清单。</p>
+    </div>
+    <div class="header-actions">
+      <span id="status" class="status">就绪</span>
+      <button id="refresh-button" type="button" class="button button--ghost">刷新作业</button>
+    </div>
+  </header>
+  <div id="error" class="error is-hidden"></div>
+
+  <main class="page">
+    <section class="card data-card">
+      <h2>导入干员练度</h2>
+      <div class="data-columns">
+        <div class="data-panel">
+          <h3>森空岛自动获取</h3>
+          <p class="hint">登录森空岛后，在 Console 执行复制命令，粘贴得到的 cred,token。</p>
+          <form id="skland-form" class="skland-form">
+            <input id="cred-input" type="password" autocomplete="off" placeholder="cred,token">
+            <button type="submit" class="button">获取账号列表</button>
+          </form>
+          <div id="binding-list" class="binding-list"></div>
+        </div>
+        <div class="data-panel">
+          <h3>手动导入 JSON</h3>
+          <textarea id="import-input" rows="6" placeholder="[{ &quot;name&quot;: &quot;阿米娅&quot;, &quot;elite&quot;: 2, &quot;level&quot;: 60, &quot;skill1&quot;: 7, &quot;skill2&quot;: 10, &quot;skill3&quot;: 10 }]"></textarea>
+          <div class="button-row">
+            <button id="import-button" type="button" class="button">导入并分析</button>
+            <button id="sample-button" type="button" class="button button--ghost">载入示例</button>
+          </div>
+        </div>
+      </div>
+      <div class="export-row">
+        <button id="export-json-button" type="button" class="button button--ghost">导出 JSON</button>
+        <button id="export-csv-button" type="button" class="button button--ghost">导出 CSV</button>
+      </div>
+    </section>
+
+    <section class="card controls-card">
+      <div class="controls">
+        <input id="filter-input" type="search" placeholder="按干员或关卡筛选">
+        <label><input id="only-pending-input" type="checkbox"> 只看待培养</label>
+        <label><input id="only-missing-input" type="checkbox"> 只看未拥有</label>
+        <label><input id="require-module-input" type="checkbox"> 模组计入判定</label>
+        <label>排序
+          <select id="sort-select">
+            <option value="priority">优先级</option>
+            <option value="coreGain">新增可抄必带</option>
+            <option value="name">干员名</option>
+          </select>
+        </label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>汇总</h2>
+      <div id="summary" class="summary"></div>
+    </section>
+
+    <section class="card">
+      <h2>培养优先级清单</h2>
+      <div id="training-table" class="table-anchor"></div>
+    </section>
+
+    <section class="card">
+      <h2>作业明细</h2>
+      <div id="assignment-table" class="table-anchor"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>数据来源：<a href="https://prts.maa.plus" target="_blank" rel="noreferrer">PRTS 作业站</a>、<a href="https://www.skland.com" target="_blank" rel="noreferrer">森空岛</a>。凭证仅在浏览器内使用，不会上传到本站。</p>
+  </footer>
+
+  <script type="module">
+    import { initApp } from "./js/app.js";
+    initApp();
+  </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "maa-job-training-list",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "分析萨拉托加 MAA 作业练度要求并生成培养优先级清单的静态站点",
+  "scripts": {
+    "test": "vitest run --coverage",
+    "test:watch": "vitest",
+    "generate:data": "node scripts/run-generate-data.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.1.11",
+    "jsdom": "^30.0.1",
+    "vitest": "^4.1.11"
+  }
+}
