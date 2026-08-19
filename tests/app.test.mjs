@@ -4,7 +4,8 @@ vi.mock("../js/maa.js", () => ({
   fetchAllAssignments: vi.fn(),
   fetchAssignmentsSnapshot: vi.fn(),
 }));
-vi.mock("../js/skland.js", () => ({
+vi.mock("../js/skland.js", async (importOriginal) => ({
+  ...(await importOriginal()),
   fetchBindingList: vi.fn(),
   getSklandOperatorData: vi.fn(),
   parseCredential: vi.fn(),
@@ -119,6 +120,62 @@ test("normalizeImportedOperators accepts array and wrapped operators", () => {
   const wrapped = normalizeImportedOperators({ operators: [item] }, operatorMeta);
   expect(wrapped[0].name).toBe("阿米娅");
   expect(() => normalizeImportedOperators({ bad: true }, operatorMeta)).toThrow("导入数据应为数组");
+});
+
+test("normalizeImportedOperators accepts raw Skland player/info payload", () => {
+  const raw = {
+    code: 0,
+    message: "OK",
+    data: {
+      chars: [
+        {
+          charId: "char_002_amiya",
+          evolvePhase: 2,
+          level: 60,
+          mainSkillLvl: 7,
+          skills: [
+            { id: "s1", specializeLevel: 0 },
+            { id: "s2", specializeLevel: 3 },
+            { id: "s3", specializeLevel: 2 },
+          ],
+          equip: [
+            { id: "m1", level: 1, locked: false },
+            { id: "m2", level: 3, locked: true },
+          ],
+        },
+      ],
+    },
+  };
+  const rows = normalizeImportedOperators(raw, operatorMeta);
+  expect(rows).toHaveLength(1);
+  expect(rows[0]).toMatchObject({
+    charId: "char_002_amiya",
+    name: "阿米娅",
+    elite: 2,
+    level: 60,
+    skill1: 7,
+    skill2: 10,
+    skill3: 9,
+    maxModuleLevel: 1,
+  });
+});
+
+test("normalizeImportedOperators accepts data.operators and bare chars wrappers", () => {
+  const item = { name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 1 };
+  const viaData = normalizeImportedOperators({ data: { operators: [item] } }, operatorMeta);
+  expect(viaData[0].name).toBe("阿米娅");
+  const rawChars = [
+    {
+      charId: "char_002_amiya",
+      evolvePhase: 1,
+      level: 40,
+      mainSkillLvl: 5,
+      skills: [{ id: "s1", specializeLevel: 1 }],
+      equip: [],
+    },
+  ];
+  const viaChars = normalizeImportedOperators({ chars: rawChars }, operatorMeta);
+  expect(viaChars[0]).toMatchObject({ charId: "char_002_amiya", name: "阿米娅", elite: 1, level: 40, skill1: 6, maxModuleLevel: 0 });
 });
 
 test("normalizeImportedOperators fills every missing field", () => {

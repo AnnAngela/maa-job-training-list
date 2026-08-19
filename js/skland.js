@@ -101,21 +101,41 @@ export function formatSklandCharacters(chars, operatorMeta) {
   const operators = [];
   const list = Array.isArray(chars) ? chars : [];
   for (const char of list) {
-    const meta = operatorMeta?.operators?.[char?.id];
+    const charId = char?.charId || char?.id;
+    const meta = operatorMeta?.operators?.[charId];
     if (!meta) continue;
     const skills = Array.isArray(char?.skills) ? char.skills : [];
-    const equips = Array.isArray(char?.equips) ? char.equips : [];
-    const moduleLevels = equips.map((equip) => Number(equip?.level) || 0);
+    // 森空岛实际字段：char.mainSkillLvl 为技能基础等级（1-7），
+    // skills[i].specializeLevel 为专精等级（0-3），最终技能等级 = 基础 + 专精。
+    const baseSkillLevel = Number(char?.mainSkillLvl) || 0;
+    const skillLevelAt = (index) => {
+      const skill = skills[index] || {};
+      const explicit = skill.level;
+      if (explicit !== undefined && explicit !== null && explicit !== "") {
+        const legacy = Number(explicit);
+        if (Number.isFinite(legacy) && legacy > 0) return legacy;
+      }
+      return baseSkillLevel + (Number(skill.specializeLevel) || 0);
+    };
+    const equips = Array.isArray(char?.equip)
+      ? char.equip
+      : Array.isArray(char?.equips)
+        ? char.equips
+        : [];
+    // locked 表示该模组尚未解锁，不计入已拥有的模组等级
+    const moduleLevels = equips
+      .filter((equip) => !equip?.locked)
+      .map((equip) => Number(equip?.level) || 0);
     operators.push({
-      charId: char.id,
+      charId,
       name: meta.name,
       rarity: meta.rarity,
       profession: meta.profession,
       elite: Number(char?.evolvePhase) || 0,
       level: Number(char?.level) || 0,
-      skill1: Number(skills[0]?.level) || 0,
-      skill2: Number(skills[1]?.level) || 0,
-      skill3: Number(skills[2]?.level) || 0,
+      skill1: skillLevelAt(0),
+      skill2: skillLevelAt(1),
+      skill3: skillLevelAt(2),
       maxModuleLevel: moduleLevels.length ? Math.max(...moduleLevels) : 0,
     });
   }

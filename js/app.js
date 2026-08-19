@@ -5,7 +5,7 @@ import {
 } from "./config.js";
 import { computeTrainingList } from "./compare.js";
 import { fetchAllAssignments, fetchAssignmentsSnapshot } from "./maa.js";
-import { fetchBindingList, getSklandOperatorData, parseCredential } from "./skland.js";
+import { fetchBindingList, formatSklandCharacters, getSklandOperatorData, parseCredential } from "./skland.js";
 import { escapeHtml } from "./util.js";
 import { renderAssignmentTable, renderBindingButtons, renderSummary, renderTrainingTable } from "./view.js";
 
@@ -74,9 +74,31 @@ async function fetchJson(fetchImpl, url) {
 }
 
 export function normalizeImportedOperators(raw, operatorMeta) {
-  const list = Array.isArray(raw) ? raw : raw?.operators;
+  let list;
+  if (Array.isArray(raw)) {
+    list = raw;
+  } else if (Array.isArray(raw?.operators)) {
+    list = raw.operators;
+  } else if (Array.isArray(raw?.data?.operators)) {
+    list = raw.data.operators;
+  } else if (Array.isArray(raw?.chars)) {
+    list = raw.chars;
+  } else if (Array.isArray(raw?.data?.chars)) {
+    list = raw.data.chars;
+  }
   if (!Array.isArray(list)) {
-    throw new Error("导入数据应为数组或包含 operators 数组的对象");
+    throw new Error("导入数据应为数组、包含 operators 数组的对象，或森空岛 player/info 原始响应");
+  }
+  const first = list[0];
+  const isRawSkland = Boolean(
+    first &&
+      (Object.hasOwn(first, "evolvePhase") ||
+        Object.hasOwn(first, "mainSkillLvl") ||
+        Object.hasOwn(first, "equip") ||
+        Object.hasOwn(first, "potentialRank")),
+  );
+  if (isRawSkland) {
+    return formatSklandCharacters(list, operatorMeta);
   }
   return list.map((item) => {
     const charId = item.charId || operatorMeta?.nameToCharId?.[item.name] || "";

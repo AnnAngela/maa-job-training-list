@@ -18,7 +18,9 @@ copy(localStorage.getItem("SK_OAUTH_CRED_KEY")+","+localStorage.getItem("SK_TOKE
 
 ## 手动导入格式
 
-支持 JSON 数组，或包含 operators 数组的对象：
+支持以下任意一种：
+
+1. JSON 数组（字段与森空岛格式化后的干员数据一致：name、elite、level、skill1、skill2、skill3、maxModuleLevel）：
 
 ```json
 [
@@ -34,7 +36,28 @@ copy(localStorage.getItem("SK_OAUTH_CRED_KEY")+","+localStorage.getItem("SK_TOKE
 ]
 ```
 
-字段与森空岛格式化后的干员数据一致：name、elite、level、skill1、skill2、skill3、maxModuleLevel。
+2. 包含 operators 数组的对象。
+
+3. 森空岛 player/info 接口的原始响应（含 data.chars，干员字段为 charId、evolvePhase、level、mainSkillLvl、skills[].specializeLevel、equip[].level），例如 curl 或脚本直接保存的接口返回：
+
+```json
+{
+  "code": 0,
+  "message": "OK",
+  "data": {
+    "chars": [
+      {
+        "charId": "char_002_amiya",
+        "evolvePhase": 2,
+        "level": 60,
+        "mainSkillLvl": 7,
+        "skills": [{ "specializeLevel": 0 }],
+        "equip": [{ "level": 1, "locked": false }]
+      }
+    ]
+  }
+}
+```
 
 ## 判定规则
 

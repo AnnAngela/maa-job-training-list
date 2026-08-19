@@ -103,7 +103,7 @@ test("fetchPlayerInfo returns data or throws", async () => {
   await expect(fetchPlayerInfo(noMessage, "123", "cred", "token", { now: () => 1700000000000 })).rejects.toThrow("读取森空岛数据失败");
 });
 
-test("formatSklandCharacters maps char data to operators", () => {
+test("formatSklandCharacters maps real Skland char data to operators", () => {
   const operatorMeta = {
     operators: {
       char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] },
@@ -111,11 +111,36 @@ test("formatSklandCharacters maps char data to operators", () => {
     },
   };
   const chars = [
-    { id: "char_002_amiya", evolvePhase: 2, level: 60, skills: [{ level: 7 }, { level: 10 }], equips: [{ level: 1 }] },
-    { id: "char_missing", evolvePhase: 0, level: 1, skills: [], equips: [] },
+    {
+      charId: "char_002_amiya",
+      evolvePhase: 2,
+      level: 60,
+      mainSkillLvl: 7,
+      skills: [
+        { id: "skcom_magic_rage[3]", specializeLevel: 0 },
+        { id: "skchr_amiya_2", specializeLevel: 3 },
+        { id: "skchr_amiya_3", specializeLevel: 2 },
+      ],
+      equip: [
+        { id: "uniequip_001_amiya", level: 1, locked: false },
+        { id: "uniequip_002_amiya", level: 3, locked: true },
+      ],
+    },
+    { charId: "char_missing", evolvePhase: 0, level: 1, mainSkillLvl: 1, skills: [], equip: [] },
   ];
   const operators = formatSklandCharacters(chars, operatorMeta);
   expect(operators).toHaveLength(1);
+  expect(operators[0]).toMatchObject({ charId: "char_002_amiya", name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 9, maxModuleLevel: 1 });
+});
+
+test("formatSklandCharacters accepts legacy id/skills[].level/equips shape", () => {
+  const operatorMeta = {
+    operators: { char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] } },
+  };
+  const operators = formatSklandCharacters(
+    [{ id: "char_002_amiya", evolvePhase: 2, level: 60, skills: [{ level: 7 }, { level: 10 }], equips: [{ level: 1 }] }],
+    operatorMeta,
+  );
   expect(operators[0]).toMatchObject({ charId: "char_002_amiya", name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 10, maxModuleLevel: 1 });
 });
 
@@ -126,12 +151,14 @@ test("formatSklandCharacters handles non-array chars and empty arrays", () => {
   expect(fallback).toMatchObject({ elite: 0, level: 0, skill1: 0, skill2: 0, skill3: 0, maxModuleLevel: 0 });
   const zeroEquip = formatSklandCharacters([{ id: "char_002_amiya", skills: [], equips: [{ level: 0 }] }], { operators: { char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] } } })[0];
   expect(zeroEquip.maxModuleLevel).toBe(0);
+  const zeroLegacyLevel = formatSklandCharacters([{ id: "char_002_amiya", mainSkillLvl: 7, skills: [{ level: 0 }], equips: [] }], { operators: { char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] } } })[0];
+  expect(zeroLegacyLevel.skill1).toBe(7);
 });
 
 test("getSklandOperatorData supports uid and binding fallback", async () => {
   const operatorMeta = { operators: { char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] } } };
   const fetchImpl = vi.fn()
-    .mockResolvedValueOnce(jsonResponse({ code: 0, data: { chars: [{ id: "char_002_amiya", evolvePhase: 2, level: 60, skills: [], equips: [] }] } }));
+    .mockResolvedValueOnce(jsonResponse({ code: 0, data: { chars: [{ charId: "char_002_amiya", evolvePhase: 2, level: 60, mainSkillLvl: 7, skills: [{ id: "s1", specializeLevel: 0 }], equip: [] }] } }));
   const data = await getSklandOperatorData(fetchImpl, "cred", "token", operatorMeta, { uid: "123", now: () => 1700000000000 });
   expect(data.uid).toBe("123");
   expect(data.operators).toHaveLength(1);
