@@ -29,7 +29,6 @@ function createState() {
     onlyMissing: false,
     requireModule: false,
     recentOnly: false,
-    sortBy: "priority",
   };
 }
 
@@ -62,7 +61,6 @@ function collectElements(doc) {
     onlyPendingInput: requireElement(doc, "only-pending-input"),
     onlyMissingInput: requireElement(doc, "only-missing-input"),
     requireModuleInput: requireElement(doc, "require-module-input"),
-    sortSelect: requireElement(doc, "sort-select"),
     recentToggle: requireElement(doc, "recent-toggle"),
   };
 }
@@ -178,14 +176,8 @@ function createApp(deps, elements) {
       rows = rows.filter((row) => row.user && row.totalGap > 0);
     }
     const sorted = [...rows];
-    // 任何排序方式下都先按“未满足必带作业”降序
-    if (state.sortBy === "coreGain") {
-      sorted.sort((a, b) => b.unsatisfiedCore - a.unsatisfiedCore || b.coreGain - a.coreGain || b.score - a.score || a.name.localeCompare(b.name, "zh-CN"));
-    } else if (state.sortBy === "name") {
-      sorted.sort((a, b) => b.unsatisfiedCore - a.unsatisfiedCore || a.name.localeCompare(b.name, "zh-CN"));
-    } else {
-      sorted.sort((a, b) => b.unsatisfiedCore - a.unsatisfiedCore || b.score - a.score || a.totalGap - b.totalGap || a.name.localeCompare(b.name, "zh-CN"));
-    }
+    // 固定按“未满足必带作业”降序排列
+    sorted.sort((a, b) => b.unsatisfiedCore - a.unsatisfiedCore || b.score - a.score || a.totalGap - b.totalGap || a.name.localeCompare(b.name, "zh-CN"));
     return sorted;
   }
 
@@ -397,16 +389,10 @@ function createApp(deps, elements) {
       if (state.userOperators.length) runAnalysis();
       render();
     });
-    elements.sortSelect.addEventListener("change", (event) => {
-      state.sortBy = event.target.value;
-      render();
-    });
     elements.recentToggle.addEventListener("click", () => {
       state.recentOnly = !state.recentOnly;
       updateRecentToggle();
-      // 切换时间窗口后重新按“未满足必带作业”降序排列（回到默认优先级排序）
-      state.sortBy = "priority";
-      elements.sortSelect.value = "priority";
+      // 切换时间窗口后重新计算并固定按“未满足必带作业”降序排列
       runAnalysis();
       render();
     });

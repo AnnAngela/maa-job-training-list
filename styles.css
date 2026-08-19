@@ -56,7 +56,7 @@ a:hover { text-decoration: underline; }
 .data-panel { background: var(--surface-alt); border-radius: 12px; padding: 14px; }
 .hint { color: var(--muted); font-size: 13px; margin: 0 0 10px; }
 .skland-form { display: flex; gap: 8px; }
-.skland-form input, .controls input[type="search"], .controls select, .data-panel textarea {
+.skland-form input, .controls input[type="search"], .data-panel textarea {
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 9px 10px;
@@ -87,7 +87,6 @@ a:hover { text-decoration: underline; }
 
 .controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
 .controls label { display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); white-space: nowrap; }
-.controls label select { width: auto; flex: 0 0 auto; }
 
 .error { margin: 0 20px; padding: 10px 14px; border-radius: 10px; background: #fef2f2; color: var(--danger); border: 1px solid #fecaca; font-size: 14px; }
 .is-hidden { display: none; }

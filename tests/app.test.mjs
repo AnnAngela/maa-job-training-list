@@ -61,7 +61,6 @@ function buildDom() {
     "<input id=\"only-pending-input\" type=\"checkbox\">",
     "<input id=\"only-missing-input\" type=\"checkbox\">",
     "<input id=\"require-module-input\" type=\"checkbox\">",
-    "<select id=\"sort-select\"><option value=\"priority\">优先级</option><option value=\"coreGain\">核心</option><option value=\"name\">干员名</option></select>",
     "<button id=\"recent-toggle\"></button>",
   ].join("");
 }
@@ -341,19 +340,15 @@ test("recent toggle re-sorts rows by unsatisfiedCore desc", async () => {
   // 全部作业：凯尔希未满足 4 > 阿米娅 2
   let html = app.elements.trainingTable.innerHTML;
   expect(html.indexOf("凯尔希")).toBeLessThan(html.indexOf("阿米娅"));
-  // 先切到“按干员名”，再点窗口切换按钮
-  app.elements.sortSelect.value = "name";
-  app.elements.sortSelect.dispatchEvent(new Event("change", { bubbles: true }));
+  // 点击窗口切换按钮后应重新按未满足必带作业降序
   app.elements.recentToggle.dispatchEvent(new Event("click", { bubbles: true }));
   expect(app.state.recentOnly).toBe(true);
-  expect(app.state.sortBy).toBe("priority");
-  expect(app.elements.sortSelect.value).toBe("priority");
-  // 仅近6个月：阿米娅未满足 2 > 凯尔希 1，应重新按未满足必带作业降序
+  // 仅近6个月：阿米娅未满足 2 > 凯尔希 1
   html = app.elements.trainingTable.innerHTML;
   expect(html.indexOf("阿米娅")).toBeLessThan(html.indexOf("凯尔希"));
 });
 
-test("unsatisfiedCore desc dominates every sort mode", async () => {
+test("rows are always sorted by unsatisfiedCore desc", async () => {
   fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
   const app = await initApp({ fetchImpl: makeFetchImpl() });
   const makeRow = (name, unsatisfiedCore, score) => ({ name, unsatisfiedCore, score, coreGain: 0, groupGain: 0, totalGap: 0 });
@@ -364,14 +359,10 @@ test("unsatisfiedCore desc dominates every sort mode", async () => {
   };
   app.elements.filterInput.value = "";
   app.elements.filterInput.dispatchEvent(new Event("input", { bubbles: true }));
-  const firstOrder = app.elements.trainingTable.innerHTML;
-  expect(firstOrder.indexOf("阿米娅")).toBeLessThan(firstOrder.indexOf("塞雷娅"));
-  for (const mode of ["priority", "coreGain", "name"]) {
-    app.elements.sortSelect.value = mode;
-    app.elements.sortSelect.dispatchEvent(new Event("change", { bubbles: true }));
-    const html = app.elements.trainingTable.innerHTML;
-    expect(html.indexOf("阿米娅")).toBeLessThan(html.indexOf("塞雷娅"));
-  }
+  const html = app.elements.trainingTable.innerHTML;
+  // 未满足必带作业 5 的在前、2 的在后；同分时按干员名
+  expect(html.indexOf("阿米娅")).toBeLessThan(html.indexOf("凯尔希"));
+  expect(html.indexOf("凯尔希")).toBeLessThan(html.indexOf("塞雷娅"));
 });
 
 test("export handlers show error when result is empty", async () => {
@@ -453,27 +444,6 @@ test("refresh button click triggers live refresh", async () => {
   expect(app.state.assignmentSource).toBe("live");
 });
 
-test("sort comparators use secondary keys", async () => {
-  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
-  const app = await initApp({ fetchImpl: makeFetchImpl() });
-  app.state.result = {
-    summary: { totalAssignments: 0, readyCount: 0, notReadyCount: 0, involvedOperators: 0, ownedOperators: 0, missingOperators: 0 },
-    assignmentResults: [],
-    rows: [
-      { name: "a", coreGain: 2, score: 100, totalGap: 10 },
-      { name: "b", coreGain: 2, score: 200, totalGap: 5 },
-      { name: "c", coreGain: 0, score: 200, totalGap: 5 },
-      { name: "d", coreGain: 0, score: 200, totalGap: 9 },
-    ],
-  };
-  app.elements.sortSelect.value = "coreGain";
-  app.elements.sortSelect.dispatchEvent(new Event("change", { bubbles: true }));
-  app.elements.sortSelect.value = "priority";
-  app.elements.sortSelect.dispatchEvent(new Event("change", { bubbles: true }));
-  expect(app.state.sortBy).toBe("priority");
-});
-
-
 test("skland command is populated and copy succeeds", async () => {
   fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
   const app = await initApp({ fetchImpl: makeFetchImpl() });
@@ -515,7 +485,7 @@ test("render handles missing rows and status fallback", async () => {
   expect(app.state.filterText).toBe("x");
 });
 
-test("filter and sort controls update state and render", async () => {
+test("filter and checkbox controls update state and render", async () => {
   fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
   const app = await initApp({ fetchImpl: makeFetchImpl() });
   app.state.assignments = [
@@ -523,18 +493,6 @@ test("filter and sort controls update state and render", async () => {
     { id: 2, title: "凯尔希", stageName: "凯尔希", uploadTime: new Date().toISOString(), required: [{ name: "凯尔希", skill: 1, requirements: { level: 90 } }], groups: [] },
   ];
   app.loadSampleData();
-
-  app.elements.sortSelect.value = "coreGain";
-  app.elements.sortSelect.dispatchEvent(new Event("change", { bubbles: true }));
-  expect(app.state.sortBy).toBe("coreGain");
-
-  app.elements.sortSelect.value = "name";
-  app.elements.sortSelect.dispatchEvent(new Event("change", { bubbles: true }));
-  expect(app.state.sortBy).toBe("name");
-
-  app.elements.sortSelect.value = "priority";
-  app.elements.sortSelect.dispatchEvent(new Event("change", { bubbles: true }));
-  expect(app.state.sortBy).toBe("priority");
 
   app.elements.filterInput.value = "阿米娅";
   app.elements.filterInput.dispatchEvent(new Event("input", { bubbles: true }));
