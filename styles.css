@@ -52,7 +52,6 @@ a:hover { text-decoration: underline; }
 .hint { color: var(--muted); font-size: 13px; margin: 0 0 10px; }
 .skland-form { display: flex; gap: 8px; }
 .skland-form input, .controls input[type="search"], .controls select, .data-panel textarea {
-  width: 100%;
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 9px 10px;
@@ -60,9 +59,10 @@ a:hover { text-decoration: underline; }
   background: #fff;
   color: var(--text);
 }
-.skland-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
-.skland-command { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
-.skland-command code { display: block; max-width: 520px; overflow-x: auto; white-space: nowrap; padding: 8px 10px; border: 1px solid var(--border); border-radius: 10px; background: #0f172a; color: #e2e8f0; font-size: 12px; }
+.skland-form input, .controls input[type="search"], .data-panel textarea { width: 100%; }
+.skland-actions { display: grid; gap: 8px; margin-bottom: 10px; }
+.skland-command { display: block; min-width: 0; max-width: 100%; overflow-x: auto; white-space: nowrap; padding: 8px 10px; border: 1px solid var(--border); border-radius: 10px; background: #0f172a; color: #e2e8f0; font-size: 12px; }
+.skland-button-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .skland-form input { flex: 1; }
 .data-panel textarea { resize: vertical; }
 .button-row { display: flex; gap: 8px; margin-top: 10px; }
@@ -81,7 +81,8 @@ a:hover { text-decoration: underline; }
 .button--ghost:hover { background: var(--surface-alt); }
 
 .controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-.controls label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); white-space: nowrap; }
+.controls label { display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); white-space: nowrap; }
+.controls label select { width: auto; flex: 0 0 auto; }
 
 .error { margin: 0 20px; padding: 10px 14px; border-radius: 10px; background: #fef2f2; color: var(--danger); border: 1px solid #fecaca; font-size: 14px; }
 .is-hidden { display: none; }
