@@ -89,7 +89,7 @@ a:hover { text-decoration: underline; }
 .controls label { display: inline-flex; flex-wrap: nowrap; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); white-space: nowrap; }
 
 .error { margin: 0 20px; padding: 10px 14px; border-radius: 10px; background: #fef2f2; color: var(--danger); border: 1px solid #fecaca; font-size: 14px; }
-.is-hidden { display: none; }
+.is-hidden { display: none !important; }
 
 .summary-grid { display: grid; grid-template-columns: repeat(5, minmax(120px, 1fr)); gap: 10px; }
 .summary-card { background: var(--surface-alt); border-radius: 12px; padding: 12px 14px; }
