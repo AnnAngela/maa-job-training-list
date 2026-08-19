@@ -62,6 +62,7 @@ function buildDom() {
     "<input id=\"only-missing-input\" type=\"checkbox\">",
     "<input id=\"require-module-input\" type=\"checkbox\">",
     "<select id=\"sort-select\"><option value=\"priority\">优先级</option><option value=\"coreGain\">核心</option><option value=\"name\">干员名</option></select>",
+    "<button id=\"recent-toggle\"></button>",
   ].join("");
 }
 
@@ -295,6 +296,31 @@ test("sample data loads and analyzes", async () => {
   app.loadSampleData();
   expect(app.state.userOperators).toHaveLength(2);
   expect(app.state.result).not.toBeNull();
+});
+
+test("recent toggle filters assignments to the last 6 months", async () => {
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  expect(app.elements.recentToggle.textContent).toBe("全部作业");
+  const now = Date.now();
+  const recent = new Date(now - 30 * 24 * 60 * 60 * 1000).toISOString();
+  const old = new Date(now - 220 * 24 * 60 * 60 * 1000).toISOString();
+  app.state.assignments = [
+    { id: 1, uploadTime: recent, required: [{ name: "阿米娅", skill: 1, requirements: { level: 90 } }], groups: [] },
+    { id: 2, uploadTime: old, required: [{ name: "阿米娅", skill: 1, requirements: { level: 90 } }], groups: [] },
+    { id: 3, uploadTime: "", required: [{ name: "阿米娅", skill: 1, requirements: { level: 90 } }], groups: [] },
+  ];
+  app.loadSampleData();
+  expect(app.state.result.summary.totalAssignments).toBe(3);
+  app.elements.recentToggle.dispatchEvent(new Event("click", { bubbles: true }));
+  expect(app.state.recentOnly).toBe(true);
+  expect(app.elements.recentToggle.textContent).toBe("仅近6个月作业");
+  expect(app.elements.recentToggle.classList.contains("button--active")).toBe(true);
+  expect(app.state.result.summary.totalAssignments).toBe(1);
+  app.elements.recentToggle.dispatchEvent(new Event("click", { bubbles: true }));
+  expect(app.state.recentOnly).toBe(false);
+  expect(app.elements.recentToggle.textContent).toBe("全部作业");
+  expect(app.state.result.summary.totalAssignments).toBe(3);
 });
 
 test("export handlers show error when result is empty", async () => {

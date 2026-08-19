@@ -1,5 +1,6 @@
 import {
   OPERATOR_META_URL,
+  RECENT_WINDOW_DAYS,
   SKILL_SPRITE_URL,
   SKLAND_COMMAND,
 } from "./config.js";
@@ -27,6 +28,7 @@ function createState() {
     onlyPending: false,
     onlyMissing: false,
     requireModule: false,
+    recentOnly: false,
     sortBy: "priority",
   };
 }
@@ -61,6 +63,7 @@ function collectElements(doc) {
     onlyMissingInput: requireElement(doc, "only-missing-input"),
     requireModuleInput: requireElement(doc, "require-module-input"),
     sortSelect: requireElement(doc, "sort-select"),
+    recentToggle: requireElement(doc, "recent-toggle"),
   };
 }
 
@@ -190,12 +193,27 @@ function createApp(deps, elements) {
       state.result = null;
       return;
     }
+    const assignments = state.recentOnly
+      ? state.assignments.filter((assignment) => {
+          const time = Date.parse(assignment.uploadTime || "");
+          return Number.isFinite(time) && time >= Date.now() - RECENT_WINDOW_DAYS * 24 * 60 * 60 * 1000;
+        })
+      : state.assignments;
+    const options = { requireModule: state.requireModule };
+    if (state.recentOnly) {
+      options.recentDays = RECENT_WINDOW_DAYS;
+    }
     state.result = computeTrainingList({
-      assignments: state.assignments,
+      assignments,
       userOperators: state.userOperators,
       operatorMeta: state.operatorMeta,
-      options: { requireModule: state.requireModule },
+      options,
     });
+  }
+
+  function updateRecentToggle() {
+    elements.recentToggle.textContent = state.recentOnly ? "仅近6个月作业" : "全部作业";
+    elements.recentToggle.classList.toggle("button--active", state.recentOnly);
   }
 
   function render() {
@@ -382,8 +400,15 @@ function createApp(deps, elements) {
       state.sortBy = event.target.value;
       render();
     });
+    elements.recentToggle.addEventListener("click", () => {
+      state.recentOnly = !state.recentOnly;
+      updateRecentToggle();
+      runAnalysis();
+      render();
+    });
   }
 
+  updateRecentToggle();
   bindEvents();
 
   async function bootstrap() {

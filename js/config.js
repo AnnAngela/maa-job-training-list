@@ -14,6 +14,7 @@ export const SKLAND_LINK = "https://www.skland.com/index";
 export const SKLAND_COMMAND = 'copy(localStorage.getItem("SK_OAUTH_CRED_KEY")+","+localStorage.getItem("SK_TOKEN_CACHE_KEY"))';
 
 export const RECENT_DAYS = 90;
+export const RECENT_WINDOW_DAYS = 180;
 export const DEFAULT_LIMIT = 100;
 
 export const SCORE_WEIGHTS = {

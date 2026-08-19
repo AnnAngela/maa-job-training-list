@@ -30,6 +30,10 @@ test("operatorAvatarHtml renders with and without charId", () => {
   expect(operatorAvatarHtml("阿米娅", "char_002_amiya", { grayscale: true })).toContain("operator-avatar--grayscale");
   expect(operatorAvatarHtml("阿米娅", "")).not.toContain("<img");
   expect(operatorAvatarHtml(null, "char_002_amiya")).toContain("?");
+  // 有 charId 时名字占位默认隐藏，仅当头像加载失败时显示
+  expect(operatorAvatarHtml("阿米娅", "char_002_amiya")).toContain("avatar-fallback is-hidden");
+  expect(operatorAvatarHtml("阿米娅", "char_002_amiya")).toContain("previousElementSibling.classList.remove('is-hidden')");
+  expect(operatorAvatarHtml("阿米娅", "")).not.toContain("is-hidden");
 });
 
 test("skillIconHtml renders empty and sprite variants", () => {
