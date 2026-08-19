@@ -162,6 +162,26 @@ test("computeTrainingList summarizes and prioritizes", () => {
   expect(result.rows[0].user).toBe(amiya);
 });
 
+test("computeTrainingList computes per-skill and module target maxima", () => {
+  const assignments = [
+    { id: 1, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "阿米娅", skill: 2, requirements: { level: 60, skill_level: 7 } }], groups: [] },
+    { id: 2, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "阿米娅", skill: 3, requirements: { level: 90, skill_level: 10, module: 2 } }, { name: "阿米娅", skill: 1, requirements: { skill_level: 5 } }], groups: [] },
+  ];
+  const result = computeTrainingList({ assignments, userOperators: [], operatorMeta, options: {} });
+  const amiyaRow = result.rows.find((row) => row.name === "阿米娅");
+  expect(amiyaRow.target).toMatchObject({ elite: 2, level: 90, skill1: 5, skill2: 7, skill3: 10, module: 2 });
+});
+
+test("computeTrainingList keeps out-of-range skill slots out of target skills", () => {
+  const assignments = [
+    { id: 1, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "阿米娅", skill: 4, requirements: { skill_level: 8 } }], groups: [{ name: "组", opers: [{ name: "阿米娅", skill: 0, requirements: { level: 50 } }] }] },
+    { id: 2, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [], groups: [{ name: "组2", opers: [{ name: "阿米娅", skill: 4, requirements: { skill_level: 9 } }] }] },
+  ];
+  const result = computeTrainingList({ assignments, userOperators: [], operatorMeta, options: {} });
+  const amiyaRow = result.rows.find((row) => row.name === "阿米娅");
+  expect(amiyaRow.target).toMatchObject({ elite: 3, level: 50, skill1: 0, skill2: 0, skill3: 0 });
+});
+
 test("computeTrainingList handles group gains and other required operators", () => {
   const assignments = [
     {

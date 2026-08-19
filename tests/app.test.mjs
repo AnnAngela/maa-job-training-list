@@ -47,7 +47,6 @@ function buildDom() {
     "<div id=\"error\" class=\"error is-hidden\"></div>",
     "<div id=\"summary\"></div>",
     "<div id=\"training-table\"></div>",
-    "<div id=\"assignment-table\"></div>",
     "<button id=\"refresh-button\"></button>",
     "<form id=\"skland-form\"><input id=\"cred-input\" type=\"password\"></form>",
     "<code id=\"skland-command\"></code>",
@@ -397,31 +396,6 @@ test("sort comparators use secondary keys", async () => {
   expect(app.state.sortBy).toBe("priority");
 });
 
-test("filterAssignments matches stageName when title is empty", async () => {
-  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
-  const app = await initApp({ fetchImpl: makeFetchImpl() });
-  app.state.result = {
-    summary: { totalAssignments: 0, readyCount: 0, notReadyCount: 0, involvedOperators: 0, ownedOperators: 0, missingOperators: 0 },
-    assignmentResults: [{ assignment: { id: 1, title: "", stageName: "阿米娅" }, result: { ready: false, hasNamedRequirements: true, requiredResults: [], groupResults: [] } }],
-    rows: [],
-  };
-  app.elements.filterInput.value = "阿米娅";
-  app.elements.filterInput.dispatchEvent(new Event("input", { bubbles: true }));
-  expect(app.state.filterText).toBe("阿米娅");
-});
-
-test("filterAssignments falls back when title and stageName are missing", async () => {
-  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
-  const app = await initApp({ fetchImpl: makeFetchImpl() });
-  app.state.result = {
-    summary: { totalAssignments: 0, readyCount: 0, notReadyCount: 0, involvedOperators: 0, ownedOperators: 0, missingOperators: 0 },
-    assignmentResults: [{ assignment: { id: 2, title: undefined, stageName: undefined }, result: { ready: false, hasNamedRequirements: true, requiredResults: [], groupResults: [] } }],
-    rows: [],
-  };
-  app.elements.filterInput.value = "不存在";
-  app.elements.filterInput.dispatchEvent(new Event("input", { bubbles: true }));
-  expect(app.state.filterText).toBe("不存在");
-});
 
 test("skland command is populated and copy succeeds", async () => {
   fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });

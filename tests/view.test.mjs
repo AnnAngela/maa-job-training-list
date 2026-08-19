@@ -4,7 +4,6 @@ import {
   operatorAvatarHtml,
   operatorSkillIcon,
   rarityStars,
-  renderAssignmentTable,
   renderBindingButtons,
   renderSummary,
   renderTrainingTable,
@@ -72,60 +71,49 @@ test("renderBindingButtons renders empty and list", () => {
 
 test("renderTrainingTable renders empty state and rows", () => {
   expect(renderTrainingTable([], { operatorMeta, skillSprite })).toContain("暂无培养需求");
-  const rows = [{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60 }, target: { elite: 2, level: 90, skill: 1, skillLevel: 7 }, coreGain: 2, groupGain: 1, unsatisfiedCore: 3, score: 6000, totalGap: 20 }];
+  const rows = [{
+    name: "阿米娅",
+    user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 1 },
+    target: { elite: 2, level: 90, skill1: 7, skill2: 10, skill3: 10, module: 3 },
+    coreGain: 2,
+    groupGain: 1,
+    unsatisfiedCore: 3,
+    score: 6000,
+    totalGap: 20,
+  }];
   const html = renderTrainingTable(rows, { operatorMeta, skillSprite });
   expect(html).toContain("阿米娅");
   expect(html).toContain("极高");
+  expect(html).toContain("精2 60级");
+  expect(html).toContain("技能 7/10/10");
+  expect(html).toContain("模组 1");
+  expect(html).toContain("技能1 7级");
+  expect(html).toContain("技能2 专三");
+  expect(html).toContain("技能3 专三");
+  expect(html).toContain('<span class="req-unmet">90级</span>');
+  expect(html).toContain('<span class="req-unmet">模组 3</span>');
   const sparseRows = [{ name: "阿米娅", user: { elite: 0, level: 0 }, target: undefined, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 1 }];
   const sparseHtml = renderTrainingTable(sparseRows, { operatorMeta, skillSprite });
   expect(sparseHtml).toContain("char_002_amiya");
   expect(sparseHtml).toContain("精0 0级");
+  expect(sparseHtml).toContain("—");
   expect(sparseHtml).toContain("待培养");
-  const zeroSkill = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60 }, target: { elite: 2, level: 60, skill: 1, skillLevel: 0 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
-  expect(zeroSkill).toContain("技能1 0级");
+  const partialSkills = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 5, skill3: 10, maxModuleLevel: 0 }, target: { elite: 2, level: 60, skill1: 0, skill2: 7, skill3: 0, module: -1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+  expect(partialSkills).toContain("技能2 7级");
+  expect(partialSkills).not.toContain("技能1");
+  expect(partialSkills).not.toContain("技能3");
+  expect(partialSkills).toContain('<span class="req-unmet">技能2 7级</span>');
+  expect(partialSkills).not.toContain("模组");
+  const missingRow = renderTrainingTable([{ name: "阿米娅", user: null, target: { elite: 2, level: 90, skill1: 0, skill2: 7, skill3: 0, module: 1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+  expect(missingRow).toContain(">—<");
+  expect(missingRow).toContain('<span class="req-unmet">精2</span>');
+  expect(missingRow).toContain('<span class="req-unmet">90级</span>');
+  expect(missingRow).toContain('<span class="req-unmet">技能2 7级</span>');
+  expect(missingRow).toContain('<span class="req-unmet">模组 1</span>');
+  const satisfiedModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 3 }, target: { elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, module: 1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+  expect(satisfiedModule).toContain("模组 1");
+  expect(satisfiedModule).not.toContain("req-unmet");
+  const zeroModuleUser = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 0 }, target: { elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, module: 1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+  expect(zeroModuleUser).toContain('<span class="req-unmet">模组 1</span>');
 });
 
-test("renderAssignmentTable renders empty, ready, and blocked rows", () => {
-  expect(renderAssignmentTable([])).toContain("暂无作业数据");
-  const ready = [{ assignment: { id: 1, title: "A", stageName: "1-7" }, result: { ready: true, hasNamedRequirements: true, requiredResults: [], groupResults: [] } }];
-  expect(renderAssignmentTable(ready)).toContain("可抄");
-  const blocked = [{
-    assignment: { id: 2, title: "B", stageName: "2-1" },
-    result: {
-      ready: false,
-      hasNamedRequirements: true,
-      requiredResults: [{ slot: { name: "阿米娅" }, result: { satisfied: false, gaps: [{ type: "missing" }] } }],
-      groupResults: [{ name: "奶盾", satisfied: false, results: [{ slot: { name: "塞雷娅" }, result: { satisfied: false, gaps: [{ type: "level", required: 90, current: 1 }] } }] }],
-    },
-  }];
-  const html = renderAssignmentTable(blocked);
-  expect(html).toContain("不可抄");
-  expect(html).toContain("阿米娅(未拥有)");
-  expect(html).toContain("塞雷娅");
-  const otherGaps = [{
-    assignment: { id: 3, title: "C", stageName: "3-1" },
-    result: {
-      ready: false,
-      hasNamedRequirements: true,
-      requiredResults: [{ slot: { name: "阿米娅" }, result: { satisfied: false, gaps: [{ type: "elite", required: 2 }, { type: "skill_level", skill: 1, required: 10 }, { type: "weird" }] } }],
-      groupResults: [],
-    },
-  }];
-  const otherHtml = renderAssignmentTable(otherGaps);
-  expect(otherHtml).toContain("精2");
-  expect(otherHtml).toContain("技能1 专三");
-  expect(otherHtml).toContain("weird");
-  const satisfiedGroup = [{
-    assignment: { id: 4, title: "D", stageName: "4-1" },
-    result: {
-      ready: false,
-      hasNamedRequirements: true,
-      requiredResults: [
-        { slot: { name: "阿米娅" }, result: { satisfied: true, gaps: [] } },
-        { slot: { name: "凯尔希" }, result: { satisfied: false, gaps: [{ type: "missing" }] } },
-      ],
-      groupResults: [{ name: "奶盾", satisfied: true, results: [{ slot: { name: "塞雷娅" }, result: { satisfied: true, gaps: [] } }] }],
-    },
-  }];
-  expect(renderAssignmentTable(satisfiedGroup)).toContain("凯尔希(未拥有)");
-});

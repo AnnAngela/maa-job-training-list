@@ -65,62 +65,62 @@ export function renderBindingButtons(bindings) {
   return `<div class="binding-list">${bindings.map((binding) => `<button type="button" class="binding-button" data-uid="${escapeHtml(binding.uid || "")}"><span class="binding-name">${escapeHtml(binding.nickName || "")}</span><span class="binding-meta">${escapeHtml(binding.channelName || "")} · ${escapeHtml(binding.uid || "")}</span></button>`).join("")}</div>`;
 }
 
-export function renderTrainingTable(rows, { operatorMeta, skillSprite }) {
+export function renderTrainingTable(rows, { operatorMeta }) {
   if (rows.length === 0) {
     return `<div class="empty-state">暂无培养需求，先去获取干员数据或刷新作业。</div>`;
   }
   const body = rows.map((row) => {
     const charId = row.user?.charId || charIdForName(row.name, operatorMeta);
     const meta = operatorMeta?.operators?.[charId];
-    const target = row.target || {};
-    const current = row.user
-      ? `精${row.user.elite || 0} ${row.user.level || 0}级`
-      : "—";
-    const targetText = `精${target.elite || 0} ${target.level || 0}级`;
-    const skillText = target.skill
-      ? `技能${target.skill} ${skillLevelLabel(target.skillLevel || 0)}`
-      : "—";
+    const current = row.user ? formatCurrent(row.user) : "—";
+    const target = formatTarget(row.target || {}, row.user);
     const avatar = operatorAvatarHtml(row.name, charId, { size: 34, grayscale: !row.user });
-    const skillIcon = operatorSkillIcon(operatorMeta, skillSprite, charId, target.skill, { size: 20 });
-    return `<tr><td class="priority-cell"><span class="tier tier--${escapeHtml(scoreTier(row.score))}">${escapeHtml(scoreTier(row.score))}</span></td><td class="operator-cell">${avatar}<span class="operator-name">${escapeHtml(row.name)}</span><span class="operator-meta">${escapeHtml(meta?.profession || "")} ${escapeHtml(rarityStars(meta?.rarity))}</span></td><td>${current}</td><td>${targetText}</td><td class="skill-cell">${skillIcon} ${escapeHtml(skillText)}</td><td>${formatNumber(row.coreGain)}</td><td>${formatNumber(row.groupGain)}</td><td>${formatNumber(row.unsatisfiedCore)}</td><td>${statusBadge(row)}</td></tr>`;
+    return `<tr><td class="priority-cell"><span class="tier tier--${escapeHtml(scoreTier(row.score))}">${escapeHtml(scoreTier(row.score))}</span></td><td class="operator-cell">${avatar}<span class="operator-name">${escapeHtml(row.name)}</span><span class="operator-meta">${escapeHtml(meta?.profession || "")} ${escapeHtml(rarityStars(meta?.rarity))}</span></td><td class="progress-cell">${current}</td><td class="progress-cell">${target}</td><td>${formatNumber(row.coreGain)}</td><td>${formatNumber(row.groupGain)}</td><td>${formatNumber(row.unsatisfiedCore)}</td><td>${statusBadge(row)}</td></tr>`;
   }).join("");
-  return `<div class="table-wrap"><table class="data-table"><thead><tr><th>优先级</th><th>干员</th><th>当前</th><th>目标</th><th>技能</th><th>新增可抄(必带)</th><th>新增可抄(组内)</th><th>未满足必带作业</th><th>状态</th></tr></thead><tbody>${body}</tbody></table></div>`;
+  return `<div class="table-wrap"><table class="data-table"><thead><tr><th>优先级</th><th>干员</th><th>当前</th><th>目标</th><th>新增可抄(必带)</th><th>新增可抄(组内)</th><th>未满足必带作业</th><th>状态</th></tr></thead><tbody>${body}</tbody></table></div>`;
 }
 
-export function renderAssignmentTable(assignmentResults) {
-  if (assignmentResults.length === 0) {
-    return `<div class="empty-state">暂无作业数据</div>`;
+function skillTriplet(user) {
+  return [1, 2, 3].map((index) => Number(user?.[`skill${index}`]) || 0);
+}
+
+function formatCurrent(user) {
+  const parts = [`精${Number(user.elite) || 0} ${Number(user.level) || 0}级`];
+  const skills = skillTriplet(user);
+  if (skills.some((value) => value > 0)) {
+    parts.push(`技能 ${skills.join("/")}`);
   }
-  const body = assignmentResults.map(({ assignment, result }) => {
-    const readyClass = result.ready ? "status status--ready" : "status status--blocked";
-    const missing = result.hasNamedRequirements && !result.ready ? buildMissingText(result) : "—";
-    return `<tr><td class="${readyClass}">${result.ready ? "可抄" : "不可抄"}</td><td>${escapeHtml(assignment.title || assignment.stageName || "")}</td><td>${escapeHtml(assignment.stageName || "")}</td><td>${escapeHtml(missing)}</td><td><a href="https://prts.maa.plus/copilot/${escapeHtml(String(assignment.id))}" target="_blank" rel="noreferrer">打开</a></td></tr>`;
-  }).join("");
-  return `<div class="table-wrap"><table class="data-table data-table--assignments"><thead><tr><th>状态</th><th>作业</th><th>关卡</th><th>缺失项</th><th>链接</th></tr></thead><tbody>${body}</tbody></table></div>`;
+  const moduleLevel = Number(user.maxModuleLevel) || 0;
+  if (moduleLevel > 0) {
+    parts.push(`模组 ${moduleLevel}`);
+  }
+  return parts.join(" · ");
 }
 
-function buildMissingText(result) {
+function formatTarget(target, user) {
   const parts = [];
-  for (const item of result.requiredResults) {
-    if (!item.result.satisfied) {
-      parts.push(`${item.slot.name}(${gapText(item.result.gaps)})`);
-    }
+  const elite = Number(target.elite) || 0;
+  const level = Number(target.level) || 0;
+  if (elite > 0) {
+    parts.push(requirementText(`精${elite}`, !user || Number(user.elite) < elite));
   }
-  for (const group of result.groupResults) {
-    if (!group.satisfied) {
-      parts.push(`组「${group.name}」:${group.results.filter((item) => !item.result.satisfied).map((item) => item.slot.name).join("/")}`);
-    }
+  if (level > 0) {
+    parts.push(requirementText(`${level}级`, !user || Number(user.level) < level));
   }
-  return parts.join("；");
+  for (let index = 1; index <= 3; index += 1) {
+    const required = Number(target[`skill${index}`]) || 0;
+    if (required <= 0) continue; // 所有作业都不涉及该技能，不在目标列显示
+    const current = Number(user?.[`skill${index}`]) || 0;
+    const text = `技能${index} ${skillLevelLabel(required)}`;
+    parts.push(requirementText(text, !user || current < required));
+  }
+  const moduleLevel = Number(target.module);
+  if (moduleLevel > 0) {
+    parts.push(requirementText(`模组 ${moduleLevel}`, !user || (Number(user.maxModuleLevel) || 0) < moduleLevel));
+  }
+  return parts.length ? parts.join(" · ") : "—";
 }
 
-function gapText(gaps) {
-  const labels = gaps.map((gap) => {
-    if (gap.type === "missing") return "未拥有";
-    if (gap.type === "elite") return `精${gap.required}`;
-    if (gap.type === "level") return `${gap.required}级`;
-    if (gap.type === "skill_level") return `技能${gap.skill} ${skillLevelLabel(gap.required)}`;
-    return gap.type;
-  });
-  return labels.join("+");
+function requirementText(text, unmet) {
+  return unmet ? `<span class="req-unmet">${text}</span>` : text;
 }

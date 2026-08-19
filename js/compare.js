@@ -181,7 +181,7 @@ export function computeTrainingList({ assignments, userOperators, operatorMeta, 
     let coreGain = 0;
     let groupGain = 0;
     let totalGap = 0;
-    const target = { elite: 0, level: 0, skill: 0, skillLevel: 0, module: -1 };
+    const target = { elite: 0, level: 0, skill1: 0, skill2: 0, skill3: 0, module: -1 };
 
     for (const [assignmentId, appearance] of demand.assignments) {
       const base = baseResults.find((item) => item.assignment.id === assignmentId);
@@ -211,9 +211,8 @@ export function computeTrainingList({ assignments, userOperators, operatorMeta, 
         const req = normalizeSlotRequirements(slot);
         target.elite = Math.max(target.elite, req.elite);
         target.level = Math.max(target.level, req.level);
-        if (req.skillLevel > target.skillLevel) {
-          target.skillLevel = req.skillLevel;
-          target.skill = slot.skill;
+        if (req.skillLevel > 0 && slot.skill >= 1 && slot.skill <= 3) {
+          target[`skill${slot.skill}`] = Math.max(target[`skill${slot.skill}`], req.skillLevel);
         }
         if (req.module > target.module) target.module = req.module;
       }
@@ -223,9 +222,8 @@ export function computeTrainingList({ assignments, userOperators, operatorMeta, 
           const req = normalizeSlotRequirements(slot);
           target.elite = Math.max(target.elite, req.elite);
           target.level = Math.max(target.level, req.level);
-          if (req.skillLevel > target.skillLevel) {
-            target.skillLevel = req.skillLevel;
-            target.skill = slot.skill;
+          if (req.skillLevel > 0 && slot.skill >= 1 && slot.skill <= 3) {
+            target[`skill${slot.skill}`] = Math.max(target[`skill${slot.skill}`], req.skillLevel);
           }
           if (req.module > target.module) target.module = req.module;
         }

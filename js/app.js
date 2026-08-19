@@ -7,7 +7,7 @@ import { computeTrainingList } from "./compare.js";
 import { fetchAllAssignments, fetchAssignmentsSnapshot } from "./maa.js";
 import { fetchBindingList, formatSklandCharacters, getSklandOperatorData, parseCredential } from "./skland.js";
 import { escapeHtml } from "./util.js";
-import { renderAssignmentTable, renderBindingButtons, renderSummary, renderTrainingTable } from "./view.js";
+import { renderBindingButtons, renderSummary, renderTrainingTable } from "./view.js";
 
 function createState() {
   return {
@@ -45,7 +45,6 @@ function collectElements(doc) {
     error: requireElement(doc, "error"),
     summary: requireElement(doc, "summary"),
     trainingTable: requireElement(doc, "training-table"),
-    assignmentTable: requireElement(doc, "assignment-table"),
     refreshButton: requireElement(doc, "refresh-button"),
     sklandForm: requireElement(doc, "skland-form"),
     credInput: requireElement(doc, "cred-input"),
@@ -186,20 +185,6 @@ function createApp(deps, elements) {
     return sorted;
   }
 
-  function filterAssignments() {
-    let items = state.result?.assignmentResults || [];
-    if (state.filterText) {
-      const text = state.filterText;
-      items = items.filter((item) =>
-        (item.assignment.title || "").includes(text) || (item.assignment.stageName || "").includes(text),
-      );
-    }
-    if (state.onlyPending) {
-      items = items.filter((item) => !item.result.ready);
-    }
-    return items;
-  }
-
   function runAnalysis() {
     if (!state.operatorMeta || state.assignments.length === 0) {
       state.result = null;
@@ -223,11 +208,9 @@ function createApp(deps, elements) {
         operatorMeta: state.operatorMeta,
         skillSprite: state.skillSprite,
       });
-      elements.assignmentTable.innerHTML = renderAssignmentTable(filterAssignments());
     } else {
       elements.summary.innerHTML = `<div class="empty-state">请先导入干员数据</div>`;
       elements.trainingTable.innerHTML = `<div class="empty-state">暂无培养清单</div>`;
-      elements.assignmentTable.innerHTML = `<div class="empty-state">暂无作业明细</div>`;
     }
   }
 
