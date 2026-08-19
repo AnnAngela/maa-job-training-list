@@ -1,0 +1,452 @@
+{
+  "code": 0,
+  "message": "OK",
+  "timestamp": "1787104676",
+  "data": {
+    "chars": [
+      {
+        "charId": "char_002_amiya",
+        "skinId": "char_002_amiya@winter#1",
+        "level": 60,
+        "evolvePhase": 2,
+        "potentialRank": 5,
+        "mainSkillLvl": 7,
+        "skills": [
+          {
+            "id": "skcom_magic_rage[3]",
+            "specializeLevel": 0
+          },
+          {
+            "id": "skchr_amiya_2",
+            "specializeLevel": 0
+          },
+          {
+            "id": "skchr_amiya_3",
+            "specializeLevel": 0
+          }
+        ],
+        "equip": [
+          {
+            "id": "uniequip_001_amiya",
+            "level": 1,
+            "locked": false
+          },
+          {
+            "id": "uniequip_002_amiya",
+            "level": 1,
+            "locked": true
+          }
+        ],
+        "favorPercent": 200,
+        "defaultSkillId": "skcom_magic_rage[3]",
+        "gainTime": 1671200273,
+        "defaultEquipId": "uniequip_001_amiya",
+        "sortId": 0,
+        "exp": 114,
+        "gold": 0,
+        "rarity": 0
+      },
+      {
+        "charId": "char_003_kalts",
+        "skinId": "char_003_kalts@boc#6",
+        "level": 90,
+        "evolvePhase": 2,
+        "potentialRank": 1,
+        "mainSkillLvl": 7,
+        "skills": [
+          {
+            "id": "skchr_kalts_1",
+            "specializeLevel": 0
+          },
+          {
+            "id": "skchr_kalts_2",
+            "specializeLevel": 0
+          },
+          {
+            "id": "skchr_kalts_3",
+            "specializeLevel": 3
+          }
+        ],
+        "equip": [
+          {
+            "id": "uniequip_001_kalts",
+            "level": 1,
+            "locked": false
+          },
+          {
+            "id": "uniequip_002_kalts",
+            "level": 3,
+            "locked": false
+          },
+          {
+            "id": "uniequip_003_kalts",
+            "level": 1,
+            "locked": true
+          },
+          {
+            "id": "uniequip_004_kalts",
+            "level": 3,
+            "locked": false
+          }
+        ],
+        "favorPercent": 200,
+        "defaultSkillId": "skchr_kalts_3",
+        "gainTime": 1675314856,
+        "defaultEquipId": "uniequip_002_kalts",
+        "sortId": 0,
+        "exp": 0,
+        "gold": 0,
+        "rarity": 0
+      },
+      {
+        "charId": "char_202_demkni",
+        "skinId": "char_202_demkni@ambienceSynesthesia#7",
+        "level": 90,
+        "evolvePhase": 2,
+        "potentialRank": 1,
+        "mainSkillLvl": 7,
+        "skills": [
+          {
+            "id": "skchr_demkni_1",
+            "specializeLevel": 3
+          },
+          {
+            "id": "skchr_demkni_2",
+            "specializeLevel": 3
+          },
+          {
+            "id": "skchr_demkni_3",
+            "specializeLevel": 3
+          }
+        ],
+        "equip": [
+          {
+            "id": "uniequip_001_demkni",
+            "level": 1,
+            "locked": false
+          },
+          {
+            "id": "uniequip_002_demkni",
+            "level": 2,
+            "locked": false
+          },
+          {
+            "id": "uniequip_003_demkni",
+            "level": 3,
+            "locked": false
+          }
+        ],
+        "favorPercent": 200,
+        "defaultSkillId": "skchr_demkni_1",
+        "gainTime": 1684375005,
+        "defaultEquipId": "uniequip_003_demkni",
+        "sortId": 0,
+        "exp": 0,
+        "gold": 0,
+        "rarity": 0
+      },
+      {
+        "charId": "char_120_hibisc",
+        "skinId": "char_120_hibisc@nian#1",
+        "level": 1,
+        "evolvePhase": 0,
+        "potentialRank": 5,
+        "mainSkillLvl": 1,
+        "skills": [
+          {
+            "id": "skcom_heal_up[1]",
+            "specializeLevel": 0
+          }
+        ],
+        "equip": [],
+        "favorPercent": 186,
+        "defaultSkillId": "skcom_heal_up[1]",
+        "gainTime": 1671200956,
+        "defaultEquipId": "",
+        "sortId": 0,
+        "exp": 0,
+        "gold": 0,
+        "rarity": 0
+      },
+      {
+        "charId": "char_009_12fce",
+        "skinId": "char_009_12fce#1",
+        "level": 30,
+        "evolvePhase": 0,
+        "potentialRank": 1,
+        "mainSkillLvl": 1,
+        "skills": [],
+        "equip": [],
+        "favorPercent": 173,
+        "defaultSkillId": "",
+        "gainTime": 1671204715,
+        "defaultEquipId": "",
+        "sortId": 0,
+        "exp": 0,
+        "gold": 0,
+        "rarity": 0
+      },
+      {
+        "charId": "char_502_nblade",
+        "skinId": "char_502_nblade#1",
+        "level": 30,
+        "evolvePhase": 0,
+        "potentialRank": 1,
+        "mainSkillLvl": 1,
+        "skills": [],
+        "equip": [],
+        "favorPercent": 200,
+        "defaultSkillId": "",
+        "gainTime": 1671200273,
+        "defaultEquipId": "",
+        "sortId": 0,
+        "exp": 0,
+        "gold": 0,
+        "rarity": 0
+      },
+      {
+        "charId": "char_302_glaze",
+        "skinId": "char_302_glaze#2",
+        "level": 40,
+        "evolvePhase": 2,
+        "potentialRank": 5,
+        "mainSkillLvl": 7,
+        "skills": [
+          {
+            "id": "skchr_glaze_1",
+            "specializeLevel": 0
+          },
+          {
+            "id": "skchr_glaze_2",
+            "specializeLevel": 3
+          }
+        ],
+        "equip": [
+          {
+            "id": "uniequip_001_glaze",
+            "level": 1,
+            "locked": false
+          },
+          {
+            "id": "uniequip_002_glaze",
+            "level": 1,
+            "locked": true
+          }
+        ],
+        "favorPercent": 133,
+        "defaultSkillId": "skchr_glaze_2",
+        "gainTime": 1671419595,
+        "defaultEquipId": "uniequip_001_glaze",
+        "sortId": 0,
+        "exp": 64,
+        "gold": 0,
+        "rarity": 0
+      },
+      {
+        "charId": "char_102_texas",
+        "skinId": "char_102_texas@winter#1",
+        "level": 80,
+        "evolvePhase": 2,
+        "potentialRank": 5,
+        "mainSkillLvl": 7,
+        "skills": [
+          {
+            "id": "skcom_charge_cost[3]",
+            "specializeLevel": 3
+          },
+          {
+            "id": "skchr_texas_2",
+            "specializeLevel": 3
+          }
+        ],
+        "equip": [
+          {
+            "id": "uniequip_001_texas",
+            "level": 1,
+            "locked": false
+          },
+          {
+            "id": "uniequip_002_texas",
+            "level": 1,
+            "locked": false
+          }
+        ],
+        "favorPercent": 200,
+        "defaultSkillId": "skchr_texas_2",
+        "gainTime": 1674459847,
+        "defaultEquipId": "uniequip_002_texas",
+        "sortId": 0,
+        "exp": 0,
+        "gold": 0,
+        "rarity": 0
+      },
+      {
+        "charId": "char_4042_lumen",
+        "skinId": "char_4042_lumen@sanrio#2",
+        "level": 90,
+        "evolvePhase": 2,
+        "potentialRank": 5,
+        "mainSkillLvl": 7,
+        "skills": [
+          {
+            "id": "skchr_lumen_1",
+            "specializeLevel": 0
+          },
+          {
+            "id": "skchr_lumen_2",
+            "specializeLevel": 0
+          },
+          {
+            "id": "skchr_lumen_3",
+            "specializeLevel": 3
+          }
+        ],
+        "equip": [
+          {
+            "id": "uniequip_001_lumen",
+            "level": 1,
+            "locked": false
+          },
+          {
+            "id": "uniequip_002_lumen",
+            "level": 1,
+            "locked": true
+          },
+          {
+            "id": "uniequip_003_lumen",
+            "level": 2,
+            "locked": false
+          }
+        ],
+        "favorPercent": 154,
+        "defaultSkillId": "skchr_lumen_3",
+        "gainTime": 1681980056,
+        "defaultEquipId": "uniequip_003_lumen",
+        "sortId": 0,
+        "exp": 0,
+        "gold": 0,
+        "rarity": 0
+      },
+      {
+        "charId": "char_1012_skadi2",
+        "skinId": "char_1012_skadi2#2",
+        "level": 90,
+        "evolvePhase": 2,
+        "potentialRank": 1,
+        "mainSkillLvl": 7,
+        "skills": [
+          {
+            "id": "skchr_skadi2_1",
+            "specializeLevel": 0
+          },
+          {
+            "id": "skchr_skadi2_2",
+            "specializeLevel": 3
+          },
+          {
+            "id": "skchr_skadi2_3",
+            "specializeLevel": 0
+          }
+        ],
+        "equip": [
+          {
+            "id": "uniequip_001_skadi2",
+            "level": 1,
+            "locked": false
+          },
+          {
+            "id": "uniequip_002_skadi2",
+            "level": 1,
+            "locked": false
+          },
+          {
+            "id": "uniequip_003_skadi2",
+            "level": 1,
+            "locked": true
+          }
+        ],
+        "favorPercent": 200,
+        "defaultSkillId": "skchr_skadi2_2",
+        "gainTime": 1682930349,
+        "defaultEquipId": "uniequip_002_skadi2",
+        "sortId": 0,
+        "exp": 0,
+        "gold": 0,
+        "rarity": 0
+      },
+      {
+        "charId": "char_4087_ines",
+        "skinId": "char_4087_ines@ambienceSynesthesia#5",
+        "level": 90,
+        "evolvePhase": 2,
+        "potentialRank": 2,
+        "mainSkillLvl": 7,
+        "skills": [
+          {
+            "id": "skchr_ines_1",
+            "specializeLevel": 0
+          },
+          {
+            "id": "skchr_ines_2",
+            "specializeLevel": 3
+          },
+          {
+            "id": "skchr_ines_3",
+            "specializeLevel": 0
+          }
+        ],
+        "equip": [
+          {
+            "id": "uniequip_001_ines",
+            "level": 1,
+            "locked": false
+          },
+          {
+            "id": "uniequip_002_ines",
+            "level": 1,
+            "locked": true
+          }
+        ],
+        "favorPercent": 200,
+        "defaultSkillId": "skchr_ines_2",
+        "gainTime": 1680768637,
+        "defaultEquipId": "uniequip_001_ines",
+        "sortId": 0,
+        "exp": 0,
+        "gold": 0,
+        "rarity": 0
+      },
+      {
+        "charId": "char_1045_svash2",
+        "skinId": "char_1045_svash2#2",
+        "level": 90,
+        "evolvePhase": 2,
+        "potentialRank": 0,
+        "mainSkillLvl": 7,
+        "skills": [
+          {
+            "id": "skchr_svash2_1",
+            "specializeLevel": 0
+          },
+          {
+            "id": "skchr_svash2_2",
+            "specializeLevel": 0
+          },
+          {
+            "id": "skchr_svash2_3",
+            "specializeLevel": 3
+          }
+        ],
+        "equip": [],
+        "favorPercent": 200,
+        "defaultSkillId": "skchr_svash2_3",
+        "gainTime": 1762075576,
+        "defaultEquipId": "",
+        "sortId": 0,
+        "exp": 0,
+        "gold": 0,
+        "rarity": 0
+      }
+    ]
+  }
+}

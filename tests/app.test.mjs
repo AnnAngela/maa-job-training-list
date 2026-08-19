@@ -20,6 +20,8 @@ import {
 import { SKLAND_COMMAND } from "../js/config.js";
 import { fetchAllAssignments, fetchAssignmentsSnapshot } from "../js/maa.js";
 import { fetchBindingList, getSklandOperatorData, parseCredential } from "../js/skland.js";
+import realOperatorMeta from "../data/operator_meta.json";
+import playerInfo from "./fixtures/skland-player-info.json";
 
 const operatorMeta = {
   nameToCharId: { 阿米娅: "char_002_amiya" },
@@ -176,6 +178,17 @@ test("normalizeImportedOperators accepts data.operators and bare chars wrappers"
   ];
   const viaChars = normalizeImportedOperators({ chars: rawChars }, operatorMeta);
   expect(viaChars[0]).toMatchObject({ charId: "char_002_amiya", name: "阿米娅", elite: 1, level: 40, skill1: 6, maxModuleLevel: 0 });
+});
+
+test("normalizeImportedOperators imports the fixture player/info payload", () => {
+  const rows = normalizeImportedOperators(playerInfo, realOperatorMeta);
+  expect(rows).toHaveLength(playerInfo.data.chars.length);
+  const amiya = rows.find((row) => row.charId === "char_002_amiya");
+  expect(amiya).toMatchObject({ name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 7, skill3: 7, maxModuleLevel: 1 });
+  const kalts = rows.find((row) => row.charId === "char_003_kalts");
+  expect(kalts).toMatchObject({ name: "凯尔希", skill3: 10, maxModuleLevel: 3 });
+  const svash2 = rows.find((row) => row.charId === "char_1045_svash2");
+  expect(svash2.maxModuleLevel).toBe(0);
 });
 
 test("normalizeImportedOperators fills every missing field", () => {

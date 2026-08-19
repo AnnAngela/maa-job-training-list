@@ -12,6 +12,8 @@ import {
   parseCredential,
   SklandError,
 } from "../js/skland.js";
+import operatorMeta from "../data/operator_meta.json";
+import playerInfo from "./fixtures/skland-player-info.json";
 
 const jsonResponse = (data) => ({ json: async () => data });
 
@@ -153,6 +155,38 @@ test("formatSklandCharacters handles non-array chars and empty arrays", () => {
   expect(zeroEquip.maxModuleLevel).toBe(0);
   const zeroLegacyLevel = formatSklandCharacters([{ id: "char_002_amiya", mainSkillLvl: 7, skills: [{ level: 0 }], equips: [] }], { operators: { char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] } } })[0];
   expect(zeroLegacyLevel.skill1).toBe(7);
+});
+
+test("formatSklandCharacters parses the fixture player/info payload", () => {
+  const operators = formatSklandCharacters(playerInfo.data.chars, operatorMeta);
+  expect(operators).toHaveLength(playerInfo.data.chars.length);
+  const byId = new Map(operators.map((operator) => [operator.charId, operator]));
+  expect(byId.get("char_002_amiya")).toMatchObject({ name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 7, skill3: 7, maxModuleLevel: 1 });
+  expect(byId.get("char_003_kalts")).toMatchObject({ name: "凯尔希", elite: 2, level: 90, skill3: 10, maxModuleLevel: 3 });
+  expect(byId.get("char_202_demkni")).toMatchObject({ name: "塞雷娅", skill1: 10, skill2: 10, skill3: 10, maxModuleLevel: 3 });
+  expect(byId.get("char_4042_lumen")).toMatchObject({ maxModuleLevel: 2 });
+  expect(byId.get("char_1045_svash2")).toMatchObject({ maxModuleLevel: 0 });
+  for (const operator of operators) {
+    expect(operator.skill1).toBeGreaterThanOrEqual(1);
+    expect(operator.elite).toBeGreaterThanOrEqual(0);
+    expect(operator.level).toBeGreaterThanOrEqual(1);
+  }
+});
+
+test("fixture chars keep the real Skland field names", () => {
+  const [char] = playerInfo.data.chars;
+  expect(typeof char.charId).toBe("string");
+  expect(char).toHaveProperty("mainSkillLvl");
+  expect(char).toHaveProperty("evolvePhase");
+  expect(char.skills[0]).toHaveProperty("specializeLevel");
+  expect(Array.isArray(char.equip)).toBe(true);
+});
+
+test("getSklandOperatorData parses the fixture payload end to end", async () => {
+  const fetchImpl = vi.fn().mockResolvedValue(jsonResponse(playerInfo));
+  const data = await getSklandOperatorData(fetchImpl, "cred", "token", operatorMeta, { uid: "123", now: () => 1700000000000 });
+  expect(data.uid).toBe("123");
+  expect(data.operators).toHaveLength(playerInfo.data.chars.length);
 });
 
 test("getSklandOperatorData supports uid and binding fallback", async () => {
