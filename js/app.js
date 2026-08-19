@@ -404,6 +404,9 @@ function createApp(deps, elements) {
     elements.recentToggle.addEventListener("click", () => {
       state.recentOnly = !state.recentOnly;
       updateRecentToggle();
+      // 切换时间窗口后重新按“未满足必带作业”降序排列（回到默认优先级排序）
+      state.sortBy = "priority";
+      elements.sortSelect.value = "priority";
       runAnalysis();
       render();
     });

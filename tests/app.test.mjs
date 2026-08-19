@@ -323,6 +323,36 @@ test("recent toggle filters assignments to the last 6 months", async () => {
   expect(app.state.result.summary.totalAssignments).toBe(3);
 });
 
+test("recent toggle re-sorts rows by unsatisfiedCore desc", async () => {
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  const now = Date.now();
+  const days = (n) => new Date(now - n * 24 * 60 * 60 * 1000).toISOString();
+  const need = (name) => [{ name, skill: 1, requirements: { level: 99 } }];
+  app.state.assignments = [
+    { id: 1, uploadTime: days(10), required: need("阿米娅"), groups: [] },
+    { id: 2, uploadTime: days(20), required: need("阿米娅"), groups: [] },
+    { id: 3, uploadTime: days(30), required: need("凯尔希"), groups: [] },
+    { id: 4, uploadTime: days(220), required: need("凯尔希"), groups: [] },
+    { id: 5, uploadTime: days(230), required: need("凯尔希"), groups: [] },
+    { id: 6, uploadTime: days(240), required: need("凯尔希"), groups: [] },
+  ];
+  app.loadSampleData();
+  // 全部作业：凯尔希未满足 4 > 阿米娅 2
+  let html = app.elements.trainingTable.innerHTML;
+  expect(html.indexOf("凯尔希")).toBeLessThan(html.indexOf("阿米娅"));
+  // 先切到“按干员名”，再点窗口切换按钮
+  app.elements.sortSelect.value = "name";
+  app.elements.sortSelect.dispatchEvent(new Event("change", { bubbles: true }));
+  app.elements.recentToggle.dispatchEvent(new Event("click", { bubbles: true }));
+  expect(app.state.recentOnly).toBe(true);
+  expect(app.state.sortBy).toBe("priority");
+  expect(app.elements.sortSelect.value).toBe("priority");
+  // 仅近6个月：阿米娅未满足 2 > 凯尔希 1，应重新按未满足必带作业降序
+  html = app.elements.trainingTable.innerHTML;
+  expect(html.indexOf("阿米娅")).toBeLessThan(html.indexOf("凯尔希"));
+});
+
 test("unsatisfiedCore desc dominates every sort mode", async () => {
   fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
   const app = await initApp({ fetchImpl: makeFetchImpl() });
