@@ -10,6 +10,9 @@ export const PLAYER_INFO_PATH = "/api/v1/game/player/info";
 
 export const AVATAR_BASE = "https://cos.yituliu.cn/image2/avatar";
 
+export const SKLAND_LINK = "https://www.skland.com/index";
+export const SKLAND_COMMAND = 'copy(localStorage.getItem("SK_OAUTH_CRED_KEY")+","+localStorage.getItem("SK_TOKEN_CACHE_KEY"))';
+
 export const RECENT_DAYS = 90;
 export const DEFAULT_LIMIT = 100;
 

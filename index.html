@@ -26,7 +26,14 @@
       <div class="data-columns">
         <div class="data-panel">
           <h3>森空岛自动获取</h3>
-          <p class="hint">登录森空岛后，在 Console 执行复制命令，粘贴得到的 cred,token。</p>
+          <p class="hint">登录森空岛后，在 Console 执行下方命令，粘贴得到的 cred,token。</p>
+          <div class="skland-actions">
+            <a id="skland-open-button" class="button button--ghost" href="https://www.skland.com/index" target="_blank" rel="noreferrer">打开森空岛</a>
+            <div class="skland-command">
+              <code id="skland-command"></code>
+              <button id="copy-command-button" type="button" class="button button--ghost">复制命令</button>
+            </div>
+          </div>
           <form id="skland-form" class="skland-form">
             <input id="cred-input" type="password" autocomplete="off" placeholder="cred,token">
             <button type="submit" class="button">获取账号列表</button>

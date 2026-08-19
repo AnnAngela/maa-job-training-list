@@ -16,6 +16,7 @@ import {
   initApp,
   normalizeImportedOperators,
 } from "../js/app.js";
+import { SKLAND_COMMAND } from "../js/config.js";
 import { fetchAllAssignments, fetchAssignmentsSnapshot } from "../js/maa.js";
 import { fetchBindingList, getSklandOperatorData, parseCredential } from "../js/skland.js";
 
@@ -46,6 +47,8 @@ function buildDom() {
     "<div id=\"assignment-table\"></div>",
     "<button id=\"refresh-button\"></button>",
     "<form id=\"skland-form\"><input id=\"cred-input\" type=\"password\"></form>",
+    "<code id=\"skland-command\"></code>",
+    "<button id=\"copy-command-button\"></button>",
     "<div id=\"binding-list\"></div>",
     "<button id=\"import-button\"></button>",
     "<textarea id=\"import-input\"></textarea>",
@@ -348,6 +351,33 @@ test("filterAssignments falls back when title and stageName are missing", async 
   app.elements.filterInput.value = "不存在";
   app.elements.filterInput.dispatchEvent(new Event("input", { bubbles: true }));
   expect(app.state.filterText).toBe("不存在");
+});
+
+test("skland command is populated and copy succeeds", async () => {
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  expect(app.elements.sklandCommand.textContent).toBe(SKLAND_COMMAND);
+  const originalClipboard = navigator.clipboard;
+  Object.defineProperty(navigator, "clipboard", {
+    configurable: true,
+    value: { writeText: vi.fn().mockResolvedValue(undefined) },
+  });
+  await app.handleCopyCommand();
+  expect(app.state.status).toBe("命令已复制");
+  Object.defineProperty(navigator, "clipboard", { configurable: true, value: originalClipboard });
+});
+
+test("copy command failure shows error", async () => {
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  const originalClipboard = navigator.clipboard;
+  Object.defineProperty(navigator, "clipboard", {
+    configurable: true,
+    value: { writeText: vi.fn().mockRejectedValue(new Error("denied")) },
+  });
+  await app.handleCopyCommand();
+  expect(app.state.error).toContain("复制失败");
+  Object.defineProperty(navigator, "clipboard", { configurable: true, value: originalClipboard });
 });
 
 test("render handles missing rows and status fallback", async () => {

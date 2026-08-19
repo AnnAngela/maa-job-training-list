@@ -1,6 +1,7 @@
 import {
   OPERATOR_META_URL,
   SKILL_SPRITE_URL,
+  SKLAND_COMMAND,
 } from "./config.js";
 import { computeTrainingList } from "./compare.js";
 import { fetchAllAssignments, fetchAssignmentsSnapshot } from "./maa.js";
@@ -48,6 +49,8 @@ function collectElements(doc) {
     refreshButton: requireElement(doc, "refresh-button"),
     sklandForm: requireElement(doc, "skland-form"),
     credInput: requireElement(doc, "cred-input"),
+    sklandCommand: requireElement(doc, "skland-command"),
+    copyCommandButton: requireElement(doc, "copy-command-button"),
     bindingList: requireElement(doc, "binding-list"),
     importButton: requireElement(doc, "import-button"),
     importInput: requireElement(doc, "import-input"),
@@ -127,6 +130,16 @@ function createApp(deps, elements) {
 
   function clearError() {
     setError("");
+  }
+
+  async function handleCopyCommand() {
+    clearError();
+    try {
+      await navigator.clipboard.writeText(SKLAND_COMMAND);
+      setStatus("命令已复制");
+    } catch (error) {
+      setError("复制失败，请手动复制下方命令");
+    }
   }
 
   function filterRows() {
@@ -341,6 +354,7 @@ function createApp(deps, elements) {
     elements.importButton.addEventListener("click", handleImport);
     elements.exportJsonButton.addEventListener("click", handleExportJson);
     elements.exportCsvButton.addEventListener("click", handleExportCsv);
+    elements.copyCommandButton.addEventListener("click", handleCopyCommand);
     elements.sampleButton.addEventListener("click", loadSampleData);
     elements.filterInput.addEventListener("input", (event) => {
       state.filterText = event.target.value;
@@ -389,6 +403,7 @@ function createApp(deps, elements) {
     loadSampleData,
     handleExportJson,
     handleExportCsv,
+    handleCopyCommand,
   };
 }
 
@@ -398,6 +413,7 @@ export async function initApp({
   cryptoImpl = globalThis.crypto,
 } = {}) {
   const elements = collectElements(doc);
+  elements.sklandCommand.textContent = SKLAND_COMMAND;
   const app = createApp({ document: doc, fetchImpl, cryptoImpl }, elements);
   await app.bootstrap();
   return app;

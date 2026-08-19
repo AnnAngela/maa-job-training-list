@@ -60,6 +60,9 @@ a:hover { text-decoration: underline; }
   background: #fff;
   color: var(--text);
 }
+.skland-actions { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+.skland-command { display: inline-flex; align-items: center; gap: 8px; min-width: 0; }
+.skland-command code { display: block; max-width: 520px; overflow-x: auto; white-space: nowrap; padding: 8px 10px; border: 1px solid var(--border); border-radius: 10px; background: #0f172a; color: #e2e8f0; font-size: 12px; }
 .skland-form input { flex: 1; }
 .data-panel textarea { resize: vertical; }
 .button-row { display: flex; gap: 8px; margin-top: 10px; }
@@ -78,7 +81,7 @@ a:hover { text-decoration: underline; }
 .button--ghost:hover { background: var(--surface-alt); }
 
 .controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-.controls label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+.controls label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); white-space: nowrap; }
 
 .error { margin: 0 20px; padding: 10px 14px; border-radius: 10px; background: #fef2f2; color: var(--danger); border: 1px solid #fecaca; font-size: 14px; }
 .is-hidden { display: none; }
