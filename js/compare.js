@@ -261,7 +261,7 @@ export function computeTrainingList({ assignments, userOperators, operatorMeta, 
     });
   }
 
-  rows.sort((a, b) => b.score - a.score || a.totalGap - b.totalGap || a.name.localeCompare(b.name, "zh-CN"));
+  rows.sort((a, b) => b.unsatisfiedCore - a.unsatisfiedCore || b.score - a.score || a.totalGap - b.totalGap || a.name.localeCompare(b.name, "zh-CN"));
 
   const readyCount = baseResults.filter((item) => item.result.ready).length;
   const involved = rows.length;

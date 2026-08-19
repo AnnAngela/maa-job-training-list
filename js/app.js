@@ -178,12 +178,13 @@ function createApp(deps, elements) {
       rows = rows.filter((row) => row.user && row.totalGap > 0);
     }
     const sorted = [...rows];
+    // 任何排序方式下都先按“未满足必带作业”降序
     if (state.sortBy === "coreGain") {
-      sorted.sort((a, b) => b.coreGain - a.coreGain || b.score - a.score);
+      sorted.sort((a, b) => b.unsatisfiedCore - a.unsatisfiedCore || b.coreGain - a.coreGain || b.score - a.score || a.name.localeCompare(b.name, "zh-CN"));
     } else if (state.sortBy === "name") {
-      sorted.sort((a, b) => a.name.localeCompare(b.name, "zh-CN"));
+      sorted.sort((a, b) => b.unsatisfiedCore - a.unsatisfiedCore || a.name.localeCompare(b.name, "zh-CN"));
     } else {
-      sorted.sort((a, b) => b.score - a.score || a.totalGap - b.totalGap);
+      sorted.sort((a, b) => b.unsatisfiedCore - a.unsatisfiedCore || b.score - a.score || a.totalGap - b.totalGap || a.name.localeCompare(b.name, "zh-CN"));
     }
     return sorted;
   }

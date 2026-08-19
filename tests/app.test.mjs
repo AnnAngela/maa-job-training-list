@@ -323,6 +323,27 @@ test("recent toggle filters assignments to the last 6 months", async () => {
   expect(app.state.result.summary.totalAssignments).toBe(3);
 });
 
+test("unsatisfiedCore desc dominates every sort mode", async () => {
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  const makeRow = (name, unsatisfiedCore, score) => ({ name, unsatisfiedCore, score, coreGain: 0, groupGain: 0, totalGap: 0 });
+  app.state.result = {
+    summary: { totalAssignments: 0, readyCount: 0, notReadyCount: 0, involvedOperators: 0, ownedOperators: 0, missingOperators: 0 },
+    assignmentResults: [],
+    rows: [makeRow("塞雷娅", 2, 100), makeRow("阿米娅", 5, 1), makeRow("凯尔希", 5, 1)],
+  };
+  app.elements.filterInput.value = "";
+  app.elements.filterInput.dispatchEvent(new Event("input", { bubbles: true }));
+  const firstOrder = app.elements.trainingTable.innerHTML;
+  expect(firstOrder.indexOf("阿米娅")).toBeLessThan(firstOrder.indexOf("塞雷娅"));
+  for (const mode of ["priority", "coreGain", "name"]) {
+    app.elements.sortSelect.value = mode;
+    app.elements.sortSelect.dispatchEvent(new Event("change", { bubbles: true }));
+    const html = app.elements.trainingTable.innerHTML;
+    expect(html.indexOf("阿米娅")).toBeLessThan(html.indexOf("塞雷娅"));
+  }
+});
+
 test("export handlers show error when result is empty", async () => {
   fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
   const app = await initApp({ fetchImpl: makeFetchImpl() });

@@ -204,6 +204,18 @@ test("computeTrainingList handles group gains and other required operators", () 
   expect(result.rows.some((row) => row.name === "凯尔希")).toBe(true);
 });
 
+test("computeTrainingList sorts rows by unsatisfiedCore desc", () => {
+  const assignments = [
+    { id: 1, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "阿米娅", skill: 1, requirements: { level: 99 } }], groups: [] },
+    { id: 2, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "阿米娅", skill: 1, requirements: { level: 99 } }], groups: [] },
+    { id: 3, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "凯尔希", skill: 1, requirements: { level: 99 } }], groups: [] },
+  ];
+  const result = computeTrainingList({ assignments, userOperators: [], operatorMeta, options: {} });
+  expect(result.rows[0].name).toBe("阿米娅");
+  expect(result.rows[0].unsatisfiedCore).toBe(2);
+  expect(result.rows.map((row) => row.unsatisfiedCore)).toEqual([2, 1]);
+});
+
 test("computeTrainingList covers ready skips, group gain, and module fallbacks", () => {
   const assignments = [
     { id: 1, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "阿米娅", skill: 1, requirements: { level: 60, module: 1 } }], groups: [] },
