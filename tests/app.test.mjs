@@ -61,8 +61,8 @@ function buildDom() {
     "<input id=\"only-pending-input\" type=\"checkbox\">",
     "<input id=\"only-missing-input\" type=\"checkbox\">",
     "<input id=\"require-module-input\" type=\"checkbox\">",
-    "<button id=\"recent-toggle\"></button>",
-    "<button id=\"standard-toggle\"></button>",
+    "<input id=\"recent-toggle\" type=\"checkbox\">",
+    "<input id=\"standard-toggle\" type=\"checkbox\">",
   ].join("");
 }
 
@@ -191,8 +191,9 @@ test("normalizeImportedOperators imports the fixture player/info payload", () =>
   expect(kalts).toMatchObject({ name: "凯尔希", skill3: 10, maxModuleLevel: 3 });
   const svash2 = rows.find((row) => row.charId === "char_1045_svash2");
   expect(svash2.maxModuleLevel).toBe(0);
-  // 从 fixture 的 equipmentInfoMap 解析出模组名称
-  expect(amiya.modules).toContainEqual({ id: "uniequip_001_amiya", name: "阿米娅证章", level: 1 });
+  // 从 fixture 的 equipmentInfoMap 解析出模组名称（含未解锁）
+  expect(amiya.modules).toContainEqual({ id: "uniequip_001_amiya", name: "阿米娅证章", level: 1, locked: false });
+  expect(amiya.modules).toContainEqual({ id: "uniequip_002_amiya", name: "DWDB-221E", level: 1, locked: true });
 });
 
 test("normalizeImportedOperators fills every missing field", () => {
@@ -305,7 +306,7 @@ test("sample data loads and analyzes", async () => {
 test("recent toggle filters assignments to the last 6 months", async () => {
   fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
   const app = await initApp({ fetchImpl: makeFetchImpl() });
-  expect(app.elements.recentToggle.textContent).toBe("全部作业");
+  expect(app.elements.recentToggle.checked).toBe(false);
   const now = Date.now();
   const recent = new Date(now - 30 * 24 * 60 * 60 * 1000).toISOString();
   const old = new Date(now - 220 * 24 * 60 * 60 * 1000).toISOString();
@@ -316,14 +317,14 @@ test("recent toggle filters assignments to the last 6 months", async () => {
   ];
   app.loadSampleData();
   expect(app.state.result.summary.totalAssignments).toBe(3);
-  app.elements.recentToggle.dispatchEvent(new Event("click", { bubbles: true }));
+  app.elements.recentToggle.checked = true;
+  app.elements.recentToggle.dispatchEvent(new Event("change", { bubbles: true }));
   expect(app.state.recentOnly).toBe(true);
-  expect(app.elements.recentToggle.textContent).toBe("仅近6个月作业");
-  expect(app.elements.recentToggle.classList.contains("button--active")).toBe(true);
+  expect(app.elements.recentToggle.checked).toBe(true);
   expect(app.state.result.summary.totalAssignments).toBe(1);
-  app.elements.recentToggle.dispatchEvent(new Event("click", { bubbles: true }));
+  app.elements.recentToggle.checked = false;
+  app.elements.recentToggle.dispatchEvent(new Event("change", { bubbles: true }));
   expect(app.state.recentOnly).toBe(false);
-  expect(app.elements.recentToggle.textContent).toBe("全部作业");
   expect(app.state.result.summary.totalAssignments).toBe(3);
 });
 
@@ -345,8 +346,9 @@ test("recent toggle re-sorts rows by unsatisfiedCore desc", async () => {
   // 全部作业：凯尔希未满足 4 > 阿米娅 2
   let html = app.elements.trainingTable.innerHTML;
   expect(html.indexOf("凯尔希")).toBeLessThan(html.indexOf("阿米娅"));
-  // 点击窗口切换按钮后应重新按未满足必带作业降序
-  app.elements.recentToggle.dispatchEvent(new Event("click", { bubbles: true }));
+  // 勾选窗口切换后应重新按未满足必带作业降序
+  app.elements.recentToggle.checked = true;
+  app.elements.recentToggle.dispatchEvent(new Event("change", { bubbles: true }));
   expect(app.state.recentOnly).toBe(true);
   // 仅近6个月：阿米娅未满足 2 > 凯尔希 1
   html = app.elements.trainingTable.innerHTML;
@@ -356,7 +358,7 @@ test("recent toggle re-sorts rows by unsatisfiedCore desc", async () => {
 test("standard mode toggle overrides requirements with max training", async () => {
   fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
   const app = await initApp({ fetchImpl: makeFetchImpl() });
-  expect(app.elements.standardToggle.textContent).toBe("作业要求");
+  expect(app.elements.standardToggle.checked).toBe(false);
   const now = Date.now();
   app.state.assignments = [
     { id: 1, uploadTime: new Date(now - 1000).toISOString(), required: [{ name: "阿米娅", skill: 2, requirements: { level: 60, skill_level: 7, module: 1 } }], groups: [] },
@@ -364,14 +366,15 @@ test("standard mode toggle overrides requirements with max training", async () =
   app.loadSampleData();
   let amiya = app.state.result.rows.find((row) => row.name === "阿米娅");
   expect(amiya.target).toMatchObject({ elite: 2, level: 60, skill2: 7, module: 1 });
-  app.elements.standardToggle.dispatchEvent(new Event("click", { bubbles: true }));
+  app.elements.standardToggle.checked = true;
+  app.elements.standardToggle.dispatchEvent(new Event("change", { bubbles: true }));
   expect(app.state.standardMode).toBe(true);
-  expect(app.elements.standardToggle.textContent).toBe("标准练度");
-  expect(app.elements.standardToggle.classList.contains("button--active")).toBe(true);
+  expect(app.elements.standardToggle.checked).toBe(true);
   // 5★阿米娅 -> 精2 80级；用到的技能2专三；用到的模组三级
   amiya = app.state.result.rows.find((row) => row.name === "阿米娅");
   expect(amiya.target).toMatchObject({ elite: 2, level: 80, skill2: 10, module: 3 });
-  app.elements.standardToggle.dispatchEvent(new Event("click", { bubbles: true }));
+  app.elements.standardToggle.checked = false;
+  app.elements.standardToggle.dispatchEvent(new Event("change", { bubbles: true }));
   expect(app.state.standardMode).toBe(false);
   amiya = app.state.result.rows.find((row) => row.name === "阿米娅");
   expect(amiya.target).toMatchObject({ level: 60, skill2: 7, module: 1 });

@@ -212,16 +212,6 @@ function createApp(deps, elements) {
     });
   }
 
-  function updateRecentToggle() {
-    elements.recentToggle.textContent = state.recentOnly ? "仅近6个月作业" : "全部作业";
-    elements.recentToggle.classList.toggle("button--active", state.recentOnly);
-  }
-
-  function updateStandardToggle() {
-    elements.standardToggle.textContent = state.standardMode ? "标准练度" : "作业要求";
-    elements.standardToggle.classList.toggle("button--active", state.standardMode);
-  }
-
   function render() {
     elements.status.textContent = state.status || "就绪";
     elements.error.textContent = state.error;
@@ -402,23 +392,19 @@ function createApp(deps, elements) {
       if (state.userOperators.length) runAnalysis();
       render();
     });
-    elements.recentToggle.addEventListener("click", () => {
-      state.recentOnly = !state.recentOnly;
-      updateRecentToggle();
+    elements.recentToggle.addEventListener("change", () => {
+      state.recentOnly = elements.recentToggle.checked;
       // 切换时间窗口后重新计算并固定按“未满足必带作业”降序排列
       runAnalysis();
       render();
     });
-    elements.standardToggle.addEventListener("click", () => {
-      state.standardMode = !state.standardMode;
-      updateStandardToggle();
+    elements.standardToggle.addEventListener("change", () => {
+      state.standardMode = elements.standardToggle.checked;
       runAnalysis();
       render();
     });
   }
 
-  updateRecentToggle();
-  updateStandardToggle();
   bindEvents();
 
   async function bootstrap() {

@@ -127,5 +127,8 @@ test("renderTrainingTable renders empty state and rows", () => {
   const anyModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 1 }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: 4 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
   expect(anyModule).toContain("模组 任意级");
   expect(anyModule).not.toContain("req-unmet");
+  // 目标列按模组编号解析名称（未解锁的也能解析出来）
+  const namedModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 1, modules: [{ id: "uniequip_001_amiya", name: "阿米娅证章", level: 1, locked: false }, { id: "uniequip_002_amiya", name: "DWDB-221E", level: 3, locked: true }] }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: 2 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+  expect(namedModule).toContain('<span class="req-unmet">模组 DWDB-221E 2级</span>');
 });
 

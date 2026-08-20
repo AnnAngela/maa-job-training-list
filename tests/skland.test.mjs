@@ -136,8 +136,11 @@ test("formatSklandCharacters maps real Skland char data to operators", () => {
   });
   expect(operators).toHaveLength(1);
   expect(operators[0]).toMatchObject({ charId: "char_002_amiya", name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 9, maxModuleLevel: 1 });
-  // 模组只保留已解锁的，且带 id/名称/等级
-  expect(operators[0].modules).toEqual([{ id: "uniequip_001_amiya", name: "阿米娅证章", level: 1 }]);
+  // 模组保留全部（含未解锁），带 id/名称/等级/锁定状态
+  expect(operators[0].modules).toEqual([
+    { id: "uniequip_001_amiya", name: "阿米娅证章", level: 1, locked: false },
+    { id: "uniequip_002_amiya", name: "DWDB-221E", level: 3, locked: true },
+  ]);
 });
 
 test("formatSklandCharacters accepts legacy id/skills[].level/equips shape", () => {
@@ -176,9 +179,10 @@ test("formatSklandCharacters parses the fixture player/info payload", () => {
     expect(operator.elite).toBeGreaterThanOrEqual(0);
     expect(operator.level).toBeGreaterThanOrEqual(1);
   }
-  // 阿米娅已解锁模组带名称
+  // 阿米娅模组带名称（含未解锁的 DWDB-221E）
   const amiya = byId.get("char_002_amiya");
-  expect(amiya.modules).toContainEqual({ id: "uniequip_001_amiya", name: "阿米娅证章", level: 1 });
+  expect(amiya.modules).toContainEqual({ id: "uniequip_001_amiya", name: "阿米娅证章", level: 1, locked: false });
+  expect(amiya.modules).toContainEqual({ id: "uniequip_002_amiya", name: "DWDB-221E", level: 1, locked: true });
 });
 
 test("fixture chars keep the real Skland field names", () => {
