@@ -15,12 +15,14 @@ export function standardSlotRequirements(slot, operatorMeta) {
   const rarity = operatorMeta?.operators?.[charId]?.rarity;
   const max = STANDARD_MAX[rarity] || STANDARD_MAX[6];
   const rawModule = slot?.requirements?.module;
+  // module 是模组类型编号（1=X, 2=Y, 3=A, 4=D），保留类型；标准模式要求该模组三级
   const module = rawModule === undefined || rawModule === null ? -1 : Number(rawModule);
   return {
     elite: max.elite,
     level: max.level,
     skill_level: Number(slot?.skill) >= 1 ? 10 : 0,
-    module: module > 0 ? 3 : module,
+    module,
+    module_level: module > 0 ? 3 : 0,
   };
 }
 
@@ -46,7 +48,9 @@ export function normalizeSlotRequirements(slot) {
   const explicitElite = Number(req.elite) || 0;
   const skill = Number(slot?.skill) || 0;
   const skillLevel = Number(req.skill_level) || 0;
+  // module 是模组类型编号（1=X, 2=Y, 3=A, 4=D），module_level 是模组等级
   const module = req.module === undefined ? -1 : Number(req.module);
+  const moduleLevel = Number(req.module_level) || 0;
   let elite = explicitElite;
   if (skill >= 1) {
     elite = Math.max(elite, skill - 1);
@@ -61,6 +65,7 @@ export function normalizeSlotRequirements(slot) {
     level: Number(req.level) || 0,
     skillLevel: skill >= 1 ? skillLevel : 0,
     module,
+    moduleLevel,
   };
 }
 
@@ -222,7 +227,7 @@ export function computeTrainingList({ assignments, userOperators, operatorMeta, 
     let coreGain = 0;
     let groupGain = 0;
     let totalGap = 0;
-    const target = { elite: 0, level: 0, skill1: 0, skill2: 0, skill3: 0, module: -1 };
+    const target = { elite: 0, level: 0, skill1: 0, skill2: 0, skill3: 0, module: -1, moduleLevel: 0 };
 
     for (const [assignmentId, appearance] of demand.assignments) {
       const base = baseResults.find((item) => item.assignment.id === assignmentId);
@@ -238,6 +243,7 @@ export function computeTrainingList({ assignments, userOperators, operatorMeta, 
           target[`skill${slot.skill}`] = Math.max(target[`skill${slot.skill}`], req.skillLevel);
         }
         if (req.module > target.module) target.module = req.module;
+        target.moduleLevel = Math.max(target.moduleLevel, req.moduleLevel);
       }
       for (const group of assignment.groups || []) {
         for (const slot of group.opers || []) {
@@ -249,6 +255,7 @@ export function computeTrainingList({ assignments, userOperators, operatorMeta, 
             target[`skill${slot.skill}`] = Math.max(target[`skill${slot.skill}`], req.skillLevel);
           }
           if (req.module > target.module) target.module = req.module;
+          target.moduleLevel = Math.max(target.moduleLevel, req.moduleLevel);
         }
       }
 

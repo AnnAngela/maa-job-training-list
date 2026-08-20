@@ -186,14 +186,15 @@ test("normalizeImportedOperators imports the fixture player/info payload", () =>
   const rows = normalizeImportedOperators(playerInfo, realOperatorMeta);
   expect(rows).toHaveLength(playerInfo.data.chars.length);
   const amiya = rows.find((row) => row.charId === "char_002_amiya");
-  expect(amiya).toMatchObject({ name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 7, skill3: 7, maxModuleLevel: 1 });
+  // 证章不算模组，阿米娅的 Y 型未解锁 -> maxModuleLevel 0
+  expect(amiya).toMatchObject({ name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 7, skill3: 7, maxModuleLevel: 0 });
   const kalts = rows.find((row) => row.charId === "char_003_kalts");
   expect(kalts).toMatchObject({ name: "凯尔希", skill3: 10, maxModuleLevel: 3 });
   const svash2 = rows.find((row) => row.charId === "char_1045_svash2");
   expect(svash2.maxModuleLevel).toBe(0);
-  // 从 fixture 的 equipmentInfoMap 解析出模组名称（含未解锁）
-  expect(amiya.modules).toContainEqual({ id: "uniequip_001_amiya", name: "阿米娅证章", level: 1, locked: false });
-  expect(amiya.modules).toContainEqual({ id: "uniequip_002_amiya", name: "DWDB-221E", level: 1, locked: true });
+  // 模组名用 typeName2：证章为空、Y 型为 "Y"（含未解锁）
+  expect(amiya.modules).toContainEqual({ id: "uniequip_001_amiya", name: "", level: 1, locked: false });
+  expect(amiya.modules).toContainEqual({ id: "uniequip_002_amiya", name: "Y", level: 1, locked: true });
 });
 
 test("normalizeImportedOperators fills every missing field", () => {
@@ -365,19 +366,20 @@ test("standard mode toggle overrides requirements with max training", async () =
   ];
   app.loadSampleData();
   let amiya = app.state.result.rows.find((row) => row.name === "阿米娅");
-  expect(amiya.target).toMatchObject({ elite: 2, level: 60, skill2: 7, module: 1 });
+  // module 1 = X 型，普通模式无等级要求
+  expect(amiya.target).toMatchObject({ elite: 2, level: 60, skill2: 7, module: 1, moduleLevel: 0 });
   app.elements.standardToggle.checked = true;
   app.elements.standardToggle.dispatchEvent(new Event("change", { bubbles: true }));
   expect(app.state.standardMode).toBe(true);
   expect(app.elements.standardToggle.checked).toBe(true);
-  // 5★阿米娅 -> 精2 80级；用到的技能2专三；用到的模组三级
+  // 5★阿米娅 -> 精2 80级；用到的技能2专三；X 型模组三级
   amiya = app.state.result.rows.find((row) => row.name === "阿米娅");
-  expect(amiya.target).toMatchObject({ elite: 2, level: 80, skill2: 10, module: 3 });
+  expect(amiya.target).toMatchObject({ elite: 2, level: 80, skill2: 10, module: 1, moduleLevel: 3 });
   app.elements.standardToggle.checked = false;
   app.elements.standardToggle.dispatchEvent(new Event("change", { bubbles: true }));
   expect(app.state.standardMode).toBe(false);
   amiya = app.state.result.rows.find((row) => row.name === "阿米娅");
-  expect(amiya.target).toMatchObject({ level: 60, skill2: 7, module: 1 });
+  expect(amiya.target).toMatchObject({ level: 60, skill2: 7, module: 1, moduleLevel: 0 });
 });
 
 test("rows are always sorted by unsatisfiedCore desc", async () => {

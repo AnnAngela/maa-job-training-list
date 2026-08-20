@@ -95,7 +95,8 @@ test("renderTrainingTable renders empty state and rows", () => {
   expect(html).toContain("技能2 专三");
   expect(html).toContain("技能3 专三");
   expect(html).toContain('<span class="req-unmet">90级</span>');
-  expect(html).toContain('<span class="req-unmet">模组 3级</span>');
+  // module 3 = A 型；用户没有该模组 -> 警告
+  expect(html).toContain('<span class="req-unmet">模组 A</span>');
   const sparseRows = [{ name: "阿米娅", user: { elite: 0, level: 0 }, target: undefined, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 1 }];
   const sparseHtml = renderTrainingTable(sparseRows, { operatorMeta, skillSprite });
   expect(sparseHtml).toContain("char_002_amiya");
@@ -113,22 +114,25 @@ test("renderTrainingTable renders empty state and rows", () => {
   expect(missingRow).toContain('<span class="req-unmet">精2</span>');
   expect(missingRow).toContain('<span class="req-unmet">90级</span>');
   expect(missingRow).toContain('<span class="req-unmet">技能2 7级</span>');
-  expect(missingRow).toContain('<span class="req-unmet">模组 1级</span>');
-  const satisfiedModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 3 }, target: { elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, module: 1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
-  expect(satisfiedModule).toContain("模组 1");
+  expect(missingRow).toContain('<span class="req-unmet">模组 X</span>');
+  const satisfiedModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 3, modules: [{ id: "uniequip_001_amiya", name: "X", level: 1, locked: false }] }, target: { elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, module: 1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+  expect(satisfiedModule).toContain("模组 X");
   expect(satisfiedModule).not.toContain("req-unmet");
   const zeroModuleUser = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 0 }, target: { elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, module: 1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
-  expect(zeroModuleUser).toContain('<span class="req-unmet">模组 1级</span>');
-  // 多模组：当前列逐个显示模组名称和等级
-  const multiModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 3, modules: [{ id: "uniequip_001_amiya", name: "阿米娅证章", level: 1 }, { id: "uniequip_002_amiya", name: "DWDB-221E", level: 3 }] }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: -1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
-  expect(multiModule).toContain("模组 阿米娅证章 1级");
-  expect(multiModule).toContain("模组 DWDB-221E 3级");
-  // module 4 表示需要模组、等级不限
+  expect(zeroModuleUser).toContain('<span class="req-unmet">模组 X</span>');
+  // 多模组：当前列只显示有 typeName2 且已解锁的模组（证章不显示）
+  const multiModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 3, modules: [{ id: "uniequip_001_amiya", name: "", level: 1, locked: false }, { id: "uniequip_002_amiya", name: "X", level: 2, locked: false }, { id: "uniequip_003_amiya", name: "Y", level: 3, locked: false }] }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: -1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+  expect(multiModule).toContain("模组 X 2级");
+  expect(multiModule).toContain("模组 Y 3级");
+  expect(multiModule).not.toContain("模组  1级");
+  // module 4 = D 型；用户没有 D 型 -> 警告
   const anyModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 1 }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: 4 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
-  expect(anyModule).toContain("模组 任意级");
-  expect(anyModule).not.toContain("req-unmet");
-  // 目标列按模组编号解析名称（未解锁的也能解析出来）
-  const namedModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 1, modules: [{ id: "uniequip_001_amiya", name: "阿米娅证章", level: 1, locked: false }, { id: "uniequip_002_amiya", name: "DWDB-221E", level: 3, locked: true }] }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: 2 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
-  expect(namedModule).toContain('<span class="req-unmet">模组 DWDB-221E 2级</span>');
+  expect(anyModule).toContain('<span class="req-unmet">模组 D</span>');
+  // 目标列显示模组类型，标准模式带等级
+  const namedModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 1, modules: [{ id: "uniequip_001_amiya", name: "", level: 1, locked: false }, { id: "uniequip_002_amiya", name: "Y", level: 1, locked: false }] }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: 2, moduleLevel: 3 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+  expect(namedModule).toContain('<span class="req-unmet">模组 Y 3级</span>');
+  // 未知模组编号：目标列不显示模组部分
+  const unknownModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 0, modules: [] }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: 9 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+  expect(unknownModule).not.toContain("模组");
 });
 

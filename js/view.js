@@ -1,5 +1,8 @@
 import { escapeHtml, formatNumber, operatorAvatarUrl, scoreTier, skillLevelLabel, skillSpriteStyle } from "./util.js";
 
+// requirements.module 是模组类型编号（见 ZOOT-Plus copilot.schema：1=X, 2=Y, 3=A, 4=D）
+const MODULE_TYPE_NAMES = { 1: "X", 2: "Y", 3: "A", 4: "D", 5: "B" };
+
 export function charIdForName(name, operatorMeta) {
   const charId = operatorMeta?.nameToCharId?.[name];
   return charId || "";
@@ -91,7 +94,7 @@ function formatCurrent(user) {
     parts.push(`技能 ${skills.join("/")}`);
   }
   const modules = Array.isArray(user.modules)
-    ? user.modules.filter((module) => !module.locked && Number(module.level) > 0)
+    ? user.modules.filter((module) => module.name && !module.locked && Number(module.level) > 0)
     : [];
   if (modules.length > 0) {
     parts.push(modules.map((module) => `模组 ${escapeHtml(module.name)} ${module.level}级`).join(" · "));
@@ -121,15 +124,17 @@ function formatTarget(target, user) {
     const text = `技能${index} ${skillLevelLabel(required)}`;
     parts.push(requirementText(text, !user || current < required));
   }
-  const moduleLevel = Number(target.module);
-  if (moduleLevel > 0) {
-    // 模组编号（requirements.module）按干员模组列表顺序解析名称；4 表示“需要模组、等级不限”
-    const moduleName = moduleLevel <= 3 ? user?.modules?.[moduleLevel - 1]?.name : "";
-    const levelLabel = moduleLevel <= 3 ? `${moduleLevel}级` : "任意级";
-    const label = moduleName ? `模组 ${moduleName} ${levelLabel}` : `模组 ${levelLabel}`;
-    const currentModule = Number(user?.maxModuleLevel) || 0;
-    const unmet = !user || (moduleLevel > 3 ? currentModule < 1 : currentModule < moduleLevel);
-    parts.push(requirementText(label, unmet));
+  const moduleType = Number(target.module);
+  if (moduleType > 0) {
+    const typeName = MODULE_TYPE_NAMES[moduleType];
+    if (typeName) {
+      const level = Number(target.moduleLevel) || 0;
+      const label = level > 0 ? `模组 ${typeName} ${level}级` : `模组 ${typeName}`;
+      const module = user?.modules?.find((item) => item.name === typeName && !item.locked);
+      const currentLevel = Number(module?.level) || 0;
+      const unmet = !user || (level > 0 ? currentLevel < level : currentLevel < 1);
+      parts.push(requirementText(label, unmet));
+    }
   }
   return parts.length ? parts.join(" · ") : "—";
 }

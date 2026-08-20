@@ -123,12 +123,20 @@ export function formatSklandCharacters(chars, operatorMeta, equipmentInfo = {}) 
         ? char.equips
         : [];
     // locked 表示该模组尚未解锁，不计入已拥有的模组等级
-    // modules 保留全部模组（含未解锁），用于目标列按模组编号解析名称
+    // 模组显示名用 typeName2（X/Y/A/D…）；没有 typeName2 的是初始证章（无模组状态），不算模组
+    const moduleInfoOf = (equip) => equipmentInfo?.[equip.id] || {};
+    const isRealModule = (equip) => {
+      const entry = equipmentInfo?.[equip.id];
+      if (entry === undefined) return true; // 无 equipmentInfo 时按旧行为全部计入
+      return Boolean(entry.typeName2); // 有 typeName2 才是真模组，初始证章不算
+    };
     const unlockedEquips = equips.filter((equip) => !equip?.locked);
-    const moduleLevels = unlockedEquips.map((equip) => Number(equip?.level) || 0);
+    const moduleLevels = unlockedEquips
+      .filter(isRealModule)
+      .map((equip) => Number(equip?.level) || 0);
     const modules = equips.map((equip) => ({
       id: equip.id,
-      name: equipmentInfo?.[equip.id]?.name || equip.id || "",
+      name: moduleInfoOf(equip).typeName2 || "",
       level: Number(equip.level) || 0,
       locked: Boolean(equip.locked),
     }));

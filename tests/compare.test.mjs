@@ -25,7 +25,7 @@ const amiya = { charId: "char_002_amiya", name: "阿米娅", rarity: 5, professi
 const kalts = { charId: "char_003_kalts", name: "凯尔希", rarity: 6, profession: "MEDIC", elite: 2, level: 90, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 3 };
 
 test("normalizeSlotRequirements infers elite from skill and skill_level", () => {
-  expect(normalizeSlotRequirements({ skill: 0 })).toEqual({ elite: 0, level: 0, skillLevel: 0, module: -1 });
+  expect(normalizeSlotRequirements({ skill: 0 })).toEqual({ elite: 0, level: 0, skillLevel: 0, module: -1, moduleLevel: 0 });
   expect(normalizeSlotRequirements({ skill: 2 })).toMatchObject({ elite: 1 });
   expect(normalizeSlotRequirements({ skill: 3 })).toMatchObject({ elite: 2 });
   expect(normalizeSlotRequirements({ skill: 1, requirements: { skill_level: 8 } })).toMatchObject({ elite: 2 });
@@ -207,16 +207,16 @@ test("computeTrainingList handles group gains and other required operators", () 
 });
 
 test("standardSlotRequirements overrides with rarity max and mastery", () => {
-  // 阿米娅 5★ -> 精2 80级；技能专三；用到的模组三级
-  expect(standardSlotRequirements({ name: "阿米娅", skill: 2, requirements: { level: 60, skill_level: 7, module: 1 } }, operatorMeta)).toEqual({ elite: 2, level: 80, skill_level: 10, module: 3 });
-  // 凯尔希 6★ -> 精2 90级
-  expect(standardSlotRequirements({ name: "凯尔希", skill: 3, requirements: { module: 2 } }, operatorMeta)).toEqual({ elite: 2, level: 90, skill_level: 10, module: 3 });
+  // 阿米娅 5★ -> 精2 80级；技能专三；模组类型保留、等级统一三级
+  expect(standardSlotRequirements({ name: "阿米娅", skill: 2, requirements: { level: 60, skill_level: 7, module: 1 } }, operatorMeta)).toEqual({ elite: 2, level: 80, skill_level: 10, module: 1, module_level: 3 });
+  // 凯尔希 6★ -> 精2 90级；module 2 = Y 型
+  expect(standardSlotRequirements({ name: "凯尔希", skill: 3, requirements: { module: 2 } }, operatorMeta)).toEqual({ elite: 2, level: 90, skill_level: 10, module: 2, module_level: 3 });
   // 未指定技能 -> 不要求技能等级；无模组要求保持不变
-  expect(standardSlotRequirements({ name: "阿米娅", skill: 0, requirements: { level: 60 } }, operatorMeta)).toEqual({ elite: 2, level: 80, skill_level: 0, module: -1 });
-  // module 4（需要模组、等级不限）也统一为三级
-  expect(standardSlotRequirements({ name: "阿米娅", skill: 1, requirements: { module: 4 } }, operatorMeta)).toEqual({ elite: 2, level: 80, skill_level: 10, module: 3 });
+  expect(standardSlotRequirements({ name: "阿米娅", skill: 0, requirements: { level: 60 } }, operatorMeta)).toEqual({ elite: 2, level: 80, skill_level: 0, module: -1, module_level: 0 });
+  // module 4 = D 型，标准模式要求三级
+  expect(standardSlotRequirements({ name: "阿米娅", skill: 1, requirements: { module: 4 } }, operatorMeta)).toEqual({ elite: 2, level: 80, skill_level: 10, module: 4, module_level: 3 });
   // 未收录干员按 6★ 标准
-  expect(standardSlotRequirements({ name: "不存在", skill: 1, requirements: {} }, operatorMeta)).toEqual({ elite: 2, level: 90, skill_level: 10, module: -1 });
+  expect(standardSlotRequirements({ name: "不存在", skill: 1, requirements: {} }, operatorMeta)).toEqual({ elite: 2, level: 90, skill_level: 10, module: -1, module_level: 0 });
 });
 
 test("standardizeAssignments rewrites required and group slots", () => {
@@ -238,8 +238,8 @@ test("standardizeAssignments rewrites required and group slots", () => {
   }];
   const [out, sparse, noGroups] = standardizeAssignments(assignments, operatorMeta);
   expect(out.id).toBe(1);
-  expect(out.required[0].requirements).toEqual({ elite: 2, level: 80, skill_level: 10, module: 3 });
-  expect(out.groups[0].opers[0].requirements).toEqual({ elite: 2, level: 90, skill_level: 10, module: -1 });
+  expect(out.required[0].requirements).toEqual({ elite: 2, level: 80, skill_level: 10, module: 1, module_level: 3 });
+  expect(out.groups[0].opers[0].requirements).toEqual({ elite: 2, level: 90, skill_level: 10, module: -1, module_level: 0 });
   expect(sparse.required).toEqual([]);
   expect(sparse.groups[0].opers).toEqual([]);
   expect(sparse.groups[1].opers).toEqual([]);
