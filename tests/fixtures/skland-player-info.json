@@ -447,6 +447,147 @@
         "gold": 0,
         "rarity": 0
       }
-    ]
+    ],
+    "equipmentInfoMap": {
+      "uniequip_001_amiya": {
+        "id": "uniequip_001_amiya",
+        "name": "阿米娅证章",
+        "typeIcon": "original",
+        "shiningColor": "grey"
+      },
+      "uniequip_002_amiya": {
+        "id": "uniequip_002_amiya",
+        "name": "DWDB-221E",
+        "typeIcon": "ccr-y",
+        "typeName2": "Y",
+        "shiningColor": "red"
+      },
+      "uniequip_001_kalts": {
+        "id": "uniequip_001_kalts",
+        "name": "凯尔希证章",
+        "typeIcon": "original",
+        "shiningColor": "grey"
+      },
+      "uniequip_002_kalts": {
+        "id": "uniequip_002_kalts",
+        "name": "Mon2tr",
+        "typeIcon": "phy-x",
+        "typeName2": "X",
+        "shiningColor": "blue"
+      },
+      "uniequip_003_kalts": {
+        "id": "uniequip_003_kalts",
+        "name": "医者",
+        "typeIcon": "phy-y",
+        "typeName2": "Y",
+        "shiningColor": "blue"
+      },
+      "uniequip_004_kalts": {
+        "id": "uniequip_004_kalts",
+        "name": "凯尔希特限证章",
+        "typeIcon": "isw-a",
+        "typeName2": "A",
+        "shiningColor": "purple"
+      },
+      "uniequip_001_demkni": {
+        "id": "uniequip_001_demkni",
+        "name": "塞雷娅证章",
+        "typeIcon": "original",
+        "shiningColor": "grey"
+      },
+      "uniequip_002_demkni": {
+        "id": "uniequip_002_demkni",
+        "name": "闲置的拳击手套",
+        "typeIcon": "gua-x",
+        "typeName2": "X",
+        "shiningColor": "blue"
+      },
+      "uniequip_003_demkni": {
+        "id": "uniequip_003_demkni",
+        "name": "科技新星",
+        "typeIcon": "gua-y",
+        "typeName2": "Y",
+        "shiningColor": "yellow"
+      },
+      "uniequip_001_glaze": {
+        "id": "uniequip_001_glaze",
+        "name": "安比尔证章",
+        "typeIcon": "original",
+        "shiningColor": "grey"
+      },
+      "uniequip_002_glaze": {
+        "id": "uniequip_002_glaze",
+        "name": "便携雷达的辅助器材",
+        "typeIcon": "dea-x",
+        "typeName2": "X",
+        "shiningColor": "red"
+      },
+      "uniequip_001_texas": {
+        "id": "uniequip_001_texas",
+        "name": "德克萨斯证章",
+        "typeIcon": "original",
+        "shiningColor": "grey"
+      },
+      "uniequip_002_texas": {
+        "id": "uniequip_002_texas",
+        "name": "外勤私人补给包",
+        "typeIcon": "sol-y",
+        "typeName2": "Y",
+        "shiningColor": "green"
+      },
+      "uniequip_001_lumen": {
+        "id": "uniequip_001_lumen",
+        "name": "流明证章",
+        "typeIcon": "original",
+        "shiningColor": "grey"
+      },
+      "uniequip_002_lumen": {
+        "id": "uniequip_002_lumen",
+        "name": "纯铜单筒望远镜",
+        "typeIcon": "wah-x",
+        "typeName2": "X",
+        "shiningColor": "grey"
+      },
+      "uniequip_003_lumen": {
+        "id": "uniequip_003_lumen",
+        "name": "“幸运”",
+        "typeIcon": "WAH-Y",
+        "typeName2": "Y",
+        "shiningColor": "blue"
+      },
+      "uniequip_001_skadi2": {
+        "id": "uniequip_001_skadi2",
+        "name": "浊心斯卡蒂证章",
+        "typeIcon": "original",
+        "shiningColor": "grey"
+      },
+      "uniequip_002_skadi2": {
+        "id": "uniequip_002_skadi2",
+        "name": "蜕化的残迹",
+        "typeIcon": "bar-x",
+        "typeName2": "X",
+        "shiningColor": "red"
+      },
+      "uniequip_003_skadi2": {
+        "id": "uniequip_003_skadi2",
+        "name": "新生代",
+        "typeIcon": "bar-y",
+        "typeName2": "Y",
+        "shiningColor": "yellow"
+      },
+      "uniequip_001_ines": {
+        "id": "uniequip_001_ines",
+        "name": "伊内丝证章",
+        "typeIcon": "original",
+        "shiningColor": "grey"
+      },
+      "uniequip_002_ines": {
+        "id": "uniequip_002_ines",
+        "name": "角部“护理”套组",
+        "typeIcon": "age-y",
+        "typeName2": "Y",
+        "shiningColor": "grey"
+      }
+    }
   }
 }

@@ -90,9 +90,16 @@ function formatCurrent(user) {
   if (skills.some((value) => value > 0)) {
     parts.push(`技能 ${skills.join("/")}`);
   }
-  const moduleLevel = Number(user.maxModuleLevel) || 0;
-  if (moduleLevel > 0) {
-    parts.push(`模组 ${moduleLevel}`);
+  const modules = Array.isArray(user.modules)
+    ? user.modules.filter((module) => Number(module.level) > 0)
+    : [];
+  if (modules.length > 0) {
+    parts.push(modules.map((module) => `模组 ${escapeHtml(module.name)} ${module.level}级`).join(" · "));
+  } else {
+    const moduleLevel = Number(user.maxModuleLevel) || 0;
+    if (moduleLevel > 0) {
+      parts.push(`模组 ${moduleLevel}级`);
+    }
   }
   return parts.join(" · ");
 }
@@ -116,7 +123,11 @@ function formatTarget(target, user) {
   }
   const moduleLevel = Number(target.module);
   if (moduleLevel > 0) {
-    parts.push(requirementText(`模组 ${moduleLevel}`, !user || (Number(user.maxModuleLevel) || 0) < moduleLevel));
+    // 作业只给出模组编号/等级数字；4 表示“需要模组、等级不限”
+    const label = moduleLevel <= 3 ? `模组 ${moduleLevel}级` : "模组 任意级";
+    const currentModule = Number(user?.maxModuleLevel) || 0;
+    const unmet = !user || (moduleLevel > 3 ? currentModule < 1 : currentModule < moduleLevel);
+    parts.push(requirementText(label, unmet));
   }
   return parts.length ? parts.join(" · ") : "—";
 }

@@ -1,5 +1,46 @@
 import { DEFAULT_OPTIONS, SCORE_WEIGHTS } from "./config.js";
 
+// 标准练度模式：精2满级（按稀有度 1-6★ 对应的最高等级），用到的技能专三、用到的模组三级
+export const STANDARD_MAX = {
+  1: { elite: 0, level: 30 },
+  2: { elite: 0, level: 45 },
+  3: { elite: 1, level: 55 },
+  4: { elite: 2, level: 70 },
+  5: { elite: 2, level: 80 },
+  6: { elite: 2, level: 90 },
+};
+
+export function standardSlotRequirements(slot, operatorMeta) {
+  const charId = operatorMeta?.nameToCharId?.[slot?.name];
+  const rarity = operatorMeta?.operators?.[charId]?.rarity;
+  const max = STANDARD_MAX[rarity] || STANDARD_MAX[6];
+  const rawModule = slot?.requirements?.module;
+  const module = rawModule === undefined || rawModule === null ? -1 : Number(rawModule);
+  return {
+    elite: max.elite,
+    level: max.level,
+    skill_level: Number(slot?.skill) >= 1 ? 10 : 0,
+    module: module > 0 ? 3 : module,
+  };
+}
+
+export function standardizeAssignments(assignments, operatorMeta) {
+  return (assignments || []).map((assignment) => ({
+    ...assignment,
+    required: (assignment.required || []).map((slot) => ({
+      ...slot,
+      requirements: standardSlotRequirements(slot, operatorMeta),
+    })),
+    groups: (assignment.groups || []).map((group) => ({
+      ...group,
+      opers: (group.opers || []).map((slot) => ({
+        ...slot,
+        requirements: standardSlotRequirements(slot, operatorMeta),
+      })),
+    })),
+  }));
+}
+
 export function normalizeSlotRequirements(slot) {
   const req = slot?.requirements || {};
   const explicitElite = Number(req.elite) || 0;
@@ -185,27 +226,9 @@ export function computeTrainingList({ assignments, userOperators, operatorMeta, 
 
     for (const [assignmentId, appearance] of demand.assignments) {
       const base = baseResults.find((item) => item.assignment.id === assignmentId);
-      if (base?.result.ready) continue;
-
-      if (appearance.core) {
-        const isUnmet = base.result.requiredResults.some(
-          (item) => item.slot.name === name && !item.result.satisfied,
-        );
-        if (isUnmet) unsatisfiedCore += 1;
-      }
-
-      const simulated = evaluateAssignment(
-        assignmentById.get(assignmentId),
-        (slotName) => (slotName === name ? perfectUser : userLookup(slotName)),
-        mergedOptions,
-      );
-      if (simulated.ready) {
-        if (appearance.core) coreGain += 1;
-        else groupGain += 1;
-      }
-
-      const currentResult = evaluateAssignment(assignmentById.get(assignmentId), userLookup, mergedOptions);
       const assignment = assignmentById.get(assignmentId);
+
+      // 目标列取所有涉及该干员的作业的最高要求（不因当前已达标而跳过）
       for (const slot of assignment.required || []) {
         if (slot.name !== name) continue;
         const req = normalizeSlotRequirements(slot);
@@ -228,6 +251,27 @@ export function computeTrainingList({ assignments, userOperators, operatorMeta, 
           if (req.module > target.module) target.module = req.module;
         }
       }
+
+      if (base?.result.ready) continue;
+
+      if (appearance.core) {
+        const isUnmet = base.result.requiredResults.some(
+          (item) => item.slot.name === name && !item.result.satisfied,
+        );
+        if (isUnmet) unsatisfiedCore += 1;
+      }
+
+      const simulated = evaluateAssignment(
+        assignment,
+        (slotName) => (slotName === name ? perfectUser : userLookup(slotName)),
+        mergedOptions,
+      );
+      if (simulated.ready) {
+        if (appearance.core) coreGain += 1;
+        else groupGain += 1;
+      }
+
+      const currentResult = evaluateAssignment(assignment, userLookup, mergedOptions);
       for (const item of currentResult.requiredResults) {
         if (item.slot.name !== name) continue;
         for (const gap of item.result.gaps) totalGap += gapWeight(gap);

@@ -4,7 +4,7 @@ import {
   SKILL_SPRITE_URL,
   SKLAND_COMMAND,
 } from "./config.js";
-import { computeTrainingList } from "./compare.js";
+import { computeTrainingList, standardizeAssignments } from "./compare.js";
 import { fetchAllAssignments, fetchAssignmentsSnapshot } from "./maa.js";
 import { fetchBindingList, formatSklandCharacters, getSklandOperatorData, parseCredential } from "./skland.js";
 import { escapeHtml } from "./util.js";
@@ -29,6 +29,7 @@ function createState() {
     onlyMissing: false,
     requireModule: false,
     recentOnly: false,
+    standardMode: false,
   };
 }
 
@@ -62,6 +63,7 @@ function collectElements(doc) {
     onlyMissingInput: requireElement(doc, "only-missing-input"),
     requireModuleInput: requireElement(doc, "require-module-input"),
     recentToggle: requireElement(doc, "recent-toggle"),
+    standardToggle: requireElement(doc, "standard-toggle"),
   };
 }
 
@@ -98,7 +100,8 @@ export function normalizeImportedOperators(raw, operatorMeta) {
         Object.hasOwn(first, "potentialRank")),
   );
   if (isRawSkland) {
-    return formatSklandCharacters(list, operatorMeta);
+    const equipmentInfo = raw?.data?.equipmentInfoMap || raw?.equipmentInfoMap || {};
+    return formatSklandCharacters(list, operatorMeta, equipmentInfo);
   }
   return list.map((item) => {
     const charId = item.charId || operatorMeta?.nameToCharId?.[item.name] || "";
@@ -113,6 +116,7 @@ export function normalizeImportedOperators(raw, operatorMeta) {
       skill1: Number(item.skill1) || 0,
       skill2: Number(item.skill2) || 0,
       skill3: Number(item.skill3) || 0,
+      modules: Array.isArray(item.modules) ? item.modules : undefined,
       maxModuleLevel: Number(item.maxModuleLevel) || 0,
     };
   });
@@ -186,12 +190,16 @@ function createApp(deps, elements) {
       state.result = null;
       return;
     }
-    const assignments = state.recentOnly
+    let assignments = state.recentOnly
       ? state.assignments.filter((assignment) => {
           const time = Date.parse(assignment.uploadTime || "");
           return Number.isFinite(time) && time >= Date.now() - RECENT_WINDOW_DAYS * 24 * 60 * 60 * 1000;
         })
       : state.assignments;
+    // 标准练度模式：不看作业自设要求，统一精2满级（按稀有度）、用到的技能专三、用到的模组三级
+    if (state.standardMode) {
+      assignments = standardizeAssignments(assignments, state.operatorMeta);
+    }
     const options = { requireModule: state.requireModule };
     if (state.recentOnly) {
       options.recentDays = RECENT_WINDOW_DAYS;
@@ -207,6 +215,11 @@ function createApp(deps, elements) {
   function updateRecentToggle() {
     elements.recentToggle.textContent = state.recentOnly ? "仅近6个月作业" : "全部作业";
     elements.recentToggle.classList.toggle("button--active", state.recentOnly);
+  }
+
+  function updateStandardToggle() {
+    elements.standardToggle.textContent = state.standardMode ? "标准练度" : "作业要求";
+    elements.standardToggle.classList.toggle("button--active", state.standardMode);
   }
 
   function render() {
@@ -396,9 +409,16 @@ function createApp(deps, elements) {
       runAnalysis();
       render();
     });
+    elements.standardToggle.addEventListener("click", () => {
+      state.standardMode = !state.standardMode;
+      updateStandardToggle();
+      runAnalysis();
+      render();
+    });
   }
 
   updateRecentToggle();
+  updateStandardToggle();
   bindEvents();
 
   async function bootstrap() {

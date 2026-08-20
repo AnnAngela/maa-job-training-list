@@ -130,9 +130,14 @@ test("formatSklandCharacters maps real Skland char data to operators", () => {
     },
     { charId: "char_missing", evolvePhase: 0, level: 1, mainSkillLvl: 1, skills: [], equip: [] },
   ];
-  const operators = formatSklandCharacters(chars, operatorMeta);
+  const operators = formatSklandCharacters(chars, operatorMeta, {
+    uniequip_001_amiya: { id: "uniequip_001_amiya", name: "阿米娅证章" },
+    uniequip_002_amiya: { id: "uniequip_002_amiya", name: "DWDB-221E" },
+  });
   expect(operators).toHaveLength(1);
   expect(operators[0]).toMatchObject({ charId: "char_002_amiya", name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 9, maxModuleLevel: 1 });
+  // 模组只保留已解锁的，且带 id/名称/等级
+  expect(operators[0].modules).toEqual([{ id: "uniequip_001_amiya", name: "阿米娅证章", level: 1 }]);
 });
 
 test("formatSklandCharacters accepts legacy id/skills[].level/equips shape", () => {
@@ -158,7 +163,7 @@ test("formatSklandCharacters handles non-array chars and empty arrays", () => {
 });
 
 test("formatSklandCharacters parses the fixture player/info payload", () => {
-  const operators = formatSklandCharacters(playerInfo.data.chars, operatorMeta);
+  const operators = formatSklandCharacters(playerInfo.data.chars, operatorMeta, playerInfo.data.equipmentInfoMap);
   expect(operators).toHaveLength(playerInfo.data.chars.length);
   const byId = new Map(operators.map((operator) => [operator.charId, operator]));
   expect(byId.get("char_002_amiya")).toMatchObject({ name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 7, skill3: 7, maxModuleLevel: 1 });
@@ -171,6 +176,9 @@ test("formatSklandCharacters parses the fixture player/info payload", () => {
     expect(operator.elite).toBeGreaterThanOrEqual(0);
     expect(operator.level).toBeGreaterThanOrEqual(1);
   }
+  // 阿米娅已解锁模组带名称
+  const amiya = byId.get("char_002_amiya");
+  expect(amiya.modules).toContainEqual({ id: "uniequip_001_amiya", name: "阿米娅证章", level: 1 });
 });
 
 test("fixture chars keep the real Skland field names", () => {
@@ -187,6 +195,8 @@ test("getSklandOperatorData parses the fixture payload end to end", async () => 
   const data = await getSklandOperatorData(fetchImpl, "cred", "token", operatorMeta, { uid: "123", now: () => 1700000000000 });
   expect(data.uid).toBe("123");
   expect(data.operators).toHaveLength(playerInfo.data.chars.length);
+  // 走真实链路时也会带上 equipmentInfoMap 里的模组名称
+  expect(data.operators.find((operator) => operator.charId === "char_002_amiya").modules[0].name).toBe("阿米娅证章");
 });
 
 test("getSklandOperatorData supports uid and binding fallback", async () => {

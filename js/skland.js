@@ -97,7 +97,7 @@ export async function fetchPlayerInfo(fetchImpl, uid, cred, token, options = {})
   return payload.data || {};
 }
 
-export function formatSklandCharacters(chars, operatorMeta) {
+export function formatSklandCharacters(chars, operatorMeta, equipmentInfo = {}) {
   const operators = [];
   const list = Array.isArray(chars) ? chars : [];
   for (const char of list) {
@@ -123,9 +123,15 @@ export function formatSklandCharacters(chars, operatorMeta) {
         ? char.equips
         : [];
     // locked 表示该模组尚未解锁，不计入已拥有的模组等级
-    const moduleLevels = equips
-      .filter((equip) => !equip?.locked)
-      .map((equip) => Number(equip?.level) || 0);
+    const unlockedEquips = equips.filter((equip) => !equip?.locked);
+    const moduleLevels = unlockedEquips.map((equip) => Number(equip?.level) || 0);
+    const modules = unlockedEquips
+      .filter((equip) => Number(equip?.level) > 0)
+      .map((equip) => ({
+        id: equip.id,
+        name: equipmentInfo?.[equip.id]?.name || equip.id || "",
+        level: Number(equip.level),
+      }));
     operators.push({
       charId,
       name: meta.name,
@@ -136,6 +142,7 @@ export function formatSklandCharacters(chars, operatorMeta) {
       skill1: skillLevelAt(0),
       skill2: skillLevelAt(1),
       skill3: skillLevelAt(2),
+      modules,
       maxModuleLevel: moduleLevels.length ? Math.max(...moduleLevels) : 0,
     });
   }
@@ -155,6 +162,6 @@ export async function getSklandOperatorData(fetchImpl, cred, token, operatorMeta
     selectedUid = chosen.uid;
   }
   const player = await fetchPlayerInfo(fetchImpl, selectedUid, cred, token, options);
-  const operators = formatSklandCharacters(player.chars, operatorMeta);
+  const operators = formatSklandCharacters(player.chars, operatorMeta, player.equipmentInfoMap);
   return { uid: selectedUid, operators, bindingList, player };
 }

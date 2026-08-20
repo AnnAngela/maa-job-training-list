@@ -8,6 +8,8 @@ import {
   gapWeight,
   normalizeSlotRequirements,
   skillLevelFor,
+  standardSlotRequirements,
+  standardizeAssignments,
 } from "../js/compare.js";
 
 const operatorMeta = {
@@ -202,6 +204,47 @@ test("computeTrainingList handles group gains and other required operators", () 
   expect(saria).toBeTruthy();
   expect(saria.groupGain).toBeGreaterThanOrEqual(0);
   expect(result.rows.some((row) => row.name === "凯尔希")).toBe(true);
+});
+
+test("standardSlotRequirements overrides with rarity max and mastery", () => {
+  // 阿米娅 5★ -> 精2 80级；技能专三；用到的模组三级
+  expect(standardSlotRequirements({ name: "阿米娅", skill: 2, requirements: { level: 60, skill_level: 7, module: 1 } }, operatorMeta)).toEqual({ elite: 2, level: 80, skill_level: 10, module: 3 });
+  // 凯尔希 6★ -> 精2 90级
+  expect(standardSlotRequirements({ name: "凯尔希", skill: 3, requirements: { module: 2 } }, operatorMeta)).toEqual({ elite: 2, level: 90, skill_level: 10, module: 3 });
+  // 未指定技能 -> 不要求技能等级；无模组要求保持不变
+  expect(standardSlotRequirements({ name: "阿米娅", skill: 0, requirements: { level: 60 } }, operatorMeta)).toEqual({ elite: 2, level: 80, skill_level: 0, module: -1 });
+  // module 4（需要模组、等级不限）也统一为三级
+  expect(standardSlotRequirements({ name: "阿米娅", skill: 1, requirements: { module: 4 } }, operatorMeta)).toEqual({ elite: 2, level: 80, skill_level: 10, module: 3 });
+  // 未收录干员按 6★ 标准
+  expect(standardSlotRequirements({ name: "不存在", skill: 1, requirements: {} }, operatorMeta)).toEqual({ elite: 2, level: 90, skill_level: 10, module: -1 });
+});
+
+test("standardizeAssignments rewrites required and group slots", () => {
+  const assignments = [{
+    id: 1,
+    uploadTime: new Date(Date.now() - 1000).toISOString(),
+    required: [{ name: "阿米娅", skill: 2, requirements: { level: 60, skill_level: 7, module: 1 } }],
+    groups: [{ name: "组", opers: [{ name: "凯尔希", skill: 1, requirements: { level: 90 } }] }],
+  }, {
+    id: 2,
+    uploadTime: new Date(Date.now() - 1000).toISOString(),
+    required: undefined,
+    groups: [{ name: "组2", opers: undefined }, { name: "组3" }],
+  }, {
+    id: 3,
+    uploadTime: new Date(Date.now() - 1000).toISOString(),
+    required: [],
+    groups: undefined,
+  }];
+  const [out, sparse, noGroups] = standardizeAssignments(assignments, operatorMeta);
+  expect(out.id).toBe(1);
+  expect(out.required[0].requirements).toEqual({ elite: 2, level: 80, skill_level: 10, module: 3 });
+  expect(out.groups[0].opers[0].requirements).toEqual({ elite: 2, level: 90, skill_level: 10, module: -1 });
+  expect(sparse.required).toEqual([]);
+  expect(sparse.groups[0].opers).toEqual([]);
+  expect(sparse.groups[1].opers).toEqual([]);
+  expect(noGroups.groups).toEqual([]);
+  expect(standardizeAssignments(null, operatorMeta)).toEqual([]);
 });
 
 test("computeTrainingList sorts rows by unsatisfiedCore desc", () => {

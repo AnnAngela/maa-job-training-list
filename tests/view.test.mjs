@@ -95,7 +95,7 @@ test("renderTrainingTable renders empty state and rows", () => {
   expect(html).toContain("技能2 专三");
   expect(html).toContain("技能3 专三");
   expect(html).toContain('<span class="req-unmet">90级</span>');
-  expect(html).toContain('<span class="req-unmet">模组 3</span>');
+  expect(html).toContain('<span class="req-unmet">模组 3级</span>');
   const sparseRows = [{ name: "阿米娅", user: { elite: 0, level: 0 }, target: undefined, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 1 }];
   const sparseHtml = renderTrainingTable(sparseRows, { operatorMeta, skillSprite });
   expect(sparseHtml).toContain("char_002_amiya");
@@ -113,11 +113,19 @@ test("renderTrainingTable renders empty state and rows", () => {
   expect(missingRow).toContain('<span class="req-unmet">精2</span>');
   expect(missingRow).toContain('<span class="req-unmet">90级</span>');
   expect(missingRow).toContain('<span class="req-unmet">技能2 7级</span>');
-  expect(missingRow).toContain('<span class="req-unmet">模组 1</span>');
+  expect(missingRow).toContain('<span class="req-unmet">模组 1级</span>');
   const satisfiedModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 3 }, target: { elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, module: 1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
   expect(satisfiedModule).toContain("模组 1");
   expect(satisfiedModule).not.toContain("req-unmet");
   const zeroModuleUser = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 0 }, target: { elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, module: 1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
-  expect(zeroModuleUser).toContain('<span class="req-unmet">模组 1</span>');
+  expect(zeroModuleUser).toContain('<span class="req-unmet">模组 1级</span>');
+  // 多模组：当前列逐个显示模组名称和等级
+  const multiModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 3, modules: [{ id: "uniequip_001_amiya", name: "阿米娅证章", level: 1 }, { id: "uniequip_002_amiya", name: "DWDB-221E", level: 3 }] }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: -1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+  expect(multiModule).toContain("模组 阿米娅证章 1级");
+  expect(multiModule).toContain("模组 DWDB-221E 3级");
+  // module 4 表示需要模组、等级不限
+  const anyModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 1 }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: 4 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+  expect(anyModule).toContain("模组 任意级");
+  expect(anyModule).not.toContain("req-unmet");
 });
 

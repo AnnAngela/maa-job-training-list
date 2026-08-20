@@ -62,6 +62,7 @@ function buildDom() {
     "<input id=\"only-missing-input\" type=\"checkbox\">",
     "<input id=\"require-module-input\" type=\"checkbox\">",
     "<button id=\"recent-toggle\"></button>",
+    "<button id=\"standard-toggle\"></button>",
   ].join("");
 }
 
@@ -120,6 +121,8 @@ test("normalizeImportedOperators accepts array and wrapped operators", () => {
   expect(fromArray[0]).toMatchObject({ charId: "char_002_amiya", name: "阿米娅", elite: 2 });
   const wrapped = normalizeImportedOperators({ operators: [item] }, operatorMeta);
   expect(wrapped[0].name).toBe("阿米娅");
+  const withModules = normalizeImportedOperators([{ ...item, modules: [{ id: "m1", name: "模组甲", level: 2 }] }], operatorMeta);
+  expect(withModules[0].modules).toEqual([{ id: "m1", name: "模组甲", level: 2 }]);
   expect(() => normalizeImportedOperators({ bad: true }, operatorMeta)).toThrow("导入数据应为数组");
 });
 
@@ -188,6 +191,8 @@ test("normalizeImportedOperators imports the fixture player/info payload", () =>
   expect(kalts).toMatchObject({ name: "凯尔希", skill3: 10, maxModuleLevel: 3 });
   const svash2 = rows.find((row) => row.charId === "char_1045_svash2");
   expect(svash2.maxModuleLevel).toBe(0);
+  // 从 fixture 的 equipmentInfoMap 解析出模组名称
+  expect(amiya.modules).toContainEqual({ id: "uniequip_001_amiya", name: "阿米娅证章", level: 1 });
 });
 
 test("normalizeImportedOperators fills every missing field", () => {
@@ -346,6 +351,30 @@ test("recent toggle re-sorts rows by unsatisfiedCore desc", async () => {
   // 仅近6个月：阿米娅未满足 2 > 凯尔希 1
   html = app.elements.trainingTable.innerHTML;
   expect(html.indexOf("阿米娅")).toBeLessThan(html.indexOf("凯尔希"));
+});
+
+test("standard mode toggle overrides requirements with max training", async () => {
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  expect(app.elements.standardToggle.textContent).toBe("作业要求");
+  const now = Date.now();
+  app.state.assignments = [
+    { id: 1, uploadTime: new Date(now - 1000).toISOString(), required: [{ name: "阿米娅", skill: 2, requirements: { level: 60, skill_level: 7, module: 1 } }], groups: [] },
+  ];
+  app.loadSampleData();
+  let amiya = app.state.result.rows.find((row) => row.name === "阿米娅");
+  expect(amiya.target).toMatchObject({ elite: 2, level: 60, skill2: 7, module: 1 });
+  app.elements.standardToggle.dispatchEvent(new Event("click", { bubbles: true }));
+  expect(app.state.standardMode).toBe(true);
+  expect(app.elements.standardToggle.textContent).toBe("标准练度");
+  expect(app.elements.standardToggle.classList.contains("button--active")).toBe(true);
+  // 5★阿米娅 -> 精2 80级；用到的技能2专三；用到的模组三级
+  amiya = app.state.result.rows.find((row) => row.name === "阿米娅");
+  expect(amiya.target).toMatchObject({ elite: 2, level: 80, skill2: 10, module: 3 });
+  app.elements.standardToggle.dispatchEvent(new Event("click", { bubbles: true }));
+  expect(app.state.standardMode).toBe(false);
+  amiya = app.state.result.rows.find((row) => row.name === "阿米娅");
+  expect(amiya.target).toMatchObject({ level: 60, skill2: 7, module: 1 });
 });
 
 test("rows are always sorted by unsatisfiedCore desc", async () => {
