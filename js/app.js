@@ -67,6 +67,27 @@ function collectElements(doc) {
   };
 }
 
+export const SKLAND_CREDENTIAL_KEY = "maa-training-list.skland-credential";
+
+function saveCredential(cred, token) {
+  try {
+    localStorage.setItem(SKLAND_CREDENTIAL_KEY, JSON.stringify({ cred, token }));
+  } catch {
+    // localStorage 不可用时静默失败，凭证仅保留在内存
+  }
+}
+
+function loadCredential() {
+  try {
+    const raw = localStorage.getItem(SKLAND_CREDENTIAL_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    return parsed && parsed.cred && parsed.token ? { cred: parsed.cred, token: parsed.token } : null;
+  } catch {
+    return null;
+  }
+}
+
 async function fetchJson(fetchImpl, url) {
   const response = await fetchImpl(url);
   if (!response.ok) {
@@ -281,6 +302,7 @@ function createApp(deps, elements) {
       const { cred, token } = parseCredential(elements.credInput.value);
       state.cred = cred;
       state.token = token;
+      saveCredential(cred, token);
       setStatus("正在获取森空岛账号列表...");
       const binding = await fetchBindingList(deps.fetchImpl, cred, token, { cryptoImpl: deps.cryptoImpl });
       state.bindingList = binding.arkBindingList;
@@ -407,11 +429,29 @@ function createApp(deps, elements) {
 
   bindEvents();
 
+  async function restoreCredential() {
+    const saved = loadCredential();
+    if (!saved) return;
+    state.cred = saved.cred;
+    state.token = saved.token;
+    elements.credInput.value = saved.cred;
+    try {
+      setStatus("正在读取已保存的森空岛账号...");
+      const binding = await fetchBindingList(deps.fetchImpl, saved.cred, saved.token, { cryptoImpl: deps.cryptoImpl });
+      state.bindingList = binding.arkBindingList;
+      elements.bindingList.innerHTML = renderBindingButtons(state.bindingList);
+      setStatus("已恢复已保存的森空岛账号");
+    } catch (error) {
+      setError(`自动恢复凭证失败：${error.message}`);
+    }
+  }
+
   async function bootstrap() {
     try {
       setStatus("正在加载基础数据...");
       await loadStaticData();
       await refreshAssignments(true);
+      await restoreCredential();
     } catch (error) {
       setError(error.message);
       setStatus("加载失败");

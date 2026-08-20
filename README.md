@@ -100,7 +100,7 @@ npm run generate:data # 重新生成 data/ 下的数据文件
 - 作业数据：PRTS 作业站 API（https://prts.maa.plus）。
 - 干员数据：森空岛（https://zonai.skland.com），仅在浏览器内直连。
 - 干员头像与技能图标：一图流 CDN（https://cos.yituliu.cn）。
-- 森空岛 cred/token 仅保存在当前页面内存中，默认不写入 localStorage，不会上传到本站或其他第三方。
+- 森空岛 cred/token 会保存在浏览器 localStorage（仅本机），下次打开页面自动恢复并获取账号列表；不会上传到本站或其他第三方。
 
 ## GitHub Pages 部署
 

@@ -16,6 +16,7 @@ import {
   downloadFile,
   initApp,
   normalizeImportedOperators,
+  SKLAND_CREDENTIAL_KEY,
 } from "../js/app.js";
 import { SKLAND_COMMAND } from "../js/config.js";
 import { fetchAllAssignments, fetchAssignmentsSnapshot } from "../js/maa.js";
@@ -68,6 +69,7 @@ function buildDom() {
 
 beforeEach(() => {
   vi.resetAllMocks();
+  localStorage.clear();
   buildDom();
 });
 
@@ -238,6 +240,43 @@ test("skland credential flow renders bindings", async () => {
   await app.handleSklandCredential({ preventDefault: vi.fn() });
   expect(app.state.bindingList).toHaveLength(1);
   expect(app.elements.bindingList.innerHTML).toContain("博士");
+  // 粘贴提交后凭证写入 localStorage
+  expect(JSON.parse(localStorage.getItem(SKLAND_CREDENTIAL_KEY))).toEqual({ cred: "cred", token: "token" });
+});
+
+test("bootstrap restores saved skland credential", async () => {
+  localStorage.setItem(SKLAND_CREDENTIAL_KEY, JSON.stringify({ cred: "saved-cred", token: "saved-token" }));
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  fetchBindingList.mockResolvedValue({ arkBindingList: [{ uid: "9", nickName: "博士", channelName: "官服", isOfficial: true }] });
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  expect(app.state.cred).toBe("saved-cred");
+  expect(app.state.token).toBe("saved-token");
+  expect(app.elements.credInput.value).toBe("saved-cred");
+  expect(fetchBindingList).toHaveBeenCalled();
+  expect(app.state.bindingList).toHaveLength(1);
+});
+
+test("bootstrap ignores corrupt saved credential", async () => {
+  localStorage.setItem(SKLAND_CREDENTIAL_KEY, "{not-json");
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  expect(app.state.cred).toBe("");
+  expect(fetchBindingList).not.toHaveBeenCalled();
+  // 字段缺失（只有 cred 没有 token）同样忽略
+  localStorage.setItem(SKLAND_CREDENTIAL_KEY, JSON.stringify({ cred: "c" }));
+  const again = await initApp({ fetchImpl: makeFetchImpl() });
+  expect(again.state.cred).toBe("");
+  expect(fetchBindingList).not.toHaveBeenCalled();
+});
+
+test("bootstrap surfaces saved credential restore failure", async () => {
+  localStorage.setItem(SKLAND_CREDENTIAL_KEY, JSON.stringify({ cred: "c", token: "t" }));
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  fetchBindingList.mockRejectedValue(new Error("cred 失效"));
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  expect(app.state.cred).toBe("c");
+  expect(app.state.error).toContain("自动恢复凭证失败");
+  expect(app.state.bindingList).toHaveLength(0);
 });
 
 test("skland credential flow shows error", async () => {
