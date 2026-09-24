@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-18T16:51:54.094Z",
+  "generatedAt": "2026-09-24T01:36:01.598Z",
   "operators": {
     "char_145_prove": {
       "name": "普罗旺斯",
@@ -762,6 +762,12 @@
         }
       ]
     },
+    "char_4220_kormr": {
+      "name": "虎狼丸",
+      "rarity": 1,
+      "profession": "WARRIOR",
+      "skills": []
+    },
     "char_4140_lasher": {
       "name": "衡沙",
       "rarity": 5,
@@ -998,6 +1004,23 @@
         }
       ]
     },
+    "char_4218_aigis": {
+      "name": "埃癸斯",
+      "rarity": 5,
+      "profession": "SNIPER",
+      "skills": [
+        {
+          "skillId": "skchr_aigis_1",
+          "skillIcon": "skchr_aigis_1",
+          "skillName": "启动狂宴模式"
+        },
+        {
+          "skillId": "skchr_aigis_2",
+          "skillIcon": "skchr_aigis_2",
+          "skillName": "全弹发射"
+        }
+      ]
+    },
     "char_261_sddrag": {
       "name": "苇草",
       "rarity": 5,
@@ -1166,6 +1189,23 @@
       "rarity": 1,
       "profession": "WARRIOR",
       "skills": []
+    },
+    "char_4219_yukari": {
+      "name": "岳羽由加莉",
+      "rarity": 5,
+      "profession": "SUPPORT",
+      "skills": [
+        {
+          "skillId": "skchr_yukari_1",
+          "skillIcon": "skchr_yukari_1",
+          "skillName": "龙卷箭"
+        },
+        {
+          "skillId": "skchr_yukari_2",
+          "skillIcon": "skchr_yukari_2",
+          "skillName": "明镜止水"
+        }
+      ]
     },
     "char_4009_irene": {
       "name": "艾丽妮",
@@ -2913,6 +2953,28 @@
           "skillId": "skchr_zebra_2",
           "skillIcon": "skchr_zebra_2",
           "skillName": "群体迷彩"
+        }
+      ]
+    },
+    "char_4217_makoto": {
+      "name": "结城理",
+      "rarity": 6,
+      "profession": "SPECIAL",
+      "skills": [
+        {
+          "skillId": "skchr_makoto_1",
+          "skillIcon": "skchr_makoto_1",
+          "skillName": "俄耳甫斯的竖琴"
+        },
+        {
+          "skillId": "skchr_makoto_2",
+          "skillIcon": "skchr_makoto_2",
+          "skillName": "塔纳托斯的囚锁"
+        },
+        {
+          "skillId": "skchr_makoto_3",
+          "skillIcon": "skchr_makoto_3",
+          "skillName": "开辟明日的剑刃"
         }
       ]
     },
@@ -7727,6 +7789,7 @@
     "承曦格雷伊": "char_1027_greyy2",
     "海霓": "char_4079_haini",
     "截云": "char_4078_bdhkgt",
+    "虎狼丸": "char_4220_kormr",
     "衡沙": "char_4140_lasher",
     "猎蜂": "char_137_brownb",
     "安哲拉": "char_218_cuttle",
@@ -7740,6 +7803,7 @@
     "止颂": "char_4011_lessng",
     "黍": "char_2025_shu",
     "微风": "char_275_breeze",
+    "埃癸斯": "char_4218_aigis",
     "苇草": "char_261_sddrag",
     "桑葚": "char_473_mberry",
     "坚雷": "char_260_durnar",
@@ -7750,6 +7814,7 @@
     "安赛尔": "char_212_ansel",
     "伊桑": "char_355_ethan",
     "Castle-3": "char_286_cast3",
+    "岳羽由加莉": "char_4219_yukari",
     "艾丽妮": "char_4009_irene",
     "夜半": "char_476_blkngt",
     "蒂比": "char_4191_tippi",
@@ -7849,6 +7914,7 @@
     "天空盒": "char_4213_skybx",
     "狮蝎": "char_215_mantic",
     "暴雨": "char_304_zebra",
+    "结城理": "char_4217_makoto",
     "温米": "char_4081_warmy",
     "银灰": "char_172_svrash",
     "空构": "char_4015_spuria",
