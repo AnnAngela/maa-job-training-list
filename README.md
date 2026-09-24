@@ -95,6 +95,20 @@ npm run test:watch    # 监听模式
 npm run generate:data # 重新生成 data/ 下的数据文件
 ```
 
+## 数据自动更新
+
+仓库包含 .github/workflows/update-data.yml，每天北京时间 05:00 自动重新生成 data/ 下的数据文件，无需人工干预：
+
+- 生成后判断是否有实质变化；仅 `generatedAt`、作业的 `views`/`hotScore` 这类每次都变的字段不同时，视为无变化，不提交、不部署。
+- 有实质变化时先跑测试守门，通过后才提交到 master，并派发 pages.yml 重新部署；测试失败则中止，线上继续使用上一版数据。
+- 重新部署必须显式派发：`GITHUB_TOKEN` 推送的提交不会触发 push 事件的工作流。
+
+需要手动补跑（定时任务可能被延迟或丢弃）时执行：
+
+```bash
+gh workflow run update-data.yml
+```
+
 ## 数据来源与隐私
 
 - 作业数据：PRTS 作业站 API（https://prts.maa.plus）。

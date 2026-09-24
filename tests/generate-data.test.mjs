@@ -1,10 +1,13 @@
 import { expect, test, vi } from "vitest";
 import {
+  GENERATED_FILES,
   buildOperatorMeta,
   fetchAllAssignments,
   generateAll,
+  isDataEquivalent,
   normalizeAssignment,
   parseSkillSpriteCss,
+  stripVolatileFields,
 } from "../scripts/generate-data.mjs";
 
 const textResponse = (text, status = 200) => ({ ok: status >= 200 && status < 300, status, text: async () => text });
@@ -108,6 +111,42 @@ test("fetchAllAssignments paginates", async () => {
   expect(result.assignments[0].title).toBe("A");
 });
 
+test("stripVolatileFields drops volatile keys recursively", () => {
+  const input = {
+    generatedAt: "2024-01-01T00:00:00Z",
+    operators: { char_x: { name: "X", views: 3 } },
+    assignments: [{ id: 1, views: 2, hotScore: 1.5, title: "A" }],
+  };
+  expect(stripVolatileFields(input)).toEqual({
+    operators: { char_x: { name: "X" } },
+    assignments: [{ id: 1, title: "A" }],
+  });
+  expect(stripVolatileFields(null)).toBeNull();
+  expect(stripVolatileFields([1, "a", null])).toEqual([1, "a", null]);
+  expect(stripVolatileFields(7)).toBe(7);
+});
+
+test("isDataEquivalent ignores only volatile fields", () => {
+  const before = {
+    generatedAt: "2024-01-01T00:00:00Z",
+    operators: { char_x: { name: "X", skills: [{ skillId: "a" }] } },
+    assignments: [{ id: 1, views: 10, hotScore: 1, title: "A" }],
+  };
+  const volatileOnly = {
+    generatedAt: "2024-06-06T06:06:06Z",
+    operators: { char_x: { name: "X", skills: [{ skillId: "a" }] } },
+    assignments: [{ id: 1, views: 99, hotScore: 9, title: "A" }],
+  };
+  expect(isDataEquivalent(before, volatileOnly)).toBe(true);
+  const substantive = {
+    generatedAt: "2024-06-06T06:06:06Z",
+    operators: { char_x: { name: "X", skills: [{ skillId: "a" }, { skillId: "b" }] } },
+    assignments: [{ id: 1, views: 99, hotScore: 9, title: "A" }],
+  };
+  expect(isDataEquivalent(before, substantive)).toBe(false);
+  expect(isDataEquivalent([1, 2], [2, 1])).toBe(false);
+});
+
 test("generateAll writes generated data files", async () => {
   const fetchImpl = vi.fn((url) => {
     if (url.includes("character_table")) {
@@ -121,7 +160,9 @@ test("generateAll writes generated data files", async () => {
   const writeFileImpl = vi.fn().mockResolvedValue(undefined);
   const result = await generateAll({ fetchImpl, writeFileImpl, now: new Date("2024-01-01T00:00:00Z") });
   expect(result.assignmentData.total).toBe(1);
-  expect(writeFileImpl).toHaveBeenCalledTimes(3);
+  expect(writeFileImpl).toHaveBeenCalledTimes(GENERATED_FILES.length);
+  const writtenFiles = writeFileImpl.mock.calls.map(([url]) => url.pathname.split("/").pop()).sort();
+  expect(writtenFiles).toEqual([...GENERATED_FILES].sort());
 });
 
 test("generateAll throws on character or css request failure", async () => {

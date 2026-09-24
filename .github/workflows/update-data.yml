@@ -1,0 +1,52 @@
+name: Update generated data
+
+on:
+  schedule:
+    # cron 默认按 UTC 解析；指定 IANA 时区后即为北京时间每天 05:00
+    - cron: 0 5 * * *
+      timezone: Asia/Shanghai
+  workflow_dispatch:
+
+permissions:
+  contents: write # 提交并推送重新生成的数据
+  actions: write # 显式派发 pages.yml 触发部署：GITHUB_TOKEN 推送的提交不会自动触发 workflow
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Keep committed data for comparison
+        run: cp -r data "$RUNNER_TEMP/data-before"
+      - run: npm run generate:data
+      - name: Check for substantive changes
+        id: check
+        run: node scripts/run-check-data-changed.mjs "$RUNNER_TEMP/data-before" data
+      - name: Run tests
+        if: steps.check.outputs.changed == 'true'
+        run: npm test
+      - name: Commit and push data
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- data/
+          git commit -m "chore(data): refresh generated data"
+          git pull --rebase origin master
+          git push
+      - name: Dispatch Pages deployment
+        if: steps.check.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml

@@ -6,6 +6,29 @@ export const CHARACTER_TABLE_URL =
 export const SKILL_SPRITE_CSS_URL =
   "https://raw.githubusercontent.com/Arknights-yituliu/frontend-v2-plus/dev/src/assets/css/sprite/sprite_skill.css";
 
+// 生成到 data/ 下的文件清单；run-check-data-changed.mjs 复用同一清单做新旧对比，避免两处漂移
+export const GENERATED_FILES = ["operator_meta.json", "skill_sprite.json", "assignments.snapshot.json"];
+
+// 每次抓取都会变化且页面不使用的字段：generatedAt 是生成时刻，views/hotScore 是作业站热度统计。
+// 判断新旧数据是否实质变化时忽略它们，否则每天都会产生无意义提交。
+const VOLATILE_FIELDS = new Set(["generatedAt", "views", "hotScore"]);
+
+export function stripVolatileFields(value) {
+  if (Array.isArray(value)) return value.map(stripVolatileFields);
+  if (value && typeof value === "object") {
+    const result = {};
+    for (const [key, entry] of Object.entries(value)) {
+      if (!VOLATILE_FIELDS.has(key)) result[key] = stripVolatileFields(entry);
+    }
+    return result;
+  }
+  return value;
+}
+
+export function isDataEquivalent(before, after) {
+  return JSON.stringify(stripVolatileFields(before)) === JSON.stringify(stripVolatileFields(after));
+}
+
 export function normalizeAssignment(item) {
   let content = {};
   try {
@@ -145,18 +168,17 @@ export async function generateAll({
   const operatorMeta = buildOperatorMeta(characters);
   const skillSprite = parseSkillSpriteCss(css);
 
-  await writeFileImpl(
-    new URL("../data/operator_meta.json", import.meta.url),
-    `${JSON.stringify({ generatedAt, ...operatorMeta }, null, 2)}\n`,
-  );
-  await writeFileImpl(
-    new URL("../data/skill_sprite.json", import.meta.url),
-    `${JSON.stringify({ generatedAt, ...skillSprite }, null, 2)}\n`,
-  );
-  await writeFileImpl(
-    new URL("../data/assignments.snapshot.json", import.meta.url),
-    `${JSON.stringify({ generatedAt, ...assignmentData }, null, 2)}\n`,
-  );
+  const payloads = {
+    "operator_meta.json": { generatedAt, ...operatorMeta },
+    "skill_sprite.json": { generatedAt, ...skillSprite },
+    "assignments.snapshot.json": { generatedAt, ...assignmentData },
+  };
+  for (const file of GENERATED_FILES) {
+    await writeFileImpl(
+      new URL(`../data/${file}`, import.meta.url),
+      `${JSON.stringify(payloads[file], null, 2)}\n`,
+    );
+  }
 
   return { generatedAt, operatorMeta, skillSprite, assignmentData };
 }
