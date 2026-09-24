@@ -21,20 +21,20 @@ export const DEFAULT_LIMIT = 100;
 export const INTRO_REMIND_DAYS = 30;
 
 export const SCORE_WEIGHTS = {
-  coreGain: 1000,
-  groupGain: 100,
-  unsatisfiedCore: 50,
-  recentCoreDemand: 10,
-  groupDemand: 1,
+    coreGain: 1000,
+    groupGain: 100,
+    unsatisfiedCore: 50,
+    recentCoreDemand: 10,
+    groupDemand: 1,
 };
 
 export const PRIORITY_TIERS = {
-  extreme: 5000,
-  high: 1000,
-  medium: 100,
+    extreme: 5000,
+    high: 1000,
+    medium: 100,
 };
 
 export const DEFAULT_OPTIONS = {
-  requireModule: false,
-  recentDays: RECENT_DAYS,
+    requireModule: false,
+    recentDays: RECENT_DAYS,
 };

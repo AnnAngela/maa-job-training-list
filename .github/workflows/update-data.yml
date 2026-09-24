@@ -32,7 +32,7 @@ jobs:
       - run: npm run generate:data
       - name: Check for substantive changes
         id: check
-        run: node scripts/run-check-data-changed.mjs "$RUNNER_TEMP/data-before" data
+        run: node scripts/run-check-data-changed.js "$RUNNER_TEMP/data-before" data
       - name: Run tests
         if: steps.check.outputs.changed == 'true'
         run: npm test

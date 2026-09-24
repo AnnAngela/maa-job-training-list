@@ -5,15 +5,19 @@
   "type": "module",
   "description": "分析萨拉托加 MAA 作业练度要求并生成培养优先级清单的静态站点",
   "scripts": {
-    "test": "vitest run --coverage",
+    "lint": "eslint . --max-warnings 0",
+    "lint:fix": "eslint . --fix",
+    "test": "npm run lint && vitest run --coverage",
     "test:watch": "vitest",
-    "generate:data": "node scripts/run-generate-data.mjs"
+    "generate:data": "node scripts/run-generate-data.js"
   },
   "engines": {
-    "node": ">=20"
+    "node": "^22.21 || ^24.11"
   },
   "devDependencies": {
+    "@annangela/eslint-config": "^15.0.0",
     "@vitest/coverage-v8": "^4.1.11",
+    "eslint": "^10.11.0",
     "jsdom": "^30.0.1",
     "vitest": "^4.1.11"
   }

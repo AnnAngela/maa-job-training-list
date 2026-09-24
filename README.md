@@ -88,14 +88,26 @@ score = coreGain * 1000 + groupGain * 100 + unsatisfiedCore * 50 + recentCoreDem
 
 ## 开发
 
-要求 Node.js 20 及以上。
+要求 Node.js 22.21 或 24.11 及以上（与 `@annangela/eslint-config` 的 engines 保持一致）。
 
 ```bash
 npm install
-npm test              # 运行 Vitest 并强制 100% 覆盖率
+npm test              # 先跑 ESLint，再跑 Vitest 并强制 100% 覆盖率
+npm run lint          # 只跑 ESLint
+npm run lint:fix      # 自动修复可修复的 ESLint 问题
 npm run test:watch    # 监听模式
 npm run generate:data # 重新生成 data/ 下的数据文件
 ```
+
+### 代码规范
+
+ESLint 规则迁移自 [MoegirlPediaInterfaceCodes](https://github.com/MoegirlPediaInterfaceAdmins/MoegirlPediaInterfaceCodes)，使用同一套共享配置 `@annangela/eslint-config`，并在 eslint.config.js 中按本仓库结构分三类文件：
+
+- `js/`、`lib/`：浏览器侧 ES 模块（`sourceType` 从共享配置的 `script` 改为 `module`）。
+- `scripts/`、根目录配置文件：Node 侧脚本。
+- `tests/`：跑在 Vitest + jsdom 下，额外给浏览器全局与测试夹具所需的例外。
+
+代码风格为 4 空格缩进、双引号、分号、尾随逗号（沿用共享配置），提交前请确保 `npm run lint` 无告警（CI 的 `npm test` 会守门）。
 
 ## 数据自动更新
 
