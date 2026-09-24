@@ -85,6 +85,18 @@
     <p>数据来源：<a href="https://prts.maa.plus" target="_blank" rel="noreferrer">PRTS 作业站</a>、<a href="https://www.skland.com" target="_blank" rel="noreferrer">森空岛</a>。凭证仅在浏览器内使用，不会上传到本站。</p>
   </footer>
 
+  <dialog id="intro-dialog" class="intro-dialog" aria-labelledby="intro-dialog-title">
+    <div class="intro-dialog__card">
+      <h2 id="intro-dialog-title">清单开关怎么用</h2>
+      <p>「培养优先级清单」标题右侧有两个多选框开关，勾选效果如下：</p>
+      <ul>
+        <li><strong>【仅近6个月作业】</strong>：只统计最近6个月上传的作业。老作业的干员需求可能和当下新作业的不一致，可自行判断。</li>
+        <li><strong>【标准练度】</strong>：不再考虑作业设置的练度要求，而是：①所有使用到的干员均要求满级；②所有使用到的模组均要求三级；③所有使用到的技能均要求专三。部分作业只在作业简介处说明了练度要求，而未在干员信息处设置练度要求，这可能导致练度需求错配，开启本功能可避免该情况发生。</li>
+      </ul>
+      <button id="intro-close-button" type="button" class="button">我知道了</button>
+    </div>
+  </dialog>
+
   <script type="module">
     import { initApp } from "./js/app.js";
     initApp();

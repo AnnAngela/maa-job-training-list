@@ -1,4 +1,6 @@
 import { beforeEach, expect, test, vi } from "vitest";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 vi.mock("../js/maa.js", () => ({
   fetchAllAssignments: vi.fn(),
@@ -18,8 +20,9 @@ import {
   normalizeImportedOperators,
   SKLAND_CREDENTIAL_KEY,
 } from "../js/app.js";
-import { SKLAND_COMMAND } from "../js/config.js";
+import { INTRO_REMIND_DAYS, SKLAND_COMMAND } from "../js/config.js";
 import { fetchAllAssignments, fetchAssignmentsSnapshot } from "../js/maa.js";
+import { LAST_VISIT_KEY } from "../js/notice.js";
 import { fetchBindingList, getSklandOperatorData, parseCredential } from "../js/skland.js";
 import realOperatorMeta from "../data/operator_meta.json";
 import playerInfo from "./fixtures/skland-player-info.json";
@@ -64,6 +67,8 @@ function buildDom() {
     "<input id=\"require-module-input\" type=\"checkbox\">",
     "<input id=\"recent-toggle\" type=\"checkbox\">",
     "<input id=\"standard-toggle\" type=\"checkbox\">",
+    "<dialog id=\"intro-dialog\"></dialog>",
+    "<button id=\"intro-close-button\"></button>",
   ].join("");
 }
 
@@ -583,4 +588,78 @@ test("filter and checkbox controls update state and render", async () => {
   app.elements.requireModuleInput.dispatchEvent(new Event("change", { bubbles: true }));
   expect(app.state.requireModule).toBe(true);
 
+});
+
+test("first visit opens the intro dialog and records the visit", async () => {
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  expect(app.elements.introDialog.hasAttribute("open")).toBe(true);
+  expect(Number(localStorage.getItem(LAST_VISIT_KEY))).toBeGreaterThan(0);
+});
+
+test("visit within the remind window keeps the intro dialog closed", async () => {
+  const before = Date.now();
+  localStorage.setItem(LAST_VISIT_KEY, String(before - 10 * 24 * 60 * 60 * 1000));
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  expect(app.elements.introDialog.hasAttribute("open")).toBe(false);
+  // 未弹窗也要刷新时间戳，从最近一次访问起算
+  expect(Number(localStorage.getItem(LAST_VISIT_KEY))).toBeGreaterThanOrEqual(before);
+});
+
+test("visit older than the remind window opens the intro dialog again", async () => {
+  localStorage.setItem(LAST_VISIT_KEY, String(Date.now() - (INTRO_REMIND_DAYS + 1) * 24 * 60 * 60 * 1000));
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  expect(app.elements.introDialog.hasAttribute("open")).toBe(true);
+});
+
+test("unparsable visit timestamp is treated as a first visit", async () => {
+  localStorage.setItem(LAST_VISIT_KEY, "not-a-timestamp");
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  expect(app.elements.introDialog.hasAttribute("open")).toBe(true);
+});
+
+test("intro dialog opens even when assignments fail to load", async () => {
+  fetchAllAssignments.mockRejectedValue(new Error("network down"));
+  fetchAssignmentsSnapshot.mockRejectedValue(new Error("snapshot down"));
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  expect(app.elements.introDialog.hasAttribute("open")).toBe(true);
+});
+
+test("intro close button dismisses the dialog", async () => {
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  app.elements.introCloseButton.dispatchEvent(new Event("click", { bubbles: true }));
+  expect(app.elements.introDialog.hasAttribute("open")).toBe(false);
+});
+
+test("intro uses the native dialog API when available", async () => {
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  const showModal = vi.fn();
+  const close = vi.fn();
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  app.elements.introDialog.showModal = showModal;
+  app.elements.introDialog.close = close;
+  localStorage.removeItem(LAST_VISIT_KEY);
+  app.maybeShowIntro();
+  app.elements.introCloseButton.dispatchEvent(new Event("click", { bubbles: true }));
+  expect(showModal).toHaveBeenCalledTimes(1);
+  expect(close).toHaveBeenCalledTimes(1);
+});
+
+// buildDom 是手写的，无法发现 index.html 与 app.js 的元素契约漂移；
+// 这里直接加载真实页面，确保线上标记能满足 collectElements 的全部 id
+test("index.html markup satisfies the app element contract", async () => {
+  // import.meta.url 在 vitest 的 jsdom 环境下是 http 形式，用工作目录定位仓库里的 index.html
+  const html = readFileSync(resolve(process.cwd(), "index.html"), "utf8");
+  document.body.innerHTML = new DOMParser().parseFromString(html, "text/html").body.innerHTML;
+  fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+  const app = await initApp({ fetchImpl: makeFetchImpl() });
+  expect(app.elements.introDialog).toBeInstanceOf(HTMLDialogElement);
+  expect(app.elements.introDialog.hasAttribute("open")).toBe(true);
+  expect(app.elements.introDialog.textContent).toContain("仅近6个月作业");
+  expect(app.elements.introDialog.textContent).toContain("标准练度");
+  expect(app.elements.introCloseButton.textContent).toContain("我知道了");
 });

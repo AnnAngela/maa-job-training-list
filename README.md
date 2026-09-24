@@ -14,6 +14,8 @@ copy(localStorage.getItem("SK_OAUTH_CRED_KEY")+","+localStorage.getItem("SK_TOKE
 3. 将复制的 cred,token 粘贴到页面输入框，点击「获取账号列表」。
 4. 选择你的明日方舟账号，页面会自动读取干员练度并生成清单。
 
+首次访问或超过 30 天未访问时，页面会弹出「清单开关怎么用」提示，说明「仅近6个月作业」与「标准练度」两个开关的含义与位置；关闭与否都会刷新访问时间，30 天内再次访问不再弹出。
+
 也可以使用「手动导入 JSON」或「载入示例」体验。
 
 ## 手动导入格式
@@ -115,6 +117,7 @@ gh workflow run update-data.yml
 - 干员数据：森空岛（https://zonai.skland.com），仅在浏览器内直连。
 - 干员头像与技能图标：一图流 CDN（https://cos.yituliu.cn）。
 - 森空岛 cred/token 会保存在浏览器 localStorage（仅本机），下次打开页面自动恢复并获取账号列表；不会上传到本站或其他第三方。
+- 提示功能的访问时间戳保存在 localStorage（键 `maa-training-list.last-visit`），同样不会上传。
 
 ## GitHub Pages 部署
 

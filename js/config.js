@@ -17,6 +17,9 @@ export const RECENT_DAYS = 90;
 export const RECENT_WINDOW_DAYS = 180;
 export const DEFAULT_LIMIT = 100;
 
+// 首次访问或超过该天数未访问时，弹出两个清单开关的说明
+export const INTRO_REMIND_DAYS = 30;
+
 export const SCORE_WEIGHTS = {
   coreGain: 1000,
   groupGain: 100,

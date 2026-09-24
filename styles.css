@@ -91,6 +91,32 @@ a:hover { text-decoration: underline; }
 .error { margin: 0 20px; padding: 10px 14px; border-radius: 10px; background: #fef2f2; color: var(--danger); border: 1px solid #fecaca; font-size: 14px; }
 .is-hidden { display: none !important; }
 
+/* 全屏遮罩式提示框：原生 showModal 走 top-layer，属性回退（jsdom/旧浏览器）靠 [open] 切换显隐，
+   两种路径共用同一套尺寸与定位 */
+.intro-dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 20px;
+  border: 0;
+  background: rgba(15, 23, 42, 0.55);
+  /* flex 而非 grid：卡片 max-height 的百分比要相对定高的容器解析，网格隐式行下不可靠 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+.intro-dialog:not([open]) { display: none; }
+.intro-dialog__card { width: 100%; max-width: 640px; max-height: 100%; overflow-y: auto; background: var(--surface); color: var(--text); border-radius: var(--radius); padding: 20px 22px; box-shadow: var(--shadow); }
+.intro-dialog__card h2 { margin: 0 0 10px; font-size: 18px; }
+.intro-dialog__card p { margin: 0 0 10px; color: var(--muted); font-size: 14px; }
+.intro-dialog__card ul { margin: 0 0 16px; padding-left: 20px; display: grid; gap: 8px; font-size: 14px; }
+.intro-dialog__card strong { color: var(--primary-dark); }
+
 .summary-grid { display: grid; grid-template-columns: repeat(5, minmax(120px, 1fr)); gap: 10px; }
 .summary-card { background: var(--surface-alt); border-radius: 12px; padding: 12px 14px; }
 .summary-value { font-size: 26px; font-weight: 700; }

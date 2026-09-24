@@ -6,6 +6,7 @@ import {
 } from "./config.js";
 import { computeTrainingList, standardizeAssignments } from "./compare.js";
 import { fetchAllAssignments, fetchAssignmentsSnapshot } from "./maa.js";
+import { closeDialog, openDialog, readLastVisit, shouldShowIntro, writeLastVisit } from "./notice.js";
 import { fetchBindingList, formatSklandCharacters, getSklandOperatorData, parseCredential } from "./skland.js";
 import { escapeHtml } from "./util.js";
 import { renderBindingButtons, renderSummary, renderTrainingTable } from "./view.js";
@@ -64,6 +65,8 @@ function collectElements(doc) {
     requireModuleInput: requireElement(doc, "require-module-input"),
     recentToggle: requireElement(doc, "recent-toggle"),
     standardToggle: requireElement(doc, "standard-toggle"),
+    introDialog: requireElement(doc, "intro-dialog"),
+    introCloseButton: requireElement(doc, "intro-close-button"),
   };
 }
 
@@ -249,6 +252,16 @@ function createApp(deps, elements) {
     }
   }
 
+  // 首次访问或超过 INTRO_REMIND_DAYS 天未访问时，提示两个清单开关的含义与位置；
+  // 每次访问都刷新时间戳（含未弹窗的访问），因此「连续 30 天未访问」按页面打开时间计算
+  function maybeShowIntro() {
+    const now = Date.now();
+    if (shouldShowIntro(readLastVisit(globalThis.localStorage), now)) {
+      openDialog(elements.introDialog);
+    }
+    writeLastVisit(globalThis.localStorage, now);
+  }
+
   async function loadStaticData() {
     const [operatorMeta, skillSprite] = await Promise.all([
       fetchJson(deps.fetchImpl, OPERATOR_META_URL),
@@ -425,6 +438,9 @@ function createApp(deps, elements) {
       runAnalysis();
       render();
     });
+    elements.introCloseButton.addEventListener("click", () => {
+      closeDialog(elements.introDialog);
+    });
   }
 
   bindEvents();
@@ -462,6 +478,7 @@ function createApp(deps, elements) {
     state,
     elements,
     bootstrap,
+    maybeShowIntro,
     refreshAssignments,
     handleSklandCredential,
     handleBindingSelect,
@@ -481,6 +498,8 @@ export async function initApp({
   const elements = collectElements(doc);
   elements.sklandCommand.textContent = SKLAND_COMMAND;
   const app = createApp({ document: doc, fetchImpl, cryptoImpl }, elements);
+  // 先弹提示再加载数据：数据加载失败也不影响开关说明的展示
+  app.maybeShowIntro();
   await app.bootstrap();
   return app;
 }
