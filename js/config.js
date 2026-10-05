@@ -3,6 +3,13 @@ export const UPLOADER_ID = "7661";
 export const ASSIGNMENT_SNAPSHOT_URL = "./data/assignments.snapshot.json";
 export const OPERATOR_META_URL = "./data/operator_meta.json";
 export const SKILL_SPRITE_URL = "./data/skill_sprite.json";
+// 养成成本数据：一图流 v2 干员表（含精英化/技能/专精/模组成本）与材料、升级成本表，原样镜像
+export const CHARACTER_TABLE_URL = "./data/character_table_simple.v2.json";
+export const ITEM_INFO_URL = "./data/item_info.json";
+export const LEVEL_COST_TABLE_URL = "./data/level_cost_table.json";
+// 材料图标雪碧图（直链一图流仓库，随上游更新）
+export const ITEM_SPRITE_CSS_URL
+    = "https://cdn.jsdelivr.net/gh/Arknights-yituliu/frontend-v2-plus@dev/src/assets/css/sprite/sprite_item.css";
 
 export const SKLAND_BASE = "https://zonai.skland.com";
 export const BINDING_PATH = "/api/v1/game/player/binding";

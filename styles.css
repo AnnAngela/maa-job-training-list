@@ -134,6 +134,8 @@ a:hover { text-decoration: underline; }
 .operator-meta { color: var(--muted); font-size: 12px; }
 .skill-cell { min-width: 150px; white-space: nowrap; }
 .progress-cell { overflow-wrap: anywhere; }
+/* 状态列锁定单行，徽章不换行、单元格高度不随内容扩展 */
+.status-cell { white-space: nowrap; }
 .req-unmet { color: var(--warning); font-weight: 600; }
 
 .tier { display: inline-block; border-radius: 999px; padding: 3px 8px; font-size: 12px; color: #fff; }
@@ -163,6 +165,73 @@ a:hover { text-decoration: underline; }
 .binding-meta { color: var(--muted); font-size: 12px; }
 .empty-state { color: var(--muted); padding: 18px; text-align: center; background: var(--surface-alt); border-radius: 10px; }
 .site-footer { text-align: center; color: var(--muted); padding: 20px; font-size: 13px; }
+
+/* ===== 养成材料展示：图标结构复刻一图流 item-sprite + .bg-{itemId} 雪碧图模式 ===== */
+.materials-list { display: flex; flex-wrap: wrap; gap: 4px; }
+
+/* 养成材料计算 section */
+.section-hint { color: var(--muted); font-size: 13px; margin: 4px 0 10px; }
+.material-filters { display: flex; flex-wrap: wrap; gap: 12px; }
+.material-filters fieldset {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.material-filters legend { font-size: 12px; color: var(--muted); padding: 0 4px; }
+.material-filters label { display: inline-flex; align-items: center; gap: 3px; font-size: 13px; cursor: pointer; }
+
+.material-operators { display: flex; flex-direction: column; gap: 10px; }
+/* 总计卡片与下方干员卡片留出间距 */
+.material-operator--total { margin-bottom: 12px; }
+.material-operator {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: var(--surface-alt);
+}
+.material-operator-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.material-operator-head .operator-name { font-weight: 600; }
+.cost-group { display: flex; align-items: flex-start; gap: 10px; padding: 3px 0; }
+.cost-group + .cost-group { border-top: 1px dashed var(--border); }
+/* 方向复选框（总计卡片）：与左侧标签对齐 */
+.cost-group input[type="checkbox"] { flex: none; margin: 4px 0 0; }
+.cost-group-label {
+  flex: none;
+  width: 72px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  padding-top: 2px;
+}
+.cost-group-notes { flex: none; width: 200px; font-size: 12px; color: var(--muted); padding-top: 3px; }
+.cost-group .materials-list { flex: 1; }
+.cost-group--total { border-top: 1px solid var(--border); margin-top: 4px; padding-top: 8px; }
+.cost-group--total .cost-group-label { color: var(--text); }
+.select-cell { width: 36px; text-align: center; }
+
+/* 材料芯片放大 1.5 倍：图标容器 24→36px，数量 12→18px 并加粗 */
+.item-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px 3px 3px;
+  border-radius: 5px;
+  background: var(--surface-alt);
+}
+/* 按材料稀有度着色边框（r1 灰 r2 绿 r3 蓝 r4 紫 r5 金） */
+.item-chip--r1 { box-shadow: inset 0 0 0 1px #9ca3af; }
+.item-chip--r2 { box-shadow: inset 0 0 0 1px #5faf6f; }
+.item-chip--r3 { box-shadow: inset 0 0 0 1px #4a90d9; }
+.item-chip--r4 { box-shadow: inset 0 0 0 1px #9a6fd0; }
+.item-chip--r5 { box-shadow: inset 0 0 0 1px #e0a832; }
+
+/* 一图流 sprite 单格 183px，容器 36px：scale = 36/183，偏移 = -(183-36)/2 */
+.item-sprite { position: relative; width: 36px; height: 36px; flex: none; overflow: hidden; }
+.item-sprite > span { position: absolute; top: -73.5px; left: -73.5px; transform: scale(0.19672); }
+.item-count { font-size: 18px; font-weight: 700; white-space: nowrap; }
 
 @media (max-width: 980px) {
   .table-wrap { overflow-x: auto; }

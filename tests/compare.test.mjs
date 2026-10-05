@@ -46,7 +46,8 @@ test("skillLevelFor reads the matching skill slot", () => {
 
 test("evaluateSlot reports missing, gaps, and satisfied", () => {
     expect(evaluateSlot({ name: "阿米娅", skill: 2, requirements: { level: 90 } }, null)).toMatchObject({ owned: false, satisfied: false });
-    expect(evaluateSlot({ name: "阿米娅", skill: 2, requirements: { level: 90 } }, amiya).gaps).toContainEqual({ type: "level", required: 90, current: 60 });
+    // skill:3 推断精英阶段 2，与用户「精二60」同阶段才比较等级；跨阶段不比等级数值
+    expect(evaluateSlot({ name: "阿米娅", skill: 3, requirements: { level: 90 } }, amiya).gaps).toContainEqual({ type: "level", required: 90, current: 60 });
     expect(evaluateSlot({ name: "阿米娅", skill: 3, requirements: { skill_level: 10 } }, amiya).satisfied).toBe(true);
     expect(evaluateSlot({ name: "阿米娅", skill: 1, requirements: { elite: 2 } }, amiya).satisfied).toBe(true);
     expect(evaluateSlot({ name: "阿米娅", skill: 1, requirements: { elite: 3 } }, amiya).gaps).toContainEqual({ type: "elite", required: 3, current: 2 });
@@ -54,14 +55,42 @@ test("evaluateSlot reports missing, gaps, and satisfied", () => {
 });
 
 test("evaluateSlot handles module fallback", () => {
-    const moduleGap = evaluateSlot({ name: "阿米娅", skill: 1, requirements: { module: 1 } }, { ...amiya, maxModuleLevel: 0 }, { requireModule: true });
+    const moduleGap = evaluateSlot({ name: "阿米娅", skill: 1, requirements: { module: 1 } }, { ...amiya, maxModuleLevel: 0, modules: [] }, { requireModule: true });
     expect(moduleGap.gaps).toContainEqual({ type: "module", required: 1, current: 0 });
+});
+
+test("evaluateSlot compares module level by matching type", () => {
+    const slotModule3 = { name: "阿米娅", skill: 1, requirements: { module: 1, module_level: 3 } };
+    // X 型只有 1 级：缺到 3 级
+    const levelGap = evaluateSlot(slotModule3, {
+        ...amiya,
+        modules: [{ name: "X", level: 1, locked: false }],
+    }, { requireModule: true });
+    expect(levelGap.gaps).toContainEqual({ type: "module", required: 3, current: 1 });
+    // X 型已 3 级：满足
+    const satisfied = evaluateSlot(slotModule3, {
+        ...amiya,
+        modules: [{ name: "X", level: 3, locked: false }],
+    }, { requireModule: true });
+    expect(satisfied.satisfied).toBe(true);
+    // 锁定的模组不计入
+    const locked = evaluateSlot(slotModule3, {
+        ...amiya,
+        modules: [{ name: "X", level: 3, locked: true }],
+    }, { requireModule: true });
+    expect(locked.gaps).toContainEqual({ type: "module", required: 3, current: 0 });
 });
 
 test("evaluateSlot handles module requirement toggle", () => {
     const slotModule = { name: "阿米娅", skill: 1, requirements: { module: 1 } };
-    expect(evaluateSlot(slotModule, amiya, { requireModule: true }).satisfied).toBe(true);
-    expect(evaluateSlot(slotModule, { ...amiya, maxModuleLevel: 0 }, { requireModule: true }).satisfied).toBe(false);
+    const amiyaWithX = {
+        ...amiya,
+        modules: [{ name: "X", level: 1, locked: false }],
+    };
+    expect(evaluateSlot(slotModule, amiyaWithX, { requireModule: true }).satisfied).toBe(true);
+    expect(evaluateSlot(slotModule, { ...amiyaWithX, modules: [] }, { requireModule: true }).satisfied).toBe(false);
+    // 关闭开关时不判定模组
+    expect(evaluateSlot(slotModule, { ...amiyaWithX, modules: [] }, { requireModule: false }).satisfied).toBe(true);
     const slotNoModule = { name: "阿米娅", skill: 1, requirements: { module: 0 } };
     expect(evaluateSlot(slotNoModule, { ...amiya, maxModuleLevel: 0 }, { requireModule: true }).satisfied).toBe(true);
     expect(evaluateSlot(slotNoModule, amiya, { requireModule: true }).satisfied).toBe(false);

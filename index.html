@@ -6,6 +6,7 @@
   <meta name="color-scheme" content="light">
   <title>萨拉托加作业练度分析与培养清单</title>
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./data/sprite_item.css">
 </head>
 <body>
   <header class="site-header">
@@ -60,7 +61,25 @@
         <input id="filter-input" type="search" placeholder="按干员或关卡筛选">
         <label><input id="only-pending-input" type="checkbox"> 只看待培养</label>
         <label><input id="only-missing-input" type="checkbox"> 只看未拥有</label>
-        <label><input id="require-module-input" type="checkbox"> 模组计入判定</label>
+        <label><input id="require-module-input" type="checkbox" checked> 模组计入判定</label>
+        <div id="material-filters" class="material-filters">
+          <fieldset>
+            <legend>星级</legend>
+            <label><input type="checkbox" data-rarity="6">6星</label>
+            <label><input type="checkbox" data-rarity="5">5星</label>
+            <label><input type="checkbox" data-rarity="4">4星</label>
+            <label><input type="checkbox" data-rarity="3">3星及以下</label>
+          </fieldset>
+          <fieldset>
+            <legend>养成优先级</legend>
+            <label><input type="checkbox" data-tier="极高">极高</label>
+            <label><input type="checkbox" data-tier="高">高</label>
+            <label><input type="checkbox" data-tier="中">中</label>
+            <label><input type="checkbox" data-tier="低">低</label>
+          </fieldset>
+        </div>
+        <button id="material-select-all" type="button" class="button button--ghost">全部计入</button>
+        <button id="material-clear" type="button" class="button button--ghost">全部不计</button>
       </div>
     </section>
 
@@ -71,13 +90,22 @@
 
     <section class="card">
       <div class="section-heading">
-        <h2>培养优先级清单</h2>
+        <h2 id="training-title">培养优先级清单</h2>
         <div class="section-heading-actions">
           <label class="toggle-label"><input id="recent-toggle" type="checkbox"><span>仅近6个月作业</span></label>
           <label class="toggle-label"><input id="standard-toggle" type="checkbox"><span>标准练度</span></label>
         </div>
       </div>
+      <p class="section-hint">勾选行首复选框可将干员计入下方「养成材料计算」。</p>
       <div id="training-table" class="table-anchor"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-heading">
+        <h2 id="material-title">养成材料计算</h2>
+      </div>
+      <p class="section-hint">仅统计当前清单中存在并勾选的干员。特殊培养方案的干员（电弧、机械师）会被排除。</p>
+      <div id="material-detail" class="material-detail"></div>
     </section>
   </main>
 
