@@ -43,11 +43,13 @@
         </div>
         <div class="data-panel">
           <h3>手动导入 JSON</h3>
-          <textarea id="import-input" rows="6" placeholder="[{ &quot;name&quot;: &quot;阿米娅&quot;, &quot;elite&quot;: 2, &quot;level&quot;: 60, &quot;skill1&quot;: 7, &quot;skill2&quot;: 10, &quot;skill3&quot;: 10 }]"></textarea>
+          <textarea id="import-input" rows="6" placeholder="[{ &quot;name&quot;: &quot;阿米娅&quot;, &quot;elite&quot;: 2, &quot;level&quot;: 60, &quot;skill1&quot;: 7, &quot;skill2&quot;: 10, &quot;skill3&quot;: 10 }]，也可直接将 JSON 文件拖拽到此处"></textarea>
           <div class="button-row">
             <button id="import-button" type="button" class="button">导入并分析</button>
+            <button id="upload-file-button" type="button" class="button button--ghost">上传文件</button>
             <button id="sample-button" type="button" class="button button--ghost">载入示例</button>
           </div>
+          <input id="import-file-input" type="file" accept=".json,application/json" hidden>
         </div>
       </div>
       <div class="export-row">
@@ -110,7 +112,7 @@
   </main>
 
   <footer class="site-footer">
-    <p>数据来源：<a href="https://prts.maa.plus" target="_blank" rel="noreferrer">PRTS 作业站</a>、<a href="https://www.skland.com" target="_blank" rel="noreferrer">森空岛</a>。凭证仅在浏览器内使用，不会上传到本站。</p>
+    <p>数据来源：<a href="https://prts.maa.plus" target="_blank" rel="noreferrer">PRTS 作业站</a>、<a href="https://www.skland.com" target="_blank" rel="noreferrer">森空岛</a>、<a href="https://ark.yituliu.cn/" target="_blank" rel="noreferrer">一图流</a>。凭证仅在浏览器内使用，不会上传到本站。</p>
   </footer>
 
   <dialog id="intro-dialog" class="intro-dialog" aria-labelledby="intro-dialog-title">

@@ -14,6 +14,7 @@ vi.mock("../js/skland.js", async (importOriginal) => ({
 }));
 
 import {
+    COPY_RESET_DELAY_MS,
     csvEscape,
     downloadFile,
     initApp,
@@ -48,7 +49,13 @@ const buildDom = () => {
         "<span id=\"status\"></span>",
         "<div id=\"error\" class=\"error is-hidden\"></div>",
         "<div id=\"summary\"></div>",
+        "<div id=\"material-detail\"></div>",
+        "<h2 id=\"material-title\"></h2>",
+        "<div id=\"material-filters\"></div>",
+        "<button id=\"material-select-all\"></button>",
+        "<button id=\"material-clear\"></button>",
         "<div id=\"training-table\"></div>",
+        "<h2 id=\"training-title\"></h2>",
         "<button id=\"refresh-button\"></button>",
         "<form id=\"skland-form\"><input id=\"cred-input\" type=\"password\"></form>",
         "<code id=\"skland-command\"></code>",
@@ -56,6 +63,8 @@ const buildDom = () => {
         "<div id=\"binding-list\"></div>",
         "<button id=\"import-button\"></button>",
         "<textarea id=\"import-input\"></textarea>",
+        "<button id=\"upload-file-button\"></button>",
+        "<input id=\"import-file-input\" type=\"file\">",
         "<button id=\"export-json-button\"></button>",
         "<button id=\"export-csv-button\"></button>",
         "<button id=\"sample-button\"></button>",
@@ -129,6 +138,38 @@ test("normalizeImportedOperators accepts array and wrapped operators", () => {
     const withModules = normalizeImportedOperators([{ ...item, modules: [{ id: "m1", name: "模组甲", level: 2 }] }], operatorMeta);
     expect(withModules[0].modules).toEqual([{ id: "m1", name: "模组甲", level: 2 }]);
     expect(() => normalizeImportedOperators({ bad: true }, operatorMeta)).toThrow("导入数据应为数组");
+});
+
+test("normalizeImportedOperators reads nested user of exported result rows", () => {
+    const row = {
+        name: "阿斯卡纶",
+        user: {
+            charId: "char_4132_ascln",
+            name: "阿斯卡纶",
+            rarity: 6,
+            profession: "SPECIAL",
+            elite: 2,
+            level: 90,
+            skill1: 10,
+            skill2: 7,
+            skill3: 7,
+            modules: [{ id: "uniequip_001_ascln", name: "", level: 1, locked: false }],
+            maxModuleLevel: 0,
+        },
+        score: 16540,
+        totalGap: 135,
+    };
+    const result = normalizeImportedOperators([row], operatorMeta);
+    expect(result[0]).toMatchObject({
+        charId: "char_4132_ascln",
+        name: "阿斯卡纶",
+        elite: 2,
+        level: 90,
+        skill1: 10,
+        skill2: 7,
+        skill3: 7,
+    });
+    expect(result[0].modules).toEqual(row.user.modules);
 });
 
 test("normalizeImportedOperators accepts raw Skland player/info payload", () => {
@@ -346,6 +387,70 @@ test("manual import shows error for invalid json", async () => {
     expect(app.state.error).toBeTruthy();
 });
 
+test("file input change imports selected file", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    const content = JSON.stringify([{ name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10 }]);
+    const file = new File([content], "operators.json", { type: "application/json" });
+    Reflect.defineProperty(app.elements.importFileInput, "files", { configurable: true, value: [file] });
+    app.elements.importFileInput.dispatchEvent(new Event("change", { bubbles: true }));
+    await vi.waitFor(() => expect(app.state.userOperators).toHaveLength(1));
+    expect(app.elements.importInput.value).toBe(content);
+});
+
+test("file input change without files is ignored", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    Reflect.defineProperty(app.elements.importFileInput, "files", { configurable: true, value: undefined });
+    expect(() => app.elements.importFileInput.dispatchEvent(new Event("change", { bubbles: true }))).not.toThrow();
+});
+
+test("invalid selected file shows error", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    const file = new File(["not-json"], "operators.json", { type: "application/json" });
+    Reflect.defineProperty(app.elements.importFileInput, "files", { configurable: true, value: [file] });
+    app.elements.importFileInput.dispatchEvent(new Event("change", { bubbles: true }));
+    await vi.waitFor(() => expect(app.state.error).toBeTruthy());
+});
+
+test("upload file button triggers file input click", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    const clickSpy = vi.spyOn(app.elements.importFileInput, "click");
+    app.elements.uploadFileButton.dispatchEvent(new Event("click", { bubbles: true }));
+    expect(clickSpy).toHaveBeenCalledOnce();
+});
+
+test("text area dragover and dragleave toggle highlight", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    const dragOverEvent = new Event("dragover", { bubbles: true, cancelable: true });
+    app.elements.importInput.dispatchEvent(dragOverEvent);
+    expect(dragOverEvent.defaultPrevented).toBe(true);
+    expect(app.elements.importInput.classList.contains("is-dragover")).toBe(true);
+    app.elements.importInput.dispatchEvent(new Event("dragleave", { bubbles: true }));
+    expect(app.elements.importInput.classList.contains("is-dragover")).toBe(false);
+});
+
+test("text area drop without data is ignored", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    expect(() => app.elements.importInput.dispatchEvent(new Event("drop", { bubbles: true }))).not.toThrow();
+});
+
+test("text area drop imports dragged file", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    const content = JSON.stringify([{ name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10 }]);
+    const file = new File([content], "operators.json", { type: "application/json" });
+    const dropEvent = new Event("drop", { bubbles: true, cancelable: true });
+    Reflect.defineProperty(dropEvent, "dataTransfer", { configurable: true, value: { files: [file] } });
+    app.elements.importInput.dispatchEvent(dropEvent);
+    expect(dropEvent.defaultPrevented).toBe(true);
+    await vi.waitFor(() => expect(app.state.userOperators).toHaveLength(1));
+});
+
 test("sample data loads and analyzes", async () => {
     fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
@@ -385,7 +490,7 @@ test("recent toggle re-sorts rows by unsatisfiedCore desc", async () => {
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     const now = Date.now();
     const days = (n) => new Date(now - n * 24 * 60 * 60 * 1000).toISOString();
-    const need = (name) => [{ name, skill: 1, requirements: { level: 99 } }];
+    const need = (name) => [{ name, skill: 1, requirements: { elite: 2, level: 99 } }];
     app.state.assignments = [
         { id: 1, uploadTime: days(10), required: need("阿米娅"), groups: [] },
         { id: 2, uploadTime: days(20), required: need("阿米娅"), groups: [] },
@@ -543,8 +648,13 @@ test("skland command is populated and copy succeeds", async () => {
         configurable: true,
         value: { writeText: vi.fn().mockResolvedValue(undefined) },
     });
+    vi.useFakeTimers();
     await app.handleCopyCommand();
     expect(app.state.status).toBe("命令已复制");
+    expect(app.elements.copyCommandButton.textContent).toBe("已复制");
+    vi.advanceTimersByTime(COPY_RESET_DELAY_MS);
+    expect(app.elements.copyCommandButton.textContent).toBe("复制命令");
+    vi.useRealTimers();
     Reflect.defineProperty(navigator, "clipboard", { configurable: true, value: originalClipboard });
 });
 

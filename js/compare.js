@@ -92,8 +92,8 @@ export const evaluateSlot = (slot, user, options = {}) => {
         gaps.push({ type: "elite", required: req.elite, current: userElite });
     }
     // 干员等级比较规则：精一任意等级小于精二 1 级，仅精英等级相同时才比较等级
-    if (userElite === req.elite && Number(user.level) < req.level) {
-        gaps.push({ type: "level", required: req.level, current: Number(user.level) });
+    if (userElite === req.elite && (Number(user.level) || 0) < req.level) {
+        gaps.push({ type: "level", required: req.level, current: Number(user.level) || 0 });
     }
     if (req.skillLevel > 0) {
         const skillIndex = Number(slot.skill);

@@ -48,6 +48,8 @@ test("evaluateSlot reports missing, gaps, and satisfied", () => {
     expect(evaluateSlot({ name: "阿米娅", skill: 2, requirements: { level: 90 } }, null)).toMatchObject({ owned: false, satisfied: false });
     // skill:3 推断精英阶段 2，与用户「精二60」同阶段才比较等级；跨阶段不比等级数值
     expect(evaluateSlot({ name: "阿米娅", skill: 3, requirements: { level: 90 } }, amiya).gaps).toContainEqual({ type: "level", required: 90, current: 60 });
+    // 用户等级缺失或非法时按 0 处理，仍产生等级缺口
+    expect(evaluateSlot({ name: "阿米娅", skill: 3, requirements: { level: 90 } }, { ...amiya, level: undefined }).gaps).toContainEqual({ type: "level", required: 90, current: 0 });
     expect(evaluateSlot({ name: "阿米娅", skill: 3, requirements: { skill_level: 10 } }, amiya).satisfied).toBe(true);
     expect(evaluateSlot({ name: "阿米娅", skill: 1, requirements: { elite: 2 } }, amiya).satisfied).toBe(true);
     expect(evaluateSlot({ name: "阿米娅", skill: 1, requirements: { elite: 3 } }, amiya).gaps).toContainEqual({ type: "elite", required: 3, current: 2 });

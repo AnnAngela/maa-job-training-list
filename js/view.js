@@ -143,7 +143,7 @@ const materialOperatorCard = (row, itemInfoMap) => {
     }).join("");
     const totalChips = sortMaterialEntries(breakdown?.total, itemInfoMap)
         .map(([itemId, count]) => itemChipHtml(itemId, count, itemInfoMap)).join("");
-    return `<div class="material-operator"><div class="material-operator-head"><span class="operator-name">${escapeHtml(row.name)}</span><span class="tier tier--${escapeHtml(scoreTier(row.score))}">${escapeHtml(scoreTier(row.score))}</span></div>${groups}<div class="cost-group cost-group--total"><span class="cost-group-label">总计</span><div class="materials-list">${totalChips}</div></div></div>`;
+    return `<div class="material-operator"><div class="material-operator-head"><span class="operator-name">${escapeHtml(row.name)}</span><span class="tier tier--${escapeHtml(scoreTier(row.score))}">${escapeHtml(scoreTier(row.score))}</span></div><div class="cost-groups">${groups}<div class="cost-group cost-group--total"><span class="cost-group-label">总计</span><div class="materials-list">${totalChips}</div></div></div></div>`;
 };
 
 // 单方向多名干员的材料合计

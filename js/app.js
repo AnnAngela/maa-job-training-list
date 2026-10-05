@@ -24,6 +24,9 @@ const ITEM_INFO_PATCH = {
 };
 /* eslint-enable camelcase */
 
+// 复制按钮「已复制」状态的保持时长
+export const COPY_RESET_DELAY_MS = 2000;
+
 const createState = () => ({
     operatorMeta: null,
     skillSprite: null,
@@ -79,6 +82,8 @@ const collectElements = (doc) => ({
     bindingList: requireElement(doc, "binding-list"),
     importButton: requireElement(doc, "import-button"),
     importInput: requireElement(doc, "import-input"),
+    importFileInput: requireElement(doc, "import-file-input"),
+    uploadFileButton: requireElement(doc, "upload-file-button"),
     exportJsonButton: requireElement(doc, "export-json-button"),
     exportCsvButton: requireElement(doc, "export-csv-button"),
     sampleButton: requireElement(doc, "sample-button"),
@@ -151,7 +156,9 @@ export const normalizeImportedOperators = (raw, operatorMeta) => {
         const equipmentInfo = raw?.data?.equipmentInfoMap || raw?.equipmentInfoMap || {};
         return formatSklandCharacters(list, operatorMeta, equipmentInfo);
     }
-    return list.map((item) => {
+    return list.map((rawItem) => {
+        // 兼容本页导出的结果行：练度数据嵌套在 user 字段中
+        const item = rawItem?.user && typeof rawItem.user === "object" ? rawItem.user : rawItem;
         const charId = item.charId || operatorMeta?.nameToCharId?.[item.name] || "";
         const meta = operatorMeta?.operators?.[charId];
         return {
@@ -206,11 +213,16 @@ const createApp = (deps, elements) => {
         setError("");
     };
 
+    // 复制成功后按钮短暂显示「已复制」，到时恢复原文
     const handleCopyCommand = async () => {
         clearError();
         try {
             await navigator.clipboard.writeText(SKLAND_COMMAND);
             setStatus("命令已复制");
+            elements.copyCommandButton.textContent = "已复制";
+            setTimeout(() => {
+                elements.copyCommandButton.textContent = "复制命令";
+            }, COPY_RESET_DELAY_MS);
         } catch {
             setError("复制失败，请手动复制下方命令");
         }
@@ -470,14 +482,32 @@ const createApp = (deps, elements) => {
         }
     };
 
-    const handleImport = () => {
+    const importFromText = (text) => {
         clearError();
+        const raw = JSON.parse(text);
+        state.userOperators = normalizeImportedOperators(raw, state.operatorMeta);
+        runAnalysis();
+        render();
+        setStatus(`已导入 ${state.userOperators.length} 名干员`);
+    };
+
+    const handleImport = () => {
         try {
-            const raw = JSON.parse(elements.importInput.value);
-            state.userOperators = normalizeImportedOperators(raw, state.operatorMeta);
-            runAnalysis();
-            render();
-            setStatus(`已导入 ${state.userOperators.length} 名干员`);
+            importFromText(elements.importInput.value);
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
+    // 读取文件内容并回填文本框，便于查看与再次手动导入
+    const handleImportFile = async (file) => {
+        if (!file) {
+            return;
+        }
+        try {
+            const text = await file.text();
+            elements.importInput.value = text;
+            importFromText(text);
         } catch (error) {
             setError(error.message);
         }
@@ -530,6 +560,29 @@ const createApp = (deps, elements) => {
             }
         });
         elements.importButton.addEventListener("click", handleImport);
+        // 上传按钮触发系统文件选择
+        elements.uploadFileButton.addEventListener("click", () => {
+            elements.importFileInput.click();
+        });
+        elements.importFileInput.addEventListener("change", (event) => {
+            const file = event.target.files?.[0];
+            // 清空 value，保证选择同一文件也能再次触发 change
+            event.target.value = "";
+            handleImportFile(file);
+        });
+        // 拖拽到文本框时阻止浏览器默认打开文件，并切换高亮样式
+        elements.importInput.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            elements.importInput.classList.add("is-dragover");
+        });
+        elements.importInput.addEventListener("dragleave", () => {
+            elements.importInput.classList.remove("is-dragover");
+        });
+        elements.importInput.addEventListener("drop", (event) => {
+            event.preventDefault();
+            elements.importInput.classList.remove("is-dragover");
+            handleImportFile(event.dataTransfer?.files?.[0]);
+        });
         elements.exportJsonButton.addEventListener("click", handleExportJson);
         elements.exportCsvButton.addEventListener("click", handleExportCsv);
         elements.copyCommandButton.addEventListener("click", handleCopyCommand);
