@@ -1,13 +1,22 @@
 import { writeFile } from "node:fs/promises";
 export const MAA_QUERY_BASE = "https://prts.maa.plus/copilot/query";
 export const UPLOADER_ID = "7661";
-export const CHARACTER_TABLE_URL
-    = "https://raw.githubusercontent.com/Arknights-yituliu/frontend-v2-plus/dev/src/static/json/operator/character_table_simple.v2.json";
 export const SKILL_SPRITE_CSS_URL
     = "https://raw.githubusercontent.com/Arknights-yituliu/frontend-v2-plus/dev/src/assets/css/sprite/sprite_skill.css";
+export const ITEM_SPRITE_CSS_URL
+    = "https://raw.githubusercontent.com/Arknights-yituliu/frontend-v2-plus/dev/src/assets/css/sprite/sprite_item.css";
+// 养成成本数据源（原样镜像，不构造中间格式）：v2 干员表含 elite/allSkill/专精/模组成本
+export const CHARACTER_TABLE_URL
+    = "https://raw.githubusercontent.com/Arknights-yituliu/frontend-v2-plus/dev/src/static/json/operator/character_table_simple.v2.json";
+export const ITEM_INFO_URL
+    = "https://raw.githubusercontent.com/Arknights-yituliu/frontend-v2-plus/dev/src/static/json/material/item_info.json";
+export const LEVEL_COST_TABLE_URL
+    = "https://raw.githubusercontent.com/Arknights-yituliu/frontend-v2-plus/dev/src/static/json/operator/level_cost_table.json";
 
-// 生成到 data/ 下的文件清单；run-check-data-changed.js 复用同一清单做新旧对比，避免两处漂移
-export const GENERATED_FILES = ["operator_meta.json", "skill_sprite.json", "assignments.snapshot.json"];
+// 生成到 data/ 下的文件清单；run-check-data-changed.js 复用同一清单做新旧对比，避免两处漂移。
+// MIRROR_FILES 保存上游响应原文（含非 JSON 的 item CSS），其余文件由本脚本构造。
+export const MIRROR_FILES = ["character_table_simple.v2.json", "item_info.json", "level_cost_table.json", "sprite_item.css"];
+export const GENERATED_FILES = ["operator_meta.json", "skill_sprite.json", "assignments.snapshot.json", ...MIRROR_FILES];
 
 // 每次抓取都会变化且页面不使用的字段：generatedAt 是生成时刻，views/hotScore 是作业站热度统计。
 // 判断新旧数据是否实质变化时忽略它们，否则每天都会产生无意义提交。
@@ -154,9 +163,12 @@ export const generateAll = async ({
     writeFileImpl = writeFile,
     now = new Date(),
 } = {}) => {
-    const [charactersResponse, cssResponse, assignmentData] = await Promise.all([
+    const [charactersResponse, cssResponse, itemInfoResponse, levelCostResponse, itemSpriteCssResponse, assignmentData] = await Promise.all([
         fetchImpl(CHARACTER_TABLE_URL),
         fetchImpl(SKILL_SPRITE_CSS_URL),
+        fetchImpl(ITEM_INFO_URL),
+        fetchImpl(LEVEL_COST_TABLE_URL),
+        fetchImpl(ITEM_SPRITE_CSS_URL),
         fetchAllAssignments(fetchImpl),
     ]);
 
@@ -166,9 +178,25 @@ export const generateAll = async ({
     if (!cssResponse.ok) {
         throw new Error(`skill sprite css request failed with HTTP ${cssResponse.status}`);
     }
+    if (!itemInfoResponse.ok) {
+        throw new Error(`item info request failed with HTTP ${itemInfoResponse.status}`);
+    }
+    if (!levelCostResponse.ok) {
+        throw new Error(`level cost table request failed with HTTP ${levelCostResponse.status}`);
+    }
+    if (!itemSpriteCssResponse.ok) {
+        throw new Error(`item sprite css request failed with HTTP ${itemSpriteCssResponse.status}`);
+    }
 
-    const characters = await charactersResponse.json();
-    const css = await cssResponse.text();
+    // 镜像文件保存上游响应原文；operator_meta 等构造文件另行序列化
+    const [charactersText, css, itemInfoText, levelCostText, itemSpriteCss] = await Promise.all([
+        charactersResponse.text(),
+        cssResponse.text(),
+        itemInfoResponse.text(),
+        levelCostResponse.text(),
+        itemSpriteCssResponse.text(),
+    ]);
+    const characters = JSON.parse(charactersText);
     const generatedAt = now.toISOString();
     const operatorMeta = buildOperatorMeta(characters);
     const skillSprite = parseSkillSpriteCss(css);
@@ -178,11 +206,19 @@ export const generateAll = async ({
         "skill_sprite.json": { generatedAt, ...skillSprite },
         "assignments.snapshot.json": { generatedAt, ...assignmentData },
     };
+    const mirrorTexts = {
+        "character_table_simple.v2.json": charactersText,
+        "item_info.json": itemInfoText,
+        "level_cost_table.json": levelCostText,
+        "sprite_item.css": itemSpriteCss,
+    };
     for (const file of GENERATED_FILES) {
-        await writeFileImpl(
-            new URL(`../data/${file}`, import.meta.url),
-            `${JSON.stringify(payloads[file], null, 2)}\n`,
-        );
+        const content = MIRROR_FILES.includes(file)
+            ? mirrorTexts[file]
+            : `${JSON.stringify(payloads[file], null, 2)}\n`;
+        // 两段构造：写成 `new URL(`../data/${file}`, import.meta.url)` 会被 Vite 静态收进
+        // 资源映射表，非其识别类型的文件查表得到 undefined；先固定目录 URL 再拼文件名可避开
+        await writeFileImpl(new URL(file, new URL("../data/", import.meta.url)), content);
     }
 
     return { generatedAt, operatorMeta, skillSprite, assignmentData };

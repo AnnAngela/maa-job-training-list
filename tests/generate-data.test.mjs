@@ -11,7 +11,13 @@ import {
 } from "../scripts/generate-data.js";
 
 const textResponse = (text, status = 200) => ({ ok: status >= 200 && status < 300, status, text: () => Promise.resolve(text) });
-const jsonResponse = (data, status = 200) => ({ ok: status >= 200 && status < 300, status, json: () => Promise.resolve(data) });
+const jsonResponse = (data, status = 200) => ({
+    ok: status >= 200 && status < 300,
+    status,
+    json: () => Promise.resolve(data),
+    // 镜像文件保存响应原文，generateAll 会对 JSON 响应调用 text()
+    text: () => Promise.resolve(JSON.stringify(data)),
+});
 
 test("normalizeAssignment normalizes slots and groups", () => {
     const item = {
@@ -154,6 +160,9 @@ test("generateAll writes generated data files", async () => {
         }
         if (url.includes("sprite_skill")) {
             return Promise.resolve(textResponse(".bg-skill_icon_sk {\nbackground-image: url(\"https://example.com/s.jpg\");\nbackground-position: -0px -0px;\n}", 200));
+        }
+        if (url.includes("sprite_item")) {
+            return Promise.resolve(textResponse(".bg-0 { background: url('https://example.com/i.webp'); }", 200));
         }
         return Promise.resolve(jsonResponse({ data: { has_next: false, data: [{ id: 1, content: JSON.stringify({ doc: { title: "A" } }) }] } }, 200));
     });
