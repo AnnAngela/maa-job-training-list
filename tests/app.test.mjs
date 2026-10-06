@@ -29,20 +29,92 @@ import realOperatorMeta from "../data/operator_meta.json";
 import playerInfo from "./fixtures/skland-player-info.json";
 
 const operatorMeta = {
-    nameToCharId: { 阿米娅: "char_002_amiya" },
-    operators: { char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] } },
+    nameToCharId: { 阿米娅: "char_002_amiya", 泡普卡: "char_low", 月见夜: "char_low2" },
+    operators: {
+        char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] },
+        char_low: { name: "泡普卡", rarity: 3, profession: "GUARD", skills: [] },
+        char_low2: { name: "月见夜", rarity: 3, profession: "CASTER", skills: [] },
+    },
 };
 const skillSprite = { spriteUrl: "https://example.com/s.jpg", size: 128, entries: {} };
 
-const makeFetchImpl = () => vi.fn((url) => {
+// 养成成本数据（仅构造分析所需最小结构）
+const costCharacterTable = {
+    char_002_amiya: {
+        name: "阿米娅",
+        rarity: 5,
+        elite: [{}, { 30014: 4 }, { 30034: 3 }],
+        allSkill: [{ 3301: 4 }, { 3301: 4 }, { 3302: 4 }, { 3302: 4 }, { 3302: 4 }, { 3303: 4 }],
+        skills: [
+            { skillId: "s1", skillLevelUpCost: [] },
+            { skillId: "s2", skillLevelUpCost: [[{ id: "3303", count: 5 }]] },
+            { skillId: "s3", skillLevelUpCost: [] },
+        ],
+        equip: [{ typeName2: "X", itemCost: [{ 4001: 10000 }] }],
+    },
+    // 3星干员：有精一无精二
+    char_low: {
+        name: "泡普卡",
+        rarity: 3,
+        elite: [{}, { 30014: 2 }],
+        allSkill: [],
+        skills: [],
+        equip: [],
+    },
+    // 另一名3星干员：用于同分（同 score）排序按名比较
+    char_low2: {
+        name: "月见夜",
+        rarity: 3,
+        elite: [{}, { 30014: 2 }],
+        allSkill: [],
+        skills: [],
+        equip: [],
+    },
+};
+const itemInfo = [{ itemId: "30014", itemName: "全新装置", rarity: 4 }];
+// 等级成本表：每级经验与龙门币均为 500，长度足够精二阶段使用
+const levelCostTable = {
+    elite0: Array.from({ length: 50 }, () => ({ exp: 500, gold: 500 })),
+    elite1: Array.from({ length: 80 }, () => ({ exp: 500, gold: 500 })),
+    elite2: Array.from({ length: 90 }, () => ({ exp: 500, gold: 500 })),
+};
+
+const makeFetchImpl = ({ serveCost = false } = {}) => vi.fn((url) => {
     if (url.includes("operator_meta")) {
         return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(operatorMeta) });
     }
     if (url.includes("skill_sprite")) {
         return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(skillSprite) });
     }
+    if (serveCost && url.includes("character_table")) {
+        return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(costCharacterTable) });
+    }
+    if (serveCost && url.includes("item_info")) {
+        return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(itemInfo) });
+    }
+    if (serveCost && url.includes("level_cost")) {
+        return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(levelCostTable) });
+    }
     return Promise.resolve({ ok: false, status: 404, json: () => Promise.resolve({}) });
 });
+
+// 建立一个已分析、含成本数据的应用：作业要求阿米娅精二90级，形成缺口；
+// 经真实导入流程（handleImport）完成分析与渲染
+const setupAnalyzedApp = async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 1, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl({ serveCost: true }) });
+    app.state.assignments = [{
+        id: 1,
+        uploadTime: new Date().toISOString(),
+        required: [{ name: "阿米娅", skill: 1, requirements: { elite: 2, level: 90 } }],
+        groups: [],
+    }];
+    app.elements.importInput.value = JSON.stringify([
+        { charId: "char_002_amiya", name: "阿米娅", elite: 0, level: 1, skill1: 1, skill2: 1, skill3: 1 },
+    ]);
+    app.handleImport();
+    return app;
+};
 
 const buildDom = () => {
     document.body.innerHTML = [
@@ -768,6 +840,168 @@ test("intro uses the native dialog API when available", async () => {
     app.elements.introCloseButton.dispatchEvent(new Event("click", { bubbles: true }));
     expect(showModal).toHaveBeenCalledTimes(1);
     expect(close).toHaveBeenCalledTimes(1);
+});
+
+test("养成成本数据加载成功：成本索引、信息表（含补丁）与升级表就绪", async () => {
+    const app = await setupAnalyzedApp();
+    expect(app.state.costIndex).not.toBeNull();
+    expect(app.state.levelCostTable).toEqual(levelCostTable);
+    // itemInfoMap 由上游条目与本站补丁合并：补丁含两条证章
+    expect(app.state.itemInfoMap["30014"].itemName).toBe("全新装置");
+    expect(app.state.itemInfoMap.mod_update_token_1.itemName).toBe("数据增补条");
+    expect(app.state.itemInfoMap.mod_update_token_2.itemName).toBe("数据增补仪");
+    // 默认全选：材料区标题含 1 名干员
+    expect(app.elements.materialTitle.textContent).toContain("1");
+});
+
+test("清单行首复选框：取消勾选与重新勾选更新材料区", async () => {
+    const app = await setupAnalyzedApp();
+    const checkbox = app.elements.trainingTable.querySelector(".material-select");
+    expect(checkbox.dataset.name).toBe("阿米娅");
+    checkbox.checked = false;
+    checkbox.dispatchEvent(new Event("change", { bubbles: true }));
+    expect(app.state.materialSelection.has("阿米娅")).toBe(false);
+    expect(app.elements.materialTitle.textContent).toContain("0");
+    // render 已重建表格，需重新查询当前复选框节点
+    const rechecked = app.elements.trainingTable.querySelector(".material-select");
+    rechecked.checked = true;
+    rechecked.dispatchEvent(new Event("change", { bubbles: true }));
+    expect(app.state.materialSelection.has("阿米娅")).toBe(true);
+    expect(app.elements.materialTitle.textContent).toContain("1");
+});
+
+test("勾选集合未初始化时清单复选框 change 直接忽略", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    app.state.materialSelection = null;
+    app.elements.trainingTable.innerHTML = "<input type=\"checkbox\" class=\"material-select\" data-name=\"阿米娅\">";
+    expect(() => app.elements.trainingTable.dispatchEvent(new Event("change", { bubbles: true }))).not.toThrow();
+});
+
+test("星级与优先级筛选按行匹配，不命中的行被隐藏", async () => {
+    const app = await setupAnalyzedApp();
+    // material-filters 注入勾选项：6星与极高优先级
+    app.elements.materialFilters.innerHTML = [
+        "<input type=\"checkbox\" data-rarity=\"6\" checked>",
+        "<input type=\"checkbox\" data-tier=\"极高\" checked>",
+    ].join("");
+    app.elements.filterInput.value = "";
+    app.elements.filterInput.dispatchEvent(new Event("input", { bubbles: true }));
+    // 阿米娅 5星：不满足 6 星筛选 -> 清单为空
+    expect(app.elements.trainingTable.innerHTML).toContain("暂无培养需求");
+    // 等值命中：5星
+    app.elements.materialFilters.innerHTML = "<input type=\"checkbox\" data-rarity=\"5\" checked>";
+    app.elements.filterInput.dispatchEvent(new Event("input", { bubbles: true }));
+    expect(app.elements.trainingTable.innerHTML).toContain("阿米娅");
+    // 聚合分支「3星及以下」：5星不命中
+    app.elements.materialFilters.innerHTML = "<input type=\"checkbox\" data-rarity=\"3\" checked>";
+    app.elements.filterInput.dispatchEvent(new Event("input", { bubbles: true }));
+    expect(app.elements.trainingTable.innerHTML).toContain("暂无培养需求");
+    // 加入3星干员泡普卡后命中聚合分支
+    app.state.assignments = [{
+        id: 2,
+        uploadTime: new Date().toISOString(),
+        required: [{ name: "泡普卡", skill: 1, requirements: { elite: 1 } }],
+        groups: [],
+    }];
+    app.elements.importInput.value = JSON.stringify([
+        { charId: "char_002_amiya", name: "阿米娅", elite: 0, level: 1, skill1: 1 },
+        { charId: "char_low", name: "泡普卡", elite: 0, level: 1, skill1: 1 },
+    ]);
+    app.handleImport();
+    expect(app.elements.trainingTable.innerHTML).toContain("泡普卡");
+    expect(app.elements.trainingTable.innerHTML).not.toContain("阿米娅");
+});
+
+test("养成优先级筛选：不匹配的干员被隐藏", async () => {
+    const app = await setupAnalyzedApp();
+    // 阿米娅 score 1060 落入「高」档；筛选「低」-> 无命中
+    app.elements.materialFilters.innerHTML = "<input type=\"checkbox\" data-tier=\"低\" checked>";
+    app.elements.filterInput.dispatchEvent(new Event("input", { bubbles: true }));
+    expect(app.elements.trainingTable.innerHTML).toContain("暂无培养需求");
+    // 匹配实际档位（score 1060 落入「高」档）-> 命中
+    app.elements.materialFilters.innerHTML = "<input type=\"checkbox\" data-tier=\"高\" checked>";
+    app.elements.filterInput.dispatchEvent(new Event("input", { bubbles: true }));
+    expect(app.elements.trainingTable.innerHTML).toContain("阿米娅");
+});
+
+test("未拥有且无法解析 charId 的干员：三级回退均落空，材料行为空", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 1, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl({ serveCost: true }) });
+    // 未知名称的未拥有干员：user.charId、nameToCharId 均无 -> attachMaterials 收到空 charId
+    app.state.assignments = [{
+        id: 1,
+        uploadTime: new Date().toISOString(),
+        required: [{ name: "不存在的干员", skill: 1, requirements: { elite: 2, level: 90 } }],
+        groups: [],
+    }];
+    app.elements.importInput.value = JSON.stringify([
+        { name: "不存在的干员", elite: 2, level: 90, skill1: 7 },
+    ]);
+    // 名称在 meta 中查不到 charId，但导入本身不报错
+    expect(() => app.handleImport()).not.toThrow();
+    const row = app.state.result.rows[0];
+    expect(row.costBreakdown).toBeNull();
+    // 行复选框：costBreakdown === undefined 才不渲染；此处为 null 仍渲染复选框
+    expect(app.elements.trainingTable.innerHTML).toContain("material-select");
+});
+
+test("材料行同分按干员名排序：排序比较实际执行", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 1, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl({ serveCost: true }) });
+    // 两名3星干员在同一份作业中要求相同（精一），聚合后分数一致
+    app.state.assignments = [{
+        id: 1,
+        uploadTime: new Date().toISOString(),
+        required: [
+            { name: "泡普卡", skill: 1, requirements: { elite: 1 } },
+            { name: "月见夜", skill: 1, requirements: { elite: 1 } },
+        ],
+        groups: [],
+    }];
+    app.elements.importInput.value = JSON.stringify([
+        { charId: "char_low", name: "泡普卡", elite: 0, level: 1, skill1: 1 },
+        { charId: "char_low2", name: "月见夜", elite: 0, level: 1, skill1: 1 },
+    ]);
+    app.handleImport();
+    const rows = app.state.result.rows;
+    const pao = rows.find((row) => row.name === "泡普卡");
+    const yue = rows.find((row) => row.name === "月见夜");
+    // 要求完全一致，分数相同；selectedMaterialRows 按名升序
+    expect(pao.score).toBe(yue.score);
+    const html = app.elements.materialDetail.innerHTML;
+    // 拼音 p 在 y 之前
+    expect(html.indexOf("泡普卡")).toBeLessThan(html.indexOf("月见夜"));
+});
+
+test("材料区方向复选框控制方向合计", async () => {
+    const app = await setupAnalyzedApp();
+    const directionInput = app.elements.materialDetail.querySelector(".direction-total-select");
+    expect(directionInput.dataset.direction).toBe("evolve");
+    directionInput.checked = false;
+    directionInput.dispatchEvent(new Event("change", { bubbles: true }));
+    expect(app.state.directionTotals.evolve).toBe(false);
+    // 无关 change 目标忽略
+    app.elements.materialDetail.dispatchEvent(new Event("change", { bubbles: true }));
+});
+
+test("筛选区变化剪枝勾选并重渲", async () => {
+    const app = await setupAnalyzedApp();
+    expect(() => app.elements.materialFilters.dispatchEvent(new Event("change", { bubbles: true }))).not.toThrow();
+});
+
+test("全部计入在无结果时直接返回，有结果时勾选当前筛选行", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const empty = await initApp({ fetchImpl: makeFetchImpl() });
+    empty.elements.materialSelectAll.dispatchEvent(new Event("click", { bubbles: true }));
+    expect(empty.state.materialSelection).toBeNull();
+
+    const app = await setupAnalyzedApp();
+    // 先清空，再全部计入
+    app.elements.materialClear.dispatchEvent(new Event("click", { bubbles: true }));
+    expect(app.state.materialSelection.size).toBe(0);
+    app.elements.materialSelectAll.dispatchEvent(new Event("click", { bubbles: true }));
+    expect(app.state.materialSelection.has("阿米娅")).toBe(true);
 });
 
 // buildDom 是手写的，无法发现 index.html 与 app.js 的元素契约漂移；

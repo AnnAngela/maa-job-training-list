@@ -1,13 +1,16 @@
 import { expect, test } from "vitest";
 import {
     charIdForName,
+    itemChipHtml,
     operatorAvatarHtml,
     operatorSkillIcon,
     rarityStars,
     renderBindingButtons,
+    renderMaterialSection,
     renderSummary,
     renderTrainingTable,
     skillIconHtml,
+    sortMaterialEntries,
     statusBadge,
 } from "../js/view.js";
 
@@ -71,6 +74,98 @@ test("renderBindingButtons renders empty and list", () => {
     expect(renderBindingButtons([])).toContain("未找到绑定的明日方舟账号");
     expect(renderBindingButtons([{ uid: "1", nickName: "博士", channelName: "官服" }])).toContain("data-uid=\"1\"");
     expect(renderBindingButtons([{}])).toContain("data-uid=\"\"");
+});
+
+// 材料信息表：稀有度用于排序与 chip 边框色
+const itemInfoMap = {
+    30014: { itemId: "30014", itemName: "全新装置", rarity: 4 },
+    30034: { itemId: "30034", itemName: "改量装置", rarity: 4 },
+    3303: { itemId: "3303", itemName: "技巧概要·卷3", rarity: 3 },
+    4001: { itemId: "4001", itemName: "龙门币", rarity: 2 },
+};
+
+// 含完整成本分组的材料行
+const materialRow = {
+    name: "阿米娅",
+    score: 6000,
+    costBreakdown: {
+        evolve: { items: { 30014: 5, 4001: 10000 }, notes: ["精零1 → 精一50"] },
+        mastery: { items: { 3303: 6 }, notes: ["6/0/0 → 7/0/0"] },
+        module: { items: { 30034: 3 }, notes: ["无模组 → 模组X"], excluded: false },
+        total: { 30014: 5, 4001: 10000, 3303: 6, 30034: 3 },
+    },
+};
+
+const allDirectionTotals = { evolve: true, mastery: true, module: true };
+
+test("itemChipHtml renders rarity chip and falls back to itemId", () => {
+    const chip = itemChipHtml("30014", 5, itemInfoMap);
+    expect(chip).toContain("item-chip--r4");
+    expect(chip).toContain("title=\"全新装置\"");
+    expect(chip).toContain("bg-30014");
+    expect(chip).toContain(">5<");
+    // 未知材料：标题回退为 itemId，稀有度钳制为 1
+    const unknown = itemChipHtml("99999", 2, itemInfoMap);
+    expect(unknown).toContain("title=\"99999\"");
+    expect(unknown).toContain("item-chip--r1");
+    // 无信息表时同样回退
+    expect(itemChipHtml("30014", 1, null)).toContain("item-chip--r1");
+});
+
+test("sortMaterialEntries sorts by rarity desc then itemId", () => {
+    const sorted = sortMaterialEntries({ 3303: 6, 30014: 5, 4001: 100 }, itemInfoMap);
+    expect(sorted.map(([id]) => id)).toEqual(["30014", "3303", "4001"]);
+    const tie = sortMaterialEntries({ 3005: 1, 3001: 1 }, {
+        3005: { rarity: 4 },
+        3001: { rarity: 4 },
+    });
+    expect(tie.map(([id]) => id)).toEqual(["3001", "3005"]);
+    // 空输入与无信息表（稀有度一律 0，按 itemId 排序）
+    expect(sortMaterialEntries(null, itemInfoMap)).toEqual([]);
+    expect(sortMaterialEntries({ 3005: 1, 3001: 1 }, {})).toEqual([["3001", 1], ["3005", 1]]);
+});
+
+test("renderMaterialSection renders empty state", () => {
+    expect(renderMaterialSection([], { itemInfoMap, directionTotals: allDirectionTotals })).toContain("未勾选任何可计算的干员");
+});
+
+test("renderMaterialSection renders total card and operator cards", () => {
+    const html = renderMaterialSection([materialRow], { itemInfoMap, directionTotals: allDirectionTotals });
+    // 总计卡片：三个方向复选框均勾选，底部为方向合计
+    expect(html).toContain("养成材料总计（1名干员）");
+    // 三个方向复选框均勾选；属性按 class、data-direction、aria-label、checked 顺序输出
+    expect(html).toContain('data-direction="evolve" aria-label="计入精英/等级" checked');
+    expect(html).toContain('data-direction="module" aria-label="计入模组" checked');
+    // 单个干员卡片：名称、分层标签、练度说明、材料 chip
+    expect(html).toContain("精零1 → 精一50");
+    expect(html).toContain("6/0/0 → 7/0/0");
+    expect(html).toContain("无模组 → 模组X");
+    expect(html).toContain("bg-30014");
+});
+
+test("renderMaterialSection shows placeholder when no direction is selected", () => {
+    const html = renderMaterialSection([materialRow], { itemInfoMap, directionTotals: { evolve: false, mastery: false, module: false } });
+    expect(html).toContain("未选择养成方向");
+    // 方向复选框全部不勾选
+    expect(html).not.toContain("direction-total-select\" checked");
+});
+
+test("renderMaterialSection marks excluded direction and empty list", () => {
+    const row = {
+        name: "阿米娅",
+        score: 0,
+        costBreakdown: {
+            evolve: { items: {}, notes: [] },
+            mastery: { items: {}, notes: [] },
+            // 未计入的模组方向
+            module: { items: {}, notes: [], excluded: true },
+            total: {},
+        },
+    };
+    const html = renderMaterialSection([row], { itemInfoMap, directionTotals: allDirectionTotals });
+    expect(html).toContain("未计入");
+    // 无材料方向显示「无缺口」
+    expect(html).toContain("无缺口");
 });
 
 test("renderTrainingTable renders empty state and rows", () => {
