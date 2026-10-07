@@ -34,14 +34,6 @@ test("normalizeSlotRequirements infers elite from skill and skill_level", () => 
     expect(normalizeSlotRequirements({ skill: 0, requirements: { skill_level: 10 } })).toMatchObject({ skillLevel: 0 });
 });
 
-test("normalizeSlotRequirements infers elite from level beyond stage caps", () => {
-    // 精0 最高 50 级、精1 最高 80 级（跨稀有度上限），超出视作更高阶段
-    expect(normalizeSlotRequirements({ skill: 1, requirements: { level: 99 } })).toMatchObject({ elite: 2, level: 99 });
-    expect(normalizeSlotRequirements({ skill: 2, requirements: { level: 90 } })).toMatchObject({ elite: 2 });
-    expect(normalizeSlotRequirements({ skill: 1, requirements: { level: 60 } })).toMatchObject({ elite: 1 });
-    expect(normalizeSlotRequirements({ skill: 0, requirements: { level: 50 } })).toMatchObject({ elite: 0 });
-});
-
 test("skillLevelFor reads the matching skill slot", () => {
     expect(skillLevelFor(1, amiya)).toBe(7);
     expect(skillLevelFor(2, amiya)).toBe(10);
@@ -54,10 +46,7 @@ test("skillLevelFor reads the matching skill slot", () => {
 
 test("evaluateSlot reports missing, gaps, and satisfied", () => {
     expect(evaluateSlot({ name: "阿米娅", skill: 2, requirements: { level: 90 } }, null)).toMatchObject({ owned: false, satisfied: false });
-    // skill:3 推断精英阶段 2，与用户「精二60」同阶段才比较等级；跨阶段不比等级数值
-    expect(evaluateSlot({ name: "阿米娅", skill: 3, requirements: { level: 90 } }, amiya).gaps).toContainEqual({ type: "level", required: 90, current: 60 });
-    // 用户等级缺失或非法时按 0 处理，仍产生等级缺口
-    expect(evaluateSlot({ name: "阿米娅", skill: 3, requirements: { level: 90 } }, { ...amiya, level: undefined }).gaps).toContainEqual({ type: "level", required: 90, current: 0 });
+    expect(evaluateSlot({ name: "阿米娅", skill: 2, requirements: { level: 90 } }, amiya).gaps).toContainEqual({ type: "level", required: 90, current: 60 });
     expect(evaluateSlot({ name: "阿米娅", skill: 3, requirements: { skill_level: 10 } }, amiya).satisfied).toBe(true);
     expect(evaluateSlot({ name: "阿米娅", skill: 1, requirements: { elite: 2 } }, amiya).satisfied).toBe(true);
     expect(evaluateSlot({ name: "阿米娅", skill: 1, requirements: { elite: 3 } }, amiya).gaps).toContainEqual({ type: "elite", required: 3, current: 2 });

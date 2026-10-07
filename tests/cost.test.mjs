@@ -624,6 +624,15 @@ test("要求的模组类型在成本表缺失：非数组 costs 跳过", () => {
     expect(total).not.toHaveProperty("4001");
 });
 
+test("模组要求对含未知类型编号或缺字段：过滤后只计算已知类型", () => {
+    // type 9 无对应类型名；缺 type 字段时编号兜底为 0；两者均过滤，Y 型正常计算
+    const { module } = compute(
+        { elite: 2, level: 60, modules: [] },
+        { modulePairs: [{ type: 9, level: 2 }, { level: 2 }, { type: 2, level: 3 }] },
+    );
+    expect(module.notes).toEqual(["无模组 → 模组Y"]);
+});
+
 test("模组已达标：升级循环不执行，仅保留说明", () => {
     const current = { elite: 2, level: 60, modules: null, mods: null };
     // current.modules 非数组 -> 258 分支；说明 owned 取 []

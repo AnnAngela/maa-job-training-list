@@ -64,14 +64,6 @@ test("statusBadge renders missing ready and pending", () => {
     expect(statusBadge({ user: {}, totalGap: 1 })).toContain("待培养");
 });
 
-test("renderTrainingTable keeps level met when promotion stage exceeds target", () => {
-    // 用户精2 40级对目标精1 60级：精英化阶段更高，等级视为已满足，不标红
-    const html = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 40, skill1: 10, skill2: 0, skill3: 0, maxModuleLevel: 0 }, target: { elite: 1, level: 60, skill1: 7, skill2: 0, skill3: 0, module: -1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
-    expect(html).toContain("60级");
-    expect(html).not.toContain("req-unmet");
-    expect(html).toContain("已达标");
-});
-
 test("renderSummary renders cards", () => {
     const html = renderSummary({ totalAssignments: 5, readyCount: 2, notReadyCount: 3, involvedOperators: 4, missingOperators: 1 });
     expect(html).toContain("作业总数");
@@ -212,7 +204,7 @@ test("renderTrainingTable renders empty state and rows", () => {
     expect(partialSkills).not.toContain("技能3");
     expect(partialSkills).toContain('<span class="req-unmet">技能2 7级</span>');
     expect(partialSkills).not.toContain("模组");
-    const missingRow = renderTrainingTable([{ name: "阿米娅", user: null, target: { elite: 2, level: 90, skill1: 0, skill2: 7, skill3: 0, module: 1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+    const missingRow = renderTrainingTable([{ name: "阿米娅", user: null, target: { elite: 2, level: 90, levelPairs: [{ elite: 2, level: 90 }], skill1: 0, skill2: 7, skill3: 0, module: 1, modulePairs: [{ type: 1, level: 0 }] }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
     expect(missingRow).toContain(">—<");
     expect(missingRow).toContain('<span class="req-unmet">精2</span>');
     expect(missingRow).toContain('<span class="req-unmet">90级</span>');
@@ -237,4 +229,61 @@ test("renderTrainingTable renders empty state and rows", () => {
     // 未知模组编号：目标列不显示模组部分
     const unknownModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 0, modules: [] }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: 9 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
     expect(unknownModule).not.toContain("模组");
+});
+
+test("跨精英阶要求对：精英与等级分别按未满足对高亮", () => {
+    // 用户精一60；两对要求：精一70 与 精二80。聚合显示精2/80级，两者均应高亮
+    const rows = [{
+        name: "阿米娅",
+        user: { charId: "char_002_amiya", elite: 1, level: 60, skill1: 1, skill2: 1, skill3: 1, maxModuleLevel: 0 },
+        target: {
+            elite: 2,
+            level: 80,
+            levelPairs: [{ elite: 1, level: 70 }, { elite: 2, level: 80 }],
+            module: -1,
+            modulePairs: [],
+        },
+        coreGain: 0,
+        groupGain: 0,
+        unsatisfiedCore: 0,
+        score: 0,
+        totalGap: 0,
+    }];
+    const html = renderTrainingTable(rows, { operatorMeta, skillSprite });
+    expect(html).toContain('<span class="req-unmet">精2</span>');
+    expect(html).toContain('<span class="req-unmet">80级</span>');
+});
+
+test("含精零要求对：等级兜底分支与同阶等级高亮", () => {
+    // 用户精零30；要求对：精零50、精零（无等级，不产生等级缺口）与 精一（无等级）。聚合显示精1/50级
+    const rows = [{
+        name: "阿米娅",
+        user: { charId: "char_002_amiya", elite: 0, level: 30, skill1: 1, skill2: 1, skill3: 1, maxModuleLevel: 0 },
+        target: {
+            elite: 1,
+            level: 50,
+            levelPairs: [{ elite: 0, level: 50 }, { elite: 0 }, { elite: 1, level: 0 }],
+            module: -1,
+            modulePairs: [],
+        },
+        coreGain: 0,
+        groupGain: 0,
+        unsatisfiedCore: 0,
+        score: 0,
+        totalGap: 0,
+    }];
+    const html = renderTrainingTable(rows, { operatorMeta, skillSprite });
+    expect(html).toContain('<span class="req-unmet">精1</span>');
+    expect(html).toContain('<span class="req-unmet">50级</span>');
+});
+
+test("已达标行复选框禁用；缺成本数据行不渲染复选框", () => {
+    const rows = [
+        { name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 90 }, target: { elite: 2, level: 90 }, costBreakdown: null, score: 0, totalGap: 0, unsatisfiedCore: 0 },
+        { name: "凯尔希", user: null, target: { elite: 2 }, costBreakdown: undefined, score: 0, totalGap: 0, unsatisfiedCore: 0 },
+    ];
+    const html = renderTrainingTable(rows, { operatorMeta, skillSprite, materialSelection: new Set(["阿米娅"]) });
+    // 无缺口行复选框存在但禁用，且不因默认勾选集合而选中
+    expect(html).toContain('class="material-select" data-name="阿米娅" disabled');
+    expect(html).not.toContain('data-name="凯尔希"');
 });

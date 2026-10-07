@@ -1,4 +1,5 @@
 import { DEFAULT_OPTIONS, SCORE_WEIGHTS } from "./config.js";
+import { MODULE_TYPE_NAMES } from "./cost.js";
 
 // 标准练度模式：精2满级（按稀有度 1-6★ 对应的最高等级），用到的技能专三、用到的模组三级
 export const STANDARD_MAX = {
@@ -86,6 +87,27 @@ const raiseEliteLevel = (target, req) => {
     }
 };
 
+// 合并单个作业槽位要求到干员聚合目标：精英/等级按字典序取最大；
+// 模组要求按类型分别记录（modulePairs），同类型取等级最大，避免跨类型拼出不存在的目标
+const mergeTargetReq = (target, slot, req) => {
+    raiseEliteLevel(target, req);
+    const skillIndex = Number(slot.skill);
+    if (req.skillLevel > 0 && skillIndex >= 1 && skillIndex <= 3) {
+        target[`skill${skillIndex}`] = Math.max(target[`skill${skillIndex}`], req.skillLevel);
+    }
+    if (req.module >= 0) {
+        const pair = target.modulePairs.find((item) => item.type === req.module);
+        if (pair) {
+            pair.level = Math.max(pair.level, req.moduleLevel);
+        } else {
+            target.modulePairs.push({ type: req.module, level: req.moduleLevel });
+        }
+        // 聚合字段供目标列展示：类型编号与等级分别取大
+        target.module = Math.max(target.module, req.module);
+        target.moduleLevel = Math.max(target.moduleLevel, req.moduleLevel);
+    }
+};
+
 export const skillLevelFor = (skillIndex, user) => {
     if (skillIndex === 1) {
         return Number(user?.skill1) || 0;
@@ -120,11 +142,19 @@ export const evaluateSlot = (slot, user, options = {}) => {
         }
     }
     if (options.requireModule) {
-        if (req.module > 0) {
-            if (Number(user.maxModuleLevel) < 1) {
-                gaps.push({ type: "module", required: 1, current: Number(user.maxModuleLevel) || 0 });
+        // 模组缺口按匹配类型的模组等级判定（与材料计算器同源）：req.module 为类型编号，
+        // req.moduleLevel 缺省按 1（仅解锁）；用户数据来自森空岛 modules 数组
+        const requiredType = req.module;
+        if (requiredType > 0) {
+            const typeName = MODULE_TYPE_NAMES[requiredType];
+            const targetLevel = req.moduleLevel > 0 ? req.moduleLevel : 1;
+            const ownedModule = (Array.isArray(user.modules) ? user.modules : [])
+                .find((item) => item?.name === typeName && !item.locked);
+            if ((Number(ownedModule?.level) || 0) < targetLevel) {
+                gaps.push({ type: "module", required: targetLevel, current: Number(ownedModule?.level) || 0 });
             }
-        } else if (req.module === 0) {
+        } else if (requiredType === 0) {
+            // 作业明确不带模组：用户已解锁任意模组即产生缺口
             if (Number(user.maxModuleLevel) > 0) {
                 gaps.push({ type: "module", required: 0, current: Number(user.maxModuleLevel) });
             }
@@ -258,7 +288,7 @@ export const computeTrainingList = ({ assignments, userOperators, operatorMeta, 
         let coreGain = 0;
         let groupGain = 0;
         let totalGap = 0;
-        const target = { elite: 0, level: 0, skill1: 0, skill2: 0, skill3: 0, module: -1, moduleLevel: 0 };
+        const target = { elite: 0, level: 0, skill1: 0, skill2: 0, skill3: 0, module: -1, moduleLevel: 0, modulePairs: [] };
 
         for (const [assignmentId, appearance] of demand.assignments) {
             const base = baseResults.find((item) => item.assignment.id === assignmentId);
@@ -270,14 +300,7 @@ export const computeTrainingList = ({ assignments, userOperators, operatorMeta, 
                     continue;
                 }
                 const req = normalizeSlotRequirements(slot);
-                raiseEliteLevel(target, req);
-                if (req.skillLevel > 0 && slot.skill >= 1 && slot.skill <= 3) {
-                    target[`skill${slot.skill}`] = Math.max(target[`skill${slot.skill}`], req.skillLevel);
-                }
-                if (req.module > target.module) {
-                    target.module = req.module;
-                }
-                target.moduleLevel = Math.max(target.moduleLevel, req.moduleLevel);
+                mergeTargetReq(target, slot, req);
             }
             for (const group of assignment.groups || []) {
                 for (const slot of group.opers || []) {
@@ -285,14 +308,7 @@ export const computeTrainingList = ({ assignments, userOperators, operatorMeta, 
                         continue;
                     }
                     const req = normalizeSlotRequirements(slot);
-                    raiseEliteLevel(target, req);
-                    if (req.skillLevel > 0 && slot.skill >= 1 && slot.skill <= 3) {
-                        target[`skill${slot.skill}`] = Math.max(target[`skill${slot.skill}`], req.skillLevel);
-                    }
-                    if (req.module > target.module) {
-                        target.module = req.module;
-                    }
-                    target.moduleLevel = Math.max(target.moduleLevel, req.moduleLevel);
+                    mergeTargetReq(target, slot, req);
                 }
             }
 

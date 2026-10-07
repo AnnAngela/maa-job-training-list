@@ -3,7 +3,8 @@
 // 练度语义（本工具）：skill1/2/3 取值 1-10（8/9/10 为专一/二/三）；target 中 0 表示作业不涉及该技能。
 
 // 作业 requirements.module 的模组类型编号 → 一图流 equip[].typeName2
-export const MODULE_TYPE_NAMES = { 1: "X", 2: "Y", 3: "A", 4: "D" };
+// 全项目唯一来源，展示层（view.js）与缺口判定（compare.js）共用
+export const MODULE_TYPE_NAMES = { 1: "X", 2: "Y", 3: "A", 4: "D", 5: "B" };
 
 // 精英化龙门币（按星级；与一图流 operatorEliteCostTable 一致，游戏内基本不变）
 // 值为 [精一龙门币, 精二龙门币]，1/2 星不可精英化
@@ -172,7 +173,8 @@ const eliteName = (elite) => ["精零", "精一", "精二"][elite] || `精${elit
 
 // 计算单个干员从 current 到 target 的养成成本，按方向分组
 // current: {elite, level, skill1, skill2, skill3, modules}
-// target: {elite, level, skill1, skill2, skill3, module, moduleLevel}
+// target: {elite, level, skill1, skill2, skill3, module, moduleLevel, levelPairs, modulePairs}
+// module/moduleLevel 为聚合字段（供展示）；modulePairs: [{type, level}] 为按类型记录的模组要求，材料计算以此为准
 // requireModule: 与培养清单同一开关，关闭时跳过模组分组
 // evolve 含精英化与等级提升（龙门币+作战记录）；mastery 含技能升级与专精；module 为模组
 // 返回 {evolve, mastery, module, total}，每组 {items: {itemId: count}, notes: [当前值→目标值]}
@@ -237,27 +239,38 @@ export const computeCostBreakdown = ({ charId, costEntry, rarity, current, targe
     if (targetTriplet.some((value, index) => value > currentTriplet[index])) {
         mastery.notes.push(`${currentTriplet.join("/")} → ${targetTriplet.join("/")}`);
     }
-    const moduleType = Number(target?.module) || 0;
-    const typeName = MODULE_TYPE_NAMES[moduleType];
-    if (typeName) {
-        // 开关关闭：只标记未计入（材料区显示「未计入」，说明列保持「—」），不产出材料
-        if (!requireModule) {
-            module.excluded = true;
-        }
+    // 模组要求按"类型对"逐项计算（与 levelPairs 同构）：每对记录一个类型及其等级要求，
+    // 避免跨作业聚合时高编号类型覆盖低编号类型、等级跨类型取大值
+    let modulePairs = Array.isArray(target?.modulePairs) ? target.modulePairs : [];
+    if (!modulePairs.length && Number(target?.module) > 0) {
+        // 兼容直接构造的 target（无 modulePairs）：用 module/moduleLevel 合成单对
+        modulePairs = [{ type: Number(target.module), level: Number(target.moduleLevel) || 0 }];
     }
-    if (requireModule && typeName) {
-        // 作业仅要求解锁模组（module_level 缺省为 0）时按 1 级计算成本
-        const targetModuleLevel = Math.max(Number(target?.moduleLevel) || 0, 1);
-        const costs = costEntry.mods[typeName];
-        if (Array.isArray(costs)) {
-            const fromLevel = currentModuleLevel(current, typeName);
-            for (let level = fromLevel + 1; level <= targetModuleLevel; level += 1) {
-                addCostList(module.items, costs[level - 1]);
+    // 解析为一图流类型名，过滤未知类型编号
+    const resolvedModulePairs = modulePairs
+        .map((pair) => ({ typeName: MODULE_TYPE_NAMES[Number(pair?.type) || 0], level: Number(pair?.level) || 0 }))
+        .filter((pair) => pair.typeName);
+    // 开关关闭：只标记未计入（材料区显示「未计入」，说明列保持「—」），不产出材料
+    if (!requireModule && resolvedModulePairs.length) {
+        module.excluded = true;
+    }
+    if (requireModule) {
+        // 已解锁模组说明起点（所有类型合并展示，终点按对区分）
+        const owned = (Array.isArray(current?.modules) ? current.modules : [])
+            .filter((item) => item?.name && !item.locked && Number(item.level) > 0)
+            .map((item) => `模组${item.name} ${Number(item.level)}级`);
+        for (const { typeName, level } of resolvedModulePairs) {
+            const costs = costEntry.mods[typeName];
+            if (!Array.isArray(costs)) {
+                continue;
             }
-            // 模组说明：「模组X 1级/模组Y 1级 → 模组Y」；无已解锁模组时显示「无模组 → 模组Y」
-            const owned = (Array.isArray(current?.modules) ? current.modules : [])
-                .filter((item) => item?.name && !item.locked && Number(item.level) > 0)
-                .map((item) => `模组${item.name} ${Number(item.level)}级`);
+            // 作业仅要求解锁模组（level 缺省为 0）时按 1 级计算成本
+            const targetModuleLevel = Math.max(level, 1);
+            const fromLevel = currentModuleLevel(current, typeName);
+            for (let lvl = fromLevel + 1; lvl <= targetModuleLevel; lvl += 1) {
+                addCostList(module.items, costs[lvl - 1]);
+            }
+            // 模组说明：「模组X 1级 → 模组Y」；无已解锁模组时显示「无模组 → 模组Y」
             const targetText = `模组${typeName}`;
             module.notes.push(owned.length ? `${owned.join("/")} → ${targetText}` : `无模组 → ${targetText}`);
         }

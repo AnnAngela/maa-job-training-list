@@ -7,9 +7,6 @@ export const SKILL_SPRITE_URL = "./data/skill_sprite.json";
 export const CHARACTER_TABLE_URL = "./data/character_table_simple.v2.json";
 export const ITEM_INFO_URL = "./data/item_info.json";
 export const LEVEL_COST_TABLE_URL = "./data/level_cost_table.json";
-// 材料图标雪碧图（直链一图流仓库，随上游更新）
-export const ITEM_SPRITE_CSS_URL
-    = "https://cdn.jsdelivr.net/gh/Arknights-yituliu/frontend-v2-plus@dev/src/assets/css/sprite/sprite_item.css";
 
 export const SKLAND_BASE = "https://zonai.skland.com";
 export const BINDING_PATH = "/api/v1/game/player/binding";

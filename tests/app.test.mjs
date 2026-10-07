@@ -663,7 +663,7 @@ test("export handlers download when result exists", async () => {
     app.handleExportCsv();
     vi.unstubAllGlobals();
     expect(createObjectURL).toHaveBeenCalledTimes(2);
-    // CSV 状态列与页面徽章一致：totalGap 为 0 的已拥有干员导出为「已达标」
+    // CSV 状态列与页面徽章一致：三行分别为待培养、未拥有、已达标
     const csv = blobs[1].parts.join("");
     expect(csv).toContain("待培养");
     expect(csv).toContain("未拥有");

@@ -3,7 +3,7 @@
 // 用法：npm run serve，地址 http://localhost:8080
 import { createServer } from "node:http";
 import { readFile } from "node:fs/promises";
-import { extname, join, normalize } from "node:path";
+import { extname, join, normalize, sep } from "node:path";
 
 const PORT = 8080;
 const root = process.cwd();
@@ -26,7 +26,8 @@ const server = createServer(async (request, response) => {
             pathname += "index.html";
         }
         const file = normalize(join(root, pathname));
-        if (!file.startsWith(root)) {
+        // 必须落在 root 目录内（追加分隔符，避免同级的 root-xxx 目录通过校验）
+        if (!file.startsWith(root + sep) && file !== root) {
             response.writeHead(403);
             response.end();
             return;
