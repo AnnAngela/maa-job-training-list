@@ -33,7 +33,7 @@ test("normalizeOperSlot fills defaults", () => {
 });
 
 test("operatorAvatarUrl builds avatar URL", () => {
-    expect(operatorAvatarUrl("char_002_amiya")).toBe("https://cos.yituliu.cn/image2/avatar/char_002_amiya.png");
+    expect(operatorAvatarUrl("char_002_amiya")).toBe("https://prts.plus/assets/operator-avatars/webp32/char_002_amiya.webp");
 });
 
 test("skillSpriteStyle returns empty for missing entry", () => {

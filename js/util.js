@@ -16,7 +16,7 @@ export const normalizeOperSlot = (oper) => ({
     requirements: oper?.requirements || {},
 });
 
-export const operatorAvatarUrl = (charId) => `${AVATAR_BASE}/${charId}.png`;
+export const operatorAvatarUrl = (charId) => `${AVATAR_BASE}/${charId}.webp`;
 
 export const skillSpriteStyle = (skillSprite, skillIcon, size = 24) => {
     const entry = skillSprite?.entries?.[skillIcon];

@@ -138,7 +138,7 @@ export const renderTrainingTable = (rows, { operatorMeta }) => {
         const meta = operatorMeta?.operators?.[charId];
         const current = row.user ? formatCurrent(row.user) : "—";
         const target = formatTarget(row.target || {}, row.user);
-        const avatar = operatorAvatarHtml(row.name, charId, { size: 34, grayscale: !row.user });
+        const avatar = operatorAvatarHtml(row.name, charId, { size: 32, grayscale: !row.user });
         return `<tr><td class="priority-cell"><span class="tier tier--${escapeHtml(scoreTier(row.score))}">${escapeHtml(scoreTier(row.score))}</span></td><td class="operator-cell"><div class="operator-cell-inner">${avatar}<span class="operator-name">${escapeHtml(row.name)}</span><span class="operator-meta">${escapeHtml(meta?.profession || "")} ${escapeHtml(rarityStars(meta?.rarity))}</span></div></td><td class="progress-cell">${current}</td><td class="progress-cell">${target}</td><td>${formatNumber(row.unsatisfiedCore)}</td><td>${statusBadge(row)}</td></tr>`;
     }).join("");
     return `<div class="table-wrap"><table class="data-table"><thead><tr><th>优先级</th><th>干员</th><th>当前</th><th>目标</th><th>未满足必带作业</th><th>状态</th></tr></thead><tbody>${body}</tbody></table></div>`;

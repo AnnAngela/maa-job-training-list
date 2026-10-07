@@ -26,7 +26,7 @@ test("charIdForName returns charId or empty", () => {
 });
 
 test("operatorAvatarHtml renders with and without charId", () => {
-    expect(operatorAvatarHtml("阿米娅", "char_002_amiya")).toContain("https://cos.yituliu.cn/image2/avatar/char_002_amiya.png");
+    expect(operatorAvatarHtml("阿米娅", "char_002_amiya")).toContain("https://prts.plus/assets/operator-avatars/webp32/char_002_amiya.webp");
     expect(operatorAvatarHtml("阿米娅", "char_002_amiya", { grayscale: true })).toContain("operator-avatar--grayscale");
     expect(operatorAvatarHtml("阿米娅", "")).not.toContain("<img");
     expect(operatorAvatarHtml(null, "char_002_amiya")).toContain("?");

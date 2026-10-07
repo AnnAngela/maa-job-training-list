@@ -127,7 +127,7 @@ gh workflow run update-data.yml
 
 - 作业数据：PRTS 作业站 API（https://prts.maa.plus）。
 - 干员数据：森空岛（https://zonai.skland.com），仅在浏览器内直连。
-- 干员头像与技能图标：一图流 CDN（https://cos.yituliu.cn）。
+- 干员头像：PRTS 作业站静态资源（https://prts.plus）；技能图标：一图流 CDN（https://cos.yituliu.cn）。
 - 森空岛 cred/token 会保存在浏览器 localStorage（仅本机），下次打开页面自动恢复并获取账号列表；不会上传到本站或其他第三方。
 - 提示功能的访问时间戳保存在 localStorage（键 `maa-training-list.last-visit`），同样不会上传。
 
