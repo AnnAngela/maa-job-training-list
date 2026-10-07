@@ -1,5 +1,4 @@
 import { DEFAULT_OPTIONS, SCORE_WEIGHTS } from "./config.js";
-import { MODULE_TYPE_NAMES } from "./cost.js";
 
 // 标准练度模式：精2满级（按稀有度 1-6★ 对应的最高等级），用到的技能专三、用到的模组三级
 export const STANDARD_MAX = {
@@ -59,13 +58,32 @@ export const normalizeSlotRequirements = (slot) => {
     } else if (skillLevel > 4) {
         elite = Math.max(elite, 1);
     }
+    const level = Number(req.level) || 0;
+    // 精0 最高 50 级、精1 最高 80 级（跨稀有度上限）：等级超出说明作者意图就是更高阶段，
+    // 避免出现 (精0,99) 这类不可能组合后被「高阶段盖过低等级」的规则误判为已达标
+    if (level > 80) {
+        elite = Math.max(elite, 2);
+    } else if (level > 50) {
+        elite = Math.max(elite, 1);
+    }
     return {
         elite,
-        level: Number(req.level) || 0,
+        level,
         skillLevel: skill >= 1 ? skillLevel : 0,
         module,
         moduleLevel,
     };
+};
+
+// 目标练度按（精英化,等级）字典序取最大：精2 任意等级都高于精1 满级，
+// 若按分量各自取 max 会把 (精1,60)+(精2,40) 虚增成 (精2,60)
+const raiseEliteLevel = (target, req) => {
+    const higherStage = req.elite > target.elite;
+    const sameStageHigher = req.elite === target.elite && req.level > target.level;
+    if (higherStage || sameStageHigher) {
+        target.elite = req.elite;
+        target.level = req.level;
+    }
 };
 
 export const skillLevelFor = (skillIndex, user) => {
@@ -87,13 +105,12 @@ export const evaluateSlot = (slot, user, options = {}) => {
         return { satisfied: false, owned: false, gaps: [{ type: "missing" }] };
     }
     const gaps = [];
-    const userElite = Number(user.elite) || 0;
-    if (userElite < req.elite) {
-        gaps.push({ type: "elite", required: req.elite, current: userElite });
+    if (Number(user.elite) < req.elite) {
+        gaps.push({ type: "elite", required: req.elite, current: Number(user.elite) });
     }
-    // 干员等级比较规则：精一任意等级小于精二 1 级，仅精英等级相同时才比较等级
-    if (userElite === req.elite && (Number(user.level) || 0) < req.level) {
-        gaps.push({ type: "level", required: req.level, current: Number(user.level) || 0 });
+    // 精英化阶段优先于等级：精2 任意等级都高于精1 满级，仅在当前阶段不超过要求阶段时才比较等级
+    if (Number(user.elite) <= req.elite && Number(user.level) < req.level) {
+        gaps.push({ type: "level", required: req.level, current: Number(user.level) });
     }
     if (req.skillLevel > 0) {
         const skillIndex = Number(slot.skill);
@@ -103,19 +120,11 @@ export const evaluateSlot = (slot, user, options = {}) => {
         }
     }
     if (options.requireModule) {
-        // 模组缺口按匹配类型的模组等级判定（与材料计算器同源）：req.module 为类型编号，
-        // req.moduleLevel 缺省按 1（仅解锁）；用户数据来自森空岛 modules 数组
-        const requiredType = req.module;
-        if (requiredType > 0) {
-            const typeName = MODULE_TYPE_NAMES[requiredType];
-            const targetLevel = req.moduleLevel > 0 ? req.moduleLevel : 1;
-            const ownedModule = (Array.isArray(user.modules) ? user.modules : [])
-                .find((item) => item?.name === typeName && !item.locked);
-            if ((Number(ownedModule?.level) || 0) < targetLevel) {
-                gaps.push({ type: "module", required: targetLevel, current: Number(ownedModule?.level) || 0 });
+        if (req.module > 0) {
+            if (Number(user.maxModuleLevel) < 1) {
+                gaps.push({ type: "module", required: 1, current: Number(user.maxModuleLevel) || 0 });
             }
-        } else if (requiredType === 0) {
-            // 作业明确不带模组：用户已解锁任意模组即产生缺口
+        } else if (req.module === 0) {
             if (Number(user.maxModuleLevel) > 0) {
                 gaps.push({ type: "module", required: 0, current: Number(user.maxModuleLevel) });
             }
@@ -223,27 +232,6 @@ export const gapWeight = (gap) => {
     }
 };
 
-// 合并单个作业槽位要求到干员聚合目标；同时记录成对的精英/等级要求（levelPairs），
-// 供材料计算按"最强未满足对"取数，避免跨作业聚合的 elite/level 拼接产生假缺口
-const mergeTargetReq = (target, slot, req) => {
-    target.elite = Math.max(target.elite, req.elite);
-    target.level = Math.max(target.level, req.level);
-    const skillIndex = Number(slot.skill);
-    if (req.skillLevel > 0 && skillIndex >= 1 && skillIndex <= 3) {
-        target[`skill${skillIndex}`] = Math.max(target[`skill${skillIndex}`], req.skillLevel);
-    }
-    if (req.module > target.module) {
-        target.module = req.module;
-    }
-    target.moduleLevel = Math.max(target.moduleLevel, req.moduleLevel);
-    if (req.level > 0 || req.elite > 0) {
-        const key = `${req.elite}:${req.level}`;
-        if (!target.levelPairs.some((pair) => pair.key === key)) {
-            target.levelPairs.push({ key, elite: req.elite, level: req.level });
-        }
-    }
-};
-
 export const computeTrainingList = ({ assignments, userOperators, operatorMeta, options = {} }) => {
     const mergedOptions = { ...DEFAULT_OPTIONS, ...options };
     const weights = { ...SCORE_WEIGHTS, ...options.weights || {} };
@@ -270,7 +258,7 @@ export const computeTrainingList = ({ assignments, userOperators, operatorMeta, 
         let coreGain = 0;
         let groupGain = 0;
         let totalGap = 0;
-        const target = { elite: 0, level: 0, skill1: 0, skill2: 0, skill3: 0, module: -1, moduleLevel: 0, levelPairs: [] };
+        const target = { elite: 0, level: 0, skill1: 0, skill2: 0, skill3: 0, module: -1, moduleLevel: 0 };
 
         for (const [assignmentId, appearance] of demand.assignments) {
             const base = baseResults.find((item) => item.assignment.id === assignmentId);
@@ -282,7 +270,14 @@ export const computeTrainingList = ({ assignments, userOperators, operatorMeta, 
                     continue;
                 }
                 const req = normalizeSlotRequirements(slot);
-                mergeTargetReq(target, slot, req);
+                raiseEliteLevel(target, req);
+                if (req.skillLevel > 0 && slot.skill >= 1 && slot.skill <= 3) {
+                    target[`skill${slot.skill}`] = Math.max(target[`skill${slot.skill}`], req.skillLevel);
+                }
+                if (req.module > target.module) {
+                    target.module = req.module;
+                }
+                target.moduleLevel = Math.max(target.moduleLevel, req.moduleLevel);
             }
             for (const group of assignment.groups || []) {
                 for (const slot of group.opers || []) {
@@ -290,7 +285,14 @@ export const computeTrainingList = ({ assignments, userOperators, operatorMeta, 
                         continue;
                     }
                     const req = normalizeSlotRequirements(slot);
-                    mergeTargetReq(target, slot, req);
+                    raiseEliteLevel(target, req);
+                    if (req.skillLevel > 0 && slot.skill >= 1 && slot.skill <= 3) {
+                        target[`skill${slot.skill}`] = Math.max(target[`skill${slot.skill}`], req.skillLevel);
+                    }
+                    if (req.module > target.module) {
+                        target.module = req.module;
+                    }
+                    target.moduleLevel = Math.max(target.moduleLevel, req.moduleLevel);
                 }
             }
 

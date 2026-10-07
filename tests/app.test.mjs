@@ -643,23 +643,31 @@ test("export handlers download when result exists", async () => {
         summary: { totalAssignments: 0, readyCount: 0, notReadyCount: 0, involvedOperators: 0, ownedOperators: 0, missingOperators: 0 },
         assignmentResults: [],
         rows: [
-            { name: "阿米娅", user: { elite: 2 }, score: 100, coreGain: 1, groupGain: 0, unsatisfiedCore: 1 },
-            { name: "凯尔希", user: null, score: 50, coreGain: 0, groupGain: 1, unsatisfiedCore: 0 },
+            { name: "阿米娅", user: { elite: 2 }, score: 100, coreGain: 1, groupGain: 0, unsatisfiedCore: 1, totalGap: 5 },
+            { name: "凯尔希", user: null, score: 50, coreGain: 0, groupGain: 1, unsatisfiedCore: 0, totalGap: 1000 },
+            { name: "塞雷娅", user: { elite: 2 }, score: 10, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, totalGap: 0 },
         ],
     };
     const createObjectURL = vi.fn(() => "blob:test");
     const revokeObjectURL = vi.fn();
     vi.stubGlobal("URL", { createObjectURL, revokeObjectURL });
+    const blobs = [];
     vi.stubGlobal("Blob", class Blob {
         constructor(parts, options) {
             this.parts = parts;
             this.options = options;
+            blobs.push(this);
         }
     });
     app.handleExportJson();
     app.handleExportCsv();
     vi.unstubAllGlobals();
     expect(createObjectURL).toHaveBeenCalledTimes(2);
+    // CSV 状态列与页面徽章一致：totalGap 为 0 的已拥有干员导出为「已达标」
+    const csv = blobs[1].parts.join("");
+    expect(csv).toContain("待培养");
+    expect(csv).toContain("未拥有");
+    expect(csv).toContain("已达标");
 });
 
 test("runAnalysis returns early when static data or assignments are missing", async () => {

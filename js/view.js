@@ -1,5 +1,4 @@
-import { aggregateMaterials } from "./cost.js";
-import { escapeHtml, formatCount, formatNumber, operatorAvatarUrl, scoreTier, skillLevelLabel, skillSpriteStyle } from "./util.js";
+import { escapeHtml, formatNumber, operatorAvatarUrl, scoreTier, skillLevelLabel, skillSpriteStyle } from "./util.js";
 
 // requirements.module 是模组类型编号（见 ZOOT-Plus copilot.schema：1=X, 2=Y, 3=A, 4=D）
 const MODULE_TYPE_NAMES = { 1: "X", 2: "Y", 3: "A", 4: "D", 5: "B" };
@@ -36,9 +35,9 @@ const formatTarget = (target, user) => {
         parts.push(requirementText(`精${elite}`, !user || Number(user.elite) < elite));
     }
     if (level > 0) {
-        // 干员等级比较规则：精一任意等级小于精二 1 级，仅精英等级相同时才比较等级高亮
-        const levelShort = !!user && Number(user.elite) === elite && Number(user.level) < level;
-        parts.push(requirementText(`${level}级`, !user || levelShort));
+        // 精英化阶段优先于等级：用户阶段更高时（如精2 40级对目标精1 60级），等级视为已满足
+        const sameStageBelow = !!user && Number(user.elite) <= elite && Number(user.level) < level;
+        parts.push(requirementText(`${level}级`, !user || sameStageBelow));
     }
     for (let index = 1; index <= 3; index += 1) {
         const required = Number(target[`skill${index}`]) || 0;
@@ -102,75 +101,6 @@ export const operatorSkillIcon = (operatorMeta, skillSprite, charId, skillIndex,
 
 export const rarityStars = (rarity) => "★".repeat(Math.min(6, Math.max(1, Number(rarity) || 1)));
 
-// 材料图标 chip：DOM 结构复刻一图流 item-sprite + .bg-{itemId} 雪碧图模式（sprite_item.css 直链）
-export const itemChipHtml = (itemId, count, itemInfoMap) => {
-    const info = itemInfoMap?.[itemId];
-    const title = info?.itemName || itemId;
-    const rarity = Math.min(5, Math.max(1, Number(info?.rarity) || 1));
-    return `<span class="item-chip item-chip--r${rarity}" title="${escapeHtml(title)}"><span class="item-sprite"><span class="bg-${escapeHtml(itemId)}"></span></span><span class="item-count">${formatCount(count)}</span></span>`;
-};
-
-const rarityOfItem = (itemId, itemInfoMap) => Number(itemInfoMap?.[itemId]?.rarity) || 0;
-
-// 材料条目排序：稀有度降序，同稀有度按 itemId
-export const sortMaterialEntries = (items, itemInfoMap) => Object.entries(items || {})
-    .sort((a, b) => rarityOfItem(b[0], itemInfoMap) - rarityOfItem(a[0], itemInfoMap) || a[0].localeCompare(b[0]));
-
-// 材料 chips 列表；无材料时显示占位文案
-const materialChipsHtml = (items, itemInfoMap) => {
-    const chips = sortMaterialEntries(items, itemInfoMap)
-        .map(([itemId, count]) => itemChipHtml(itemId, count, itemInfoMap)).join("");
-    return chips || "<span class=\"hint\">无缺口</span>";
-};
-
-// 养成方向的分组顺序与展示名（与 cost.js 的 breakdown 键对应）
-const COST_GROUP_LABELS = [
-    ["evolve", "精英/等级"],
-    ["mastery", "专精"],
-    ["module", "模组"],
-];
-
-const materialOperatorCard = (row, itemInfoMap) => {
-    const breakdown = row.costBreakdown;
-    const groups = COST_GROUP_LABELS.map(([key, label]) => {
-        const group = breakdown?.[key];
-        const notes = group?.notes?.length ? group.notes.join(" · ") : "—";
-        // 未计入的方向：材料区显示「未计入」，不显示「无缺口」
-        const listHtml = group?.excluded
-            ? "<span class=\"hint\">未计入</span>"
-            : materialChipsHtml(group?.items, itemInfoMap);
-        return `<div class="cost-group"><span class="cost-group-label">${label}</span><span class="cost-group-notes">${escapeHtml(notes)}</span><div class="materials-list">${listHtml}</div></div>`;
-    }).join("");
-    const totalChips = sortMaterialEntries(breakdown?.total, itemInfoMap)
-        .map(([itemId, count]) => itemChipHtml(itemId, count, itemInfoMap)).join("");
-    return `<div class="material-operator"><div class="material-operator-head"><span class="operator-name">${escapeHtml(row.name)}</span><span class="tier tier--${escapeHtml(scoreTier(row.score))}">${escapeHtml(scoreTier(row.score))}</span></div><div class="cost-groups">${groups}<div class="cost-group cost-group--total"><span class="cost-group-label">总计</span><div class="materials-list">${totalChips}</div></div></div></div>`;
-};
-
-// 单方向多名干员的材料合计
-const directionItems = (rows, key) => aggregateMaterials(rows.map((row) => row.costBreakdown?.[key]?.items));
-
-// 总计卡片：置顶展示，样式与单个干员卡片一致；每个方向左侧复选框控制该方向是否计入底部合计
-const materialTotalCard = (rows, itemInfoMap, directionTotals) => {
-    const groups = COST_GROUP_LABELS.map(([key, label]) => {
-        const checked = directionTotals?.[key] ? " checked" : "";
-        return `<div class="cost-group"><input type="checkbox" class="direction-total-select" data-direction="${key}" aria-label="计入${escapeHtml(label)}"${checked}><span class="cost-group-label">${label}</span><div class="materials-list">${materialChipsHtml(directionItems(rows, key), itemInfoMap)}</div></div>`;
-    }).join("");
-    const selectedKeys = COST_GROUP_LABELS.filter(([key]) => directionTotals?.[key]).map(([key]) => key);
-    const totalHtml = selectedKeys.length
-        ? materialChipsHtml(aggregateMaterials(selectedKeys.map((key) => directionItems(rows, key))), itemInfoMap)
-        : "<span class=\"hint\">未选择养成方向</span>";
-    return `<div class="material-operator material-operator--total"><div class="material-operator-head"><span class="operator-name">养成材料总计（${rows.length}名干员）</span></div>${groups}<div class="cost-group cost-group--total"><span class="cost-group-label">总计</span><div class="materials-list">${totalHtml}</div></div></div>`;
-};
-
-// 养成材料计算明细：rows 为已勾选且可计算的行，总计卡片置顶
-export const renderMaterialSection = (rows, { itemInfoMap, directionTotals }) => {
-    if (rows.length === 0) {
-        return "<div class=\"empty-state\">未勾选任何可计算的干员。在上方清单勾选行首复选框，或使用「全部计入」。</div>";
-    }
-    const cards = rows.map((row) => materialOperatorCard(row, itemInfoMap)).join("");
-    return `${materialTotalCard(rows, itemInfoMap, directionTotals)}<div class="material-operators">${cards}</div>`;
-};
-
 export const statusBadge = (row) => {
     if (!row.user) {
         return "<span class=\"badge badge--missing\">未拥有</span>";
@@ -199,7 +129,7 @@ export const renderBindingButtons = (bindings) => {
     return `<div class="binding-list">${bindings.map((binding) => `<button type="button" class="binding-button" data-uid="${escapeHtml(binding.uid || "")}"><span class="binding-name">${escapeHtml(binding.nickName || "")}</span><span class="binding-meta">${escapeHtml(binding.channelName || "")} · ${escapeHtml(binding.uid || "")}</span></button>`).join("")}</div>`;
 };
 
-export const renderTrainingTable = (rows, { operatorMeta, materialSelection } = {}) => {
+export const renderTrainingTable = (rows, { operatorMeta }) => {
     if (rows.length === 0) {
         return "<div class=\"empty-state\">暂无培养需求，先去获取干员数据或刷新作业。</div>";
     }
@@ -209,11 +139,7 @@ export const renderTrainingTable = (rows, { operatorMeta, materialSelection } = 
         const current = row.user ? formatCurrent(row.user) : "—";
         const target = formatTarget(row.target || {}, row.user);
         const avatar = operatorAvatarHtml(row.name, charId, { size: 34, grayscale: !row.user });
-        const checked = materialSelection?.has(row.name) ? " checked" : "";
-        const checkbox = row.costBreakdown === undefined
-            ? ""
-            : `<input type="checkbox" class="material-select" data-name="${escapeHtml(row.name)}"${checked}>`;
-        return `<tr><td class="select-cell">${checkbox}</td><td class="priority-cell"><span class="tier tier--${escapeHtml(scoreTier(row.score))}">${escapeHtml(scoreTier(row.score))}</span></td><td class="operator-cell"><div class="operator-cell-inner">${avatar}<span class="operator-name">${escapeHtml(row.name)}</span><span class="operator-meta">${escapeHtml(meta?.profession || "")} ${escapeHtml(rarityStars(meta?.rarity))}</span></div></td><td class="progress-cell">${current}</td><td class="progress-cell">${target}</td><td>${formatNumber(row.unsatisfiedCore)}</td><td class="status-cell">${statusBadge(row)}</td></tr>`;
+        return `<tr><td class="priority-cell"><span class="tier tier--${escapeHtml(scoreTier(row.score))}">${escapeHtml(scoreTier(row.score))}</span></td><td class="operator-cell"><div class="operator-cell-inner">${avatar}<span class="operator-name">${escapeHtml(row.name)}</span><span class="operator-meta">${escapeHtml(meta?.profession || "")} ${escapeHtml(rarityStars(meta?.rarity))}</span></div></td><td class="progress-cell">${current}</td><td class="progress-cell">${target}</td><td>${formatNumber(row.unsatisfiedCore)}</td><td>${statusBadge(row)}</td></tr>`;
     }).join("");
-    return `<div class="table-wrap"><table class="data-table"><thead><tr><th>计入</th><th>优先级</th><th>干员</th><th>当前</th><th>目标</th><th>未满足必带作业</th><th>状态</th></tr></thead><tbody>${body}</tbody></table></div>`;
+    return `<div class="table-wrap"><table class="data-table"><thead><tr><th>优先级</th><th>干员</th><th>当前</th><th>目标</th><th>未满足必带作业</th><th>状态</th></tr></thead><tbody>${body}</tbody></table></div>`;
 };

@@ -34,6 +34,14 @@ test("normalizeSlotRequirements infers elite from skill and skill_level", () => 
     expect(normalizeSlotRequirements({ skill: 0, requirements: { skill_level: 10 } })).toMatchObject({ skillLevel: 0 });
 });
 
+test("normalizeSlotRequirements infers elite from level beyond stage caps", () => {
+    // 精0 最高 50 级、精1 最高 80 级（跨稀有度上限），超出视作更高阶段
+    expect(normalizeSlotRequirements({ skill: 1, requirements: { level: 99 } })).toMatchObject({ elite: 2, level: 99 });
+    expect(normalizeSlotRequirements({ skill: 2, requirements: { level: 90 } })).toMatchObject({ elite: 2 });
+    expect(normalizeSlotRequirements({ skill: 1, requirements: { level: 60 } })).toMatchObject({ elite: 1 });
+    expect(normalizeSlotRequirements({ skill: 0, requirements: { level: 50 } })).toMatchObject({ elite: 0 });
+});
+
 test("skillLevelFor reads the matching skill slot", () => {
     expect(skillLevelFor(1, amiya)).toBe(7);
     expect(skillLevelFor(2, amiya)).toBe(10);
@@ -54,6 +62,20 @@ test("evaluateSlot reports missing, gaps, and satisfied", () => {
     expect(evaluateSlot({ name: "阿米娅", skill: 1, requirements: { elite: 2 } }, amiya).satisfied).toBe(true);
     expect(evaluateSlot({ name: "阿米娅", skill: 1, requirements: { elite: 3 } }, amiya).gaps).toContainEqual({ type: "elite", required: 3, current: 2 });
     expect(evaluateSlot({ name: "阿米娅", skill: 1, requirements: { skill_level: 10 } }, amiya).gaps).toContainEqual({ type: "skill_level", skill: 1, required: 10, current: 7 });
+});
+
+test("evaluateSlot compares promotion stage before level", () => {
+    const slot = { name: "阿米娅", skill: 1, requirements: { elite: 1, level: 60, skill_level: 7 } };
+    // 精2 40级已高于精1 60级（精英化阶段优先于等级），不应再报等级缺口
+    const promoted = { ...amiya, elite: 2, level: 40 };
+    expect(evaluateSlot(slot, promoted).gaps).toEqual([]);
+    expect(evaluateSlot(slot, promoted).satisfied).toBe(true);
+    // 同阶段下等级不足仍报缺口
+    expect(evaluateSlot(slot, { ...amiya, elite: 1, level: 40 }).gaps).toContainEqual({ type: "level", required: 60, current: 40 });
+    // 阶段不足时等级缺口保留：晋升后等级清零，仍需练到要求等级
+    const below = evaluateSlot(slot, { ...amiya, elite: 0, level: 55 }).gaps;
+    expect(below).toContainEqual({ type: "elite", required: 1, current: 0 });
+    expect(below).toContainEqual({ type: "level", required: 60, current: 55 });
 });
 
 test("evaluateSlot handles module fallback", () => {
@@ -212,7 +234,27 @@ test("computeTrainingList keeps out-of-range skill slots out of target skills", 
     ];
     const result = computeTrainingList({ assignments, userOperators: [], operatorMeta, options: {} });
     const amiyaRow = result.rows.find((row) => row.name === "阿米娅");
-    expect(amiyaRow.target).toMatchObject({ elite: 3, level: 50, skill1: 0, skill2: 0, skill3: 0 });
+    // (精3,0) 已在字典序上高于 (精0,50)，目标不再带回 50 级
+    expect(amiyaRow.target).toMatchObject({ elite: 3, level: 0, skill1: 0, skill2: 0, skill3: 0 });
+});
+
+test("computeTrainingList treats higher promotion stage as meeting lower-stage target", () => {
+    // 复现线上问题：干员已精2 40级、技能1 专三，目标精1 60级、技能1 7级 -> 应已达标
+    const assignments = [
+        { id: 1, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "阿米娅", skill: 1, requirements: { elite: 1, level: 60, skill_level: 7 } }], groups: [] },
+    ];
+    const result = computeTrainingList({ assignments, userOperators: [{ ...amiya, elite: 2, level: 40, skill1: 10 }], operatorMeta, options: {} });
+    expect(result.summary.readyCount).toBe(1);
+    expect(result.rows[0].totalGap).toBe(0);
+});
+
+test("computeTrainingList merges target by (elite, level) lexicographic order", () => {
+    const mkAssignment = (id, requirements) => ({ id, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "阿米娅", skill: 1, requirements }], groups: [] });
+    // (精1,60)+(精2,40) 的最低满足练度是 (精2,40)；分量各自取 max 会虚增成 (精2,60)
+    const ascending = computeTrainingList({ assignments: [mkAssignment(1, { elite: 1, level: 60 }), mkAssignment(2, { elite: 2, level: 40, skill_level: 8 })], userOperators: [], operatorMeta, options: {} });
+    expect(ascending.rows[0].target).toMatchObject({ elite: 2, level: 40 });
+    const descending = computeTrainingList({ assignments: [mkAssignment(1, { elite: 2, level: 40, skill_level: 8 }), mkAssignment(2, { elite: 1, level: 60 })], userOperators: [], operatorMeta, options: {} });
+    expect(descending.rows[0].target).toMatchObject({ elite: 2, level: 40 });
 });
 
 test("computeTrainingList handles group gains and other required operators", () => {
