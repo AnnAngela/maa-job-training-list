@@ -61,6 +61,14 @@ test("statusBadge renders missing ready and pending", () => {
     expect(statusBadge({ user: {}, totalGap: 1 })).toContain("待培养");
 });
 
+test("renderTrainingTable keeps level met when promotion stage exceeds target", () => {
+    // 用户精2 40级对目标精1 60级：精英化阶段更高，等级视为已满足，不标红
+    const html = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 40, skill1: 10, skill2: 0, skill3: 0, maxModuleLevel: 0 }, target: { elite: 1, level: 60, skill1: 7, skill2: 0, skill3: 0, module: -1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+    expect(html).toContain("60级");
+    expect(html).not.toContain("req-unmet");
+    expect(html).toContain("已达标");
+});
+
 test("renderSummary renders cards", () => {
     const html = renderSummary({ totalAssignments: 5, readyCount: 2, notReadyCount: 3, involvedOperators: 4, missingOperators: 1 });
     expect(html).toContain("作业总数");

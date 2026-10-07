@@ -58,13 +58,32 @@ export const normalizeSlotRequirements = (slot) => {
     } else if (skillLevel > 4) {
         elite = Math.max(elite, 1);
     }
+    const level = Number(req.level) || 0;
+    // 精0 最高 50 级、精1 最高 80 级（跨稀有度上限）：等级超出说明作者意图就是更高阶段，
+    // 避免出现 (精0,99) 这类不可能组合后被「高阶段盖过低等级」的规则误判为已达标
+    if (level > 80) {
+        elite = Math.max(elite, 2);
+    } else if (level > 50) {
+        elite = Math.max(elite, 1);
+    }
     return {
         elite,
-        level: Number(req.level) || 0,
+        level,
         skillLevel: skill >= 1 ? skillLevel : 0,
         module,
         moduleLevel,
     };
+};
+
+// 目标练度按（精英化,等级）字典序取最大：精2 任意等级都高于精1 满级，
+// 若按分量各自取 max 会把 (精1,60)+(精2,40) 虚增成 (精2,60)
+const raiseEliteLevel = (target, req) => {
+    const higherStage = req.elite > target.elite;
+    const sameStageHigher = req.elite === target.elite && req.level > target.level;
+    if (higherStage || sameStageHigher) {
+        target.elite = req.elite;
+        target.level = req.level;
+    }
 };
 
 export const skillLevelFor = (skillIndex, user) => {
@@ -89,7 +108,8 @@ export const evaluateSlot = (slot, user, options = {}) => {
     if (Number(user.elite) < req.elite) {
         gaps.push({ type: "elite", required: req.elite, current: Number(user.elite) });
     }
-    if (Number(user.level) < req.level) {
+    // 精英化阶段优先于等级：精2 任意等级都高于精1 满级，仅在当前阶段不超过要求阶段时才比较等级
+    if (Number(user.elite) <= req.elite && Number(user.level) < req.level) {
         gaps.push({ type: "level", required: req.level, current: Number(user.level) });
     }
     if (req.skillLevel > 0) {
@@ -250,8 +270,7 @@ export const computeTrainingList = ({ assignments, userOperators, operatorMeta, 
                     continue;
                 }
                 const req = normalizeSlotRequirements(slot);
-                target.elite = Math.max(target.elite, req.elite);
-                target.level = Math.max(target.level, req.level);
+                raiseEliteLevel(target, req);
                 if (req.skillLevel > 0 && slot.skill >= 1 && slot.skill <= 3) {
                     target[`skill${slot.skill}`] = Math.max(target[`skill${slot.skill}`], req.skillLevel);
                 }
@@ -266,8 +285,7 @@ export const computeTrainingList = ({ assignments, userOperators, operatorMeta, 
                         continue;
                     }
                     const req = normalizeSlotRequirements(slot);
-                    target.elite = Math.max(target.elite, req.elite);
-                    target.level = Math.max(target.level, req.level);
+                    raiseEliteLevel(target, req);
                     if (req.skillLevel > 0 && slot.skill >= 1 && slot.skill <= 3) {
                         target[`skill${slot.skill}`] = Math.max(target[`skill${slot.skill}`], req.skillLevel);
                     }

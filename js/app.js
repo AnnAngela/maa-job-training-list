@@ -393,7 +393,8 @@ const createApp = (deps, elements) => {
             row.coreGain,
             row.groupGain,
             row.unsatisfiedCore,
-            row.user ? "待培养" : "未拥有",
+            // 状态与页面徽章保持一致：已拥有且 totalGap 为 0 是「已达标」
+            !row.user ? "未拥有" : row.totalGap === 0 ? "已达标" : "待培养",
         ]);
         const csv = [header, ...body].map((row) => row.map(csvEscape).join(",")).join("\n");
         downloadFile("maa-training-list.csv", csv, "text/csv");

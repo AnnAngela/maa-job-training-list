@@ -35,7 +35,9 @@ const formatTarget = (target, user) => {
         parts.push(requirementText(`精${elite}`, !user || Number(user.elite) < elite));
     }
     if (level > 0) {
-        parts.push(requirementText(`${level}级`, !user || Number(user.level) < level));
+        // 精英化阶段优先于等级：用户阶段更高时（如精2 40级对目标精1 60级），等级视为已满足
+        const sameStageBelow = !!user && Number(user.elite) <= elite && Number(user.level) < level;
+        parts.push(requirementText(`${level}级`, !user || sameStageBelow));
     }
     for (let index = 1; index <= 3; index += 1) {
         const required = Number(target[`skill${index}`]) || 0;
