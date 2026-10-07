@@ -1,5 +1,7 @@
 node_modules/
 coverage/
+# vitest 5 起测试产物（html/json/junit 报告、附件等）统一写入根目录 .vitest/
+.vitest/
 site/
 *.log
 .DS_Store
