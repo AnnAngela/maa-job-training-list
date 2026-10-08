@@ -12,7 +12,9 @@ export const SKLAND_BASE = "https://zonai.skland.com";
 export const BINDING_PATH = "/api/v1/game/player/binding";
 export const PLAYER_INFO_PATH = "/api/v1/game/player/info";
 
-export const AVATAR_BASE = "https://cos.yituliu.cn/image2/avatar";
+// 一图流头像 CDN（cos.yituliu.cn）已于 2025-11-01 停更，特限异格与后续新干员全部 404；
+// 改用 PRTS 作业站静态资源，其 /assets/operator-avatars/webp32/ 覆盖全部在用干员（阿米娅近卫/医疗形态除外，页面不渲染）
+export const AVATAR_BASE = "https://prts.plus/assets/operator-avatars/webp32";
 
 export const SKLAND_LINK = "https://www.skland.com/index";
 export const SKLAND_COMMAND = 'copy(localStorage.getItem("SK_OAUTH_CRED_KEY")+","+localStorage.getItem("SK_TOKEN_CACHE_KEY"))';

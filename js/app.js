@@ -86,6 +86,13 @@ const collectElements = (doc) => ({
     uploadFileButton: requireElement(doc, "upload-file-button"),
     exportJsonButton: requireElement(doc, "export-json-button"),
     exportCsvButton: requireElement(doc, "export-csv-button"),
+    exportPlanButton: requireElement(doc, "export-plan-button"),
+    planCopyDialog: requireElement(doc, "plan-copy-dialog"),
+    planCopyTextarea: requireElement(doc, "plan-copy-textarea"),
+    planCopyCloseButton: requireElement(doc, "plan-copy-close-button"),
+    planDoneDialog: requireElement(doc, "plan-done-dialog"),
+    planDoneMessage: requireElement(doc, "plan-done-message"),
+    planDoneCloseButton: requireElement(doc, "plan-done-close-button"),
     sampleButton: requireElement(doc, "sample-button"),
     filterInput: requireElement(doc, "filter-input"),
     onlyPendingInput: requireElement(doc, "only-pending-input"),
@@ -193,6 +200,48 @@ export const downloadFile = (filename, content, mime) => {
     link.download = filename;
     link.click();
     URL.revokeObjectURL(url);
+};
+
+// MAA「干员培养」未支持阿米娅三形态的培养流程（其选择器已屏蔽），导出计划时跳过并计数
+const MAA_UNSUPPORTED_CHAR_IDS = new Set(["char_002_amiya", "char_1001_amiya2", "char_1037_amiya3"]);
+
+/**
+ * 把培养清单行转成 MAA「干员培养-从剪贴板读取」的导入格式（行需来自 filterRows，自带 target）。
+ * 内部技能值 8/9/10 表示专一/二/三：公共技能等级封顶 7（专精前置），skill_mastery = 值 - 7；
+ * level 是 MAA 当前不解析的预留字段，恒带上。未拥有干员 MAA 无法培养，与阿米娅形态一并跳过。
+ */
+export const buildMaaTrainingPlan = (rows, operatorMeta) => {
+    const plans = [];
+    let skippedUnowned = 0;
+    let skippedUnsupported = 0;
+    for (const row of rows || []) {
+        const charId = operatorMeta?.nameToCharId?.[row.name] || row.user?.charId || "";
+        if (MAA_UNSUPPORTED_CHAR_IDS.has(charId)) {
+            skippedUnsupported += 1;
+            continue;
+        }
+        if (!row.user) {
+            skippedUnowned += 1;
+            continue;
+        }
+        // role 为职业枚举首字母大写（WARRIOR→Warrior），与 MAA OperatorRole 一一对应；
+        // 查不到时省略该键，MAA 解析端会按干员名反查补齐
+        const profession = operatorMeta?.operators?.[charId]?.profession || row.user.profession || "";
+        const target = row.target;
+        const skills = [1, 2, 3].map((index) => Number(target[`skill${index}`]) || 0);
+        // MaaCore 的 check_json 只接受 skill_level 2-7，且一条非法值会使整份任务创建失败；
+        // 技能 1 级是游戏基线（无培养意义），此时按未设置导出 0（MAA 序列化端会省略该字段）
+        const commonLevel = Math.min(7, Math.max(...skills));
+        plans.push({
+            ...profession ? { role: profession.charAt(0) + profession.slice(1).toLowerCase() } : {},
+            name: row.name,
+            elite: Number(target.elite) || 0,
+            level: Number(target.level) || 0,
+            skill_level: commonLevel > 1 ? commonLevel : 0,
+            skill_mastery: skills.map((value) => Math.max(0, value - 7)),
+        });
+    }
+    return { plans, skippedUnowned, skippedUnsupported };
 };
 
 const createApp = (deps, elements) => {
@@ -551,6 +600,42 @@ const createApp = (deps, elements) => {
         downloadFile("maa-training-list.csv", csv, "text/csv");
     };
 
+    // 导出当前筛选视图为 MAA 培养计划并写剪贴板；被拒/不可用时弹只读 textarea 全选兜底
+    const handleExportPlan = async () => {
+        clearError();
+        if (!state.result) {
+            setError("暂无结果可导出");
+            return;
+        }
+        const rows = filterRows();
+        const { plans, skippedUnowned, skippedUnsupported } = buildMaaTrainingPlan(rows, state.operatorMeta);
+        if (plans.length === 0) {
+            setError(rows.length === 0
+                ? "当前筛选下没有可导出的培养计划"
+                : "当前筛选下的干员均无法由 MAA 培养（未拥有或阿米娅形态）");
+            return;
+        }
+        const text = JSON.stringify(plans);
+        const skippedParts = [
+            skippedUnowned > 0 ? `${skippedUnowned} 名未拥有` : "",
+            skippedUnsupported > 0 ? `${skippedUnsupported} 名阿米娅形态` : "",
+        ].filter((part) => !!part);
+        const skippedNote = skippedParts.length ? `（已跳过 ${skippedParts.join("、")}）` : "";
+        try {
+            await navigator.clipboard.writeText(text);
+            // 结果提示较长（数量、跳过说明、MAA 操作引导），状态栏放不下且易被忽略，用对话框呈现
+            elements.planDoneMessage.textContent = `已复制 ${plans.length} 名干员的培养计划，请在 MAA「干员培养」中点击「从剪贴板读取」${skippedNote}`;
+            openDialog(elements.planDoneDialog);
+        } catch {
+            // 剪贴板被拒或 API 不可用（如 http 非安全上下文）：弹窗兜底，textarea 打开即全选
+            elements.planCopyTextarea.value = text;
+            openDialog(elements.planCopyDialog);
+            elements.planCopyTextarea.focus();
+            elements.planCopyTextarea.select();
+            setStatus(`复制失败，请在弹窗中手动复制${skippedNote}`);
+        }
+    };
+
     const bindEvents = () => {
         elements.refreshButton.addEventListener("click", () => refreshAssignments(true));
         elements.sklandForm.addEventListener("submit", handleSklandCredential);
@@ -586,6 +671,13 @@ const createApp = (deps, elements) => {
         });
         elements.exportJsonButton.addEventListener("click", handleExportJson);
         elements.exportCsvButton.addEventListener("click", handleExportCsv);
+        elements.exportPlanButton.addEventListener("click", handleExportPlan);
+        elements.planCopyCloseButton.addEventListener("click", () => {
+            closeDialog(elements.planCopyDialog);
+        });
+        elements.planDoneCloseButton.addEventListener("click", () => {
+            closeDialog(elements.planDoneDialog);
+        });
         elements.copyCommandButton.addEventListener("click", handleCopyCommand);
         elements.sampleButton.addEventListener("click", loadSampleData);
         // 清单行首复选框：切换干员是否计入材料计算
@@ -713,6 +805,7 @@ const createApp = (deps, elements) => {
         loadSampleData,
         handleExportJson,
         handleExportCsv,
+        handleExportPlan,
         handleCopyCommand,
     };
 };

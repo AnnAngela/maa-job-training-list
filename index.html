@@ -55,6 +55,7 @@
       <div class="export-row">
         <button id="export-json-button" type="button" class="button button--ghost">导出 JSON</button>
         <button id="export-csv-button" type="button" class="button button--ghost">导出 CSV</button>
+        <button id="export-plan-button" type="button" class="button button--ghost">导出培养计划</button>
       </div>
     </section>
 
@@ -124,6 +125,25 @@
         <li><strong>【标准练度】</strong>：不再考虑作业设置的练度要求，而是：①所有使用到的干员均要求满级；②所有使用到的模组均要求三级；③所有使用到的技能均要求专三。部分作业只在作业简介处说明了练度要求，而未在干员信息处设置练度要求，这可能导致练度需求错配，开启本功能可避免该情况发生。</li>
       </ul>
       <button id="intro-close-button" type="button" class="button">我知道了</button>
+    </div>
+  </dialog>
+
+  <!-- 剪贴板被浏览器拒绝（或 http 非安全上下文不可用）时的手动复制兜底，内容打开即全选 -->
+  <dialog id="plan-copy-dialog" class="intro-dialog" aria-labelledby="plan-copy-dialog-title">
+    <div class="intro-dialog__card">
+      <h2 id="plan-copy-dialog-title">请手动复制培养计划</h2>
+      <p>浏览器剪贴板不可用。下方内容已全选，按 Ctrl+C 复制后，到 MAA「干员培养」中点击「从剪贴板读取」。</p>
+      <textarea id="plan-copy-textarea" rows="10" readonly></textarea>
+      <button id="plan-copy-close-button" type="button" class="button">我知道了</button>
+    </div>
+  </dialog>
+
+  <!-- 复制成功的结果提示：含数量、跳过说明与 MAA 操作引导，头部状态栏窄且易被忽略，改用对话框呈现 -->
+  <dialog id="plan-done-dialog" class="intro-dialog" aria-labelledby="plan-done-dialog-title">
+    <div class="intro-dialog__card">
+      <h2 id="plan-done-dialog-title">培养计划已复制</h2>
+      <p id="plan-done-message"></p>
+      <button id="plan-done-close-button" type="button" class="button">我知道了</button>
     </div>
   </dialog>
 

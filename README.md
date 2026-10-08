@@ -109,6 +109,12 @@ ESLint 规则迁移自 [MoegirlPediaInterfaceCodes](https://github.com/MoegirlPe
 
 代码风格为 4 空格缩进、双引号、分号、尾随逗号（沿用共享配置），提交前请确保 `npm run lint` 无告警（CI 的 `npm test` 会守门）。
 
+### 持续集成
+
+仓库包含 .github/workflows/ci.yml，每次 push 与 pull_request 都会自动运行 `npm test`（ESLint + Vitest 全量测试 + 100% 覆盖率守门），也可手动触发。
+
+各 workflow 引用的 action 均钉在 commit SHA 上（行尾附 `# vX.Y.Z` 版本注释防供应链劫持），dependabot 会在新版本发布时自动更新 SHA 与注释。
+
 ## 数据自动更新
 
 仓库包含 .github/workflows/update-data.yml，每天北京时间 05:00 自动重新生成 data/ 下的数据文件，无需人工干预：
@@ -127,7 +133,7 @@ gh workflow run update-data.yml
 
 - 作业数据：PRTS 作业站 API（https://prts.maa.plus）。
 - 干员数据：森空岛（https://zonai.skland.com），仅在浏览器内直连。
-- 干员头像与技能图标：一图流 CDN（https://cos.yituliu.cn）。
+- 干员头像：PRTS 作业站静态资源（https://prts.plus）；技能图标：一图流 CDN（https://cos.yituliu.cn）。
 - 森空岛 cred/token 会保存在浏览器 localStorage（仅本机），下次打开页面自动恢复并获取账号列表；不会上传到本站或其他第三方。
 - 提示功能的访问时间戳保存在 localStorage（键 `maa-training-list.last-visit`），同样不会上传。
 
