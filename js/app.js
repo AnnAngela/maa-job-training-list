@@ -192,12 +192,15 @@ export const buildMaaTrainingPlan = (rows, operatorMeta) => {
         const profession = operatorMeta?.operators?.[charId]?.profession || row.user.profession || "";
         const target = row.target;
         const skills = [1, 2, 3].map((index) => Number(target[`skill${index}`]) || 0);
+        // MaaCore 的 check_json 只接受 skill_level 2-7，且一条非法值会使整份任务创建失败；
+        // 技能 1 级是游戏基线（无培养意义），此时按未设置导出 0（MAA 序列化端会省略该字段）
+        const commonLevel = Math.min(7, Math.max(...skills));
         plans.push({
             ...profession ? { role: profession.charAt(0) + profession.slice(1).toLowerCase() } : {},
             name: row.name,
             elite: Number(target.elite) || 0,
             level: Number(target.level) || 0,
-            skill_level: Math.min(7, Math.max(...skills)),
+            skill_level: commonLevel > 1 ? commonLevel : 0,
             skill_mastery: skills.map((value) => Math.max(0, value - 7)),
         });
     }

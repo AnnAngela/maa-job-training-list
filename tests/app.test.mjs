@@ -598,6 +598,24 @@ test("buildMaaTrainingPlan skips unowned operators and amiya forms", () => {
     expect(skippedUnsupported).toBe(2);
 });
 
+test("buildMaaTrainingPlan clamps baseline skill levels to unset", () => {
+    // 技能 1 级是游戏基线（无培养意义）；MaaCore 校验 skill_level 只接受 2-7，
+    // 输出 1 会让整份计划在 set_params 处被拒，故按未设置（0）导出
+    const baseline = [planRow("陈", {
+        user: { charId: "char_chen", name: "陈", profession: "WARRIOR" },
+        target: { elite: 1, level: 55, skill1: 1, skill2: 0, skill3: 0 },
+    })];
+    expect(buildMaaTrainingPlan(baseline, operatorMeta).plans[0].skill_level).toBe(0);
+    // 其余技能要求超过基线时取最大值，基线要求不影响结果
+    const mixed = [planRow("陈", {
+        user: { charId: "char_chen", name: "陈", profession: "WARRIOR" },
+        target: { elite: 2, level: 60, skill1: 1, skill2: 0, skill3: 10 },
+    })];
+    const mixedPlan = buildMaaTrainingPlan(mixed, operatorMeta).plans[0];
+    expect(mixedPlan.skill_level).toBe(7);
+    expect(mixedPlan.skill_mastery).toEqual([0, 0, 3]);
+});
+
 test("buildMaaTrainingPlan keeps rows the user already satisfies", () => {
     const rows = [planRow("陈", {
         user: { charId: "char_chen", name: "陈", profession: "WARRIOR", elite: 2, level: 90, skill1: 10, skill2: 10, skill3: 10 },
