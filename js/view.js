@@ -215,9 +215,10 @@ export const renderTrainingTable = (rows, { operatorMeta, materialSelection } = 
         const checked = row.costBreakdown && materialSelection?.has(row.name) ? " checked" : "";
         let checkbox = "";
         if (row.costBreakdown !== undefined) {
-            // 无缺口行（costBreakdown 为 null）勾选后也会被过滤，直接禁用
+            // 无缺口行（costBreakdown 为 null）勾选后也会被过滤，直接禁用；
+            // aria-label 带干员名，避免屏幕阅读器只能读出泛化的「计入」
             const disabled = row.costBreakdown === null ? " disabled" : "";
-            checkbox = `<input type="checkbox" class="material-select" data-name="${escapeHtml(row.name)}"${checked}${disabled}>`;
+            checkbox = `<input type="checkbox" class="material-select" data-name="${escapeHtml(row.name)}" aria-label="计入 ${escapeHtml(row.name)} 的养成材料"${checked}${disabled}>`;
         }
         return `<tr><td class="select-cell">${checkbox}</td><td class="priority-cell"><span class="tier tier--${escapeHtml(scoreTier(row.score))}">${escapeHtml(scoreTier(row.score))}</span></td><td class="operator-cell"><div class="operator-cell-inner">${avatar}<span class="operator-name">${escapeHtml(row.name)}</span><span class="operator-meta">${escapeHtml(meta?.profession || "")} ${escapeHtml(rarityStars(meta?.rarity))}</span></div></td><td class="progress-cell">${current}</td><td class="progress-cell">${target}</td><td>${formatNumber(row.unsatisfiedCore)}</td><td class="status-cell">${statusBadge(row)}</td></tr>`;
     }).join("");

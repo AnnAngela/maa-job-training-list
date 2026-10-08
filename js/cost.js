@@ -127,8 +127,10 @@ const addSkillLevelCost = (items, { costEntry, currentSkill, targetSkill }) => {
 };
 
 // 专精材料（skillLevelUpCost[0..2] 对应 8/9/10 级）
-const addMasteryCost = (items, { skillCost, targetSkill }) => {
-    for (let level = 8; level <= targetSkill; level += 1) {
+// 从当前等级的下一段起算，避免已专精的阶段被重复计入
+const addMasteryCost = (items, { skillCost, currentSkill, targetSkill }) => {
+    const from = Math.max(8, currentSkill + 1);
+    for (let level = from; level <= targetSkill; level += 1) {
         addCostList(items, skillCost?.[level - 8]);
     }
 };
@@ -224,16 +226,25 @@ export const computeCostBreakdown = ({ charId, costEntry, rarity, current, targe
         const value = Number(target?.[`skill${index}`]) || 0;
         return value > 0 ? value : currentTriplet[index - 1];
     });
+    // allSkill 是三个技能共享的基础等级（1-7）成本：基础等级以各技能的最高基础为准
+    // （森空岛 mainSkillLvl 单一基础等级；任一技能已 8 级以上即代表基础已满 7），
+    // 从当前基础升到三个目标中的最高基础，仅累计一次
+    const baseOf = (skillLevel) => Math.min(Math.max(skillLevel, 0), 7);
+    const currentBase = Math.max(...currentTriplet.map(baseOf));
+    const targetBase = Math.max(...targetTriplet.map(baseOf));
+    if (targetBase > currentBase) {
+        addSkillLevelCost(mastery.items, { costEntry, currentSkill: currentBase, targetSkill: targetBase });
+    }
+    // 专精成本逐技能累计，从各技能当前等级的下一段起算
     for (let skillIndex = 1; skillIndex <= 3; skillIndex += 1) {
         const currentSkill = currentTriplet[skillIndex - 1];
         const targetSkill = targetTriplet[skillIndex - 1];
-        if (targetSkill <= currentSkill) {
+        if (targetSkill <= Math.max(currentSkill, 7)) {
             continue;
         }
-        addSkillLevelCost(mastery.items, { costEntry, currentSkill, targetSkill });
         const skillCost = costEntry.skills[skillIndex - 1]?.skillLevelUpCost;
         if (skillCost?.length) {
-            addMasteryCost(mastery.items, { skillCost, targetSkill });
+            addMasteryCost(mastery.items, { skillCost, currentSkill, targetSkill });
         }
     }
     if (targetTriplet.some((value, index) => value > currentTriplet[index])) {

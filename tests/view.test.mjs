@@ -283,7 +283,7 @@ test("已达标行复选框禁用；缺成本数据行不渲染复选框", () =>
         { name: "凯尔希", user: null, target: { elite: 2 }, costBreakdown: undefined, score: 0, totalGap: 0, unsatisfiedCore: 0 },
     ];
     const html = renderTrainingTable(rows, { operatorMeta, skillSprite, materialSelection: new Set(["阿米娅"]) });
-    // 无缺口行复选框存在但禁用，且不因默认勾选集合而选中
-    expect(html).toContain('class="material-select" data-name="阿米娅" disabled');
+    // 无缺口行复选框存在但禁用，带干员名的可访问名称，且不因默认勾选集合而选中
+    expect(html).toContain('data-name="阿米娅" aria-label="计入 阿米娅 的养成材料" disabled');
     expect(html).not.toContain('data-name="凯尔希"');
 });

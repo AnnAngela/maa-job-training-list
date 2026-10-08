@@ -272,6 +272,8 @@ export const computeTrainingList = ({ assignments, userOperators, operatorMeta, 
         assignment,
         result: evaluateAssignment(assignment, userLookup, mergedOptions),
     }));
+    // 模拟满练干员：补齐全部模组类型的 3 级模组，
+    // 否则要求具体类型的作业在模拟升级后仍被判定不满足，coreGain/groupGain 偏低
     const perfectUser = {
         elite: 2,
         level: 99,
@@ -279,6 +281,8 @@ export const computeTrainingList = ({ assignments, userOperators, operatorMeta, 
         skill2: 10,
         skill3: 10,
         maxModuleLevel: 3,
+        modules: Object.values(MODULE_TYPE_NAMES)
+            .map((typeName) => ({ name: typeName, level: 3, locked: false })),
     };
 
     const rows = [];

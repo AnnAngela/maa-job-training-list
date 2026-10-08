@@ -246,6 +246,20 @@ test("computeTrainingList merges target by (elite, level) lexicographic order", 
     expect(descending.rows[0].target).toMatchObject({ elite: 2, level: 40 });
 });
 
+test("computeTrainingList 满练模拟含具体模组类型：模组作业计入收益", () => {
+    // 作业要求模组 X（module:1）；干员已精二但无模组
+    const assignments = [
+        { id: 1, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "阿米娅", skill: 1, requirements: { module: 1 } }], groups: [] },
+    ];
+    const operators = [{ ...amiya, maxModuleLevel: 0, modules: [] }];
+    const result = computeTrainingList({ assignments, userOperators: operators, operatorMeta, options: { requireModule: true } });
+    const row = result.rows[0];
+    // 模拟满练补齐 X 型 3 级模组后作业可抄：coreGain 为 1，优先级含模组收益
+    expect(row.coreGain).toBe(1);
+    // 1000(coreGain) + 50(unsatisfiedCore) + 10(recentCoreDemand)
+    expect(row.score).toBe(1060);
+});
+
 test("computeTrainingList handles group gains and other required operators", () => {
     const assignments = [
         {

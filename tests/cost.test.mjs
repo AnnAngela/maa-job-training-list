@@ -126,6 +126,29 @@ test("技能2从7专精到10：三段专精成本合并", () => {
     });
 });
 
+test("共享基础等级成本：多技能同目标时 allSkill 仅累计一次", () => {
+    // 技能1、技能2 都从 1 升到 7：allSkill 是共享成本，不随技能数翻倍
+    const { total } = compute(
+        { elite: 2, level: 60, skill1: 1, skill2: 1, skill3: 1 },
+        { elite: 2, level: 0, skill1: 7, skill2: 7 },
+    );
+    // 升到 7 级的 allSkill 第6项：3303×6 仅一次（非 12）
+    expect(total["3303"]).toBe(6);
+    expect(total["30023"]).toBe(3);
+    expect(total["30063"]).toBe(2);
+});
+
+test("专精成本从当前等级下一段起算：专二升专三不计前两段", () => {
+    // 技能2 已专二（9），目标专三（10）：仅 M3
+    const { total } = compute(
+        { elite: 2, level: 60, skill1: 1, skill2: 9, skill3: 1 },
+        { elite: 2, level: 0, skill2: 10 },
+    );
+    // 仅 M3 的 3303×10（非三段合计 21）
+    expect(total["3303"]).toBe(10);
+    expect(total).not.toHaveProperty("30084");
+});
+
 test("技能从6直接专三：自动补齐升7与专精材料", () => {
     const { total } = compute({ elite: 2, level: 60, skill3: 6 }, { elite: 2, level: 0, skill3: 10 });
     // 升7：3303×6+30023×3+30063×2；专精：3303×(5+6+10)+30094×3+30073×4+30014×3+30094×6+30125×4+30034×4
