@@ -113,6 +113,8 @@ ESLint 规则迁移自 [MoegirlPediaInterfaceCodes](https://github.com/MoegirlPe
 
 仓库包含 .github/workflows/ci.yml，每次 push 与 pull_request 都会自动运行 `npm test`（ESLint + Vitest 全量测试 + 100% 覆盖率守门），也可手动触发。
 
+各 workflow 引用的 action 均钉在 commit SHA 上（行尾附 `# vX.Y.Z` 版本注释防供应链劫持），dependabot 会在新版本发布时自动更新 SHA 与注释。
+
 ## 数据自动更新
 
 仓库包含 .github/workflows/update-data.yml，每天北京时间 05:00 自动重新生成 data/ 下的数据文件，无需人工干预：
