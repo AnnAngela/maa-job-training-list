@@ -14,6 +14,7 @@ vi.mock("../js/skland.js", async (importOriginal) => ({
 }));
 
 import {
+    buildMaaTrainingPlan,
     csvEscape,
     downloadFile,
     initApp,
@@ -28,8 +29,12 @@ import realOperatorMeta from "../data/operator_meta.json";
 import playerInfo from "./fixtures/skland-player-info.json";
 
 const operatorMeta = {
-    nameToCharId: { 阿米娅: "char_002_amiya" },
-    operators: { char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] } },
+    nameToCharId: { 阿米娅: "char_002_amiya", 陈: "char_chen", 凯尔希: "char_003_kalts" },
+    operators: {
+        char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] },
+        char_chen: { name: "陈", rarity: 6, profession: "WARRIOR", skills: [] },
+        char_003_kalts: { name: "凯尔希", rarity: 6, profession: "MEDIC", skills: [] },
+    },
 };
 const skillSprite = { spriteUrl: "https://example.com/s.jpg", size: 128, entries: {} };
 
@@ -58,6 +63,7 @@ const buildDom = () => {
         "<textarea id=\"import-input\"></textarea>",
         "<button id=\"export-json-button\"></button>",
         "<button id=\"export-csv-button\"></button>",
+        "<button id=\"export-plan-button\"></button>",
         "<button id=\"sample-button\"></button>",
         "<input id=\"filter-input\" type=\"search\">",
         "<input id=\"only-pending-input\" type=\"checkbox\">",
@@ -67,6 +73,7 @@ const buildDom = () => {
         "<input id=\"standard-toggle\" type=\"checkbox\">",
         "<dialog id=\"intro-dialog\"></dialog>",
         "<button id=\"intro-close-button\"></button>",
+        "<dialog id=\"plan-copy-dialog\"><textarea id=\"plan-copy-textarea\" readonly></textarea><button id=\"plan-copy-close-button\"></button></dialog>",
     ].join("");
 };
 
@@ -493,6 +500,294 @@ test("export handlers download when result exists", async () => {
     expect(csv).toContain("已达标");
 });
 
+// ── 导出培养计划（MAA「干员培养」剪贴板格式）──
+
+const planRow = (name, { user, target, unsatisfiedCore = 0, score = 0, totalGap = 0 } = {}) => ({
+    name,
+    user,
+    target,
+    unsatisfiedCore,
+    score,
+    totalGap,
+    coreGain: 0,
+    groupGain: 0,
+});
+
+const planResult = (rows) => ({
+    summary: { totalAssignments: 0, readyCount: 0, notReadyCount: 0, involvedOperators: rows.length, ownedOperators: 0, missingOperators: 0 },
+    assignmentResults: [],
+    rows,
+});
+
+const stubClipboard = (value) => {
+    const original = navigator.clipboard;
+    Reflect.defineProperty(navigator, "clipboard", { configurable: true, value });
+    return () => Reflect.defineProperty(navigator, "clipboard", { configurable: true, value: original });
+};
+
+const chenTarget = { elite: 2, level: 60, skill1: 7, skill2: 0, skill3: 10 };
+
+test("buildMaaTrainingPlan maps target requirements to MAA plan fields", () => {
+    const rows = [planRow("陈", {
+        user: { charId: "char_chen", name: "陈", profession: "WARRIOR" },
+        target: chenTarget,
+    })];
+    const { plans, skippedUnowned, skippedUnsupported } = buildMaaTrainingPlan(rows, operatorMeta);
+    expect(plans).toHaveLength(1);
+    // 键序即剪贴板 JSON 的字段顺序，与 MAA 文档示例保持一致
+    expect(Object.keys(plans[0])).toEqual(["role", "name", "elite", "level", "skill_level", "skill_mastery"]);
+    expect(plans[0]).toEqual({ role: "Warrior", name: "陈", elite: 2, level: 60, skill_level: 7, skill_mastery: [0, 0, 3] });
+    expect(skippedUnowned).toBe(0);
+    expect(skippedUnsupported).toBe(0);
+});
+
+test("buildMaaTrainingPlan converts mastery ranks and keeps the reserved level field", () => {
+    const rows = [planRow("陈", {
+        user: { charId: "char_chen", name: "陈", profession: "WARRIOR" },
+        target: { elite: 2, level: 0, skill1: 8, skill2: 9 },
+    })];
+    const { plans } = buildMaaTrainingPlan(rows, operatorMeta);
+    // 内部技能值 8/9/10 表示专一/二/三：公共等级封顶 7，专精 = 值 - 7；level 是 MAA 预留字段，恒带上
+    expect(plans[0].level).toBe(0);
+    expect(plans[0].skill_level).toBe(7);
+    expect(plans[0].skill_mastery).toEqual([1, 2, 0]);
+});
+
+test("buildMaaTrainingPlan maps every profession to its MAA role", () => {
+    const professions = {
+        WARRIOR: "Warrior",
+        PIONEER: "Pioneer",
+        TANK: "Tank",
+        MEDIC: "Medic",
+        SUPPORT: "Support",
+        CASTER: "Caster",
+        SNIPER: "Sniper",
+        SPECIAL: "Special",
+    };
+    const rows = Object.entries(professions).map(([profession], index) => planRow(`干员${index}`, {
+        user: { charId: `char_${profession}`, profession },
+        target: { elite: 2, level: 60, skill1: 7, skill2: 0, skill3: 0 },
+    }));
+    const { plans } = buildMaaTrainingPlan(rows, { nameToCharId: {}, operators: {} });
+    expect(plans.map((plan) => plan.role)).toEqual(Object.values(professions));
+});
+
+test("buildMaaTrainingPlan falls back to the user profile and omits role when unknown", () => {
+    const rows = [
+        // 无精英化要求的目标：elite 回退为 0（level/skill 语义相同）
+        planRow("神秘干员", { user: { name: "神秘干员", charId: "char_unknown", profession: "MEDIC" }, target: { level: 55, skill1: 4, skill2: 0, skill3: 0 } }),
+        planRow("无职干员", { user: { name: "无职干员" }, target: { elite: 1, level: 55, skill1: 4, skill2: 0, skill3: 0 } }),
+    ];
+    const { plans } = buildMaaTrainingPlan(rows, undefined);
+    expect(plans[0].role).toBe("Medic");
+    expect(plans[0].elite).toBe(0);
+    expect(Object.keys(plans[1])).toEqual(["name", "elite", "level", "skill_level", "skill_mastery"]);
+});
+
+test("buildMaaTrainingPlan skips unowned operators and amiya forms", () => {
+    const target = { elite: 2, level: 60, skill1: 7, skill2: 0, skill3: 0 };
+    const rows = [
+        planRow("银灰", { user: null, target }),
+        planRow("阿米娅", { user: { charId: "char_002_amiya", profession: "CASTER" }, target }),
+        planRow("阿米娅（近卫）", { user: { charId: "char_1001_amiya2", profession: "WARRIOR" }, target }),
+        planRow("凯尔希", { user: { charId: "char_003_kalts", profession: "MEDIC" }, target }),
+    ];
+    const { plans, skippedUnowned, skippedUnsupported } = buildMaaTrainingPlan(rows, operatorMeta);
+    expect(plans.map((plan) => plan.name)).toEqual(["凯尔希"]);
+    expect(skippedUnowned).toBe(1);
+    expect(skippedUnsupported).toBe(2);
+});
+
+test("buildMaaTrainingPlan clamps baseline skill levels to unset", () => {
+    // 技能 1 级是游戏基线（无培养意义）；MaaCore 校验 skill_level 只接受 2-7，
+    // 输出 1 会让整份计划在 set_params 处被拒，故按未设置（0）导出
+    const baseline = [planRow("陈", {
+        user: { charId: "char_chen", name: "陈", profession: "WARRIOR" },
+        target: { elite: 1, level: 55, skill1: 1, skill2: 0, skill3: 0 },
+    })];
+    expect(buildMaaTrainingPlan(baseline, operatorMeta).plans[0].skill_level).toBe(0);
+    // 其余技能要求超过基线时取最大值，基线要求不影响结果
+    const mixed = [planRow("陈", {
+        user: { charId: "char_chen", name: "陈", profession: "WARRIOR" },
+        target: { elite: 2, level: 60, skill1: 1, skill2: 0, skill3: 10 },
+    })];
+    const mixedPlan = buildMaaTrainingPlan(mixed, operatorMeta).plans[0];
+    expect(mixedPlan.skill_level).toBe(7);
+    expect(mixedPlan.skill_mastery).toEqual([0, 0, 3]);
+});
+
+test("buildMaaTrainingPlan keeps rows the user already satisfies", () => {
+    const rows = [planRow("陈", {
+        user: { charId: "char_chen", name: "陈", profession: "WARRIOR", elite: 2, level: 90, skill1: 10, skill2: 10, skill3: 10 },
+        target: { elite: 2, level: 60, skill1: 7, skill2: 0, skill3: 0 },
+    })];
+    expect(buildMaaTrainingPlan(rows, operatorMeta).plans).toHaveLength(1);
+});
+
+test("buildMaaTrainingPlan returns empty plans for missing rows", () => {
+    expect(buildMaaTrainingPlan(undefined, operatorMeta)).toEqual({ plans: [], skippedUnowned: 0, skippedUnsupported: 0 });
+});
+
+test("export plan shows error when result is empty", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    await app.handleExportPlan();
+    expect(app.state.error).toContain("暂无结果可导出");
+});
+
+test("export plan copies owned rows of the current view to the clipboard", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    app.state.result = planResult([
+        planRow("陈", { user: { charId: "char_chen", profession: "WARRIOR" }, target: chenTarget, unsatisfiedCore: 1, score: 100, totalGap: 10 }),
+        planRow("阿米娅", { user: { charId: "char_002_amiya", profession: "CASTER" }, target: chenTarget, score: 50, totalGap: 20 }),
+        planRow("凯尔希", { user: null, target: chenTarget, score: 30, totalGap: 1000 }),
+    ]);
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    const restore = stubClipboard({ writeText });
+    await app.handleExportPlan();
+    restore();
+    expect(JSON.parse(writeText.mock.calls[0][0])).toEqual([
+        { role: "Warrior", name: "陈", elite: 2, level: 60, skill_level: 7, skill_mastery: [0, 0, 3] },
+    ]);
+    expect(app.state.status).toContain("已复制 1 名干员的培养计划");
+    // 阿米娅形态 MAA 不支持、凯尔希未拥有，都要在提示里交代
+    expect(app.state.status).toContain("已跳过 1 名未拥有、1 名阿米娅形态");
+});
+
+test("export plan follows the search filter", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    app.state.result = planResult([
+        planRow("陈", { user: { charId: "char_chen", profession: "WARRIOR" }, target: chenTarget, totalGap: 10 }),
+        planRow("凯尔希", { user: null, target: chenTarget, totalGap: 1000 }),
+    ]);
+    app.elements.filterInput.value = "陈";
+    app.elements.filterInput.dispatchEvent(new Event("input", { bubbles: true }));
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    const restore = stubClipboard({ writeText });
+    await app.handleExportPlan();
+    restore();
+    const parsed = JSON.parse(writeText.mock.calls[0][0]);
+    expect(parsed.map((plan) => plan.name)).toEqual(["陈"]);
+    // 被筛掉的干员不应出现在跳过说明里
+    expect(app.state.status).not.toContain("已跳过");
+});
+
+test("export plan reports when nothing is exportable", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    const restore = stubClipboard({ writeText });
+    // 只看待培养：唯一已拥有干员已达标，筛选后行集为空
+    app.state.result = planResult([planRow("陈", {
+        user: { charId: "char_chen", profession: "WARRIOR" },
+        target: { elite: 2, level: 60, skill1: 7, skill2: 0, skill3: 0 },
+        totalGap: 0,
+    })]);
+    app.elements.onlyPendingInput.checked = true;
+    app.elements.onlyPendingInput.dispatchEvent(new Event("change", { bubbles: true }));
+    await app.handleExportPlan();
+    expect(app.state.error).toContain("当前筛选下没有可导出的培养计划");
+    expect(writeText).not.toHaveBeenCalled();
+    // 只看未拥有：行都在但 MAA 都无法培养
+    app.state.result = planResult([planRow("凯尔希", { user: null, target: chenTarget, totalGap: 1000 })]);
+    app.elements.onlyPendingInput.checked = false;
+    app.elements.onlyPendingInput.dispatchEvent(new Event("change", { bubbles: true }));
+    app.elements.onlyMissingInput.checked = true;
+    app.elements.onlyMissingInput.dispatchEvent(new Event("change", { bubbles: true }));
+    await app.handleExportPlan();
+    expect(app.state.error).toContain("无法由 MAA 培养");
+    expect(writeText).not.toHaveBeenCalled();
+    restore();
+});
+
+test("export plan follows the recent window toggle", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    const now = Date.now();
+    const days = (n) => new Date(now - n * 24 * 60 * 60 * 1000).toISOString();
+    app.state.assignments = [
+        { id: 1, uploadTime: days(30), required: [{ name: "凯尔希", skill: 1, requirements: { elite: 1 } }], groups: [] },
+        { id: 2, uploadTime: days(220), required: [{ name: "陈", skill: 1, requirements: { elite: 1 } }], groups: [] },
+    ];
+    app.elements.importInput.value = JSON.stringify([
+        { name: "陈", elite: 0, level: 30, skill1: 4, skill2: 0, skill3: 0 },
+        { name: "凯尔希", elite: 0, level: 30, skill1: 4, skill2: 0, skill3: 0 },
+    ]);
+    app.handleImport();
+    app.elements.recentToggle.checked = true;
+    app.elements.recentToggle.dispatchEvent(new Event("change", { bubbles: true }));
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    const restore = stubClipboard({ writeText });
+    await app.handleExportPlan();
+    restore();
+    // 220 天前的作业超出 180 天窗口，陈的目标不应再出现在导出里
+    expect(JSON.parse(writeText.mock.calls[0][0]).map((plan) => plan.name)).toEqual(["凯尔希"]);
+});
+
+test("export plan matches the standard training mode", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    app.state.assignments = [
+        { id: 1, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "凯尔希", skill: 1, requirements: {} }], groups: [] },
+    ];
+    app.elements.importInput.value = JSON.stringify([{ name: "凯尔希", elite: 0, level: 30, skill1: 4, skill2: 0, skill3: 0 }]);
+    app.handleImport();
+    app.elements.standardToggle.checked = true;
+    app.elements.standardToggle.dispatchEvent(new Event("change", { bubbles: true }));
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    const restore = stubClipboard({ writeText });
+    await app.handleExportPlan();
+    restore();
+    // 标准练度：6★ 精二 90 级，作业用到的技能 1 专三，公共等级封顶 7
+    expect(JSON.parse(writeText.mock.calls[0][0])).toEqual([
+        { role: "Medic", name: "凯尔希", elite: 2, level: 90, skill_level: 7, skill_mastery: [3, 0, 0] },
+    ]);
+});
+
+test("export plan opens a manual-copy dialog when the clipboard rejects", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    app.state.result = planResult([planRow("陈", { user: { charId: "char_chen", profession: "WARRIOR" }, target: chenTarget, totalGap: 10 })]);
+    const select = vi.fn();
+    app.elements.planCopyTextarea.select = select;
+    const restore = stubClipboard({ writeText: vi.fn().mockRejectedValue(new Error("denied")) });
+    await app.handleExportPlan();
+    restore();
+    expect(app.elements.planCopyDialog.hasAttribute("open")).toBe(true);
+    expect(JSON.parse(app.elements.planCopyTextarea.value)).toEqual([
+        { role: "Warrior", name: "陈", elite: 2, level: 60, skill_level: 7, skill_mastery: [0, 0, 3] },
+    ]);
+    // 弹窗打开即全选，用户直接 Ctrl+C
+    expect(select).toHaveBeenCalledTimes(1);
+    expect(app.state.status).toContain("复制失败，请在弹窗中手动复制");
+});
+
+test("export plan falls back when the clipboard API is unavailable", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    app.state.result = planResult([planRow("陈", { user: { charId: "char_chen", profession: "WARRIOR" }, target: chenTarget, totalGap: 10 })]);
+    const restore = stubClipboard(undefined);
+    await app.handleExportPlan();
+    restore();
+    expect(app.elements.planCopyDialog.hasAttribute("open")).toBe(true);
+    expect(app.elements.planCopyTextarea.value).not.toBe("");
+});
+
+test("plan copy dialog closes via its close button", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    app.state.result = planResult([planRow("陈", { user: { charId: "char_chen", profession: "WARRIOR" }, target: chenTarget, totalGap: 10 })]);
+    app.elements.planCopyTextarea.select = vi.fn();
+    const restore = stubClipboard({ writeText: vi.fn().mockRejectedValue(new Error("denied")) });
+    await app.handleExportPlan();
+    restore();
+    expect(app.elements.planCopyDialog.hasAttribute("open")).toBe(true);
+    app.elements.planCopyCloseButton.dispatchEvent(new Event("click", { bubbles: true }));
+    expect(app.elements.planCopyDialog.hasAttribute("open")).toBe(false);
+});
+
 test("runAnalysis returns early when static data or assignments are missing", async () => {
     fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
@@ -681,4 +976,8 @@ test("index.html markup satisfies the app element contract", async () => {
     expect(app.elements.introDialog.textContent).toContain("仅近6个月作业");
     expect(app.elements.introDialog.textContent).toContain("标准练度");
     expect(app.elements.introCloseButton.textContent).toContain("我知道了");
+    // 导出培养计划按钮与手动复制兜底弹窗的标记契约
+    expect(app.elements.exportPlanButton.textContent).toContain("导出培养计划");
+    expect(app.elements.planCopyTextarea.readOnly).toBe(true);
+    expect(app.elements.planCopyCloseButton.textContent).toContain("我知道了");
 });

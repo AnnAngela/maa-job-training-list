@@ -75,12 +75,14 @@ const config = [
         ignores,
         rules: {
             // 作业站与一图流的接口字段是 snake_case，解析响应时无法改名，属于外部契约而非本地命名疏漏
-            // （Moegirl 侧同样为 GitHub API 的 pull_number 等字段开了口子）
+            // （Moegirl 侧同样为 GitHub API 的 pull_number 等字段开了口子；
+            // skill_mastery 是 MAA「干员培养」剪贴板导入格式的字段，同属外部契约）
             camelcase: [
                 "error",
                 {
                     allow: [
                         "skill_level",
+                        "skill_mastery",
                         "module_level",
                         "skill_usage",
                         "skill_times",
