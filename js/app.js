@@ -208,12 +208,14 @@ const MAA_UNSUPPORTED_CHAR_IDS = new Set(["char_002_amiya", "char_1001_amiya2", 
 /**
  * 把培养清单行转成 MAA「干员培养-从剪贴板读取」的导入格式（行需来自 filterRows，自带 target）。
  * 内部技能值 8/9/10 表示专一/二/三：公共技能等级封顶 7（专精前置），skill_mastery = 值 - 7；
- * level 是 MAA 当前不解析的预留字段，恒带上。未拥有干员 MAA 无法培养，与阿米娅形态一并跳过。
+ * level 是 MAA 当前不解析的预留字段，恒带上。未拥有干员 MAA 无法培养、阿米娅三形态不支持、
+ * 精英化与技能皆无可练的行（如已满级的 1-2★ 干员），一并跳过并计数。
  */
 export const buildMaaTrainingPlan = (rows, operatorMeta) => {
     const plans = [];
     let skippedUnowned = 0;
     let skippedUnsupported = 0;
+    let skippedNoGoal = 0;
     for (const row of rows || []) {
         const charId = operatorMeta?.nameToCharId?.[row.name] || row.user?.charId || "";
         if (MAA_UNSUPPORTED_CHAR_IDS.has(charId)) {
@@ -232,6 +234,12 @@ export const buildMaaTrainingPlan = (rows, operatorMeta) => {
         // MaaCore 的 check_json 只接受 skill_level 2-7，且一条非法值会使整份任务创建失败；
         // 技能 1 级是游戏基线（无培养意义），此时按未设置导出 0（MAA 序列化端会省略该字段）
         const commonLevel = Math.min(7, Math.max(...skills));
+        // MAA 可表达的培养目标只有精英化（1-2）与技能（2-7/专精）：两者皆无时导出空条目
+        // 没有培养意义，还会在 MAA 里呈现为「推荐培养但无具体目标」的卡片
+        if ((Number(target.elite) || 0) < 1 && commonLevel < 2) {
+            skippedNoGoal += 1;
+            continue;
+        }
         plans.push({
             ...profession ? { role: profession.charAt(0) + profession.slice(1).toLowerCase() } : {},
             name: row.name,
@@ -241,7 +249,7 @@ export const buildMaaTrainingPlan = (rows, operatorMeta) => {
             skill_mastery: skills.map((value) => Math.max(0, value - 7)),
         });
     }
-    return { plans, skippedUnowned, skippedUnsupported };
+    return { plans, skippedUnowned, skippedUnsupported, skippedNoGoal };
 };
 
 const createApp = (deps, elements) => {
@@ -608,17 +616,18 @@ const createApp = (deps, elements) => {
             return;
         }
         const rows = filterRows();
-        const { plans, skippedUnowned, skippedUnsupported } = buildMaaTrainingPlan(rows, state.operatorMeta);
+        const { plans, skippedUnowned, skippedUnsupported, skippedNoGoal } = buildMaaTrainingPlan(rows, state.operatorMeta);
         if (plans.length === 0) {
             setError(rows.length === 0
                 ? "当前筛选下没有可导出的培养计划"
-                : "当前筛选下的干员均无法由 MAA 培养（未拥有或阿米娅形态）");
+                : "当前筛选下的干员均无法由 MAA 培养（未拥有、阿米娅形态或无可培养目标）");
             return;
         }
         const text = JSON.stringify(plans);
         const skippedParts = [
             skippedUnowned > 0 ? `${skippedUnowned} 名未拥有` : "",
             skippedUnsupported > 0 ? `${skippedUnsupported} 名阿米娅形态` : "",
+            skippedNoGoal > 0 ? `${skippedNoGoal} 名无可培养目标` : "",
         ].filter((part) => !!part);
         const skippedNote = skippedParts.length ? `（已跳过 ${skippedParts.join("、")}）` : "";
         try {

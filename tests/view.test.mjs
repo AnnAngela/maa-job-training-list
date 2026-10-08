@@ -15,9 +15,10 @@ import {
 } from "../js/view.js";
 
 const operatorMeta = {
-    nameToCharId: { 阿米娅: "char_002_amiya" },
+    nameToCharId: { 阿米娅: "char_002_amiya", "Lancet-2": "char_285_medic2" },
     operators: {
         char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [{ skillId: "a", skillIcon: "sk_amiya_1", skillName: "战术咏唱" }] },
+        char_285_medic2: { name: "Lancet-2", rarity: 1, profession: "MEDIC", skills: [] },
     },
 };
 
@@ -62,6 +63,22 @@ test("statusBadge renders missing ready and pending", () => {
     expect(statusBadge({ user: null })).toContain("未拥有");
     expect(statusBadge({ user: {}, totalGap: 0 })).toContain("已达标");
     expect(statusBadge({ user: {}, totalGap: 1 })).toContain("待培养");
+});
+
+test("renderTrainingTable hides the skill triplet for skill-less operators", () => {
+    // 1★/2★ 干员没有技能：森空岛数据里的技能等级只是基线反射，当前列不渲染技能段
+    const html = renderTrainingTable([{
+        name: "Lancet-2",
+        user: { charId: "char_285_medic2", elite: 0, level: 30, skill1: 1, skill2: 1, skill3: 1, maxModuleLevel: 0 },
+        target: { elite: 0, level: 30, skill1: 0, skill2: 0, skill3: 0, module: -1 },
+        coreGain: 0,
+        groupGain: 0,
+        unsatisfiedCore: 0,
+        score: 0,
+        totalGap: 0,
+    }], { operatorMeta, skillSprite });
+    expect(html).toContain("精0 30级");
+    expect(html).not.toContain("技能");
 });
 
 test("renderSummary renders cards", () => {

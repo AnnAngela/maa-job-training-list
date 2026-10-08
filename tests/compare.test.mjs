@@ -7,17 +7,21 @@ import {
     evaluateSlot,
     gapWeight,
     normalizeSlotRequirements,
+    RARITY_CAPS,
     skillLevelFor,
     standardSlotRequirements,
     standardizeAssignments,
 } from "../js/compare.js";
 
 const operatorMeta = {
-    nameToCharId: { 阿米娅: "char_002_amiya", 凯尔希: "char_003_kalts", 塞雷娅: "char_202_demkni" },
+    nameToCharId: { 阿米娅: "char_002_amiya", 凯尔希: "char_003_kalts", 塞雷娅: "char_202_demkni", "Lancet-2": "char_285_medic2", 夜刀: "char_502_nblade", 芬: "char_123_fang" },
     operators: {
         char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] },
         char_003_kalts: { name: "凯尔希", rarity: 6, profession: "MEDIC", skills: [] },
         char_202_demkni: { name: "塞雷娅", rarity: 6, profession: "TANK", skills: [] },
+        char_285_medic2: { name: "Lancet-2", rarity: 1, profession: "MEDIC", skills: [] },
+        char_502_nblade: { name: "夜刀", rarity: 2, profession: "PIONEER", skills: [] },
+        char_123_fang: { name: "芬", rarity: 3, profession: "PIONEER", skills: [] },
     },
 };
 
@@ -223,8 +227,9 @@ test("computeTrainingList keeps out-of-range skill slots out of target skills", 
     ];
     const result = computeTrainingList({ assignments, userOperators: [], operatorMeta, options: {} });
     const amiyaRow = result.rows.find((row) => row.name === "阿米娅");
-    // (精3,0) 已在字典序上高于 (精0,50)，目标不再带回 50 级
-    expect(amiyaRow.target).toMatchObject({ elite: 3, level: 0, skill1: 0, skill2: 0, skill3: 0 });
+    // (精2,0) 已在字典序上高于 (精0,50)，目标不再带回 50 级；
+    // skill 4 越界推断出的精3 同时被 5★ 的稀有度上限钳回精2（不可能阶段不再进入目标）
+    expect(amiyaRow.target).toMatchObject({ elite: 2, level: 0, skill1: 0, skill2: 0, skill3: 0 });
 });
 
 test("computeTrainingList treats higher promotion stage as meeting lower-stage target", () => {
@@ -295,6 +300,39 @@ test("standardSlotRequirements overrides with rarity max and mastery", () => {
     expect(standardSlotRequirements({ name: "不存在", skill: 1, requirements: {} }, operatorMeta)).toEqual({ elite: 2, level: 90, skill_level: 10, module: -1, module_level: 0 });
 });
 
+test("RARITY_CAPS matches per-rarity reachable caps in game", () => {
+    // 1-2★ 无技能不可精英化、3★ 精1 技能封顶 7 级、4★ 起可专精（内部编码 10 = 专三）与开模组
+    expect(RARITY_CAPS).toEqual({
+        1: { elite: 0, level: 30, skill: 0, module: false },
+        2: { elite: 0, level: 30, skill: 0, module: false },
+        3: { elite: 1, level: 55, skill: 7, module: false },
+        4: { elite: 2, level: 70, skill: 10, module: true },
+        5: { elite: 2, level: 80, skill: 10, module: true },
+        6: { elite: 2, level: 90, skill: 10, module: true },
+    });
+});
+
+test("standardSlotRequirements caps skill and module goals by rarity", () => {
+    // 1★/2★ 干员没有技能、不可精英化也没有模组：满级即达标，
+    // 作业槽位里的 skill:1 只是 copilot JSON 默认值噪声，模组编号也不产生要求
+    expect(standardSlotRequirements({ name: "Lancet-2", skill: 1, requirements: { module: 1 } }, operatorMeta)).toEqual({ elite: 0, level: 30, skill_level: 0, module: -1, module_level: 0 });
+    expect(standardSlotRequirements({ name: "夜刀", skill: 1, requirements: {} }, operatorMeta)).toEqual({ elite: 0, level: 30, skill_level: 0, module: -1, module_level: 0 });
+    // 3★ 精英化上限为精1，唯一技能封顶 7 级，无模组
+    expect(standardSlotRequirements({ name: "芬", skill: 1, requirements: {} }, operatorMeta)).toEqual({ elite: 1, level: 55, skill_level: 7, module: -1, module_level: 0 });
+});
+
+test("normalizeSlotRequirements clamps impossible goals by rarity", () => {
+    // 通用推断（技能 5-7 需精1、专精需精2）对低星干员会推出不可能目标，按稀有度钳回可达范围
+    expect(normalizeSlotRequirements({ name: "Lancet-2", skill: 1, requirements: { elite: 2, level: 30, skill_level: 10 } }, operatorMeta)).toMatchObject({ elite: 0, skillLevel: 0 });
+    expect(normalizeSlotRequirements({ name: "Lancet-2", skill: 2, requirements: {} }, operatorMeta)).toMatchObject({ elite: 0 });
+    expect(normalizeSlotRequirements({ name: "夜刀", skill: 1, requirements: { skill_level: 5, module: 2 } }, operatorMeta)).toMatchObject({ elite: 0, skillLevel: 0, module: -1 });
+    expect(normalizeSlotRequirements({ name: "芬", skill: 1, requirements: { skill_level: 10 } }, operatorMeta)).toMatchObject({ elite: 1, skillLevel: 7 });
+    // 4★+ 上限不低于既有推断，行为不变
+    expect(normalizeSlotRequirements({ name: "阿米娅", skill: 3, requirements: { skill_level: 10 } }, operatorMeta)).toMatchObject({ elite: 2, skillLevel: 10 });
+    // 未收录干员查不到稀有度，保持通用推断不钳制
+    expect(normalizeSlotRequirements({ name: "不存在", skill: 1, requirements: { skill_level: 10 } }, operatorMeta)).toMatchObject({ elite: 2, skillLevel: 10 });
+});
+
 test("standardizeAssignments rewrites required and group slots", () => {
     const assignments = [{
         id: 1,
@@ -321,6 +359,35 @@ test("standardizeAssignments rewrites required and group slots", () => {
     expect(sparse.groups[1].opers).toEqual([]);
     expect(noGroups.groups).toEqual([]);
     expect(standardizeAssignments(null, operatorMeta)).toEqual([]);
+});
+
+test("standard mode keeps low-rarity operators within reachable caps", () => {
+    // 复现线上问题：勾选标准练度后 Lancet-2/夜刀被推荐「精2+专三」的不可能目标
+    const assignments = [{
+        id: 1,
+        uploadTime: new Date(Date.now() - 1000).toISOString(),
+        required: [
+            { name: "Lancet-2", skill: 1, requirements: {} },
+            { name: "夜刀", skill: 1, requirements: {} },
+            { name: "芬", skill: 1, requirements: {} },
+        ],
+        groups: [],
+    }];
+    const userOperators = [
+        { charId: "char_285_medic2", name: "Lancet-2", rarity: 1, profession: "MEDIC", elite: 0, level: 30, skill1: 1, skill2: 1, skill3: 1, maxModuleLevel: 0 },
+        { charId: "char_502_nblade", name: "夜刀", rarity: 2, profession: "PIONEER", elite: 0, level: 30, skill1: 1, skill2: 1, skill3: 1, maxModuleLevel: 0 },
+        { charId: "char_123_fang", name: "芬", rarity: 3, profession: "PIONEER", elite: 1, level: 55, skill1: 1, skill2: 0, skill3: 0, maxModuleLevel: 0 },
+    ];
+    const result = computeTrainingList({ assignments: standardizeAssignments(assignments, operatorMeta), userOperators, operatorMeta, options: {} });
+    const rowOf = (name) => result.rows.find((row) => row.name === name);
+    // 1★/2★ 满 30 级即达标（此前目标被推断成精2+专三，totalGap 虚高）
+    expect(rowOf("Lancet-2")).toMatchObject({ totalGap: 0, unsatisfiedCore: 0 });
+    expect(rowOf("Lancet-2").target).toMatchObject({ elite: 0, level: 30, skill1: 0, skill2: 0, skill3: 0 });
+    expect(rowOf("夜刀").target).toMatchObject({ elite: 0, level: 30, skill1: 0, skill2: 0, skill3: 0 });
+    // 3★ 标准目标为精1 满 55 级 + 技能 7，技能不足只报技能缺口
+    expect(rowOf("芬").target).toMatchObject({ elite: 1, level: 55, skill1: 7 });
+    expect(rowOf("芬").totalGap).toBe(gapWeight({ type: "skill_level" }));
+    expect(result.summary.readyCount).toBe(0);
 });
 
 test("computeTrainingList sorts rows by unsatisfiedCore desc", () => {

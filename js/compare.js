@@ -1,29 +1,40 @@
 import { DEFAULT_OPTIONS, SCORE_WEIGHTS } from "./config.js";
 import { MODULE_TYPE_NAMES } from "./cost.js";
 
-// 标准练度模式：精2满级（按稀有度 1-6★ 对应的最高等级），用到的技能专三、用到的模组三级
-export const STANDARD_MAX = {
-    1: { elite: 0, level: 30 },
-    2: { elite: 0, level: 45 },
-    3: { elite: 1, level: 55 },
-    4: { elite: 2, level: 70 },
-    5: { elite: 2, level: 80 },
-    6: { elite: 2, level: 90 },
+// 标准练度模式：按稀有度取游戏内可达上限，而不是作业自设要求。
+// 1★/2★ 干员没有技能、不可精英化也没有模组（满级即精0 30级，2★ 同样是 30 级）；
+// 3★ 精1 满 55 级、唯一技能封顶 7 级、无模组；4★ 起可精2 满级、技能可专精（内部技能编码 10 = 专三）、有模组
+export const RARITY_CAPS = {
+    1: { elite: 0, level: 30, skill: 0, module: false },
+    2: { elite: 0, level: 30, skill: 0, module: false },
+    3: { elite: 1, level: 55, skill: 7, module: false },
+    4: { elite: 2, level: 70, skill: 10, module: true },
+    5: { elite: 2, level: 80, skill: 10, module: true },
+    6: { elite: 2, level: 90, skill: 10, module: true },
+};
+
+// 未收录干员查不到稀有度，按 6★ 标准兜底
+const FALLBACK_CAP = RARITY_CAPS[6];
+
+const capForSlot = (slot, operatorMeta) => {
+    const charId = operatorMeta?.nameToCharId?.[slot?.name];
+    const rarity = operatorMeta?.operators?.[charId]?.rarity;
+    return RARITY_CAPS[Number(rarity)] || null;
 };
 
 export const standardSlotRequirements = (slot, operatorMeta) => {
-    const charId = operatorMeta?.nameToCharId?.[slot?.name];
-    const rarity = operatorMeta?.operators?.[charId]?.rarity;
-    const max = STANDARD_MAX[rarity] || STANDARD_MAX[6];
+    const cap = capForSlot(slot, operatorMeta) || FALLBACK_CAP;
+    // module 是模组类型编号（1=X, 2=Y, 3=A, 4=D；0 = 明确不带模组），保留类型；
+    // 标准模式要求该模组三级，但模组仅 4★+ 存在，低稀有度槽位即使写了编号也不产生要求
     const rawModule = slot?.requirements?.module;
-    // module 是模组类型编号（1=X, 2=Y, 3=A, 4=D），保留类型；标准模式要求该模组三级
     const module = rawModule === undefined || rawModule === null ? -1 : Number(rawModule);
+    const effectiveModule = cap.module ? module : -1;
     return {
-        elite: max.elite,
-        level: max.level,
-        skill_level: Number(slot?.skill) >= 1 ? 10 : 0,
-        module,
-        module_level: module > 0 ? 3 : 0,
+        elite: cap.elite,
+        level: cap.level,
+        skill_level: Number(slot?.skill) >= 1 ? cap.skill : 0,
+        module: effectiveModule,
+        module_level: effectiveModule > 0 ? 3 : 0,
     };
 };
 
@@ -42,14 +53,24 @@ export const standardizeAssignments = (assignments, operatorMeta) => (assignment
     })),
 }));
 
-export const normalizeSlotRequirements = (slot) => {
+export const normalizeSlotRequirements = (slot, operatorMeta) => {
     const req = slot?.requirements || {};
     const explicitElite = Number(req.elite) || 0;
     const skill = Number(slot?.skill) || 0;
-    const skillLevel = Number(req.skill_level) || 0;
+    let skillLevel = Number(req.skill_level) || 0;
     // module 是模组类型编号（1=X, 2=Y, 3=A, 4=D），module_level 是模组等级
-    const module = req.module === undefined ? -1 : Number(req.module);
+    let module = req.module === undefined ? -1 : Number(req.module);
     const moduleLevel = Number(req.module_level) || 0;
+    // 按稀有度钳制可达上限：1-2★ 无技能不可精英化、3★ 技能封顶 7 级只能精1，
+    // 否则下方「技能 5-7 需精1、专精需精2」的通用推断会给低星干员推出不可能目标；
+    // 未收录干员（查不到稀有度）保持通用推断不钳制
+    const cap = capForSlot(slot, operatorMeta);
+    if (cap) {
+        skillLevel = Math.min(skillLevel, cap.skill);
+        if (!cap.module) {
+            module = -1;
+        }
+    }
     let elite = explicitElite;
     if (skill >= 1) {
         elite = Math.max(elite, skill - 1);
@@ -66,6 +87,9 @@ export const normalizeSlotRequirements = (slot) => {
         elite = Math.max(elite, 2);
     } else if (level > 50) {
         elite = Math.max(elite, 1);
+    }
+    if (cap) {
+        elite = Math.min(elite, cap.elite);
     }
     return {
         elite,
@@ -121,8 +145,8 @@ export const skillLevelFor = (skillIndex, user) => {
     return 0;
 };
 
-export const evaluateSlot = (slot, user, options = {}) => {
-    const req = normalizeSlotRequirements(slot);
+export const evaluateSlot = (slot, user, options = {}, operatorMeta) => {
+    const req = normalizeSlotRequirements(slot, operatorMeta);
     if (!user) {
         return { satisfied: false, owned: false, gaps: [{ type: "missing" }] };
     }
@@ -173,18 +197,18 @@ export const buildUserLookup = (userOperators, operatorMeta) => {
     return (name) => byName.get(name) || byCharId.get(name) || byCharId.get(operatorMeta?.nameToCharId?.[name]) || null;
 };
 
-export const evaluateAssignment = (assignment, userLookup, options = {}) => {
+export const evaluateAssignment = (assignment, userLookup, options = {}, operatorMeta) => {
     const required = Array.isArray(assignment?.required) ? assignment.required : [];
     const groups = Array.isArray(assignment?.groups) ? assignment.groups : [];
     const requiredResults = required.map((slot) => ({
         slot,
-        result: evaluateSlot(slot, userLookup(slot.name), options),
+        result: evaluateSlot(slot, userLookup(slot.name), options, operatorMeta),
     }));
     const groupResults = groups.map((group) => {
         const opers = Array.isArray(group?.opers) ? group.opers : [];
         const results = opers.map((slot) => ({
             slot,
-            result: evaluateSlot(slot, userLookup(slot.name), options),
+            result: evaluateSlot(slot, userLookup(slot.name), options, operatorMeta),
         }));
         return {
             name: group?.name || "",
@@ -270,7 +294,7 @@ export const computeTrainingList = ({ assignments, userOperators, operatorMeta, 
     const assignmentById = new Map(assignments.map((assignment) => [assignment.id, assignment]));
     const baseResults = assignments.map((assignment) => ({
         assignment,
-        result: evaluateAssignment(assignment, userLookup, mergedOptions),
+        result: evaluateAssignment(assignment, userLookup, mergedOptions, operatorMeta),
     }));
     // 模拟满练干员：补齐全部模组类型的 3 级模组，
     // 否则要求具体类型的作业在模拟升级后仍被判定不满足，coreGain/groupGain 偏低
@@ -303,7 +327,7 @@ export const computeTrainingList = ({ assignments, userOperators, operatorMeta, 
                 if (slot.name !== name) {
                     continue;
                 }
-                const req = normalizeSlotRequirements(slot);
+                const req = normalizeSlotRequirements(slot, operatorMeta);
                 mergeTargetReq(target, slot, req);
             }
             for (const group of assignment.groups || []) {
@@ -311,7 +335,7 @@ export const computeTrainingList = ({ assignments, userOperators, operatorMeta, 
                     if (slot.name !== name) {
                         continue;
                     }
-                    const req = normalizeSlotRequirements(slot);
+                    const req = normalizeSlotRequirements(slot, operatorMeta);
                     mergeTargetReq(target, slot, req);
                 }
             }
@@ -333,6 +357,7 @@ export const computeTrainingList = ({ assignments, userOperators, operatorMeta, 
                 assignment,
                 (slotName) => slotName === name ? perfectUser : userLookup(slotName),
                 mergedOptions,
+                operatorMeta,
             );
             if (simulated.ready) {
                 if (appearance.core) {
@@ -342,7 +367,7 @@ export const computeTrainingList = ({ assignments, userOperators, operatorMeta, 
                 }
             }
 
-            const currentResult = evaluateAssignment(assignment, userLookup, mergedOptions);
+            const currentResult = evaluateAssignment(assignment, userLookup, mergedOptions, operatorMeta);
             for (const item of currentResult.requiredResults) {
                 if (item.slot.name !== name) {
                     continue;

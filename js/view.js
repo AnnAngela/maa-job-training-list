@@ -5,10 +5,10 @@ const skillTriplet = (user) => [1, 2, 3].map((index) => Number(user?.[`skill${in
 
 const requirementText = (text, unmet) => unmet ? `<span class="req-unmet">${text}</span>` : text;
 
-const formatCurrent = (user) => {
+const formatCurrent = (user, { hasSkills = true } = {}) => {
     const parts = [`精${Number(user.elite) || 0} ${Number(user.level) || 0}级`];
     const skills = skillTriplet(user);
-    if (skills.some((value) => value > 0)) {
+    if (hasSkills && skills.some((value) => value > 0)) {
         parts.push(`技能 ${skills.join("/")}`);
     }
     const modules = Array.isArray(user.modules)
@@ -209,7 +209,9 @@ export const renderTrainingTable = (rows, { operatorMeta, materialSelection } = 
     const body = rows.map((row) => {
         const charId = row.user?.charId || charIdForName(row.name, operatorMeta);
         const meta = operatorMeta?.operators?.[charId];
-        const current = row.user ? formatCurrent(row.user) : "—";
+        // 1-2★ 干员没有技能，当前列不渲染技能段（森空岛返回的等级只是基线反射）；元数据缺失时保持原行为
+        const hasSkills = meta?.rarity === undefined || Number(meta.rarity) > 2;
+        const current = row.user ? formatCurrent(row.user, { hasSkills }) : "—";
         const target = formatTarget(row.target || {}, row.user);
         const avatar = operatorAvatarHtml(row.name, charId, { size: 32, grayscale: !row.user });
         const checked = row.costBreakdown && materialSelection?.has(row.name) ? " checked" : "";

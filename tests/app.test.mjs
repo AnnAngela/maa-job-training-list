@@ -30,11 +30,13 @@ import realOperatorMeta from "../data/operator_meta.json";
 import playerInfo from "./fixtures/skland-player-info.json";
 
 const operatorMeta = {
-    nameToCharId: { 阿米娅: "char_002_amiya", 陈: "char_chen", 凯尔希: "char_003_kalts" },
+    nameToCharId: { 阿米娅: "char_002_amiya", 陈: "char_chen", 凯尔希: "char_003_kalts", "Lancet-2": "char_285_medic2", 芬: "char_123_fang" },
     operators: {
         char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] },
         char_chen: { name: "陈", rarity: 6, profession: "WARRIOR", skills: [] },
         char_003_kalts: { name: "凯尔希", rarity: 6, profession: "MEDIC", skills: [] },
+        char_285_medic2: { name: "Lancet-2", rarity: 1, profession: "MEDIC", skills: [] },
+        char_123_fang: { name: "芬", rarity: 3, profession: "PIONEER", skills: [] },
     },
 };
 const skillSprite = { spriteUrl: "https://example.com/s.jpg", size: 128, entries: {} };
@@ -798,8 +800,23 @@ test("buildMaaTrainingPlan keeps rows the user already satisfies", () => {
     expect(buildMaaTrainingPlan(rows, operatorMeta).plans).toHaveLength(1);
 });
 
+test("buildMaaTrainingPlan skips rows without trainable goals", () => {
+    // MAA 可表达的培养目标只有精英化与技能；1★/2★ 干员无技能且不可精英化，
+    // 目标两者皆无（满级即达标）时导出空条目没有培养意义
+    const rows = [
+        planRow("Lancet-2", { user: { charId: "char_285_medic2", name: "Lancet-2", profession: "MEDIC" }, target: { elite: 0, level: 30, skill1: 0, skill2: 0, skill3: 0 } }),
+        planRow("陈", { user: { charId: "char_chen", name: "陈", profession: "WARRIOR" }, target: chenTarget }),
+        // 无精英化目标但有技能目标的行仍导出：elite 0 由 MAA GUI 序列化端省略
+        planRow("芬", { user: { charId: "char_123_fang", name: "芬", profession: "PIONEER" }, target: { elite: 0, level: 55, skill1: 7, skill2: 0, skill3: 0 } }),
+    ];
+    const { plans, skippedNoGoal } = buildMaaTrainingPlan(rows, operatorMeta);
+    expect(plans.map((plan) => plan.name)).toEqual(["陈", "芬"]);
+    expect(plans[1]).toMatchObject({ elite: 0, skill_level: 7 });
+    expect(skippedNoGoal).toBe(1);
+});
+
 test("buildMaaTrainingPlan returns empty plans for missing rows", () => {
-    expect(buildMaaTrainingPlan(undefined, operatorMeta)).toEqual({ plans: [], skippedUnowned: 0, skippedUnsupported: 0 });
+    expect(buildMaaTrainingPlan(undefined, operatorMeta)).toEqual({ plans: [], skippedUnowned: 0, skippedUnsupported: 0, skippedNoGoal: 0 });
 });
 
 test("export plan shows error when result is empty", async () => {
@@ -922,6 +939,32 @@ test("export plan matches the standard training mode", async () => {
     expect(JSON.parse(writeText.mock.calls[0][0])).toEqual([
         { role: "Medic", name: "凯尔希", elite: 2, level: 90, skill_level: 7, skill_mastery: [3, 0, 0] },
     ]);
+});
+
+test("export plan keeps skill-less operators out of the standard training mode", async () => {
+    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    app.state.assignments = [
+        { id: 1, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "Lancet-2", skill: 1, requirements: {} }], groups: [] },
+        { id: 2, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "凯尔希", skill: 1, requirements: {} }], groups: [] },
+    ];
+    // 1★ 的 Lancet-2 已满级且无技能可练：不进入导出，也不再被推荐精2+专精
+    app.elements.importInput.value = JSON.stringify([
+        { name: "Lancet-2", elite: 0, level: 30, skill1: 1, skill2: 1, skill3: 0 },
+        { name: "凯尔希", elite: 0, level: 30, skill1: 4, skill2: 0, skill3: 0 },
+    ]);
+    app.handleImport();
+    app.elements.standardToggle.checked = true;
+    app.elements.standardToggle.dispatchEvent(new Event("change", { bubbles: true }));
+    const lancet = app.state.result.rows.find((row) => row.name === "Lancet-2");
+    expect(lancet.totalGap).toBe(0);
+    expect(lancet.target).toMatchObject({ elite: 0, level: 30, skill1: 0 });
+    const writeText = vi.fn().mockResolvedValue(undefined);
+    const restore = stubClipboard({ writeText });
+    await app.handleExportPlan();
+    restore();
+    expect(JSON.parse(writeText.mock.calls[0][0]).map((plan) => plan.name)).toEqual(["凯尔希"]);
+    expect(app.elements.planDoneMessage.textContent).toContain("1 名无可培养目标");
 });
 
 test("export plan opens a manual-copy dialog when the clipboard rejects", async () => {
