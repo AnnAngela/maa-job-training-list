@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-07T00:28:41.465Z",
+  "generatedAt": "2026-10-07T08:21:36.721Z",
   "total": 1641,
   "assignments": [
     {
       "id": 105255,
       "uploadTime": "2026-10-06T23:42:24",
-      "views": 1559,
-      "hotScore": 16.066923869252992,
+      "views": 3986,
+      "hotScore": 19.931013394942937,
       "title": "矢量突破#3 拟生态 - VEC-D - 挽救治疗 需手动放装置",
       "stageName": "act3break_h04",
       "required": [
@@ -165,8 +165,8 @@
     {
       "id": 105238,
       "uploadTime": "2026-10-06T19:50:54",
-      "views": 2394,
-      "hotScore": 17.631783813061865,
+      "views": 4506,
+      "hotScore": 20.561865085705165,
       "title": "矢量突破#3 拟生态 - VEC-C - 惊吓幕后",
       "stageName": "act3break_h03",
       "required": [
@@ -306,8 +306,8 @@
     {
       "id": 105217,
       "uploadTime": "2026-10-06T18:41:30",
-      "views": 2178,
-      "hotScore": 16.783604885943014,
+      "views": 4028,
+      "hotScore": 19.12674567934969,
       "title": "矢量突破#3 拟生态 - VEC-B - 高优先通道",
       "stageName": "act3break_h02",
       "required": [
@@ -434,8 +434,8 @@
     {
       "id": 105202,
       "uploadTime": "2026-10-06T18:18:24",
-      "views": 2458,
-      "hotScore": 17.384813180622494,
+      "views": 4535,
+      "hotScore": 20.452026490169878,
       "title": "矢量突破#3 拟生态 - VEC-A - 卓绝之巅",
       "stageName": "act3break_h01",
       "required": [
@@ -523,8 +523,8 @@
     {
       "id": 105189,
       "uploadTime": "2026-10-06T17:47:35",
-      "views": 2044,
-      "hotScore": 15.187978861500344,
+      "views": 3724,
+      "hotScore": 16.828942822116673,
       "title": "矢量突破#3 拟生态 - VEC-SP07 - 荒废矿道",
       "stageName": "act3break_sp11",
       "required": [
@@ -560,8 +560,8 @@
     {
       "id": 105180,
       "uploadTime": "2026-10-06T17:19:22",
-      "views": 2470,
-      "hotScore": 15.734527803093773,
+      "views": 4324,
+      "hotScore": 17.93869692582984,
       "title": "矢量突破#3 拟生态 - VEC-SP05 - 难以相交",
       "stageName": "act3break_sp09",
       "required": [
@@ -597,8 +597,8 @@
     {
       "id": 105178,
       "uploadTime": "2026-10-06T16:55:54",
-      "views": 2191,
-      "hotScore": 16.40992329616096,
+      "views": 3891,
+      "hotScore": 18.426802014668343,
       "title": "矢量突破#3 拟生态 - VEC-SP14 - 乙醇暴动",
       "stageName": "act3break_sp13",
       "required": [
@@ -621,8 +621,8 @@
     {
       "id": 105175,
       "uploadTime": "2026-10-06T19:49:22",
-      "views": 2280,
-      "hotScore": 16.54122096544928,
+      "views": 3942,
+      "hotScore": 18.58352115856715,
       "title": "矢量突破#3 拟生态 - VEC-SP13 - 紧急夺还",
       "stageName": "act3break_sp12",
       "required": [
@@ -658,8 +658,8 @@
     {
       "id": 105171,
       "uploadTime": "2026-10-06T19:09:04",
-      "views": 2268,
-      "hotScore": 15.883008795666326,
+      "views": 4089,
+      "hotScore": 17.816121945027266,
       "title": "矢量突破#3 拟生态 - VEC-SP06 - 林间小憩",
       "stageName": "act3break_sp10",
       "required": [
@@ -695,7 +695,7 @@
     {
       "id": 104617,
       "uploadTime": "2026-10-03T07:15:53",
-      "views": 9008,
+      "views": 9836,
       "hotScore": 25.347413823016318,
       "title": "矢量突破#3 拟生态 - VEC-SP12 - 四号站台",
       "stageName": "act3break_sp08",
@@ -732,8 +732,8 @@
     {
       "id": 104614,
       "uploadTime": "2026-10-03T23:32:28",
-      "views": 10152,
-      "hotScore": 25.27716508765858,
+      "views": 10988,
+      "hotScore": 25.60904727989289,
       "title": "矢量突破#3 拟生态 - VEC-SP11 - 影院出口",
       "stageName": "act3break_sp07",
       "required": [
@@ -769,7 +769,7 @@
     {
       "id": 104613,
       "uploadTime": "2026-10-03T07:24:39",
-      "views": 9489,
+      "views": 10260,
       "hotScore": 21.36965887037867,
       "title": "矢量突破#3 拟生态 - VEC-SP04 - 明星靶场",
       "stageName": "act3break_sp06",
@@ -793,7 +793,7 @@
     {
       "id": 104037,
       "uploadTime": "2026-10-01T22:53:17",
-      "views": 23984,
+      "views": 25125,
       "hotScore": 102.14749323649806,
       "title": "VEC-12 - 需手动放装置",
       "stageName": "act3break_12",
@@ -947,7 +947,7 @@
     {
       "id": 103971,
       "uploadTime": "2026-09-30T00:48:56",
-      "views": 12741,
+      "views": 13169,
       "hotScore": 0.2260256728462896,
       "title": "矢量突破#3 拟生态 - VEC-11 - 漂白剂",
       "stageName": "act3break_11",
@@ -997,7 +997,7 @@
     {
       "id": 103964,
       "uploadTime": "2026-09-30T00:48:33",
-      "views": 11318,
+      "views": 11715,
       "hotScore": 0.20680775829743836,
       "title": "矢量突破#3 拟生态 - VEC-10 - 动捕影棚",
       "stageName": "act3break_10",
@@ -1073,7 +1073,7 @@
     {
       "id": 103946,
       "uploadTime": "2026-09-30T00:47:57",
-      "views": 12152,
+      "views": 12595,
       "hotScore": 0.21281634875322822,
       "title": "矢量突破#3 拟生态 - VEC-09 - 浸漫花圃",
       "stageName": "act3break_09",
@@ -1162,7 +1162,7 @@
     {
       "id": 103919,
       "uploadTime": "2026-10-04T08:44:50",
-      "views": 13877,
+      "views": 14342,
       "hotScore": 0.34727020292574645,
       "title": "VEC-8 需要手动放装置",
       "stageName": "act3break_08",
@@ -1283,7 +1283,7 @@
     {
       "id": 103909,
       "uploadTime": "2026-09-29T21:36:34",
-      "views": 13534,
+      "views": 14049,
       "hotScore": 0.2095004464865093,
       "title": "VEC-7",
       "stageName": "act3break_07",
@@ -1365,7 +1365,7 @@
     {
       "id": 103906,
       "uploadTime": "2026-09-29T22:02:15",
-      "views": 12252,
+      "views": 12662,
       "hotScore": 0.19287500748655867,
       "title": "VEC-6",
       "stageName": "act3break_06",
@@ -1415,8 +1415,8 @@
     {
       "id": 103901,
       "uploadTime": "2026-09-29T21:00:26",
-      "views": 11631,
-      "hotScore": 0.199985459948048,
+      "views": 12056,
+      "hotScore": 0.1931079735006476,
       "title": "VEC-5",
       "stageName": "act3break_05",
       "required": [
@@ -1484,8 +1484,8 @@
     {
       "id": 103895,
       "uploadTime": "2026-09-29T20:53:50",
-      "views": 11752,
-      "hotScore": 0.19655848478128007,
+      "views": 12165,
+      "hotScore": 0.18827316498102598,
       "title": "VEC-4",
       "stageName": "act3break_04",
       "required": [
@@ -1534,7 +1534,7 @@
     {
       "id": 103855,
       "uploadTime": "2026-09-29T19:20:06",
-      "views": 11434,
+      "views": 11815,
       "hotScore": 0.1831244990133726,
       "title": "VEC-3",
       "stageName": "act3break_03",
@@ -1590,7 +1590,7 @@
     {
       "id": 103848,
       "uploadTime": "2026-09-29T19:16:50",
-      "views": 11302,
+      "views": 11677,
       "hotScore": 0.17830921980868958,
       "title": "VEC-2",
       "stageName": "act3break_02",
@@ -1627,7 +1627,7 @@
     {
       "id": 103842,
       "uploadTime": "2026-09-29T20:40:06",
-      "views": 12976,
+      "views": 13404,
       "hotScore": 0.18882787948545457,
       "title": "VEC-SP-10",
       "stageName": "act3break_sp05",
@@ -1651,7 +1651,7 @@
     {
       "id": 103838,
       "uploadTime": "2026-09-29T20:39:36",
-      "views": 10275,
+      "views": 10634,
       "hotScore": 0.1622795929717022,
       "title": "VEC-SP-9",
       "stageName": "act3break_sp04",
@@ -1688,7 +1688,7 @@
     {
       "id": 103820,
       "uploadTime": "2026-09-29T17:15:40",
-      "views": 10256,
+      "views": 10626,
       "hotScore": 0.17163638735385064,
       "title": "VEC-SP-3",
       "stageName": "act3break_sp03",
@@ -1725,7 +1725,7 @@
     {
       "id": 103819,
       "uploadTime": "2026-09-29T17:09:11",
-      "views": 10781,
+      "views": 11148,
       "hotScore": 0.17532771922138812,
       "title": "VEC-SP-2",
       "stageName": "act3break_sp02",
@@ -1749,7 +1749,7 @@
     {
       "id": 103813,
       "uploadTime": "2026-09-29T16:37:49",
-      "views": 11138,
+      "views": 11503,
       "hotScore": 0.17270080370143062,
       "title": "VEC-SP-1",
       "stageName": "act3break_sp01",
@@ -1773,8 +1773,8 @@
     {
       "id": 103812,
       "uploadTime": "2026-09-29T16:32:05",
-      "views": 11137,
-      "hotScore": 0.17896703833650776,
+      "views": 11508,
+      "hotScore": 0.17454508408106098,
       "title": "VEC-1 - 寂静螺旋",
       "stageName": "act3break_01",
       "required": [
@@ -1823,7 +1823,7 @@
     {
       "id": 103332,
       "uploadTime": "2026-09-22T10:31:19",
-      "views": 17576,
+      "views": 17577,
       "hotScore": 11.287044021735849,
       "title": "DP-TR-1 仅剧情手动",
       "stageName": "act1dp_tr01",
@@ -1833,7 +1833,7 @@
     {
       "id": 103283,
       "uploadTime": "2026-09-24T22:52:16",
-      "views": 38277,
+      "views": 38283,
       "hotScore": 14.932157558796886,
       "title": "DP-EX-5 不稳定 看简介",
       "stageName": "act1dp_ex05",
@@ -1896,7 +1896,7 @@
     {
       "id": 103257,
       "uploadTime": "2026-09-21T11:59:22",
-      "views": 34092,
+      "views": 34097,
       "hotScore": 12.500105772646922,
       "title": "DP-EX-6 不稳定 看简介",
       "stageName": "act1dp_ex06",
@@ -1972,7 +1972,7 @@
     {
       "id": 103255,
       "uploadTime": "2026-09-21T03:12:40",
-      "views": 39650,
+      "views": 39652,
       "hotScore": 12.836342080402058,
       "title": "DS-2",
       "stageName": "act1dp_s02",
@@ -1982,7 +1982,7 @@
     {
       "id": 103252,
       "uploadTime": "2026-09-21T02:42:41",
-      "views": 40023,
+      "views": 40024,
       "hotScore": 12.85819730885165,
       "title": "DP-EX-4 看简介",
       "stageName": "act1dp_ex04",
@@ -2069,7 +2069,7 @@
     {
       "id": 103245,
       "uploadTime": "2026-09-21T08:28:41",
-      "views": 31233,
+      "views": 31234,
       "hotScore": 0.12317218248147598,
       "title": "DP-EX-2 看简介",
       "stageName": "act1dp_ex02",
@@ -2106,7 +2106,7 @@
     {
       "id": 103244,
       "uploadTime": "2026-09-21T00:42:28",
-      "views": 53141,
+      "views": 53142,
       "hotScore": 13.57885414192544,
       "title": "DP-EX-1 看简介",
       "stageName": "act1dp_ex01",
@@ -2156,7 +2156,7 @@
     {
       "id": 103241,
       "uploadTime": "2026-09-21T00:04:14",
-      "views": 29005,
+      "views": 29007,
       "hotScore": 0.12168944582238232,
       "title": "DP-6",
       "stageName": "act1dp_06",
@@ -2284,7 +2284,7 @@
     {
       "id": 103219,
       "uploadTime": "2026-09-20T23:28:35",
-      "views": 44612,
+      "views": 44619,
       "hotScore": 13.119712567785829,
       "title": "DS-1",
       "stageName": "act1dp_s01",
@@ -2294,7 +2294,7 @@
     {
       "id": 103216,
       "uploadTime": "2026-09-20T23:27:11",
-      "views": 32273,
+      "views": 32274,
       "hotScore": 0.12384640653999103,
       "title": "DP-2 看简介",
       "stageName": "act1dp_02",
@@ -2331,7 +2331,7 @@
     {
       "id": 103214,
       "uploadTime": "2026-09-20T23:26:56",
-      "views": 26529,
+      "views": 26533,
       "hotScore": 0.1199718149424858,
       "title": "DP-1",
       "stageName": "act1dp_01",
@@ -2355,7 +2355,7 @@
     {
       "id": 102462,
       "uploadTime": "2026-09-11T23:24:31",
-      "views": 10543,
+      "views": 10544,
       "hotScore": 0.09565922564820685,
       "title": "SR-EX-7 一摆到底版",
       "stageName": "act54side_ex07",
@@ -2496,7 +2496,7 @@
     {
       "id": 102461,
       "uploadTime": "2026-09-11T23:22:29",
-      "views": 11065,
+      "views": 11066,
       "hotScore": 0.09627297405728885,
       "title": "SR-EX-6 一摆到底版",
       "stageName": "act54side_ex06",
@@ -2637,7 +2637,7 @@
     {
       "id": 102452,
       "uploadTime": "2026-09-11T22:38:43",
-      "views": 14051,
+      "views": 14052,
       "hotScore": 9.940853999850075,
       "title": "SR-EX-4 一摆到底版",
       "stageName": "act54side_ex04",
@@ -2778,7 +2778,7 @@
     {
       "id": 102449,
       "uploadTime": "2026-09-11T22:33:58",
-      "views": 12854,
+      "views": 12855,
       "hotScore": 0.09821890479174966,
       "title": "SR-EX-2 一摆到底版",
       "stageName": "act54side_ex02",
@@ -2919,7 +2919,7 @@
     {
       "id": 102446,
       "uploadTime": "2026-09-11T22:32:37",
-      "views": 19328,
+      "views": 19329,
       "hotScore": 0.10391640253978278,
       "title": "SR-EX-1 一摆到底版",
       "stageName": "act54side_ex01",
@@ -3060,7 +3060,7 @@
     {
       "id": 102364,
       "uploadTime": "2026-09-12T15:41:42",
-      "views": 38979,
+      "views": 38985,
       "hotScore": 0.1158438347179458,
       "title": "SR-EX-8 兼容一摆到底",
       "stageName": "act54side_ex08",
@@ -3579,7 +3579,7 @@
     {
       "id": 102333,
       "uploadTime": "2026-09-11T22:35:39",
-      "views": 53704,
+      "views": 53705,
       "hotScore": 12.272972918862322,
       "title": "SR-EX-3 兼容一摆到底",
       "stageName": "act54side_ex03",
@@ -3677,7 +3677,7 @@
     {
       "id": 102323,
       "uploadTime": "2026-09-11T17:54:50",
-      "views": 67400,
+      "views": 67402,
       "hotScore": 0.12842530450144132,
       "title": "SR-EX-1",
       "stageName": "act54side_ex01",
@@ -3782,7 +3782,7 @@
     {
       "id": 101811,
       "uploadTime": "2026-09-04T15:49:45",
-      "views": 20857,
+      "views": 20858,
       "hotScore": 0.09799225656175972,
       "title": "SR-8 - 月满",
       "stageName": "act54side_08",
@@ -4005,7 +4005,7 @@
     {
       "id": 101753,
       "uploadTime": "2026-09-04T14:51:53",
-      "views": 16505,
+      "views": 16506,
       "hotScore": 0.09478159398166631,
       "title": "SR-7 - 月悬 初版",
       "stageName": "act54side_07",
@@ -4393,7 +4393,7 @@
     {
       "id": 100375,
       "uploadTime": "2026-08-18T16:07:53",
-      "views": 24736,
+      "views": 24830,
       "hotScore": 10.974051534920306,
       "title": "保全派驻_荒废灯塔_圣聆初雪+遥_战地援护无人机",
       "stageName": "荒废灯塔",
@@ -4418,7 +4418,7 @@
     {
       "id": 100225,
       "uploadTime": "2026-08-29T16:28:25",
-      "views": 36953,
+      "views": 37069,
       "hotScore": 14.112750029898233,
       "title": "保全派驻_日达诺夫园区_圣聆初雪+遥+斩业星熊_可充能督战音响",
       "stageName": "日达诺夫园区",
@@ -4450,7 +4450,7 @@
     {
       "id": 100051,
       "uploadTime": "2026-08-16T00:50:44",
-      "views": 8190,
+      "views": 8191,
       "hotScore": 7.461735222053746,
       "title": "TO-S-4 - “家族聚会” 一摆到底版",
       "stageName": "act53side_s04",
@@ -4524,7 +4524,7 @@
     {
       "id": 100049,
       "uploadTime": "2026-08-15T22:50:37",
-      "views": 5217,
+      "views": 5218,
       "hotScore": 6.973581348229024,
       "title": "TO-S-3 - 交通管理员 一摆到底版",
       "stageName": "act53side_s03",
@@ -4598,7 +4598,7 @@
     {
       "id": 100043,
       "uploadTime": "2026-08-16T08:13:37",
-      "views": 24759,
+      "views": 24761,
       "hotScore": 8.775122883467425,
       "title": "TO-S-2 - 通行新选择 无杰哥",
       "stageName": "act53side_s02",
@@ -4665,7 +4665,7 @@
     {
       "id": 100038,
       "uploadTime": "2026-08-15T23:23:18",
-      "views": 6517,
+      "views": 6518,
       "hotScore": 7.2123229715390105,
       "title": "TO-S-1 - 邮箱保卫战 一摆到底版",
       "stageName": "act53side_s01",
@@ -4739,7 +4739,7 @@
     {
       "id": 100011,
       "uploadTime": "2026-08-15T19:55:45",
-      "views": 20197,
+      "views": 20198,
       "hotScore": 8.514442902715018,
       "title": "TO-S-4 - “家族聚会” 第二版",
       "stageName": "act53side_s04",
@@ -4812,7 +4812,7 @@
     {
       "id": 99995,
       "uploadTime": "2026-08-15T19:44:37",
-      "views": 5161,
+      "views": 5162,
       "hotScore": 6.962089183355358,
       "title": "TO-S-4 - “家族聚会” 初版",
       "stageName": "act53side_s04",
@@ -5055,7 +5055,7 @@
     {
       "id": 99474,
       "uploadTime": "2026-08-09T00:30:35",
-      "views": 11072,
+      "views": 11073,
       "hotScore": 0.07541154121168919,
       "title": "TO-EX-6 - 信使？术师！一摆到底版",
       "stageName": "act53side_ex06",
@@ -5129,7 +5129,7 @@
     {
       "id": 99471,
       "uploadTime": "2026-08-09T00:26:37",
-      "views": 9699,
+      "views": 9700,
       "hotScore": 0.07393501954149455,
       "title": "TO-EX-5 - “勒柄嘘混” 一摆到底版",
       "stageName": "act53side_ex05",
@@ -5203,7 +5203,7 @@
     {
       "id": 99469,
       "uploadTime": "2026-08-09T00:24:22",
-      "views": 9770,
+      "views": 9771,
       "hotScore": 0.0740158452168163,
       "title": "TO-EX-4 - 处处是一撮毛 一摆到底版",
       "stageName": "act53side_ex04",
@@ -5277,7 +5277,7 @@
     {
       "id": 99466,
       "uploadTime": "2026-08-09T00:19:08",
-      "views": 10113,
+      "views": 10114,
       "hotScore": 7.439900891658082,
       "title": "TO-EX-3 - 地下捉迷藏 一摆到底版",
       "stageName": "act53side_ex03",
@@ -5351,7 +5351,7 @@
     {
       "id": 99462,
       "uploadTime": "2026-08-08T23:57:23",
-      "views": 13578,
+      "views": 13579,
       "hotScore": 7.773030002617505,
       "title": "TO-EX-2 - 邮包流水线 一摆到底版",
       "stageName": "act53side_ex02",
@@ -5425,7 +5425,7 @@
     {
       "id": 99459,
       "uploadTime": "2026-08-08T23:52:38",
-      "views": 14220,
+      "views": 14223,
       "hotScore": 0.07826361924446477,
       "title": "TO-EX-1 - 电影防沉迷 一摆到底版",
       "stageName": "act53side_ex01",
@@ -5499,7 +5499,7 @@
     {
       "id": 99365,
       "uploadTime": "2026-08-09T00:36:29",
-      "views": 37159,
+      "views": 37171,
       "hotScore": 9.041682210041103,
       "title": "TO-EX-8 - 有袋鼷兽奇遇 兼容一摆到底",
       "stageName": "act53side_ex08",
@@ -5685,7 +5685,7 @@
     {
       "id": 99340,
       "uploadTime": "2026-08-08T21:37:09",
-      "views": 21081,
+      "views": 21082,
       "hotScore": 0.08296317994282887,
       "title": "TO-EX-5 - “勒柄嘘混”",
       "stageName": "act53side_ex05",
@@ -5842,7 +5842,7 @@
     {
       "id": 99333,
       "uploadTime": "2026-08-08T21:57:10",
-      "views": 23117,
+      "views": 23118,
       "hotScore": 8.411136333226377,
       "title": "TO-EX-2 - 邮包流水线",
       "stageName": "act53side_ex02",
@@ -6352,7 +6352,7 @@
     {
       "id": 98302,
       "uploadTime": "2026-07-27T09:51:55",
-      "views": 11674,
+      "views": 11680,
       "hotScore": 7.185343958989661,
       "title": "默祷圣祠 有初雪版",
       "stageName": "camp_r_33",
@@ -6430,7 +6430,7 @@
     {
       "id": 97336,
       "uploadTime": "2026-07-10T23:18:24",
-      "views": 5786,
+      "views": 5793,
       "hotScore": 6.304749836105856,
       "title": "全息作战矩阵 - H11-1",
       "stageName": "hard_11-01",
@@ -6483,7 +6483,7 @@
     {
       "id": 97330,
       "uploadTime": "2026-07-10T22:55:16",
-      "views": 5636,
+      "views": 5642,
       "hotScore": 6.086288358856542,
       "title": "全息作战矩阵 - H6-3",
       "stageName": "hard_06-03",
@@ -6564,7 +6564,7 @@
     {
       "id": 97304,
       "uploadTime": "2026-07-10T20:04:33",
-      "views": 6316,
+      "views": 6324,
       "hotScore": 6.205430630444273,
       "title": "全息作战矩阵 11-6",
       "stageName": "main_11-05",
@@ -6654,7 +6654,7 @@
     {
       "id": 97300,
       "uploadTime": "2026-07-10T19:42:38",
-      "views": 8322,
+      "views": 8329,
       "hotScore": 6.496550050892248,
       "title": "全息作战矩阵 - M8-8",
       "stageName": "main_08-14",
@@ -9495,7 +9495,7 @@
     {
       "id": 93006,
       "uploadTime": "2026-05-10T23:31:34",
-      "views": 8151,
+      "views": 8153,
       "hotScore": 5.562892285164902,
       "title": "H17-4 版本2",
       "stageName": "hard_17-04",
@@ -9568,7 +9568,7 @@
     {
       "id": 92736,
       "uploadTime": "2026-05-10T23:35:38",
-      "views": 26950,
+      "views": 26952,
       "hotScore": 6.844143311513215,
       "title": "H17-4 版本1",
       "stageName": "hard_17-04",
@@ -9648,7 +9648,7 @@
     {
       "id": 92728,
       "uploadTime": "2026-05-08T18:08:07",
-      "views": 28182,
+      "views": 28185,
       "hotScore": 6.894485142325495,
       "title": "H17-3",
       "stageName": "hard_17-03",
@@ -9700,7 +9700,7 @@
     {
       "id": 92721,
       "uploadTime": "2026-05-08T18:07:55",
-      "views": 28618,
+      "views": 28621,
       "hotScore": 6.9118193747189425,
       "title": "H17-2",
       "stageName": "hard_17-02",
@@ -9766,7 +9766,7 @@
     {
       "id": 92712,
       "uploadTime": "2026-05-08T18:06:29",
-      "views": 31832,
+      "views": 31833,
       "hotScore": 7.032828687391739,
       "title": "H17-1",
       "stageName": "hard_17-01",
@@ -9819,7 +9819,7 @@
     {
       "id": 91751,
       "uploadTime": "2026-05-01T17:32:26",
-      "views": 40138,
+      "views": 40144,
       "hotScore": 7.44168457820805,
       "title": "TR-28",
       "stageName": "tr_28",
@@ -9829,7 +9829,7 @@
     {
       "id": 91703,
       "uploadTime": "2026-05-02T16:34:46",
-      "views": 61861,
+      "views": 61865,
       "hotScore": 7.75147465495025,
       "title": "17-18 看简介",
       "stageName": "main_17-17",
@@ -9889,7 +9889,7 @@
     {
       "id": 91698,
       "uploadTime": "2026-05-01T22:02:51",
-      "views": 63421,
+      "views": 63424,
       "hotScore": 7.783162367867012,
       "title": "17-17",
       "stageName": "main_17-16",
@@ -9962,7 +9962,7 @@
     {
       "id": 91686,
       "uploadTime": "2026-05-01T18:00:18",
-      "views": 60721,
+      "views": 60732,
       "hotScore": 7.727896985811065,
       "title": "17-16",
       "stageName": "main_17-15",
@@ -9972,7 +9972,7 @@
     {
       "id": 91683,
       "uploadTime": "2026-05-01T17:29:43",
-      "views": 66056,
+      "views": 66058,
       "hotScore": 7.835287746387838,
       "title": "17-15",
       "stageName": "main_17-14",
@@ -10031,7 +10031,7 @@
     {
       "id": 91673,
       "uploadTime": "2026-05-01T17:29:26",
-      "views": 58446,
+      "views": 58448,
       "hotScore": 7.679840147218825,
       "title": "17-14",
       "stageName": "main_17-13",
@@ -10063,7 +10063,7 @@
     {
       "id": 91671,
       "uploadTime": "2026-05-01T17:28:52",
-      "views": 72711,
+      "views": 72716,
       "hotScore": 7.960233214168264,
       "title": "17-13",
       "stageName": "main_17-12",
@@ -10115,7 +10115,7 @@
     {
       "id": 91669,
       "uploadTime": "2026-05-01T17:28:45",
-      "views": 62854,
+      "views": 62856,
       "hotScore": 7.771716690200208,
       "title": "17-12",
       "stageName": "main_17-11",
@@ -10167,7 +10167,7 @@
     {
       "id": 91668,
       "uploadTime": "2026-05-01T17:28:39",
-      "views": 65284,
+      "views": 65286,
       "hotScore": 7.820214314273009,
       "title": "17-11",
       "stageName": "main_17-10",
@@ -10233,7 +10233,7 @@
     {
       "id": 91664,
       "uploadTime": "2026-05-01T17:27:44",
-      "views": 62638,
+      "views": 62639,
       "hotScore": 7.767314793147735,
       "title": "17-10",
       "stageName": "main_17-09",
@@ -10285,7 +10285,7 @@
     {
       "id": 91662,
       "uploadTime": "2026-05-01T17:27:34",
-      "views": 66618,
+      "views": 66619,
       "hotScore": 7.846242142284744,
       "title": "17-9",
       "stageName": "main_17-08",
@@ -10323,7 +10323,7 @@
     {
       "id": 91658,
       "uploadTime": "2026-05-01T17:27:27",
-      "views": 63936,
+      "views": 63938,
       "hotScore": 7.793489044445431,
       "title": "17-8",
       "stageName": "main_17-07",
@@ -10362,7 +10362,7 @@
     {
       "id": 91651,
       "uploadTime": "2026-05-01T17:27:20",
-      "views": 64476,
+      "views": 64477,
       "hotScore": 7.92759057232357,
       "title": "17-7",
       "stageName": "main_17-06",
@@ -10394,7 +10394,7 @@
     {
       "id": 91649,
       "uploadTime": "2026-05-01T20:34:56",
-      "views": 63148,
+      "views": 63149,
       "hotScore": 7.9004273841105395,
       "title": "17-6",
       "stageName": "main_17-05",
@@ -10458,7 +10458,7 @@
     {
       "id": 91648,
       "uploadTime": "2026-05-01T17:27:06",
-      "views": 62150,
+      "views": 62152,
       "hotScore": 7.993757097039582,
       "title": "17-5",
       "stageName": "main_17-04",
@@ -10503,7 +10503,7 @@
     {
       "id": 91645,
       "uploadTime": "2026-05-01T17:26:56",
-      "views": 62008,
+      "views": 62009,
       "hotScore": 7.7544872617029,
       "title": "17-4",
       "stageName": "main_17-03",
@@ -10548,7 +10548,7 @@
     {
       "id": 91644,
       "uploadTime": "2026-05-01T17:26:43",
-      "views": 59814,
+      "views": 59815,
       "hotScore": 7.708924469557529,
       "title": "17-3",
       "stageName": "main_17-02",
@@ -10573,7 +10573,7 @@
     {
       "id": 91642,
       "uploadTime": "2026-05-01T17:26:27",
-      "views": 60242,
+      "views": 60244,
       "hotScore": 7.717915375325847,
       "title": "17-2",
       "stageName": "main_17-01",
@@ -10671,7 +10671,7 @@
     {
       "id": 90793,
       "uploadTime": "2026-04-17T15:08:39",
-      "views": 20276,
+      "views": 20277,
       "hotScore": 6.3184023403108025,
       "title": "保全派驻_塔山农业实验平台_荒芜拉普兰德+澄闪+浊心斯卡蒂_智能空域控制机",
       "stageName": "塔山农业实验平台",
@@ -10703,7 +10703,7 @@
     {
       "id": 90706,
       "uploadTime": "2026-04-16T17:17:37",
-      "views": 40601,
+      "views": 40602,
       "hotScore": 7.094057116546932,
       "title": "保全派驻_阿尔斯特甜品制作平台_怒潮凛冬+圣聆初雪_溢能回收转化器",
       "stageName": "阿尔斯特甜品制作平台",
@@ -10728,7 +10728,7 @@
     {
       "id": 90567,
       "uploadTime": "2026-04-15T00:46:14",
-      "views": 43031,
+      "views": 43034,
       "hotScore": 7.094976733554882,
       "title": "PA-EX-8 - 樱桃园 一摆到底版",
       "stageName": "act51side_ex08",
@@ -10829,7 +10829,7 @@
     {
       "id": 90566,
       "uploadTime": "2026-04-15T00:38:29",
-      "views": 18288,
+      "views": 18289,
       "hotScore": 0.06144135669811201,
       "title": "PA-EX-4 - 长子 一摆到底版",
       "stageName": "act51side_ex04",
@@ -10930,7 +10930,7 @@
     {
       "id": 90564,
       "uploadTime": "2026-04-15T00:32:27",
-      "views": 17875,
+      "views": 17877,
       "hotScore": 6.119705189800356,
       "title": "PA-EX-3 - 母亲 一摆到底版",
       "stageName": "act51side_ex03",
@@ -11031,7 +11031,7 @@
     {
       "id": 90563,
       "uploadTime": "2026-04-15T00:29:54",
-      "views": 19835,
+      "views": 19838,
       "hotScore": 6.231288616725039,
       "title": "PA-EX-2 - 活尸 一摆到底版",
       "stageName": "act51side_ex02",
@@ -11132,7 +11132,7 @@
     {
       "id": 90561,
       "uploadTime": "2026-04-15T00:26:45",
-      "views": 21585,
+      "views": 21587,
       "hotScore": 6.3225699609969555,
       "title": "PA-EX-1 - 在底层 一摆到底版",
       "stageName": "act51side_ex01",
@@ -11289,7 +11289,7 @@
     {
       "id": 90483,
       "uploadTime": "2026-04-15T00:41:50",
-      "views": 64045,
+      "views": 64046,
       "hotScore": 0.07573464985580307,
       "title": "PA-EX-7 - 乐观的悲剧 兼容一摆到底",
       "stageName": "act51side_ex07",
@@ -11354,7 +11354,7 @@
     {
       "id": 90482,
       "uploadTime": "2026-04-15T00:40:45",
-      "views": 50863,
+      "views": 50864,
       "hotScore": 0.07292314768001863,
       "title": "PA-EX-6 - 钦差大臣 兼容一摆到底",
       "stageName": "act51side_ex06",
@@ -11401,7 +11401,7 @@
     {
       "id": 90479,
       "uploadTime": "2026-04-15T00:40:58",
-      "views": 47430,
+      "views": 47431,
       "hotScore": 7.209230118032852,
       "title": "PA-EX-5 - 三姐妹 兼容一摆到底",
       "stageName": "act51side_ex05",
@@ -11439,7 +11439,7 @@
     {
       "id": 90471,
       "uploadTime": "2026-04-15T00:24:59",
-      "views": 41225,
+      "views": 41226,
       "hotScore": 0.07045154661973639,
       "title": "PA-EX-4",
       "stageName": "act51side_ex04",
@@ -11501,7 +11501,7 @@
     {
       "id": 90465,
       "uploadTime": "2026-04-15T00:25:15",
-      "views": 37064,
+      "views": 37066,
       "hotScore": 6.922752095488478,
       "title": "PA-EX-3",
       "stageName": "act51side_ex03",
@@ -11601,7 +11601,7 @@
     {
       "id": 90459,
       "uploadTime": "2026-04-15T00:25:51",
-      "views": 37961,
+      "views": 37962,
       "hotScore": 6.9501152642883675,
       "title": "PA-EX-1",
       "stageName": "act51side_ex01",
@@ -11630,7 +11630,7 @@
     {
       "id": 89944,
       "uploadTime": "2026-04-07T18:54:25",
-      "views": 17001,
+      "views": 17002,
       "hotScore": 0.060061819235084996,
       "title": "PA-8 - 一摆到底版",
       "stageName": "act51side_08",
@@ -11677,7 +11677,7 @@
     {
       "id": 89941,
       "uploadTime": "2026-04-07T16:11:12",
-      "views": 13763,
+      "views": 13764,
       "hotScore": 0.057829009970577105,
       "title": "PA-7 - 一摆到底版",
       "stageName": "act51side_07",
@@ -11724,7 +11724,7 @@
     {
       "id": 89939,
       "uploadTime": "2026-04-07T16:08:34",
-      "views": 14847,
+      "views": 14848,
       "hotScore": 0.05862729804512987,
       "title": "PA-6 - 一摆到底版",
       "stageName": "act51side_06",
@@ -11762,7 +11762,7 @@
     {
       "id": 89934,
       "uploadTime": "2026-04-07T15:51:33",
-      "views": 13025,
+      "views": 13026,
       "hotScore": 0.05725054419366412,
       "title": "PA-5 - 一摆到底版",
       "stageName": "act51side_05",
@@ -11809,7 +11809,7 @@
     {
       "id": 89931,
       "uploadTime": "2026-04-07T15:48:28",
-      "views": 11815,
+      "views": 11816,
       "hotScore": 0.05622983915426841,
       "title": "PA-4 - 一摆到底版",
       "stageName": "act51side_04",
@@ -11856,7 +11856,7 @@
     {
       "id": 89930,
       "uploadTime": "2026-04-07T15:46:04",
-      "views": 13892,
+      "views": 13893,
       "hotScore": 0.05792708077719921,
       "title": "PA-3 - 一摆到底版",
       "stageName": "act51side_03",
@@ -11903,7 +11903,7 @@
     {
       "id": 89928,
       "uploadTime": "2026-04-07T18:24:59",
-      "views": 13828,
+      "views": 13829,
       "hotScore": 0.057878534278604336,
       "title": "PA-2 - 一摆到底版",
       "stageName": "act51side_02",
@@ -12146,7 +12146,7 @@
     {
       "id": 89916,
       "uploadTime": "2026-04-07T15:33:52",
-      "views": 21586,
+      "views": 21587,
       "hotScore": 0.06261936195537543,
       "title": "PA-3 - 新版",
       "stageName": "act51side_03",
@@ -12175,7 +12175,7 @@
     {
       "id": 89900,
       "uploadTime": "2026-04-07T14:15:50",
-      "views": 31772,
+      "views": 31773,
       "hotScore": 0.066862025638312,
       "title": "PA-TR-1 - ",
       "stageName": "act51side_tr01",
@@ -12185,7 +12185,7 @@
     {
       "id": 89894,
       "uploadTime": "2026-04-07T15:32:35",
-      "views": 9912,
+      "views": 9913,
       "hotScore": 0.054404003464241936,
       "title": "PA-8 - 初版",
       "stageName": "act51side_08",
@@ -12443,7 +12443,7 @@
     {
       "id": 89860,
       "uploadTime": "2026-04-07T19:49:46",
-      "views": 40941,
+      "views": 40943,
       "hotScore": 0.06973708430243661,
       "title": "PA-1 - 兼容一摆到底",
       "stageName": "act51side_01",
@@ -13027,7 +13027,7 @@
     {
       "id": 86500,
       "uploadTime": "2026-03-06T11:02:42",
-      "views": 13760,
+      "views": 13762,
       "hotScore": 0.05568569959849093,
       "title": "VEC-SP15 - 殊途同归",
       "stageName": "act2break_sp15",
@@ -13045,7 +13045,7 @@
     {
       "id": 86498,
       "uploadTime": "2026-03-06T11:02:52",
-      "views": 13639,
+      "views": 13642,
       "hotScore": 0.05559347140707988,
       "title": "VEC-SP12 - 水土不服",
       "stageName": "act2break_sp14",
@@ -13070,7 +13070,7 @@
     {
       "id": 86038,
       "uploadTime": "2026-03-06T11:03:02",
-      "views": 25713,
+      "views": 25806,
       "hotScore": 6.232021910915879,
       "title": "VEC-D - 认知剥离界域",
       "stageName": "act2break_h04",
@@ -13153,7 +13153,7 @@
     {
       "id": 86009,
       "uploadTime": "2026-03-03T20:13:31",
-      "views": 26366,
+      "views": 26426,
       "hotScore": 6.2096139358520475,
       "title": "VEC-C - 自适应悖论",
       "stageName": "act2break_h03",
@@ -13218,7 +13218,7 @@
     {
       "id": 85989,
       "uploadTime": "2026-03-04T20:40:31",
-      "views": 23442,
+      "views": 23465,
       "hotScore": 6.132519785516809,
       "title": "VEC-B - 十九号车道",
       "stageName": "act2break_h02",
@@ -13301,7 +13301,7 @@
     {
       "id": 85968,
       "uploadTime": "2026-03-03T19:01:00",
-      "views": 27055,
+      "views": 27072,
       "hotScore": 6.237770818077445,
       "title": "VEC-A - 可变性方程",
       "stageName": "act2break_h01",
@@ -13357,7 +13357,7 @@
     {
       "id": 85960,
       "uploadTime": "2026-03-03T19:00:27",
-      "views": 17170,
+      "views": 17171,
       "hotScore": 0.057522522131137954,
       "title": "VEC-SP11 - 过度狂热",
       "stageName": "act2break_sp13",
@@ -13386,7 +13386,7 @@
     {
       "id": 85952,
       "uploadTime": "2026-03-03T19:00:04",
-      "views": 19472,
+      "views": 19485,
       "hotScore": 0.05885205342337895,
       "title": "VEC-SP10 - 狭岸相逢",
       "stageName": "act2break_sp12",
@@ -13406,7 +13406,7 @@
     {
       "id": 85950,
       "uploadTime": "2026-03-03T18:59:33",
-      "views": 18212,
+      "views": 18216,
       "hotScore": 0.05814425505676946,
       "title": "VEC-SP09 - 向死而生",
       "stageName": "act2break_sp11",
@@ -13433,7 +13433,7 @@
     {
       "id": 85947,
       "uploadTime": "2026-03-03T18:57:26",
-      "views": 17830,
+      "views": 17835,
       "hotScore": 0.057919742582570446,
       "title": "VEC-SP08 - 速递怪谈",
       "stageName": "act2break_sp10",
@@ -13478,7 +13478,7 @@
     {
       "id": 85642,
       "uploadTime": "2026-03-03T18:58:44",
-      "views": 18468,
+      "views": 18515,
       "hotScore": 5.829069741554847,
       "title": "VEC-SP14 - 刺骨苦难",
       "stageName": "act2break_sp09",
@@ -13522,7 +13522,7 @@
     {
       "id": 85640,
       "uploadTime": "2026-03-03T18:58:24",
-      "views": 19785,
+      "views": 19805,
       "hotScore": 5.902184488041798,
       "title": "VEC-SP13 - 南辕北辙",
       "stageName": "act2break_sp08",
@@ -13574,7 +13574,7 @@
     {
       "id": 85635,
       "uploadTime": "2026-03-03T18:58:07",
-      "views": 17816,
+      "views": 17829,
       "hotScore": 5.7910857032140886,
       "title": "VEC-SP07 - 慧眼如炬",
       "stageName": "act2break_sp07",
@@ -13605,7 +13605,7 @@
     {
       "id": 85061,
       "uploadTime": "2026-03-06T23:06:49",
-      "views": 41758,
+      "views": 41764,
       "hotScore": 5.281689525608607,
       "title": "VEC-12 - 维度误导 看简介",
       "stageName": "act2break_12",
@@ -13687,7 +13687,7 @@
     {
       "id": 85059,
       "uploadTime": "2026-03-06T23:06:09",
-      "views": 36171,
+      "views": 36202,
       "hotScore": 6.6072936224784495,
       "title": "VEC-08 - 脉冲隔绝术",
       "stageName": "act2break_08",
@@ -13771,7 +13771,7 @@
     {
       "id": 85055,
       "uploadTime": "2026-03-06T23:06:36",
-      "views": 33526,
+      "views": 33548,
       "hotScore": 5.77566530076723,
       "title": "VEC-11 - 生人勿近",
       "stageName": "act2break_11",
@@ -13818,7 +13818,7 @@
     {
       "id": 85054,
       "uploadTime": "2026-03-06T23:06:26",
-      "views": 31490,
+      "views": 31496,
       "hotScore": 6.453667710843925,
       "title": "VEC-10 - 涣散喧嚣",
       "stageName": "act2break_10",
@@ -13865,7 +13865,7 @@
     {
       "id": 85053,
       "uploadTime": "2026-03-06T23:06:17",
-      "views": 32413,
+      "views": 32437,
       "hotScore": 6.045183872866467,
       "title": "VEC-09 - 紧急逃生",
       "stageName": "act2break_09",
@@ -13950,7 +13950,7 @@
     {
       "id": 84977,
       "uploadTime": "2026-03-06T23:05:41",
-      "views": 25410,
+      "views": 25412,
       "hotScore": 0.062195275698372576,
       "title": "VEC-06 - 灰烬游行团",
       "stageName": "act2break_06",
@@ -14114,7 +14114,7 @@
     {
       "id": 84964,
       "uploadTime": "2026-03-06T23:05:05",
-      "views": 24724,
+      "views": 24725,
       "hotScore": 0.06189946301076406,
       "title": "VEC-02 - 高心率追逐",
       "stageName": "act2break_02",
@@ -14152,7 +14152,7 @@
     {
       "id": 84960,
       "uploadTime": "2026-02-25T21:12:39",
-      "views": 19557,
+      "views": 19563,
       "hotScore": 0.05889881191814923,
       "title": "VEC-SP06 - 躁动冲刺",
       "stageName": "act2break_sp06",
@@ -14200,7 +14200,7 @@
     {
       "id": 84958,
       "uploadTime": "2026-02-25T21:01:52",
-      "views": 18102,
+      "views": 18103,
       "hotScore": 0.058080234676093905,
       "title": "VEC-SP05 - 污染危机",
       "stageName": "act2break_sp05",
@@ -14264,7 +14264,7 @@
     {
       "id": 84951,
       "uploadTime": "2026-02-24T23:50:15",
-      "views": 19449,
+      "views": 19450,
       "hotScore": 0.058368655953269434,
       "title": "VEC-SP03 - 心中一泓",
       "stageName": "act2break_sp03",
@@ -14293,7 +14293,7 @@
     {
       "id": 84949,
       "uploadTime": "2026-02-24T23:49:59",
-      "views": 19983,
+      "views": 19984,
       "hotScore": 0.058655700343833085,
       "title": "VEC-SP02 - 物归原主",
       "stageName": "act2break_sp02",
@@ -14318,7 +14318,7 @@
     {
       "id": 84948,
       "uploadTime": "2026-02-24T23:49:47",
-      "views": 20499,
+      "views": 20500,
       "hotScore": 0.05892627863114544,
       "title": "VEC-SP01 - 自有方圆",
       "stageName": "act2break_sp01",
@@ -14338,7 +14338,7 @@
     {
       "id": 84946,
       "uploadTime": "2026-02-24T23:49:30",
-      "views": 21151,
+      "views": 21152,
       "hotScore": 0.05925914701921988,
       "title": "VEC-01 - 此面朝上",
       "stageName": "act2break_01",
@@ -16180,7 +16180,7 @@
     {
       "id": 82972,
       "uploadTime": "2026-02-09T08:42:37",
-      "views": 9024,
+      "views": 9029,
       "hotScore": 4.94982455605098,
       "title": "卡兹戴尔 - 炽灼车间 - 炽灼车间 老干员",
       "stageName": "camp_r_31",
@@ -16277,7 +16277,7 @@
     {
       "id": 82968,
       "uploadTime": "2026-02-09T08:29:16",
-      "views": 43040,
+      "views": 43051,
       "hotScore": 6.609229256963857,
       "title": "卡兹戴尔 - 炽灼车间 - 炽灼车间",
       "stageName": "camp_r_31",
@@ -16348,7 +16348,7 @@
     {
       "id": 81138,
       "uploadTime": "2026-01-17T08:30:30",
-      "views": 44995,
+      "views": 44996,
       "hotScore": 0.06530293815940844,
       "title": "ME-EX-8 一摆到底版",
       "stageName": "act48side_ex08",
@@ -17657,7 +17657,7 @@
     {
       "id": 80432,
       "uploadTime": "2026-01-09T15:46:01",
-      "views": 37241,
+      "views": 37242,
       "hotScore": 0.06281018772433827,
       "title": "ME-4 - 失手 兼容一摆到底",
       "stageName": "act48side_04",
@@ -18044,7 +18044,7 @@
     {
       "id": 78583,
       "uploadTime": "2025-12-31T20:27:22",
-      "views": 36783,
+      "views": 36784,
       "hotScore": 6.228979062178861,
       "title": "TN-3 - 荒沙剑影 恢宏 带三级精密聚焦",
       "stageName": "act6bossrush_tm03",
@@ -18390,7 +18390,7 @@
     {
       "id": 77958,
       "uploadTime": "2025-12-19T10:35:43",
-      "views": 14521,
+      "views": 14522,
       "hotScore": 0.051729057688262456,
       "title": "EP-8 - 见证，征服，定义 一摆到底版",
       "stageName": "act39side_08",
@@ -18974,7 +18974,7 @@
     {
       "id": 77949,
       "uploadTime": "2025-12-19T20:56:16",
-      "views": 34614,
+      "views": 34618,
       "hotScore": 6.089408591970929,
       "title": "EP-EX-8 - 盐海尽头 一摆到底版",
       "stageName": "act39side_ex08",
@@ -19048,7 +19048,7 @@
     {
       "id": 77948,
       "uploadTime": "2025-12-19T10:09:25",
-      "views": 12488,
+      "views": 12490,
       "hotScore": 0.05017237598300299,
       "title": "EP-EX-7 - 盐船残骸 一摆到底版",
       "stageName": "act39side_ex07",
@@ -19122,7 +19122,7 @@
     {
       "id": 77947,
       "uploadTime": "2025-12-19T10:06:11",
-      "views": 9430,
+      "views": 9432,
       "hotScore": 4.729084559351582,
       "title": "EP-EX-6 - 盐鳞坟场 一摆到底版",
       "stageName": "act39side_ex06",
@@ -19196,7 +19196,7 @@
     {
       "id": 77944,
       "uploadTime": "2025-12-19T09:24:48",
-      "views": 10236,
+      "views": 10238,
       "hotScore": 0.04813018428622806,
       "title": "EP-EX-5 - 星河水镜 一摆到底版",
       "stageName": "act39side_ex05",
@@ -19418,7 +19418,7 @@
     {
       "id": 77938,
       "uploadTime": "2025-12-19T09:16:00",
-      "views": 10017,
+      "views": 10018,
       "hotScore": 4.790869731383462,
       "title": "EP-EX-2 - 陆港遗迹 一摆到底版",
       "stageName": "act39side_ex02",
@@ -19492,7 +19492,7 @@
     {
       "id": 77936,
       "uploadTime": "2025-12-19T09:13:26",
-      "views": 13095,
+      "views": 13096,
       "hotScore": 0.050661451311420816,
       "title": "EP-EX-1 - 雅隆旧址 一摆到底版",
       "stageName": "act39side_ex01",
@@ -19566,7 +19566,7 @@
     {
       "id": 77859,
       "uploadTime": "2025-12-21T11:27:58",
-      "views": 8596,
+      "views": 8598,
       "hotScore": 4.634499727200766,
       "title": "保全派驻_任务专用_8次术师招募_施佩尔山脚_冷爆机",
       "stageName": "施佩尔山脚",
@@ -19576,7 +19576,7 @@
     {
       "id": 77848,
       "uploadTime": "2025-12-21T11:28:29",
-      "views": 15057,
+      "views": 15060,
       "hotScore": 5.210429081094741,
       "title": "保全派驻_任务专用_施佩尔山脚_荒芜拉普兰德+圣聆初雪+浊心斯卡蒂_能量扰动放大器",
       "stageName": "施佩尔山脚",
@@ -19608,7 +19608,7 @@
     {
       "id": 77792,
       "uploadTime": "2025-12-21T11:28:52",
-      "views": 76964,
+      "views": 76967,
       "hotScore": 6.989321480860224,
       "title": "保全派驻_雷神工业测试平台_逻各斯+遥_便携式医疗设备",
       "stageName": "雷神工业测试平台",
@@ -19633,7 +19633,7 @@
     {
       "id": 77751,
       "uploadTime": "2025-12-21T11:29:08",
-      "views": 56957,
+      "views": 56962,
       "hotScore": 6.640644583693098,
       "title": "保全派驻_施佩尔山脚_逻各斯+圣聆初雪+浊心斯卡蒂_冷爆机",
       "stageName": "施佩尔山脚",
@@ -23694,7 +23694,7 @@
     {
       "id": 73209,
       "uploadTime": "2025-11-01T15:44:23",
-      "views": 5906,
+      "views": 5907,
       "hotScore": 0.04035105044235674,
       "title": "OS-7 - 焚心灼影 初版",
       "stageName": "act46side_07",
@@ -23983,7 +23983,7 @@
     {
       "id": 71754,
       "uploadTime": "2026-01-11T10:57:45",
-      "views": 6415,
+      "views": 6420,
       "hotScore": 4.4430479790664625,
       "title": "使用前看简介 反常光谱 - H16-4（标准） - 异常预案-4",
       "stageName": "hard_16-04",
@@ -24064,7 +24064,7 @@
     {
       "id": 71701,
       "uploadTime": "2025-10-16T22:30:19",
-      "views": 30493,
+      "views": 30500,
       "hotScore": 5.669106358347811,
       "title": "H16-3",
       "stageName": "hard_16-03",
@@ -24124,7 +24124,7 @@
     {
       "id": 71682,
       "uploadTime": "2025-10-17T12:13:39",
-      "views": 32528,
+      "views": 32531,
       "hotScore": 5.737702713968927,
       "title": "H16-2",
       "stageName": "hard_16-02",
@@ -24211,7 +24211,7 @@
     {
       "id": 71671,
       "uploadTime": "2025-10-16T22:26:41",
-      "views": 18627,
+      "views": 18635,
       "hotScore": 5.1529337916545845,
       "title": "反常光谱 - 16-16 自动险地版",
       "stageName": "main_16-15",
@@ -24314,7 +24314,7 @@
     {
       "id": 71667,
       "uploadTime": "2025-10-16T17:44:58",
-      "views": 31858,
+      "views": 31862,
       "hotScore": 5.715575612899839,
       "title": "H16-1",
       "stageName": "hard_16-01",
@@ -24367,7 +24367,7 @@
     {
       "id": 70788,
       "uploadTime": "2025-10-14T08:41:10",
-      "views": 14336,
+      "views": 14342,
       "hotScore": 4.855493446918667,
       "title": "反常光谱 16-18",
       "stageName": "main_16-17",
@@ -24377,7 +24377,7 @@
     {
       "id": 70769,
       "uploadTime": "2025-10-14T08:35:57",
-      "views": 17212,
+      "views": 17216,
       "hotScore": 5.043797151127783,
       "title": "反常光谱 16-9",
       "stageName": "main_16-08",
@@ -24387,7 +24387,7 @@
     {
       "id": 70768,
       "uploadTime": "2025-10-16T23:12:08",
-      "views": 41843,
+      "views": 41848,
       "hotScore": 6.007797525944026,
       "title": "反常光谱 - 16-17",
       "stageName": "main_16-16",
@@ -24461,7 +24461,7 @@
     {
       "id": 70765,
       "uploadTime": "2025-10-14T13:01:42",
-      "views": 31864,
+      "views": 31868,
       "hotScore": 5.687870821924374,
       "title": "由于地图等问题不建议使用，如需使用请看说明 反常光谱 - 16-16",
       "stageName": "main_16-15",
@@ -24542,7 +24542,7 @@
     {
       "id": 70757,
       "uploadTime": "2025-10-09T18:05:02",
-      "views": 48430,
+      "views": 48435,
       "hotScore": 6.138404431716616,
       "title": "反常光谱 - 16-15",
       "stageName": "main_16-14",
@@ -24588,7 +24588,7 @@
     {
       "id": 70751,
       "uploadTime": "2025-10-09T17:26:39",
-      "views": 44606,
+      "views": 44611,
       "hotScore": 6.048799508273397,
       "title": "反常光谱 - 16-14",
       "stageName": "main_16-13",
@@ -24634,7 +24634,7 @@
     {
       "id": 70750,
       "uploadTime": "2025-10-17T20:36:45",
-      "views": 53395,
+      "views": 53405,
       "hotScore": 6.274246266677505,
       "title": "反常光谱 - 16-13",
       "stageName": "main_16-12",
@@ -24707,7 +24707,7 @@
     {
       "id": 70723,
       "uploadTime": "2025-10-09T17:15:07",
-      "views": 50423,
+      "views": 50434,
       "hotScore": 6.18256508779721,
       "title": "反常光谱 - 16-12",
       "stageName": "main_16-11",
@@ -24760,7 +24760,7 @@
     {
       "id": 70722,
       "uploadTime": "2025-10-09T17:14:57",
-      "views": 50374,
+      "views": 50386,
       "hotScore": 6.28645215871094,
       "title": "反常光谱 - 16-11",
       "stageName": "main_16-10",
@@ -24831,7 +24831,7 @@
     {
       "id": 70721,
       "uploadTime": "2025-10-09T21:39:06",
-      "views": 48666,
+      "views": 48676,
       "hotScore": 6.248365817907336,
       "title": "反常光谱 - 16-10",
       "stageName": "main_16-09",
@@ -24876,7 +24876,7 @@
     {
       "id": 70720,
       "uploadTime": "2025-10-09T17:14:13",
-      "views": 51489,
+      "views": 51500,
       "hotScore": 6.2055145153422195,
       "title": "反常光谱 - 16-8",
       "stageName": "main_16-07",
@@ -24954,7 +24954,7 @@
     {
       "id": 70719,
       "uploadTime": "2025-10-09T17:13:34",
-      "views": 49852,
+      "views": 49862,
       "hotScore": 6.170056223996356,
       "title": "反常光谱 - 16-7",
       "stageName": "main_16-06",
@@ -25020,7 +25020,7 @@
     {
       "id": 70708,
       "uploadTime": "2025-10-09T17:13:24",
-      "views": 50074,
+      "views": 50083,
       "hotScore": 6.174926531350483,
       "title": "反常光谱 - 16-6",
       "stageName": "main_16-05",
@@ -25052,7 +25052,7 @@
     {
       "id": 70706,
       "uploadTime": "2025-10-09T17:13:14",
-      "views": 51366,
+      "views": 51376,
       "hotScore": 6.202886212738935,
       "title": "反常光谱 - 16-5",
       "stageName": "main_16-04",
@@ -25084,8 +25084,8 @@
     {
       "id": 70703,
       "uploadTime": "2025-10-09T21:46:16",
-      "views": 54598,
-      "hotScore": 6.270123526872473,
+      "views": 54606,
+      "hotScore": 6.564110950680734,
       "title": "反常光谱 - 16-4",
       "stageName": "main_16-03",
       "required": [
@@ -25129,7 +25129,7 @@
     {
       "id": 70702,
       "uploadTime": "2025-10-09T17:12:50",
-      "views": 58656,
+      "views": 58663,
       "hotScore": 6.3496212597976225,
       "title": "反常光谱 - 16-3",
       "stageName": "main_16-02",
@@ -25167,7 +25167,7 @@
     {
       "id": 70701,
       "uploadTime": "2025-10-09T21:42:34",
-      "views": 70392,
+      "views": 70399,
       "hotScore": 6.554599211029352,
       "title": "反常光谱 - 16-2",
       "stageName": "main_16-01",
@@ -26122,7 +26122,7 @@
     {
       "id": 67268,
       "uploadTime": "2025-09-04T22:36:56",
-      "views": 7327,
+      "views": 7329,
       "hotScore": 4.044210734183247,
       "title": "叙拉古人 - IS-7 - 何以忘却 丰川祥子模组任务",
       "stageName": "act21side_07",
@@ -27511,7 +27511,7 @@
     {
       "id": 66482,
       "uploadTime": "2025-08-29T11:39:45",
-      "views": 15226,
+      "views": 15231,
       "hotScore": 3.6493463252292093,
       "title": "全息作战矩阵 - H9-2（标准） - 暴风行动-2 15难",
       "stageName": "hard_09-02",
@@ -27590,7 +27590,7 @@
     {
       "id": 66467,
       "uploadTime": "2025-08-29T19:59:12",
-      "views": 17728,
+      "views": 17731,
       "hotScore": 4.213484434926272,
       "title": "全息作战矩阵 - H5-1 - 炼狱行动-1 15难",
       "stageName": "hard_05-01",
@@ -27686,7 +27686,7 @@
     {
       "id": 66464,
       "uploadTime": "2025-08-28T22:51:46",
-      "views": 9102,
+      "views": 9103,
       "hotScore": 4.24039081934338,
       "title": "全息作战矩阵 - 7-18 - 爱国者之死 15难 第二版",
       "stageName": "main_07-16",
@@ -27890,7 +27890,7 @@
     {
       "id": 66458,
       "uploadTime": "2025-08-28T22:48:48",
-      "views": 17621,
+      "views": 17626,
       "hotScore": 4.915675953370006,
       "title": "全息作战矩阵 - LS-4 - 特种战演习 15难",
       "stageName": "wk_kc_4",
@@ -27946,7 +27946,7 @@
     {
       "id": 66449,
       "uploadTime": "2025-08-28T22:52:00",
-      "views": 18100,
+      "views": 18105,
       "hotScore": 4.943322381124158,
       "title": "全息作战矩阵 - 7-18 - 爱国者之死 15难 第一版",
       "stageName": "main_07-16",
@@ -28188,7 +28188,7 @@
     {
       "id": 65571,
       "uploadTime": "2025-09-17T19:47:49",
-      "views": 43755,
+      "views": 43756,
       "hotScore": 5.946550428588775,
       "title": "*任务专用*-保全派驻-艺术馆旧址-维什戴尔-遥-能量扰动放大器",
       "stageName": "艺术馆旧址",
@@ -28298,7 +28298,7 @@
     {
       "id": 65534,
       "uploadTime": "2025-08-17T21:54:23",
-      "views": 11641,
+      "views": 11642,
       "hotScore": 4.444304327548349,
       "title": "AT-S-4 - 罪业 一摆到底版",
       "stageName": "act44side_s04",
@@ -28674,7 +28674,7 @@
     {
       "id": 65531,
       "uploadTime": "2025-08-17T21:16:34",
-      "views": 6686,
+      "views": 6687,
       "hotScore": 3.881528432946819,
       "title": "AT-S-2 - 祓雨 一摆到底版",
       "stageName": "act44side_s02",
@@ -28862,7 +28862,7 @@
     {
       "id": 65530,
       "uploadTime": "2025-08-17T21:12:04",
-      "views": 7877,
+      "views": 7879,
       "hotScore": 4.047444765670099,
       "title": "AT-S-1 - 神签 一摆到底版",
       "stageName": "act44side_s01",
@@ -29114,7 +29114,7 @@
     {
       "id": 65414,
       "uploadTime": "2025-08-16T22:24:29",
-      "views": 41990,
+      "views": 41991,
       "hotScore": 5.777784139645013,
       "title": "AT-S-4 - 罪业",
       "stageName": "act44side_s04",
@@ -29295,7 +29295,7 @@
     {
       "id": 65386,
       "uploadTime": "2025-08-16T19:40:52",
-      "views": 41323,
+      "views": 41325,
       "hotScore": 5.760660223963963,
       "title": "AT-S-3 - 逢魔",
       "stageName": "act44side_s03",
@@ -29368,7 +29368,7 @@
     {
       "id": 65373,
       "uploadTime": "2025-08-16T17:58:24",
-      "views": 53155,
+      "views": 53156,
       "hotScore": 6.032173152022814,
       "title": "AT-S-2 - 祓雨",
       "stageName": "act44side_s02",
@@ -29434,7 +29434,7 @@
     {
       "id": 65358,
       "uploadTime": "2025-08-16T17:04:20",
-      "views": 50162,
+      "views": 50163,
       "hotScore": 5.969230412886987,
       "title": "AT-S-1 - 神签",
       "stageName": "act44side_s01",
@@ -31802,7 +31802,7 @@
     {
       "id": 64500,
       "uploadTime": "2025-08-09T19:31:52",
-      "views": 42076,
+      "views": 42077,
       "hotScore": 0.05756544101020222,
       "title": "AT-EX-7 - 盛放的泡沫",
       "stageName": "act44side_ex07",
@@ -32373,7 +32373,7 @@
     {
       "id": 64044,
       "uploadTime": "2025-08-03T11:38:41",
-      "views": 3084,
+      "views": 3114,
       "hotScore": 3.057090360347825,
       "title": "多索雷斯假日·复刻 - DH-7 - 沙滩阻击 水陈二模模组任务",
       "stageName": "act12side_07",
@@ -32425,7 +32425,7 @@
     {
       "id": 64040,
       "uploadTime": "2025-08-03T11:35:13",
-      "views": 8308,
+      "views": 8310,
       "hotScore": 4.0568335368125155,
       "title": "第七章 苦难摇篮 - 7-14 - 游击-1 遥模组任务",
       "stageName": "main_07-12",
@@ -34481,7 +34481,7 @@
     {
       "id": 60720,
       "uploadTime": "2025-06-25T10:13:39",
-      "views": 42206,
+      "views": 42208,
       "hotScore": 5.628000818499476,
       "title": "引航者试炼 - TN-3 - 定向恢宏试炼",
       "stageName": "act5bossrush_03",
@@ -36787,7 +36787,7 @@
     {
       "id": 59395,
       "uploadTime": "2025-06-05T21:16:02",
-      "views": 21354,
+      "views": 21356,
       "hotScore": 0.04855984968310221,
       "title": "AD-TR-1 - ",
       "stageName": "act43side_tr01",
@@ -37384,7 +37384,7 @@
     {
       "id": 57622,
       "uploadTime": "2025-05-25T13:28:30",
-      "views": 3358,
+      "views": 3360,
       "hotScore": 0.029429651447673292,
       "title": "VEC-08 - 结构化思维 新版",
       "stageName": "act1break_08",
@@ -37423,7 +37423,7 @@
     {
       "id": 57617,
       "uploadTime": "2025-05-25T13:14:11",
-      "views": 2577,
+      "views": 2578,
       "hotScore": 0.026771607955599862,
       "title": "VEC-09 - 心碎沙堡 新版",
       "stageName": "act1break_09",
@@ -37455,7 +37455,7 @@
     {
       "id": 57616,
       "uploadTime": "2025-05-25T13:09:07",
-      "views": 2333,
+      "views": 2335,
       "hotScore": 0.025773509680401624,
       "title": "VEC-10 - 夹道欢迎 新版",
       "stageName": "act1break_10",
@@ -37501,7 +37501,7 @@
     {
       "id": 57609,
       "uploadTime": "2025-05-25T12:57:01",
-      "views": 2565,
+      "views": 2566,
       "hotScore": 0.02672476675845824,
       "title": "VEC-11 - 寒暑不分 新版",
       "stageName": "act1break_11",
@@ -37540,7 +37540,7 @@
     {
       "id": 57606,
       "uploadTime": "2025-05-25T12:49:00",
-      "views": 4439,
+      "views": 4441,
       "hotScore": 0.03223550100852767,
       "title": "VEC-12 - 存在性论证 新版",
       "stageName": "act1break_12",
@@ -37593,7 +37593,7 @@
     {
       "id": 57601,
       "uploadTime": "2025-05-25T12:18:40",
-      "views": 4517,
+      "views": 4519,
       "hotScore": 3.24107736500667,
       "title": "VEC-A - 热情逼人 新版",
       "stageName": "act1break_h01",
@@ -37632,7 +37632,7 @@
     {
       "id": 57598,
       "uploadTime": "2025-05-25T12:13:07",
-      "views": 4736,
+      "views": 4737,
       "hotScore": 3.288726372582574,
       "title": "VEC-B - 车轮滚滚 新版",
       "stageName": "act1break_h02",
@@ -37671,7 +37671,7 @@
     {
       "id": 57591,
       "uploadTime": "2025-05-25T11:47:49",
-      "views": 6635,
+      "views": 6636,
       "hotScore": 3.62852964278504,
       "title": "VEC-D - 有限性原理 新版",
       "stageName": "act1break_h04",
@@ -37772,7 +37772,7 @@
     {
       "id": 57580,
       "uploadTime": "2025-05-25T12:59:10",
-      "views": 6631,
+      "views": 6634,
       "hotScore": 3.6279210418320442,
       "title": "VEC-C - 思绪倒影 新版",
       "stageName": "act1break_h03",
@@ -37891,7 +37891,7 @@
     {
       "id": 57545,
       "uploadTime": "2025-05-25T17:04:42",
-      "views": 12107,
+      "views": 12109,
       "hotScore": 0.04237554772726473,
       "title": "VEC-SP15 - 墙开一面 提丰鸿雪",
       "stageName": "act1break_sp15",
@@ -37941,7 +37941,7 @@
     {
       "id": 56947,
       "uploadTime": "2025-05-23T11:20:49",
-      "views": 12537,
+      "views": 12546,
       "hotScore": 4.272971313387922,
       "title": "VEC-D - 有限性原理",
       "stageName": "act1break_h04",
@@ -38022,7 +38022,7 @@
     {
       "id": 56871,
       "uploadTime": "2025-05-26T08:03:54",
-      "views": 3766,
+      "views": 3767,
       "hotScore": 3.058199683013608,
       "title": "VEC-D 有限性原理 初版不建议使用",
       "stageName": "act1break_h04",
@@ -38124,7 +38124,7 @@
     {
       "id": 56862,
       "uploadTime": "2025-05-23T09:32:40",
-      "views": 21196,
+      "views": 21219,
       "hotScore": 4.810061357919751,
       "title": "VEC-C 思绪倒影",
       "stageName": "act1break_h03",
@@ -38205,7 +38205,7 @@
     {
       "id": 56846,
       "uploadTime": "2025-05-23T01:06:47",
-      "views": 13582,
+      "views": 13583,
       "hotScore": 4.35456497280358,
       "title": "VEC-B - 车轮滚滚",
       "stageName": "act1break_h02",
@@ -38265,7 +38265,7 @@
     {
       "id": 56842,
       "uploadTime": "2025-05-22T21:39:32",
-      "views": 16246,
+      "views": 16249,
       "hotScore": 4.537303366344155,
       "title": "VEC-A - 热情逼人",
       "stageName": "act1break_h01",
@@ -38419,7 +38419,7 @@
     {
       "id": 56788,
       "uploadTime": "2025-05-22T19:56:49",
-      "views": 16705,
+      "views": 16710,
       "hotScore": 0.04565865161920701,
       "title": "VEC-SP13 - 巫术汇演",
       "stageName": "act1break_sp13",
@@ -38589,7 +38589,7 @@
     {
       "id": 56740,
       "uploadTime": "2025-05-22T18:28:38",
-      "views": 10001,
+      "views": 10005,
       "hotScore": 0.04043531062995248,
       "title": "VEC-SP10 - 行色匆匆",
       "stageName": "act1break_sp10",
@@ -38614,7 +38614,7 @@
     {
       "id": 56739,
       "uploadTime": "2025-05-22T18:28:29",
-      "views": 11634,
+      "views": 11637,
       "hotScore": 0.04197045876044994,
       "title": "VEC-SP09 - 风尘仆仆",
       "stageName": "act1break_sp09",
@@ -38632,7 +38632,7 @@
     {
       "id": 56030,
       "uploadTime": "2025-05-19T15:39:58",
-      "views": 13265,
+      "views": 13266,
       "hotScore": 0.04312041926750819,
       "title": "VEC-SP08 - 风险投资",
       "stageName": "act1break_sp08",
@@ -38689,7 +38689,7 @@
     {
       "id": 56028,
       "uploadTime": "2025-05-19T15:19:20",
-      "views": 12200,
+      "views": 12202,
       "hotScore": 0.04226806646355115,
       "title": "VEC-SP06 - 择人而噬",
       "stageName": "act1break_sp06",
@@ -38732,7 +38732,7 @@
     {
       "id": 54661,
       "uploadTime": "2025-05-17T12:39:28",
-      "views": 29739,
+      "views": 29742,
       "hotScore": 0.05141939378167658,
       "title": "VEC-12 - 存在性论证",
       "stageName": "act1break_12",
@@ -38820,7 +38820,7 @@
     {
       "id": 54652,
       "uploadTime": "2025-05-16T10:09:08",
-      "views": 20211,
+      "views": 20212,
       "hotScore": 0.047426550183008995,
       "title": "VEC-11 - 寒暑不分",
       "stageName": "act1break_11",
@@ -38894,7 +38894,7 @@
     {
       "id": 54649,
       "uploadTime": "2025-05-16T10:04:14",
-      "views": 20689,
+      "views": 20693,
       "hotScore": 0.04766684960236422,
       "title": "VEC-10 - 夹道欢迎",
       "stageName": "act1break_10",
@@ -38967,7 +38967,7 @@
     {
       "id": 54646,
       "uploadTime": "2025-05-16T09:57:27",
-      "views": 23179,
+      "views": 23180,
       "hotScore": 0.048837404574214656,
       "title": "VEC-09 - 心碎沙堡",
       "stageName": "act1break_09",
@@ -39038,7 +39038,7 @@
     {
       "id": 54644,
       "uploadTime": "2025-05-16T10:29:21",
-      "views": 22073,
+      "views": 22075,
       "hotScore": 0.04833333834744849,
       "title": "VEC-08 - 结构化思维",
       "stageName": "act1break_08",
@@ -39443,7 +39443,7 @@
     {
       "id": 54577,
       "uploadTime": "2025-05-16T09:22:04",
-      "views": 28801,
+      "views": 28805,
       "hotScore": 0.05108605239703259,
       "title": "VEC-02 - 交通拦截",
       "stageName": "act1break_02",
@@ -39488,7 +39488,7 @@
     {
       "id": 54562,
       "uploadTime": "2026-05-22T20:02:14",
-      "views": 60806,
+      "views": 60809,
       "hotScore": 7.991908813266089,
       "title": "MT-S-5 - 授律圣事",
       "stageName": "act42side_s05",
@@ -39662,7 +39662,7 @@
     {
       "id": 54518,
       "uploadTime": "2025-05-16T20:45:15",
-      "views": 13080,
+      "views": 13082,
       "hotScore": 0.04297743860532635,
       "title": "VEC-SP05 - 啮齿狂潮 单令",
       "stageName": "act1break_sp05",
@@ -39680,7 +39680,7 @@
     {
       "id": 54517,
       "uploadTime": "2025-05-16T19:50:51",
-      "views": 15689,
+      "views": 15690,
       "hotScore": 0.04483193316957142,
       "title": "VEC-SP04 - 啮齿出洞",
       "stageName": "act1break_sp04",
@@ -39712,7 +39712,7 @@
     {
       "id": 54516,
       "uploadTime": "2025-05-16T03:05:47",
-      "views": 13604,
+      "views": 13606,
       "hotScore": 0.0433774118986771,
       "title": "VEC-SP03 - 火力掩护",
       "stageName": "act1break_sp03",
@@ -39755,7 +39755,7 @@
     {
       "id": 54514,
       "uploadTime": "2025-05-15T23:07:11",
-      "views": 13691,
+      "views": 13699,
       "hotScore": 0.04344235183456571,
       "title": "VEC-SP01 - 何必匆忙",
       "stageName": "act1break_sp01",
@@ -39940,7 +39940,7 @@
     {
       "id": 54501,
       "uploadTime": "2025-05-16T11:49:56",
-      "views": 49393,
+      "views": 49399,
       "hotScore": 5.676212063868588,
       "title": "MT-S-4 突袭",
       "stageName": "act42side_s04",
@@ -40007,7 +40007,7 @@
     {
       "id": 54499,
       "uploadTime": "2025-05-16T11:49:45",
-      "views": 38385,
+      "views": 38386,
       "hotScore": 5.408990656345088,
       "title": "MT-S-4 普通",
       "stageName": "act42side_s04",
@@ -40241,7 +40241,7 @@
     {
       "id": 54432,
       "uploadTime": "2025-05-16T02:13:27",
-      "views": 58132,
+      "views": 58134,
       "hotScore": 5.851090869760657,
       "title": "MT-S-2 - 布道演习",
       "stageName": "act42side_s02",
@@ -40328,7 +40328,7 @@
     {
       "id": 54423,
       "uploadTime": "2025-05-16T02:13:14",
-      "views": 51543,
+      "views": 51545,
       "hotScore": 5.721764966347413,
       "title": "MT-S-3 - 全民阅兵",
       "stageName": "act42side_s03",
@@ -40388,7 +40388,7 @@
     {
       "id": 54412,
       "uploadTime": "2025-05-16T02:13:00",
-      "views": 58976,
+      "views": 58982,
       "hotScore": 5.866661328867708,
       "title": "MT-S-1 - 甜品展会",
       "stageName": "act42side_s01",
@@ -40526,7 +40526,7 @@
     {
       "id": 54410,
       "uploadTime": "2025-05-25T15:02:07",
-      "views": 25671,
+      "views": 25672,
       "hotScore": 0.050079718139937855,
       "title": "VEC-01 - 横冲直进",
       "stageName": "act1break_01",
@@ -40551,7 +40551,7 @@
     {
       "id": 54407,
       "uploadTime": "2025-05-16T02:12:17",
-      "views": 16528,
+      "views": 16529,
       "hotScore": 4.536438714552098,
       "title": "MT-S-1 - 甜品展会初版",
       "stageName": "act42side_s01",
@@ -41105,7 +41105,7 @@
     {
       "id": 52895,
       "uploadTime": "2025-05-09T00:36:08",
-      "views": 62115,
+      "views": 62116,
       "hotScore": 0.05903728723037052,
       "title": "MT-EX-8 - “拉特兰拼图” 兼容一摆到底",
       "stageName": "act42side_ex08",
@@ -41158,7 +41158,7 @@
     {
       "id": 52838,
       "uploadTime": "2025-05-08T19:11:26",
-      "views": 43208,
+      "views": 43209,
       "hotScore": 0.055152168806620015,
       "title": "MT-EX-3 - 万众圣餐厅",
       "stageName": "act42side_ex03",
@@ -41396,7 +41396,7 @@
     {
       "id": 52811,
       "uploadTime": "2025-05-08T19:21:35",
-      "views": 54208,
+      "views": 54209,
       "hotScore": 0.05756884581265866,
       "title": "MT-EX-6 - 信仰蒸馏房",
       "stageName": "act42side_ex06",
@@ -41467,7 +41467,7 @@
     {
       "id": 52803,
       "uploadTime": "2025-05-08T19:12:56",
-      "views": 55704,
+      "views": 55705,
       "hotScore": 0.05786129661498144,
       "title": "MT-EX-5 - 圣徒祈祷区",
       "stageName": "act42side_ex05",
@@ -41526,7 +41526,7 @@
     {
       "id": 52799,
       "uploadTime": "2025-05-08T19:12:23",
-      "views": 52269,
+      "views": 52270,
       "hotScore": 0.057178392730748845,
       "title": "MT-EX-4 - 羽兽栖脚台",
       "stageName": "act42side_ex04",
@@ -41617,7 +41617,7 @@
     {
       "id": 52792,
       "uploadTime": "2025-05-09T22:02:09",
-      "views": 54778,
+      "views": 54779,
       "hotScore": 0.05768115005999921,
       "title": "MT-EX-2 - 甜梦大会堂",
       "stageName": "act42side_ex02",
@@ -41709,7 +41709,7 @@
     {
       "id": 52788,
       "uploadTime": "2025-05-08T20:25:34",
-      "views": 63887,
+      "views": 63888,
       "hotScore": 0.05934251709772686,
       "title": "MT-EX-1 - 萨科塔生态园",
       "stageName": "act42side_ex01",
@@ -41813,7 +41813,7 @@
     {
       "id": 51881,
       "uploadTime": "2025-05-02T16:11:00",
-      "views": 20126,
+      "views": 20134,
       "hotScore": 4.701924879472354,
       "title": "11-15 - 土地震颤 - 玛恩纳模组",
       "stageName": "main_11-13",
@@ -41859,7 +41859,7 @@
     {
       "id": 51880,
       "uploadTime": "2025-05-02T15:51:18",
-      "views": 19331,
+      "views": 19348,
       "hotScore": 4.660560349387966,
       "title": "13-13 - 骸骨之中 - 蕾缪安模组",
       "stageName": "main_13-11",
@@ -41891,7 +41891,7 @@
     {
       "id": 51876,
       "uploadTime": "2025-05-02T15:47:03",
-      "views": 2701,
+      "views": 2702,
       "hotScore": 2.6703521309782055,
       "title": "GA-EX-5 - 年轮卷 - 新约能天使模组任务",
       "stageName": "act16side_ex05",
@@ -42606,7 +42606,7 @@
     {
       "id": 51560,
       "uploadTime": "2025-05-02T18:49:41",
-      "views": 39364,
+      "views": 39365,
       "hotScore": 0.05398465749204466,
       "title": "MT-8+任务",
       "stageName": "act42side_08",
@@ -42691,7 +42691,7 @@
     {
       "id": 51558,
       "uploadTime": "2025-05-03T14:53:02",
-      "views": 31229,
+      "views": 31230,
       "hotScore": 0.051561145397902644,
       "title": "MT-7+任务",
       "stageName": "act42side_07",
@@ -42802,7 +42802,7 @@
     {
       "id": 51554,
       "uploadTime": "2025-05-01T18:25:23",
-      "views": 26726,
+      "views": 26727,
       "hotScore": 0.04994400263859929,
       "title": "MT-6",
       "stageName": "act42side_06",
@@ -42938,7 +42938,7 @@
     {
       "id": 51548,
       "uploadTime": "2025-05-01T18:24:50",
-      "views": 20335,
+      "views": 20336,
       "hotScore": 0.04712585595526915,
       "title": "MT-3",
       "stageName": "act42side_03",
@@ -43000,7 +43000,7 @@
     {
       "id": 51544,
       "uploadTime": "2025-05-01T18:24:16",
-      "views": 23072,
+      "views": 23073,
       "hotScore": 0.048425111506035984,
       "title": "MT-1",
       "stageName": "act42side_01",
@@ -43025,7 +43025,7 @@
     {
       "id": 51242,
       "uploadTime": "2025-04-28T19:58:24",
-      "views": 5184,
+      "views": 5186,
       "hotScore": 3.3081121977112202,
       "title": "萨尔贡 - 大巴扎 - 大巴扎 天有四时豪华版",
       "stageName": "camp_r_28",
@@ -43098,7 +43098,7 @@
     {
       "id": 51227,
       "uploadTime": "2025-04-28T07:49:01",
-      "views": 21588,
+      "views": 21593,
       "hotScore": 4.756257053943959,
       "title": "萨尔贡 - 大巴扎 - 大巴扎 老干员",
       "stageName": "camp_r_28",
@@ -43192,7 +43192,7 @@
     {
       "id": 51224,
       "uploadTime": "2025-04-28T06:36:06",
-      "views": 37074,
+      "views": 37079,
       "hotScore": 5.317411680283933,
       "title": "萨尔贡 - 大巴扎 - 大巴扎 又老又新",
       "stageName": "camp_r_28",
@@ -43284,7 +43284,7 @@
     {
       "id": 51223,
       "uploadTime": "2025-04-28T11:36:07",
-      "views": 7849,
+      "views": 7850,
       "hotScore": 3.7264279527532915,
       "title": "萨尔贡 - 大巴扎 - 大巴扎 新干员",
       "stageName": "camp_r_28",
@@ -43496,7 +43496,7 @@
     {
       "id": 50205,
       "uploadTime": "2025-04-14T23:34:37",
-      "views": 35756,
+      "views": 35761,
       "hotScore": 5.244162433623531,
       "title": "第十五章 离解复合 - H15-4（标准） - 机密预案-4 高练豪华版",
       "stageName": "hard_15-04",
@@ -43691,7 +43691,7 @@
     {
       "id": 50198,
       "uploadTime": "2025-04-18T21:35:44",
-      "views": 22619,
+      "views": 22625,
       "hotScore": 4.786671206303829,
       "title": "第十五章  - H15-4",
       "stageName": "hard_15-04",
@@ -43900,7 +43900,7 @@
     {
       "id": 50175,
       "uploadTime": "2025-04-14T17:35:00",
-      "views": 31519,
+      "views": 31524,
       "hotScore": 5.11263208349048,
       "title": "第十五章 离解复合 - H15-3（标准） - 机密预案-3",
       "stageName": "hard_15-03",
@@ -43939,7 +43939,7 @@
     {
       "id": 50174,
       "uploadTime": "2025-04-14T17:27:08",
-      "views": 27514,
+      "views": 27516,
       "hotScore": 4.971601895546591,
       "title": "第十五章 离解复合 - H15-2（标准） - 机密预案-2",
       "stageName": "hard_15-02",
@@ -44091,7 +44091,7 @@
     {
       "id": 50166,
       "uploadTime": "2025-04-14T17:23:43",
-      "views": 5281,
+      "views": 5285,
       "hotScore": 3.292518557078738,
       "title": "第十五章 离解复合 - H15-2（标准） - 机密预案-2 乌尔比安版",
       "stageName": "hard_15-02",
@@ -44144,7 +44144,7 @@
     {
       "id": 50165,
       "uploadTime": "2025-04-14T16:54:09",
-      "views": 33850,
+      "views": 33855,
       "hotScore": 5.186969005789149,
       "title": "第十五章 离解复合 - H15-1（标准） - 机密预案-1",
       "stageName": "hard_15-01",
@@ -44197,7 +44197,7 @@
     {
       "id": 49714,
       "uploadTime": "2025-04-09T14:05:08",
-      "views": 24397,
+      "views": 24400,
       "hotScore": 4.94572414873376,
       "title": "第十五章 15-20 一摆到底版",
       "stageName": "main_15-18",
@@ -44285,7 +44285,7 @@
     {
       "id": 49710,
       "uploadTime": "2025-04-08T18:36:12",
-      "views": 13803,
+      "views": 13805,
       "hotScore": 4.2473099137732575,
       "title": "第十五章 15-18 一摆到底版",
       "stageName": "main_15-16",
@@ -44461,7 +44461,7 @@
     {
       "id": 49704,
       "uploadTime": "2025-04-08T18:36:31",
-      "views": 15746,
+      "views": 15749,
       "hotScore": 4.3813402562670305,
       "title": "第十五章 15-15 一摆到底版",
       "stageName": "main_15-14",
@@ -44549,7 +44549,7 @@
     {
       "id": 49702,
       "uploadTime": "2025-04-08T22:25:43",
-      "views": 11519,
+      "views": 11520,
       "hotScore": 4.06353066063568,
       "title": "第十五章 15-14 一摆到底版",
       "stageName": "main_15-13",
@@ -44637,7 +44637,7 @@
     {
       "id": 49699,
       "uploadTime": "2025-04-08T22:25:53",
-      "views": 10639,
+      "views": 10640,
       "hotScore": 3.982945385174906,
       "title": "第十五章 15-13 一摆到底版",
       "stageName": "main_15-12",
@@ -44901,7 +44901,7 @@
     {
       "id": 49695,
       "uploadTime": "2025-04-08T22:25:32",
-      "views": 9372,
+      "views": 9373,
       "hotScore": 3.8545416138178723,
       "title": "第十五章 15-10 一摆到底版",
       "stageName": "main_15-09",
@@ -44989,7 +44989,7 @@
     {
       "id": 49694,
       "uploadTime": "2025-04-08T22:26:32",
-      "views": 8749,
+      "views": 8750,
       "hotScore": 3.7849658937015134,
       "title": "第十五章 15-9 一摆到底版",
       "stageName": "main_15-08",
@@ -45077,7 +45077,7 @@
     {
       "id": 49693,
       "uploadTime": "2025-04-08T22:27:27",
-      "views": 8624,
+      "views": 8625,
       "hotScore": 3.7704172718959263,
       "title": "第十五章 15-8 一摆到底版",
       "stageName": "main_15-07",
@@ -45517,7 +45517,7 @@
     {
       "id": 49688,
       "uploadTime": "2025-04-08T22:26:48",
-      "views": 8955,
+      "views": 8956,
       "hotScore": 3.8084992805837317,
       "title": "第十五章 15-3 一摆到底版",
       "stageName": "main_15-02",
@@ -45623,7 +45623,7 @@
     {
       "id": 49646,
       "uploadTime": "2025-04-09T14:06:52",
-      "views": 44748,
+      "views": 44755,
       "hotScore": 5.48000129245098,
       "title": "第十五章 - 15-20 险地+沙盒",
       "stageName": "main_15-18",
@@ -45711,7 +45711,7 @@
     {
       "id": 49645,
       "uploadTime": "2025-04-08T08:18:09",
-      "views": 32877,
+      "views": 32881,
       "hotScore": 5.139278216581643,
       "title": "第十五章 - 15-18 险地+沙盘",
       "stageName": "main_15-16",
@@ -45771,7 +45771,7 @@
     {
       "id": 49641,
       "uploadTime": "2025-04-08T11:11:55",
-      "views": 31515,
+      "views": 31518,
       "hotScore": 5.095241834558522,
       "title": "第十五章 - 15-17 险地+沙盘",
       "stageName": "main_15-15",
@@ -45831,7 +45831,7 @@
     {
       "id": 49640,
       "uploadTime": "2025-04-08T11:08:32",
-      "views": 36570,
+      "views": 36574,
       "hotScore": 5.250413950657462,
       "title": "第十五章 - 15-15 险地+沙盘",
       "stageName": "main_15-14",
@@ -45891,7 +45891,7 @@
     {
       "id": 49634,
       "uploadTime": "2025-04-08T11:04:44",
-      "views": 38534,
+      "views": 38536,
       "hotScore": 5.582212220003545,
       "title": "第十五章 - 15-14 险地+沙盘",
       "stageName": "main_15-13",
@@ -45957,7 +45957,7 @@
     {
       "id": 49631,
       "uploadTime": "2025-04-08T08:16:34",
-      "views": 36389,
+      "views": 36390,
       "hotScore": 5.245251611486569,
       "title": "第十五章 - 15-13 险地+沙盘",
       "stageName": "main_15-12",
@@ -46199,7 +46199,7 @@
     {
       "id": 49621,
       "uploadTime": "2025-04-08T10:46:46",
-      "views": 49688,
+      "views": 49689,
       "hotScore": 5.854844585048714,
       "title": "第十五章 - 15-9 险地+沙盘",
       "stageName": "main_15-08",
@@ -46375,7 +46375,7 @@
     {
       "id": 49615,
       "uploadTime": "2025-04-08T08:10:41",
-      "views": 47282,
+      "views": 47284,
       "hotScore": 5.956322532895941,
       "title": "第十五章 - 15-5 险地+沙盘",
       "stageName": "main_15-04",
@@ -46432,7 +46432,7 @@
     {
       "id": 49614,
       "uploadTime": "2025-04-08T10:33:46",
-      "views": 45548,
+      "views": 45549,
       "hotScore": 5.582449962608551,
       "title": "第十五章 - 15-4 险地+沙盘",
       "stageName": "main_15-03",
@@ -46794,7 +46794,7 @@
     {
       "id": 48560,
       "uploadTime": "2025-03-16T10:26:25",
-      "views": 34236,
+      "views": 34237,
       "hotScore": 0.051313021084239366,
       "title": "EA-EX-8 - 冠冕 一摆到底版",
       "stageName": "act41side_ex08",
@@ -46861,7 +46861,7 @@
     {
       "id": 48559,
       "uploadTime": "2025-03-15T08:27:21",
-      "views": 15311,
+      "views": 15312,
       "hotScore": 0.04303516642434849,
       "title": "EA-EX-7 - 花环 一摆到底版",
       "stageName": "act41side_ex07",
@@ -47417,7 +47417,7 @@
     {
       "id": 48426,
       "uploadTime": "2025-03-16T10:25:50",
-      "views": 32248,
+      "views": 32249,
       "hotScore": 0.05069056021975535,
       "title": "EA-EX-8 初版",
       "stageName": "act41side_ex08",
@@ -47477,7 +47477,7 @@
     {
       "id": 48419,
       "uploadTime": "2025-03-16T17:55:21",
-      "views": 47454,
+      "views": 47455,
       "hotScore": 0.05473904719365031,
       "title": "EA-EX-7 - 花环",
       "stageName": "act41side_ex07",
@@ -47529,7 +47529,7 @@
     {
       "id": 48414,
       "uploadTime": "2025-03-15T09:19:36",
-      "views": 36858,
+      "views": 36859,
       "hotScore": 0.052082946387900286,
       "title": "EA-EX-6 - 歌唱时",
       "stageName": "act41side_ex06",
@@ -47982,7 +47982,7 @@
     {
       "id": 48190,
       "uploadTime": "2025-03-07T20:53:15",
-      "views": 6969,
+      "views": 6970,
       "hotScore": 0.03490349834882507,
       "title": "EA-6 - 失路人 一摆到底版",
       "stageName": "act41side_06",
@@ -48166,7 +48166,7 @@
     {
       "id": 48183,
       "uploadTime": "2025-03-07T20:52:06",
-      "views": 6732,
+      "views": 6733,
       "hotScore": 0.034554648265860105,
       "title": "EA-2 - 不过别离 一摆到底版",
       "stageName": "act41side_02",
@@ -48258,7 +48258,7 @@
     {
       "id": 48127,
       "uploadTime": "2025-03-07T18:09:52",
-      "views": 46293,
+      "views": 46294,
       "hotScore": 0.05431247167436316,
       "title": "EA-8 - 夜尽之时",
       "stageName": "act41side_08",
@@ -48338,7 +48338,7 @@
     {
       "id": 48124,
       "uploadTime": "2025-03-07T17:34:21",
-      "views": 37775,
+      "views": 37776,
       "hotScore": 0.05217641263235531,
       "title": "EA-7 - 烧灯者",
       "stageName": "act41side_07",
@@ -48390,7 +48390,7 @@
     {
       "id": 48123,
       "uploadTime": "2025-03-07T16:41:26",
-      "views": 35799,
+      "views": 35802,
       "hotScore": 0.0516153299224079,
       "title": "EA-6 - 失路人",
       "stageName": "act41side_06",
@@ -48415,7 +48415,7 @@
     {
       "id": 48121,
       "uploadTime": "2025-03-07T16:42:08",
-      "views": 34591,
+      "views": 34593,
       "hotScore": 0.051257511431192254,
       "title": "EA-5 - 溺火",
       "stageName": "act41side_05",
@@ -48467,7 +48467,7 @@
     {
       "id": 48119,
       "uploadTime": "2025-03-07T20:59:55",
-      "views": 32317,
+      "views": 32319,
       "hotScore": 0.05245120044734396,
       "title": "EA-4 - 旧舞步",
       "stageName": "act41side_04",
@@ -48519,7 +48519,7 @@
     {
       "id": 48117,
       "uploadTime": "2025-03-07T16:23:59",
-      "views": 33997,
+      "views": 33999,
       "hotScore": 0.051077142332768936,
       "title": "EA-3 - 惶惑与冲动",
       "stageName": "act41side_03",
@@ -48564,7 +48564,7 @@
     {
       "id": 48116,
       "uploadTime": "2025-03-07T16:18:00",
-      "views": 34137,
+      "views": 34139,
       "hotScore": 0.05111992462589589,
       "title": "EA-2 - 不过别离",
       "stageName": "act41side_02",
@@ -48602,7 +48602,7 @@
     {
       "id": 48115,
       "uploadTime": "2025-03-07T16:16:13",
-      "views": 29373,
+      "views": 29377,
       "hotScore": 0.05925321215364421,
       "title": "EA-TR-1 - 拨雾声",
       "stageName": "act41side_tr01",
@@ -48612,7 +48612,7 @@
     {
       "id": 48114,
       "uploadTime": "2025-03-07T16:10:38",
-      "views": 34093,
+      "views": 34095,
       "hotScore": 0.05301186432639822,
       "title": "EA-1 - 扉页所见",
       "stageName": "act41side_01",
@@ -50714,7 +50714,7 @@
     {
       "id": 46372,
       "uploadTime": "2025-02-08T11:26:51",
-      "views": 36627,
+      "views": 36628,
       "hotScore": 5.122201629673559,
       "title": "OR-S-4 - 白事宴",
       "stageName": "act40side_s04",
@@ -50888,7 +50888,7 @@
     {
       "id": 46364,
       "uploadTime": "2025-02-08T11:27:28",
-      "views": 35397,
+      "views": 35398,
       "hotScore": 5.086657686062533,
       "title": "OR-S-2 - 新婚宴",
       "stageName": "act40side_s02",
@@ -50941,7 +50941,7 @@
     {
       "id": 46361,
       "uploadTime": "2025-02-08T11:30:02",
-      "views": 44418,
+      "views": 44420,
       "hotScore": 0.05324044373482899,
       "title": "OR-MO-1 - 一日三餐",
       "stageName": "act40side_mo01",
@@ -51008,7 +51008,7 @@
     {
       "id": 46359,
       "uploadTime": "2025-02-08T11:28:08",
-      "views": 57374,
+      "views": 57378,
       "hotScore": 5.59488277385179,
       "title": "OR-S-1 - 周岁宴",
       "stageName": "act40side_s01",
@@ -51762,7 +51762,7 @@
     {
       "id": 45963,
       "uploadTime": "2025-01-29T18:36:17",
-      "views": 34773,
+      "views": 34774,
       "hotScore": 0.050528982267560564,
       "title": "OR-EX-6 - 鲜",
       "stageName": "act40side_ex06",
@@ -51970,7 +51970,7 @@
     {
       "id": 45955,
       "uploadTime": "2025-02-07T15:05:03",
-      "views": 47350,
+      "views": 47351,
       "hotScore": 0.053913365153684986,
       "title": "OR-EX-2 - 甜",
       "stageName": "act40side_ex02",
@@ -52076,7 +52076,7 @@
     {
       "id": 45654,
       "uploadTime": "2025-01-22T20:17:20",
-      "views": 28395,
+      "views": 28396,
       "hotScore": 0.04828041113662232,
       "title": "OR-9",
       "stageName": "act40side_09",
@@ -52156,7 +52156,7 @@
     {
       "id": 45653,
       "uploadTime": "2025-01-22T20:32:10",
-      "views": 31614,
+      "views": 31616,
       "hotScore": 0.04939044954720624,
       "title": "OR-8",
       "stageName": "act40side_08",
@@ -52202,7 +52202,7 @@
     {
       "id": 45651,
       "uploadTime": "2025-01-22T20:43:24",
-      "views": 25854,
+      "views": 25856,
       "hotScore": 0.04731438312014817,
       "title": "OR-7",
       "stageName": "act40side_07",
@@ -52268,7 +52268,7 @@
     {
       "id": 45649,
       "uploadTime": "2025-01-22T18:17:22",
-      "views": 24486,
+      "views": 24489,
       "hotScore": 0.04675537431153099,
       "title": "OR-6",
       "stageName": "act40side_06",
@@ -52300,7 +52300,7 @@
     {
       "id": 45648,
       "uploadTime": "2025-01-22T18:15:30",
-      "views": 23233,
+      "views": 23235,
       "hotScore": 0.04621601722125988,
       "title": "OR-5",
       "stageName": "act40side_05",
@@ -52325,7 +52325,7 @@
     {
       "id": 45643,
       "uploadTime": "2025-01-22T18:12:30",
-      "views": 22796,
+      "views": 22798,
       "hotScore": 0.04602122111069635,
       "title": "OR-4",
       "stageName": "act40side_04",
@@ -52357,7 +52357,7 @@
     {
       "id": 45639,
       "uploadTime": "2025-01-22T18:12:22",
-      "views": 21097,
+      "views": 21100,
       "hotScore": 0.04522758890611523,
       "title": "OR-3",
       "stageName": "act40side_03",
@@ -52382,7 +52382,7 @@
     {
       "id": 45638,
       "uploadTime": "2025-01-22T18:12:13",
-      "views": 20718,
+      "views": 20720,
       "hotScore": 0.04504205085272117,
       "title": "OR-2",
       "stageName": "act40side_02",
@@ -52400,7 +52400,7 @@
     {
       "id": 45634,
       "uploadTime": "2025-01-22T18:11:57",
-      "views": 23898,
+      "views": 23900,
       "hotScore": 0.04650570004771635,
       "title": "OR-1",
       "stageName": "act40side_01",
@@ -52580,7 +52580,7 @@
     {
       "id": 44525,
       "uploadTime": "2024-12-13T23:40:23",
-      "views": 48692,
+      "views": 48693,
       "hotScore": 0.053025987736616945,
       "title": "EP-EX-8 - 盐海尽头 乌尔比安歌蕾蒂娅版",
       "stageName": "act39side_ex08",
@@ -52721,7 +52721,7 @@
     {
       "id": 44480,
       "uploadTime": "2024-12-13T14:34:34",
-      "views": 40390,
+      "views": 40391,
       "hotScore": 0.05106927310321245,
       "title": "EP-EX-7 - 盐船残骸",
       "stageName": "act39side_ex07",
@@ -53633,7 +53633,7 @@
     {
       "id": 44238,
       "uploadTime": "2024-12-07T10:49:03",
-      "views": 29524,
+      "views": 29525,
       "hotScore": 0.047683379194407474,
       "title": "EP-1 - 倒悬苍白海上",
       "stageName": "act39side_01",
@@ -53661,7 +53661,7 @@
     {
       "id": 43982,
       "uploadTime": "2024-11-27T13:31:38",
-      "views": 10091,
+      "views": 10095,
       "hotScore": 3.6610304348297715,
       "title": "崔林特尔梅之金 - ZT-S-3 - 拜谒途 逻黍岳",
       "stageName": "act29side_s03",
@@ -53821,7 +53821,7 @@
     {
       "id": 43965,
       "uploadTime": "2024-12-01T01:27:02",
-      "views": 23814,
+      "views": 23815,
       "hotScore": 0.04533907697101485,
       "title": "崔林特尔梅之金 - ZT-EX-8 - 永恒主题 卡BUG版",
       "stageName": "act29side_ex08",
@@ -53906,7 +53906,7 @@
     {
       "id": 43604,
       "uploadTime": "2024-11-16T18:13:54",
-      "views": 14562,
+      "views": 14563,
       "hotScore": 4.006058268444867,
       "title": "PV-S-5 - 荒芜谢幕 需要调烟花",
       "stageName": "act38side_s05",
@@ -53987,7 +53987,7 @@
     {
       "id": 43581,
       "uploadTime": "2024-11-16T19:02:26",
-      "views": 53317,
+      "views": 53319,
       "hotScore": 5.3430445667804225,
       "title": "PV-S-5 - 荒芜谢幕 修改版 需要调烟花",
       "stageName": "act38side_s05",
@@ -54086,7 +54086,7 @@
     {
       "id": 43570,
       "uploadTime": "2024-11-16T15:22:08",
-      "views": 40378,
+      "views": 40380,
       "hotScore": 5.052004722337148,
       "title": "PV-S-4 - 游戏终结 无烟花 星熊档四模组",
       "stageName": "act38side_s04",
@@ -54153,7 +54153,7 @@
     {
       "id": 43568,
       "uploadTime": "2024-11-16T15:22:19",
-      "views": 52449,
+      "views": 52450,
       "hotScore": 5.3257538383256655,
       "title": "PV-S-3 - 仓皇步法 无烟花 星熊档四模组",
       "stageName": "act38side_s03",
@@ -54234,7 +54234,7 @@
     {
       "id": 43567,
       "uploadTime": "2024-11-16T15:15:04",
-      "views": 54724,
+      "views": 54726,
       "hotScore": 5.370512919297893,
       "title": "PV-S-2 - 荒唐共谋 需要调烟花",
       "stageName": "act38side_s02",
@@ -54328,7 +54328,7 @@
     {
       "id": 43561,
       "uploadTime": "2024-11-16T15:36:21",
-      "views": 57180,
+      "views": 57182,
       "hotScore": 5.416895544214999,
       "title": "PV-S-1 - 无尽玩笑",
       "stageName": "act38side_s01",
@@ -55069,7 +55069,7 @@
     {
       "id": 43276,
       "uploadTime": "2024-11-08T20:31:10",
-      "views": 51778,
+      "views": 51780,
       "hotScore": 0.052988177406389,
       "title": "PV-EX-7 无烟花",
       "stageName": "act38side_ex07",
@@ -55128,7 +55128,7 @@
     {
       "id": 43275,
       "uploadTime": "2024-11-08T20:24:45",
-      "views": 50642,
+      "views": 50643,
       "hotScore": 0.052754976635399985,
       "title": "PV-EX-6 无烟花",
       "stageName": "act38side_ex06",
@@ -55220,7 +55220,7 @@
     {
       "id": 43274,
       "uploadTime": "2024-11-08T20:18:44",
-      "views": 53112,
+      "views": 53113,
       "hotScore": 0.05325589283430048,
       "title": "PV-EX-5 无烟花",
       "stageName": "act38side_ex05",
@@ -55279,7 +55279,7 @@
     {
       "id": 43273,
       "uploadTime": "2024-11-08T20:18:36",
-      "views": 52034,
+      "views": 52035,
       "hotScore": 0.053040057430841975,
       "title": "PV-EX-4 - 无烟花",
       "stageName": "act38side_ex04",
@@ -55357,7 +55357,7 @@
     {
       "id": 43271,
       "uploadTime": "2024-11-08T20:18:27",
-      "views": 53430,
+      "views": 53432,
       "hotScore": 0.053318767779828705,
       "title": "PV-EX-3 - 无烟花",
       "stageName": "act38side_ex03",
@@ -55435,7 +55435,7 @@
     {
       "id": 43270,
       "uploadTime": "2024-11-08T20:18:16",
-      "views": 55861,
+      "views": 55863,
       "hotScore": 0.053788018542675856,
       "title": "PV-EX-2 - 无烟花",
       "stageName": "act38side_ex02",
@@ -55513,7 +55513,7 @@
     {
       "id": 43269,
       "uploadTime": "2024-11-08T20:17:59",
-      "views": 65652,
+      "views": 65653,
       "hotScore": 0.05550094456882879,
       "title": "PV-EX-1 - 无烟花",
       "stageName": "act38side_ex01",
@@ -55683,7 +55683,7 @@
     {
       "id": 42989,
       "uploadTime": "2024-11-16T15:17:23",
-      "views": 11930,
+      "views": 11931,
       "hotScore": 0.03804040522723586,
       "title": "PV-P-3 怪戾装药 全覆盖烟花",
       "stageName": "act38side_sp03",
@@ -55693,7 +55693,7 @@
     {
       "id": 42988,
       "uploadTime": "2024-11-16T15:17:08",
-      "views": 12441,
+      "views": 12442,
       "hotScore": 0.038464979181622776,
       "title": "PV-P-2 凛冽装药 全覆盖烟花",
       "stageName": "act38side_sp02",
@@ -55703,7 +55703,7 @@
     {
       "id": 42987,
       "uploadTime": "2024-11-16T15:15:53",
-      "views": 15102,
+      "views": 15103,
       "hotScore": 0.040430155123990355,
       "title": "PV-P-1 凛冽装药 全覆盖烟花 手点对话",
       "stageName": "act38side_sp01",
@@ -55811,7 +55811,7 @@
     {
       "id": 42966,
       "uploadTime": "2024-11-02T14:06:34",
-      "views": 43835,
+      "views": 43839,
       "hotScore": 0.051111881674129125,
       "title": "PV-10 无烟花",
       "stageName": "act38side_10",
@@ -55891,7 +55891,7 @@
     {
       "id": 42965,
       "uploadTime": "2024-11-02T14:06:50",
-      "views": 38382,
+      "views": 38383,
       "hotScore": 0.049729451721674284,
       "title": "PV-9 无烟花 逻各斯版 刷气球",
       "stageName": "act38side_09",
@@ -56009,7 +56009,7 @@
     {
       "id": 42961,
       "uploadTime": "2024-11-02T14:09:30",
-      "views": 30447,
+      "views": 30448,
       "hotScore": 0.047334876039625995,
       "title": "PV-7  无烟花",
       "stageName": "act38side_07",
@@ -56068,7 +56068,7 @@
     {
       "id": 42960,
       "uploadTime": "2024-11-02T14:09:43",
-      "views": 31677,
+      "views": 31678,
       "hotScore": 0.04872755340540461,
       "title": "PV-6  无烟花",
       "stageName": "act38side_06",
@@ -56139,7 +56139,7 @@
     {
       "id": 42958,
       "uploadTime": "2024-11-02T14:09:57",
-      "views": 28560,
+      "views": 28561,
       "hotScore": 0.04855615959806018,
       "title": "PV-5  无烟花",
       "stageName": "act38side_05",
@@ -56191,7 +56191,7 @@
     {
       "id": 42957,
       "uploadTime": "2024-11-02T14:10:12",
-      "views": 27219,
+      "views": 27220,
       "hotScore": 0.04716224486378824,
       "title": "PV-4  无烟花",
       "stageName": "act38side_04",
@@ -56243,7 +56243,7 @@
     {
       "id": 42954,
       "uploadTime": "2024-11-02T14:10:22",
-      "views": 27016,
+      "views": 27017,
       "hotScore": 0.04610532390208105,
       "title": "PV-3  无烟花",
       "stageName": "act38side_03",
@@ -56314,7 +56314,7 @@
     {
       "id": 42953,
       "uploadTime": "2024-11-02T14:08:43",
-      "views": 26972,
+      "views": 26974,
       "hotScore": 0.04608858833640738,
       "title": "PV-2  无烟花",
       "stageName": "act38side_02",
@@ -56359,7 +56359,7 @@
     {
       "id": 42952,
       "uploadTime": "2024-11-02T14:08:29",
-      "views": 30733,
+      "views": 30734,
       "hotScore": 0.04743120300993276,
       "title": "PV-1 无烟花",
       "stageName": "act38side_01",
@@ -56411,7 +56411,7 @@
     {
       "id": 42951,
       "uploadTime": "2024-11-02T14:07:11",
-      "views": 15257,
+      "views": 15260,
       "hotScore": 0.044404499944222096,
       "title": "PV-TR-1",
       "stageName": "act38side_tr01",
@@ -56474,7 +56474,7 @@
     {
       "id": 42826,
       "uploadTime": "2024-10-28T09:24:21",
-      "views": 32948,
+      "views": 32949,
       "hotScore": 4.801972639409159,
       "title": "哥伦比亚 - 66号航道 - 老干员版",
       "stageName": "camp_r_25",
@@ -56573,7 +56573,7 @@
     {
       "id": 42529,
       "uploadTime": "2024-10-17T09:16:15",
-      "views": 31729,
+      "views": 31730,
       "hotScore": 0.04750358063975385,
       "title": "GO-EX-8 - 在王座前 星熊版",
       "stageName": "act37side_ex08",
@@ -56724,7 +56724,7 @@
     {
       "id": 42495,
       "uploadTime": "2024-10-16T20:45:53",
-      "views": 49621,
+      "views": 49623,
       "hotScore": 0.052149119798034924,
       "title": "GO-EX-7 - “休止角行动”",
       "stageName": "act37side_ex07",
@@ -56821,7 +56821,7 @@
     {
       "id": 42494,
       "uploadTime": "2024-10-16T19:02:54",
-      "views": 46248,
+      "views": 46249,
       "hotScore": 0.051412413110774845,
       "title": "GO-EX-6 - 中央区正面对抗",
       "stageName": "act37side_ex06",
@@ -56899,7 +56899,7 @@
     {
       "id": 42492,
       "uploadTime": "2024-10-16T19:02:29",
-      "views": 43586,
+      "views": 43587,
       "hotScore": 0.05079374623151512,
       "title": "GO-EX-5 - 工厂原料保障",
       "stageName": "act37side_ex05",
@@ -56970,7 +56970,7 @@
     {
       "id": 42489,
       "uploadTime": "2024-10-17T00:03:57",
-      "views": 42352,
+      "views": 42353,
       "hotScore": 0.0504945621251021,
       "title": "GO-EX-4 - 通讯频段干扰",
       "stageName": "act37side_ex04",
@@ -57055,7 +57055,7 @@
     {
       "id": 42485,
       "uploadTime": "2024-10-16T22:13:51",
-      "views": 43535,
+      "views": 43537,
       "hotScore": 0.050781543229953645,
       "title": "GO-EX-3 - 祭坛紧急拆除",
       "stageName": "act37side_ex03",
@@ -57133,7 +57133,7 @@
     {
       "id": 42484,
       "uploadTime": "2024-10-16T19:00:44",
-      "views": 42545,
+      "views": 42546,
       "hotScore": 0.050541902849677627,
       "title": "GO-EX-2 - 秘密通道突击",
       "stageName": "act37side_ex02",
@@ -57211,7 +57211,7 @@
     {
       "id": 42483,
       "uploadTime": "2024-10-16T19:00:00",
-      "views": 50843,
+      "views": 50844,
       "hotScore": 0.05240426709580767,
       "title": "GO-EX-1 - 城墙机动作战",
       "stageName": "act37side_ex01",
@@ -57256,7 +57256,7 @@
     {
       "id": 42315,
       "uploadTime": "2024-10-09T22:06:08",
-      "views": 6166,
+      "views": 6167,
       "hotScore": 3.07498302575435,
       "title": "第九章 风暴瞭望 - S9-4",
       "stageName": "sub_09-1-4",
@@ -57308,8 +57308,8 @@
     {
       "id": 42313,
       "uploadTime": "2024-10-09T22:03:33",
-      "views": 13557,
-      "hotScore": 3.869942446156874,
+      "views": 13559,
+      "hotScore": 3.870017167606857,
       "title": "第九章 风暴瞭望 - S9-3",
       "stageName": "sub_09-1-3",
       "required": [
@@ -57360,7 +57360,7 @@
     {
       "id": 42247,
       "uploadTime": "2024-10-09T20:03:51",
-      "views": 36953,
+      "views": 36954,
       "hotScore": 0.048951824158025674,
       "title": "GO-9 - 英雄的落幕",
       "stageName": "act37side_09",
@@ -57615,7 +57615,7 @@
     {
       "id": 42236,
       "uploadTime": "2024-10-09T17:59:15",
-      "views": 27404,
+      "views": 27405,
       "hotScore": 0.04587042838277197,
       "title": "GO-4 - 酒精与安慰剂",
       "stageName": "act37side_04",
@@ -57698,7 +57698,7 @@
     {
       "id": 42232,
       "uploadTime": "2024-10-09T17:57:05",
-      "views": 26043,
+      "views": 26044,
       "hotScore": 0.04534794214368172,
       "title": "GO-2 - 痼疾缠身",
       "stageName": "act37side_02",
@@ -57746,7 +57746,7 @@
     {
       "id": 42229,
       "uploadTime": "2024-10-09T17:57:24",
-      "views": 29385,
+      "views": 29386,
       "hotScore": 0.04658742997893467,
       "title": "GO-1 - 仇怨残余",
       "stageName": "act37side_01",
@@ -57801,7 +57801,7 @@
     {
       "id": 41904,
       "uploadTime": "2024-10-03T08:30:20",
-      "views": 14702,
+      "views": 14704,
       "hotScore": 0.039397994098685836,
       "title": "VEC-08 - 思绪之隙 满增益",
       "stageName": "act1vecb_08",
@@ -57874,7 +57874,7 @@
     {
       "id": 41903,
       "uploadTime": "2024-10-03T07:56:59",
-      "views": 14348,
+      "views": 14349,
       "hotScore": 0.03915018636794845,
       "title": "VEC-07 - 赤红的冰 满增益",
       "stageName": "act1vecb_07",
@@ -57926,7 +57926,7 @@
     {
       "id": 41902,
       "uploadTime": "2024-10-03T07:56:52",
-      "views": 17482,
+      "views": 17483,
       "hotScore": 0.03414163327657896,
       "title": "VEC-06 - 远方来袭 满增益",
       "stageName": "act1vecb_06",
@@ -58046,7 +58046,7 @@
     {
       "id": 41898,
       "uploadTime": "2024-10-03T07:56:12",
-      "views": 2119,
+      "views": 2120,
       "hotScore": 0.0199077634067904,
       "title": "MAA版本5.7.0 beta2以上可用",
       "stageName": "act1vecb_sp05",
@@ -58064,7 +58064,7 @@
     {
       "id": 41773,
       "uploadTime": "2024-10-03T07:11:54",
-      "views": 1953,
+      "views": 1955,
       "hotScore": 0.019090406180493246,
       "title": "MAA版本5.7.0 beta2以上可用",
       "stageName": "act1vecb_sp04",
@@ -58114,7 +58114,7 @@
     {
       "id": 41771,
       "uploadTime": "2024-10-03T07:13:08",
-      "views": 1567,
+      "views": 1570,
       "hotScore": 0.016884693104810476,
       "title": "MAA版本5.7.0 beta2以上可用",
       "stageName": "act1vecb_sp02",
@@ -58132,7 +58132,7 @@
     {
       "id": 41770,
       "uploadTime": "2024-10-03T07:13:18",
-      "views": 1757,
+      "views": 1758,
       "hotScore": 0.01803095108693076,
       "title": "MAA版本5.7.0 beta2以上可用",
       "stageName": "act1vecb_sp01",
@@ -58150,7 +58150,7 @@
     {
       "id": 41678,
       "uploadTime": "2024-09-29T07:18:48",
-      "views": 13755,
+      "views": 13756,
       "hotScore": 0.03860128685803603,
       "title": "VEC-05 - 刻骨铭心 满增益 没有别用",
       "stageName": "act1vecb_05",
@@ -58221,7 +58221,7 @@
     {
       "id": 41676,
       "uploadTime": "2024-09-27T20:37:58",
-      "views": 8068,
+      "views": 8069,
       "hotScore": 0.03321266817179407,
       "title": "VEC-04 - 巨锤与锐枪 满增益 没有别用",
       "stageName": "act1vecb_04",
@@ -58317,7 +58317,7 @@
     {
       "id": 41671,
       "uploadTime": "2024-09-27T20:30:56",
-      "views": 4989,
+      "views": 4993,
       "hotScore": 0.028376919689852106,
       "title": "VEC-02 - 低温征兆 满增益 没有别用",
       "stageName": "act1vecb_02",
@@ -58362,7 +58362,7 @@
     {
       "id": 41667,
       "uploadTime": "2024-09-27T20:12:49",
-      "views": 9097,
+      "views": 9098,
       "hotScore": 0.03442276640644349,
       "title": "VEC-05 - 刻骨铭心 无增益buff",
       "stageName": "act1vecb_05",
@@ -58436,7 +58436,7 @@
     {
       "id": 41664,
       "uploadTime": "2024-09-27T20:20:20",
-      "views": 11634,
+      "views": 11637,
       "hotScore": 0.03690657193519408,
       "title": "VEC-04 - 巨锤与锐枪 无增益BUFF",
       "stageName": "act1vecb_04",
@@ -58516,7 +58516,7 @@
     {
       "id": 41658,
       "uploadTime": "2024-09-27T18:40:06",
-      "views": 14051,
+      "views": 14053,
       "hotScore": 0.03881699104334287,
       "title": "VEC-03 - 重荷 无增益BUFF",
       "stageName": "act1vecb_03",
@@ -58582,7 +58582,7 @@
     {
       "id": 41656,
       "uploadTime": "2024-09-28T08:26:09",
-      "views": 14343,
+      "views": 14356,
       "hotScore": 0.03902543026720274,
       "title": "VEC-02 - 低温征兆 无增益BUFF",
       "stageName": "act1vecb_02",
@@ -58621,7 +58621,7 @@
     {
       "id": 41655,
       "uploadTime": "2024-10-03T11:19:16",
-      "views": 23239,
+      "views": 23247,
       "hotScore": 0.03701564877869057,
       "title": "VEC-01 - 拳拳生风",
       "stageName": "act1vecb_01",
@@ -58719,7 +58719,7 @@
     {
       "id": 41392,
       "uploadTime": "2024-09-19T18:08:07",
-      "views": 25335,
+      "views": 25336,
       "hotScore": 0.044696734744896605,
       "title": "CV-EX-8 - 正中目标",
       "stageName": "act28side_ex08",
@@ -59406,7 +59406,7 @@
     {
       "id": 41380,
       "uploadTime": "2024-09-19T13:19:36",
-      "views": 6397,
+      "views": 6398,
       "hotScore": 0.030756167006092277,
       "title": "CV-6 - 猎人之夜",
       "stageName": "act28side_06",
@@ -59566,7 +59566,7 @@
     {
       "id": 41375,
       "uploadTime": "2024-09-19T20:09:02",
-      "views": 2803,
+      "views": 2805,
       "hotScore": 0.0356252477412359,
       "title": "CV-TR-1 - 城市热战 有bug不下人",
       "stageName": "act28side_tr01",
@@ -60767,7 +60767,7 @@
     {
       "id": 40531,
       "uploadTime": "2024-08-24T16:17:51",
-      "views": 26162,
+      "views": 26166,
       "hotScore": 4.4551081823299885,
       "title": "火山旅梦 - SL-S-5 - 答案在风中",
       "stageName": "act27side_s05",
@@ -60955,7 +60955,7 @@
     {
       "id": 40525,
       "uploadTime": "2024-08-23T22:17:16",
-      "views": 20047,
+      "views": 20050,
       "hotScore": 4.1833707136772835,
       "title": "火山旅梦 - SL-S-4 - 北境的森林",
       "stageName": "act27side_s04",
@@ -61036,7 +61036,7 @@
     {
       "id": 40524,
       "uploadTime": "2024-08-23T22:17:07",
-      "views": 16479,
+      "views": 16480,
       "hotScore": 3.9841636256691224,
       "title": "火山旅梦 - SL-S-3 - 我正向西去",
       "stageName": "act27side_s03",
@@ -61210,7 +61210,7 @@
     {
       "id": 40522,
       "uploadTime": "2024-08-22T19:59:33",
-      "views": 17258,
+      "views": 17259,
       "hotScore": 4.031054388528448,
       "title": "火山旅梦 - SL-S-1 - 慢船行至东",
       "stageName": "act27side_s01",
@@ -61270,7 +61270,7 @@
     {
       "id": 40521,
       "uploadTime": "2024-08-22T20:56:37",
-      "views": 33839,
+      "views": 33840,
       "hotScore": 0.047193304057541345,
       "title": "火山旅梦 - SL-EX-8 - 常青树",
       "stageName": "act27side_ex08",
@@ -61791,7 +61791,7 @@
     {
       "id": 40510,
       "uploadTime": "2024-08-22T10:54:26",
-      "views": 9894,
+      "views": 9895,
       "hotScore": 0.034680728630136146,
       "title": "火山旅梦 - SL-EX-1 - 黄金与玫瑰",
       "stageName": "act27side_ex01",
@@ -61830,7 +61830,7 @@
     {
       "id": 40509,
       "uploadTime": "2024-08-22T10:48:00",
-      "views": 12226,
+      "views": 12227,
       "hotScore": 0.036818100827155316,
       "title": "火山旅梦 - SL-8 - 爱之歌",
       "stageName": "act27side_08",
@@ -61992,7 +61992,7 @@
     {
       "id": 40505,
       "uploadTime": "2024-08-22T10:14:14",
-      "views": 5192,
+      "views": 5201,
       "hotScore": 0.043619225159878185,
       "title": "火山旅梦 - SL-TR-2 - 跟着我拍拍手",
       "stageName": "act27side_tr02",
@@ -62041,7 +62041,7 @@
     {
       "id": 40503,
       "uploadTime": "2024-08-22T16:17:53",
-      "views": 6061,
+      "views": 6062,
       "hotScore": 0.029745660000240922,
       "title": "火山旅梦 - SL-4 - 一个水手出海了",
       "stageName": "act27side_04",
@@ -62087,7 +62087,7 @@
     {
       "id": 40502,
       "uploadTime": "2024-08-22T09:29:54",
-      "views": 5804,
+      "views": 5806,
       "hotScore": 0.02931007000545354,
       "title": "火山旅梦 - SL-3 - 手指之家",
       "stageName": "act27side_03",
@@ -62112,7 +62112,7 @@
     {
       "id": 40501,
       "uploadTime": "2024-08-22T09:27:12",
-      "views": 5040,
+      "views": 5041,
       "hotScore": 0.027891774593184017,
       "title": "火山旅梦 - SL-2 - 小蓝孩",
       "stageName": "act27side_02",
@@ -62169,7 +62169,7 @@
     {
       "id": 40499,
       "uploadTime": "2024-08-22T09:12:35",
-      "views": 4838,
+      "views": 4846,
       "hotScore": 0.038552107921765125,
       "title": "火山旅梦 - SL-TR-1 - 黑咩咩",
       "stageName": "act27side_tr01",
@@ -62257,7 +62257,7 @@
     {
       "id": 40346,
       "uploadTime": "2024-08-21T19:41:32",
-      "views": 52107,
+      "views": 52108,
       "hotScore": 5.167473376677812,
       "title": "太阳甩在身后 - AS-S-4 - 修辞流淌着期望",
       "stageName": "act35side_s04",
@@ -62351,7 +62351,7 @@
     {
       "id": 40336,
       "uploadTime": "2024-08-16T00:38:56",
-      "views": 49519,
+      "views": 49523,
       "hotScore": 5.102441010814577,
       "title": "太阳甩在身后 - AS-S-3 - 笔尖凝聚着愿景",
       "stageName": "act35side_s03",
@@ -62554,7 +62554,7 @@
     {
       "id": 40315,
       "uploadTime": "2024-08-15T21:04:34",
-      "views": 15049,
+      "views": 15050,
       "hotScore": 3.8806193345934967,
       "title": "太阳甩在身后 - AS-S-4 - 修辞流淌着期望高配挂机版",
       "stageName": "act35side_s04",
@@ -62702,7 +62702,7 @@
     {
       "id": 40313,
       "uploadTime": "2024-08-15T19:04:55",
-      "views": 8672,
+      "views": 8673,
       "hotScore": 3.323713485486205,
       "title": "太阳甩在身后 - AS-S-2 - 精神在富饶中绽放高配挂机版",
       "stageName": "act35side_s02",
@@ -63457,7 +63457,7 @@
     {
       "id": 39746,
       "uploadTime": "2024-08-01T23:41:31",
-      "views": 4181,
+      "views": 4182,
       "hotScore": 2.567696756833223,
       "title": "TR-S-2 综合作战训练2",
       "stageName": "tr_s_2",
@@ -63754,7 +63754,7 @@
     {
       "id": 39701,
       "uploadTime": "2024-08-01T22:56:45",
-      "views": 32785,
+      "views": 32786,
       "hotScore": 0.04923168879721075,
       "title": "太阳甩在身后 - AS-2 - 馆中特别行动",
       "stageName": "act35side_02",
@@ -63772,7 +63772,7 @@
     {
       "id": 39700,
       "uploadTime": "2024-08-01T22:56:08",
-      "views": 16798,
+      "views": 16800,
       "hotScore": 0.04448318361899194,
       "title": "太阳甩在身后 - AS-TR-1 - 护卫队演练",
       "stageName": "act35side_tr01",
@@ -63782,7 +63782,7 @@
     {
       "id": 39699,
       "uploadTime": "2024-08-01T22:55:24",
-      "views": 56395,
+      "views": 56396,
       "hotScore": 0.053155669734275844,
       "title": "太阳甩在身后 - AS-1 - 节前热身",
       "stageName": "act35side_01",
@@ -64611,7 +64611,7 @@
     {
       "id": 38907,
       "uploadTime": "2024-06-26T18:19:14",
-      "views": 6110,
+      "views": 6127,
       "hotScore": 0.039332352229656344,
       "title": "HE-TR-2 - 完全平安 看简介",
       "stageName": "act26side_tr02",
@@ -65070,7 +65070,7 @@
     {
       "id": 38844,
       "uploadTime": "2024-06-25T13:16:59",
-      "views": 19683,
+      "views": 19685,
       "hotScore": 0.04064881796622245,
       "title": "空想花庭 - HE-EX-4 - 骷髅苦地",
       "stageName": "act26side_ex04",
@@ -65235,7 +65235,7 @@
     {
       "id": 38841,
       "uploadTime": "2024-06-25T13:16:03",
-      "views": 17645,
+      "views": 17646,
       "hotScore": 0.03953932241272685,
       "title": "空想花庭 - HE-EX-1 - 齐来崇拜",
       "stageName": "act26side_ex01",
@@ -65287,7 +65287,7 @@
     {
       "id": 38840,
       "uploadTime": "2024-06-25T16:26:01",
-      "views": 16200,
+      "views": 16202,
       "hotScore": 0.03867286859717123,
       "title": "HE-8 - 愿跟随主",
       "stageName": "act26side_08",
@@ -65597,7 +65597,7 @@
     {
       "id": 38833,
       "uploadTime": "2024-06-25T13:12:50",
-      "views": 8261,
+      "views": 8262,
       "hotScore": 0.03187205429725819,
       "title": "HE-1 - 我有一个荣美家乡",
       "stageName": "act26side_01",
@@ -65622,7 +65622,7 @@
     {
       "id": 38534,
       "uploadTime": "2024-06-12T22:46:18",
-      "views": 55443,
+      "views": 55444,
       "hotScore": 0.051195094969334914,
       "title": "生路 - BP-EX-8 - 玛利图斯的斗智场",
       "stageName": "act34side_ex08",
@@ -66049,7 +66049,7 @@
     {
       "id": 38511,
       "uploadTime": "2024-06-12T20:38:43",
-      "views": 46021,
+      "views": 46022,
       "hotScore": 0.049254650681561395,
       "title": "生路 - BP-EX-2 - 纪念坛-阿戈尔和平",
       "stageName": "act34side_ex02",
@@ -66293,7 +66293,7 @@
     {
       "id": 38322,
       "uploadTime": "2024-06-05T17:21:40",
-      "views": 33838,
+      "views": 33839,
       "hotScore": 0.045973046629500525,
       "title": "生路 - BP-9 - 文明的壁垒",
       "stageName": "act34side_09",
@@ -66332,7 +66332,7 @@
     {
       "id": 38318,
       "uploadTime": "2024-06-05T17:21:32",
-      "views": 31659,
+      "views": 31661,
       "hotScore": 0.045289566343967406,
       "title": "生路 - BP-8 - “何谓存续？”",
       "stageName": "act34side_08",
@@ -66589,7 +66589,7 @@
     {
       "id": 38300,
       "uploadTime": "2024-06-05T17:19:45",
-      "views": 13300,
+      "views": 13303,
       "hotScore": 0.04400578988619713,
       "title": "生路 - BP-TR-1 - 信标投放演习",
       "stageName": "act34side_tr01",
@@ -66599,7 +66599,7 @@
     {
       "id": 38299,
       "uploadTime": "2024-06-05T18:11:15",
-      "views": 40007,
+      "views": 40008,
       "hotScore": 0.0476983122779372,
       "title": "生路 - BP-1 - 第一次接触",
       "stageName": "act34side_01",
@@ -66844,7 +66844,7 @@
     {
       "id": 37969,
       "uploadTime": "2024-05-24T14:00:37",
-      "views": 11256,
+      "views": 11257,
       "hotScore": 3.4575372286692048,
       "title": "孤星 - CW-S-3-B - 拉力赛·β",
       "stageName": "act25side_s03_a",
@@ -67082,7 +67082,7 @@
     {
       "id": 37966,
       "uploadTime": "2024-05-24T13:35:48",
-      "views": 12293,
+      "views": 12294,
       "hotScore": 3.546420036996323,
       "title": "孤星 - CW-S-1-B - 花式滑冰·β",
       "stageName": "act25side_s01_b",
@@ -67236,7 +67236,7 @@
     {
       "id": 37961,
       "uploadTime": "2024-05-26T14:35:36",
-      "views": 50974,
+      "views": 50976,
       "hotScore": 4.999982252826962,
       "title": "孤星 - CW-EX-8 - 寂寥的光",
       "stageName": "act25side_ex08",
@@ -67349,7 +67349,7 @@
     {
       "id": 37957,
       "uploadTime": "2024-05-23T22:15:35",
-      "views": 12841,
+      "views": 12843,
       "hotScore": 3.774871151009661,
       "title": "孤星 - CW-EX-7 - 前线模拟",
       "stageName": "act25side_ex07",
@@ -67441,7 +67441,7 @@
     {
       "id": 37955,
       "uploadTime": "2024-05-23T21:30:49",
-      "views": 11950,
+      "views": 11951,
       "hotScore": 3.517926864653991,
       "title": "孤星 - CW-EX-6 - 交通要道",
       "stageName": "act25side_ex06",
@@ -67514,7 +67514,7 @@
     {
       "id": 37954,
       "uploadTime": "2024-05-23T21:17:26",
-      "views": 11312,
+      "views": 11313,
       "hotScore": 3.462545179301656,
       "title": "孤星 - CW-EX-5 - 开罚单 含任务",
       "stageName": "act25side_ex05",
@@ -67560,7 +67560,7 @@
     {
       "id": 37951,
       "uploadTime": "2024-05-23T21:18:07",
-      "views": 10356,
+      "views": 10357,
       "hotScore": 3.373476164294795,
       "title": "孤星 - CW-EX-4 - 死路 含任务",
       "stageName": "act25side_ex04",
@@ -67652,7 +67652,7 @@
     {
       "id": 37950,
       "uploadTime": "2024-05-24T13:59:26",
-      "views": 13179,
+      "views": 13180,
       "hotScore": 3.6168113689704815,
       "title": "孤星 - CW-EX-3 - 双管齐下 含任务",
       "stageName": "act25side_ex03",
@@ -67744,7 +67744,7 @@
     {
       "id": 37949,
       "uploadTime": "2024-05-23T20:25:20",
-      "views": 9854,
+      "views": 9855,
       "hotScore": 3.323382727817598,
       "title": "孤星 - CW-EX-2 - 未来战争 含任务",
       "stageName": "act25side_ex02",
@@ -67810,7 +67810,7 @@
     {
       "id": 37946,
       "uploadTime": "2024-05-23T17:17:35",
-      "views": 9756,
+      "views": 9757,
       "hotScore": 3.3133087117914357,
       "title": "孤星 - CW-EX-1 - 投石问犬 不能做任务",
       "stageName": "act25side_ex01",
@@ -67883,7 +67883,7 @@
     {
       "id": 37945,
       "uploadTime": "2024-05-24T14:00:00",
-      "views": 4744,
+      "views": 4745,
       "hotScore": 2.588264957649315,
       "title": "孤星 - CW-EX-1 - 投石问犬 任务仅普通",
       "stageName": "act25side_ex01",
@@ -68062,7 +68062,7 @@
     {
       "id": 37929,
       "uploadTime": "2024-05-23T16:13:25",
-      "views": 16395,
+      "views": 16396,
       "hotScore": 3.837756673992438,
       "title": "孤星 - CW-9 - 恩怨纠葛 含任务",
       "stageName": "act25side_09",
@@ -68326,7 +68326,7 @@
     {
       "id": 37919,
       "uploadTime": "2024-05-23T09:00:57",
-      "views": 3551,
+      "views": 3554,
       "hotScore": 2.887729085784703,
       "title": "孤星 - CW-TR-2 - 先锋工程",
       "stageName": "act25side_tr02",
@@ -68336,7 +68336,7 @@
     {
       "id": 37918,
       "uploadTime": "2024-05-23T08:52:34",
-      "views": 5763,
+      "views": 5764,
       "hotScore": 2.7836642426019687,
       "title": "孤星 - CW-6 - 群英荟萃",
       "stageName": "act25side_06",
@@ -68388,7 +68388,7 @@
     {
       "id": 37917,
       "uploadTime": "2024-05-23T08:44:16",
-      "views": 5232,
+      "views": 5233,
       "hotScore": 2.6865714584958855,
       "title": "孤星 - CW-5 - 柳暗花明",
       "stageName": "act25side_05",
@@ -68427,7 +68427,7 @@
     {
       "id": 37915,
       "uploadTime": "2024-05-23T16:13:51",
-      "views": 8806,
+      "views": 8807,
       "hotScore": 3.210093409739066,
       "title": "孤星 - CW-4 - 一波又起 含任务",
       "stageName": "act25side_04",
@@ -68452,7 +68452,7 @@
     {
       "id": 37914,
       "uploadTime": "2024-05-22T22:00:23",
-      "views": 4580,
+      "views": 4581,
       "hotScore": 2.552951036015468,
       "title": "孤星 - CW-3 - 台前幕后",
       "stageName": "act25side_03",
@@ -68484,7 +68484,7 @@
     {
       "id": 37913,
       "uploadTime": "2024-05-22T21:52:19",
-      "views": 3317,
+      "views": 3324,
       "hotScore": 2.4924610139346846,
       "title": "孤星 - CW-TR-1 - 先锋建筑",
       "stageName": "act25side_tr01",
@@ -68532,7 +68532,7 @@
     {
       "id": 37911,
       "uploadTime": "2024-05-22T21:23:55",
-      "views": 6193,
+      "views": 6196,
       "hotScore": 2.8559724662969117,
       "title": "孤星 - CW-1 - 迷雾重重",
       "stageName": "act25side_01",
@@ -68582,7 +68582,7 @@
     {
       "id": 37598,
       "uploadTime": "2024-05-13T21:13:29",
-      "views": 978,
+      "views": 979,
       "hotScore": 1.2393741002828453,
       "title": "第十四章 慈悲灯塔 - H14-2（标准） - 灯塔行动-2 低配通用",
       "stageName": "hard_14-02",
@@ -69048,7 +69048,7 @@
     {
       "id": 37402,
       "uploadTime": "2024-05-10T13:41:36",
-      "views": 5929,
+      "views": 5932,
       "hotScore": 2.7920473091240545,
       "title": "第十四章 慈悲灯塔 - H14-2（标准） - 灯塔行动-2 挂机版",
       "stageName": "hard_14-02",
@@ -69142,7 +69142,7 @@
     {
       "id": 37349,
       "uploadTime": "2024-05-09T00:32:44",
-      "views": 34782,
+      "views": 34784,
       "hotScore": 4.58416141776645,
       "title": "第十四章 慈悲灯塔 - H14-4（标准） - 灯塔行动-4",
       "stageName": "hard_14-04",
@@ -69229,7 +69229,7 @@
     {
       "id": 37337,
       "uploadTime": "2024-05-09T10:21:47",
-      "views": 5747,
+      "views": 5748,
       "hotScore": 2.760725279479984,
       "title": "H14-4不稳定",
       "stageName": "hard_14-04",
@@ -69303,7 +69303,7 @@
     {
       "id": 37322,
       "uploadTime": "2024-05-08T23:31:08",
-      "views": 29872,
+      "views": 29877,
       "hotScore": 4.428115712150571,
       "title": "第十四章 慈悲灯塔 - H14-3（标准） - 灯塔行动-3",
       "stageName": "hard_14-03",
@@ -69465,7 +69465,7 @@
     {
       "id": 37310,
       "uploadTime": "2024-05-10T21:17:05",
-      "views": 30891,
+      "views": 30893,
       "hotScore": 4.462434568789631,
       "title": "第十四章 慈悲灯塔 - H14-2（标准） - 灯塔行动-2",
       "stageName": "hard_14-02",
@@ -69538,7 +69538,7 @@
     {
       "id": 37308,
       "uploadTime": "2024-05-08T23:32:06",
-      "views": 50926,
+      "views": 50932,
       "hotScore": 4.856003383220922,
       "title": "第十四章 慈悲灯塔 - H14-1（标准） - 灯塔行动-1",
       "stageName": "hard_14-01",
@@ -69681,7 +69681,7 @@
     {
       "id": 37072,
       "uploadTime": "2024-08-26T19:52:34",
-      "views": 10217,
+      "views": 10219,
       "hotScore": 3.500488340808375,
       "title": "粉碎防御 - AP-5 - 精炼工厂保全",
       "stageName": "wk_toxic_5",
@@ -69751,7 +69751,7 @@
     {
       "id": 36868,
       "uploadTime": "2024-05-02T13:35:46",
-      "views": 15802,
+      "views": 15810,
       "hotScore": 3.770157882848478,
       "title": "第十一章 淬火尘霾 - 11-6（标准） - 演绎文明 阿斯卡纶模组任务",
       "stageName": "main_11-05",
@@ -69796,7 +69796,7 @@
     {
       "id": 36867,
       "uploadTime": "2024-05-02T13:29:15",
-      "views": 1027,
+      "views": 1028,
       "hotScore": 0.0123740441075072,
       "title": "登临意 - WB-7 - “屏风卫” 仇白模组任务",
       "stageName": "act23side_07",
@@ -69881,7 +69881,7 @@
     {
       "id": 36865,
       "uploadTime": "2024-05-02T14:26:16",
-      "views": 5619,
+      "views": 5621,
       "hotScore": 2.728156970441777,
       "title": "覆潮之下·复刻 - SV-6 - 厌食 棘刺模组任务",
       "stageName": "act18d3_06",
@@ -69940,7 +69940,7 @@
     {
       "id": 36864,
       "uploadTime": "2024-05-02T13:30:42",
-      "views": 2919,
+      "views": 2924,
       "hotScore": 2.0711183659317256,
       "title": "风雪过境·复刻 - BI-7 - 破冰 银灰模组任务",
       "stageName": "act14side_07",
@@ -70070,7 +70070,7 @@
     {
       "id": 36785,
       "uploadTime": "2024-05-01T22:29:16",
-      "views": 16446,
+      "views": 16449,
       "hotScore": 3.8106107417108133,
       "title": "第十四章 慈悲灯塔 - 14-22（标准） - 在哀愁绽放的时刻",
       "stageName": "main_14-20",
@@ -70080,7 +70080,7 @@
     {
       "id": 36782,
       "uploadTime": "2024-05-08T11:10:07",
-      "views": 52509,
+      "views": 52510,
       "hotScore": 5.0101445818438854,
       "title": "第十四章 慈悲灯塔 - 14-21（磨难） - 万千愿景",
       "stageName": "tough_14-19",
@@ -70140,7 +70140,7 @@
     {
       "id": 36777,
       "uploadTime": "2024-05-08T10:57:45",
-      "views": 41426,
+      "views": 41429,
       "hotScore": 4.764247736282879,
       "title": "第十四章 慈悲灯塔 - 14-20（磨难） - 列王行迹",
       "stageName": "tough_14-18",
@@ -70237,7 +70237,7 @@
     {
       "id": 36773,
       "uploadTime": "2024-05-10T19:45:56",
-      "views": 35791,
+      "views": 35792,
       "hotScore": 4.613588209551999,
       "title": "第十四章 慈悲灯塔 - 14-19（磨难） - 晶簇之内",
       "stageName": "tough_14-17",
@@ -70290,7 +70290,7 @@
     {
       "id": 36768,
       "uploadTime": "2024-05-07T23:25:20",
-      "views": 20663,
+      "views": 20664,
       "hotScore": 4.042193588884523,
       "title": "第十四章 慈悲灯塔 - 14-17（磨难） - 核心舱攻防战",
       "stageName": "tough_14-15",
@@ -70444,7 +70444,7 @@
     {
       "id": 36750,
       "uploadTime": "2024-05-07T23:08:29",
-      "views": 40495,
+      "views": 40497,
       "hotScore": 4.730643185335504,
       "title": "第十四章 慈悲灯塔 - 14-16（磨难） - 抢占舷侧区域",
       "stageName": "tough_14-14",
@@ -70483,7 +70483,7 @@
     {
       "id": 36746,
       "uploadTime": "2024-05-07T22:56:47",
-      "views": 36866,
+      "views": 36869,
       "hotScore": 4.633896912393572,
       "title": "第十四章 慈悲灯塔 - 14-15（磨难） - 突破外围防线",
       "stageName": "tough_14-13",
@@ -70522,7 +70522,7 @@
     {
       "id": 36743,
       "uploadTime": "2024-05-07T22:49:41",
-      "views": 33934,
+      "views": 33936,
       "hotScore": 4.548685738718047,
       "title": "第十四章 慈悲灯塔 - 14-14（磨难） - 高空拒阻行动",
       "stageName": "tough_14-12",
@@ -70567,7 +70567,7 @@
     {
       "id": 36733,
       "uploadTime": "2024-05-01T22:25:54",
-      "views": 46202,
+      "views": 46204,
       "hotScore": 4.866959031895465,
       "title": "第十四章 慈悲灯塔 - 14-12（磨难） - 使徒",
       "stageName": "tough_14-11",
@@ -70619,7 +70619,7 @@
     {
       "id": 36726,
       "uploadTime": "2024-05-01T22:25:43",
-      "views": 37638,
+      "views": 37639,
       "hotScore": 4.655229247677999,
       "title": "第十四章 慈悲灯塔 - 14-11（磨难） - 所谓“英雄”",
       "stageName": "tough_14-10",
@@ -70685,7 +70685,7 @@
     {
       "id": 36725,
       "uploadTime": "2024-05-01T22:25:23",
-      "views": 16702,
+      "views": 16704,
       "hotScore": 3.826258502696297,
       "title": "第十四章 慈悲灯塔 - 14-10（标准） - 自光辉中奔涌",
       "stageName": "main_14-09",
@@ -70695,7 +70695,7 @@
     {
       "id": 36715,
       "uploadTime": "2024-05-02T07:54:42",
-      "views": 46025,
+      "views": 46027,
       "hotScore": 4.86298121850263,
       "title": "第十四章 慈悲灯塔 - 14-9（磨难） - 应对饱和打击",
       "stageName": "tough_14-08",
@@ -70768,7 +70768,7 @@
     {
       "id": 36708,
       "uploadTime": "2024-05-01T22:23:29",
-      "views": 36875,
+      "views": 36876,
       "hotScore": 4.634120190180387,
       "title": "第十四章 慈悲灯塔 - 14-8（磨难） - 抵近支援作战",
       "stageName": "tough_14-07",
@@ -70813,7 +70813,7 @@
     {
       "id": 36703,
       "uploadTime": "2024-05-01T22:23:15",
-      "views": 35513,
+      "views": 35514,
       "hotScore": 4.595440667619526,
       "title": "第十四章 慈悲灯塔 - 14-7（磨难） - 执行反制作战",
       "stageName": "tough_14-06",
@@ -70865,7 +70865,7 @@
     {
       "id": 36698,
       "uploadTime": "2025-04-20T11:01:22",
-      "views": 34814,
+      "views": 34816,
       "hotScore": 5.233783722624173,
       "title": "第十四章 慈悲灯塔 - 14-6（磨难） - 确认交战视界",
       "stageName": "tough_14-05",
@@ -70897,7 +70897,7 @@
     {
       "id": 36696,
       "uploadTime": "2024-05-08T09:46:00",
-      "views": 32571,
+      "views": 32573,
       "hotScore": 4.516758510761093,
       "title": "第十四章 慈悲灯塔 - 14-5（磨难） - 探查岩洞区域",
       "stageName": "tough_14-04",
@@ -70975,7 +70975,7 @@
     {
       "id": 36657,
       "uploadTime": "2024-05-01T22:21:49",
-      "views": 38283,
+      "views": 38284,
       "hotScore": 4.672728876771035,
       "title": "第十四章 慈悲灯塔 - 14-3（磨难） - 破解锤砧战术",
       "stageName": "tough_14-02",
@@ -71049,7 +71049,7 @@
     {
       "id": 36651,
       "uploadTime": "2024-05-01T22:21:36",
-      "views": 45066,
+      "views": 45068,
       "hotScore": 4.841191970164906,
       "title": "第十四章 慈悲灯塔 - 14-2（磨难） - 作战对策会议",
       "stageName": "tough_14-01",
@@ -71180,7 +71180,7 @@
     {
       "id": 36325,
       "uploadTime": "2024-04-25T21:57:48",
-      "views": 49646,
+      "views": 49647,
       "hotScore": 4.931438316107234,
       "title": "BB-S-4 打法2",
       "stageName": "act33side_s04",
@@ -71441,7 +71441,7 @@
     {
       "id": 36307,
       "uploadTime": "2024-04-28T14:56:08",
-      "views": 48400,
+      "views": 48403,
       "hotScore": 4.905046350473793,
       "title": "BB-S-3",
       "stageName": "act33side_s03",
@@ -71540,7 +71540,7 @@
     {
       "id": 36306,
       "uploadTime": "2024-04-26T07:49:53",
-      "views": 59690,
+      "views": 59692,
       "hotScore": 5.123535259436903,
       "title": "BB-S-2",
       "stageName": "act33side_s02",
@@ -71750,7 +71750,7 @@
     {
       "id": 36304,
       "uploadTime": "2024-04-25T21:58:54",
-      "views": 84252,
+      "views": 84254,
       "hotScore": 5.487377011719909,
       "title": "BB-S-1 打法1",
       "stageName": "act33side_s01",
@@ -72131,7 +72131,7 @@
     {
       "id": 36059,
       "uploadTime": "2024-04-25T16:22:40",
-      "views": 56867,
+      "views": 56868,
       "hotScore": 0.05072898031158678,
       "title": "巴别塔 - BB-EX-5 - 穿越荒野",
       "stageName": "act33side_ex05",
@@ -72216,7 +72216,7 @@
     {
       "id": 36058,
       "uploadTime": "2024-04-25T16:22:24",
-      "views": 51897,
+      "views": 51898,
       "hotScore": 0.04977560995654626,
       "title": "巴别塔 - BB-EX-4 - 裹起躯体",
       "stageName": "act33side_ex04",
@@ -72269,7 +72269,7 @@
     {
       "id": 36057,
       "uploadTime": "2024-04-25T16:21:29",
-      "views": 51719,
+      "views": 51720,
       "hotScore": 0.04973986166958288,
       "title": "巴别塔 - BB-EX-3 - 割下顶角",
       "stageName": "act33side_ex03",
@@ -72472,7 +72472,7 @@
     {
       "id": 35918,
       "uploadTime": "2024-04-11T20:14:28",
-      "views": 36639,
+      "views": 36640,
       "hotScore": 0.045976522440316664,
       "title": "巴别塔 - BB-10 - 再见，再见",
       "stageName": "act33side_10",
@@ -72545,7 +72545,7 @@
     {
       "id": 35886,
       "uploadTime": "2024-04-11T20:49:00",
-      "views": 23435,
+      "views": 23436,
       "hotScore": 0.04140612705472352,
       "title": "巴别塔 - BB-10 - 再见，再见 塑心版",
       "stageName": "act33side_10",
@@ -72605,7 +72605,7 @@
     {
       "id": 35884,
       "uploadTime": "2024-04-11T20:33:42",
-      "views": 18748,
+      "views": 18750,
       "hotScore": 0.03913863769542757,
       "title": "BB-9无法自动，会卡剧情",
       "stageName": "act33side_09",
@@ -72615,7 +72615,7 @@
     {
       "id": 35882,
       "uploadTime": "2024-04-11T19:18:59",
-      "views": 55786,
+      "views": 55787,
       "hotScore": 0.05032790400563303,
       "title": "巴别塔 - BB-8 - 终局倒计时",
       "stageName": "act33side_08",
@@ -72667,7 +72667,7 @@
     {
       "id": 35880,
       "uploadTime": "2024-04-11T19:19:12",
-      "views": 41006,
+      "views": 41008,
       "hotScore": 0.04713616625404691,
       "title": "巴别塔 - BB-7 - 阴影显现",
       "stageName": "act33side_07",
@@ -72726,7 +72726,7 @@
     {
       "id": 35878,
       "uploadTime": "2024-04-11T19:19:25",
-      "views": 36770,
+      "views": 36771,
       "hotScore": 0.04601322061718555,
       "title": "巴别塔 - BB-6 - 灯火闪烁不定",
       "stageName": "act33side_06",
@@ -72908,7 +72908,7 @@
     {
       "id": 35868,
       "uploadTime": "2024-04-11T19:18:11",
-      "views": 33479,
+      "views": 33480,
       "hotScore": 0.045050266045407794,
       "title": "巴别塔 - BB-2 - 命途何在",
       "stageName": "act33side_02",
@@ -73126,7 +73126,7 @@
     {
       "id": 35615,
       "uploadTime": "2024-04-02T23:18:30",
-      "views": 3149,
+      "views": 3150,
       "hotScore": 2.0987450799649077,
       "title": "第十章 破碎日冕 - 10-17（磨难） - 坚城高墙 自用",
       "stageName": "tough_10-15",
@@ -75356,7 +75356,7 @@
     {
       "id": 34971,
       "uploadTime": "2024-03-16T17:15:27",
-      "views": 49399,
+      "views": 49400,
       "hotScore": 0.04867298560458724,
       "title": "水晶箭行动 - CR-MO-1 - 直击现场",
       "stageName": "act32side_mo01",
@@ -75726,7 +75726,7 @@
     {
       "id": 34865,
       "uploadTime": "2024-03-11T19:53:58",
-      "views": 9657,
+      "views": 9663,
       "hotScore": 3.196067320299565,
       "title": "生于黑夜·复刻 - DM-EX-1 - 交锋 艾拉模组社会期望背包解锁任务",
       "stageName": "act9d0_ex01",
@@ -76393,7 +76393,7 @@
     {
       "id": 34450,
       "uploadTime": "2024-03-04T16:13:07",
-      "views": 36621,
+      "views": 36622,
       "hotScore": 4.539581275513619,
       "title": "剿灭作战新旅店大道（看简介）",
       "stageName": "camp_r_21",
@@ -77540,7 +77540,7 @@
     {
       "id": 33241,
       "uploadTime": "2024-03-02T10:25:35",
-      "views": 64850,
+      "views": 64851,
       "hotScore": 5.131792957567358,
       "title": "TN-3定向+恢宏试炼",
       "stageName": "act4bossrush_03",
@@ -77919,7 +77919,7 @@
     {
       "id": 32961,
       "uploadTime": "2025-02-26T14:44:03",
-      "views": 58749,
+      "views": 58751,
       "hotScore": 5.668111705152544,
       "title": "HS-S-4 - 育种实验室",
       "stageName": "act31side_s04",
@@ -78025,7 +78025,7 @@
     {
       "id": 32958,
       "uploadTime": "2025-02-24T18:41:44",
-      "views": 59366,
+      "views": 59367,
       "hotScore": 5.663081650450395,
       "title": "HS-S-3 - 环境观测站",
       "stageName": "act31side_s03",
@@ -78129,7 +78129,7 @@
     {
       "id": 32955,
       "uploadTime": "2025-02-24T18:40:55",
-      "views": 56229,
+      "views": 56230,
       "hotScore": 6.043643018802977,
       "title": "HS-S-2 - 园圃工程所",
       "stageName": "act31side_s02",
@@ -78384,7 +78384,7 @@
     {
       "id": 32726,
       "uploadTime": "2025-02-24T18:39:09",
-      "views": 85236,
+      "views": 85237,
       "hotScore": 0.06055219152453529,
       "title": "HS-EX-8 - 收割",
       "stageName": "act31side_ex08",
@@ -78469,7 +78469,7 @@
     {
       "id": 32718,
       "uploadTime": "2025-02-24T18:37:34",
-      "views": 59989,
+      "views": 59990,
       "hotScore": 0.056742541317898375,
       "title": "HS-EX-7 - 防害",
       "stageName": "act31side_ex07",
@@ -78542,7 +78542,7 @@
     {
       "id": 32713,
       "uploadTime": "2025-02-24T18:36:51",
-      "views": 54076,
+      "views": 54078,
       "hotScore": 0.05563526913622603,
       "title": "HS-EX-6 - 追肥",
       "stageName": "act31side_ex06",
@@ -78601,7 +78601,7 @@
     {
       "id": 32707,
       "uploadTime": "2025-02-24T18:36:05",
-      "views": 54769,
+      "views": 54770,
       "hotScore": 0.05577076083696506,
       "title": "HS-EX-5 - 灌溉",
       "stageName": "act31side_ex05",
@@ -78665,7 +78665,7 @@
     {
       "id": 32703,
       "uploadTime": "2024-02-08T17:11:22",
-      "views": 46953,
+      "views": 46955,
       "hotScore": 0.047677937090904565,
       "title": "HS-EX-4 - 插秧",
       "stageName": "act31side_ex04",
@@ -78690,7 +78690,7 @@
     {
       "id": 32698,
       "uploadTime": "2024-02-08T17:11:12",
-      "views": 45977,
+      "views": 45978,
       "hotScore": 0.04746085720888013,
       "title": "HS-EX-3 - 育苗",
       "stageName": "act31side_ex03",
@@ -78743,7 +78743,7 @@
     {
       "id": 32692,
       "uploadTime": "2025-02-24T18:35:09",
-      "views": 52873,
+      "views": 52874,
       "hotScore": 0.05539613966594751,
       "title": "HS-EX-2 - 催芽",
       "stageName": "act31side_ex02",
@@ -78795,7 +78795,7 @@
     {
       "id": 32688,
       "uploadTime": "2024-02-08T21:32:06",
-      "views": 54174,
+      "views": 54176,
       "hotScore": 0.049160426602961556,
       "title": "HS-EX-1 - 整地",
       "stageName": "act31side_ex01",
@@ -78866,7 +78866,7 @@
     {
       "id": 32651,
       "uploadTime": "2024-02-07T21:03:09",
-      "views": 13448,
+      "views": 13449,
       "hotScore": 3.493372687273534,
       "title": "近卫 - 因陀罗 - 乘风追击",
       "stageName": "mem_tiger_1",
@@ -79163,7 +79163,7 @@
     {
       "id": 32444,
       "uploadTime": "2025-02-24T17:04:37",
-      "views": 29828,
+      "views": 29829,
       "hotScore": 0.04940056939978463,
       "title": "HS-6 - 卷赤霞 含刻章",
       "stageName": "act31side_06",
@@ -79267,7 +79267,7 @@
     {
       "id": 32436,
       "uploadTime": "2024-02-02T13:29:41",
-      "views": 14336,
+      "views": 14339,
       "hotScore": 0.035489665771579484,
       "title": "HS-TR-2 - 引水疏浚",
       "stageName": "act31side_tr02",
@@ -79317,7 +79317,7 @@
     {
       "id": 32428,
       "uploadTime": "2025-02-24T17:04:00",
-      "views": 24793,
+      "views": 24796,
       "hotScore": 0.04749247216149265,
       "title": "HS-3 - 早芒种",
       "stageName": "act31side_03",
@@ -79381,7 +79381,7 @@
     {
       "id": 32426,
       "uploadTime": "2024-02-01T19:18:40",
-      "views": 22343,
+      "views": 22344,
       "hotScore": 0.03998425079537009,
       "title": "HS-2 - 祭神农",
       "stageName": "act31side_02",
@@ -79426,7 +79426,7 @@
     {
       "id": 32424,
       "uploadTime": "2024-02-02T13:26:40",
-      "views": 13083,
+      "views": 13085,
       "hotScore": 0.03640801955248067,
       "title": "HS-TR-1 - 职农须知",
       "stageName": "act31side_tr01",
@@ -79458,7 +79458,7 @@
     {
       "id": 32423,
       "uploadTime": "2024-02-01T18:53:05",
-      "views": 25366,
+      "views": 25369,
       "hotScore": 0.04127480986999183,
       "title": "HS-1 - 赴大荒",
       "stageName": "act31side_01",
@@ -80248,7 +80248,7 @@
     {
       "id": 31888,
       "uploadTime": "2024-01-17T20:08:13",
-      "views": 5094,
+      "views": 5095,
       "hotScore": 0.02489977878764366,
       "title": "登临意 - WB-4 - 不念往昔",
       "stageName": "act23side_04",
@@ -80273,7 +80273,7 @@
     {
       "id": 31886,
       "uploadTime": "2024-01-17T19:51:39",
-      "views": 4850,
+      "views": 4852,
       "hotScore": 0.024407213761705772,
       "title": "登临意 - WB-2 - 沙海黄尘",
       "stageName": "act23side_02",
@@ -80291,7 +80291,7 @@
     {
       "id": 31885,
       "uploadTime": "2024-01-17T19:51:08",
-      "views": 4879,
+      "views": 4881,
       "hotScore": 0.02446703374590096,
       "title": "登临意 - WB-1 - 塞上春来",
       "stageName": "act23side_01",
@@ -80309,7 +80309,7 @@
     {
       "id": 31884,
       "uploadTime": "2024-01-17T19:36:39",
-      "views": 2297,
+      "views": 2302,
       "hotScore": 0.019539618930192355,
       "title": "登临意 - WB-TR-1 - 塞上孤城",
       "stageName": "act23side_tr01",
@@ -80327,7 +80327,7 @@
     {
       "id": 31769,
       "uploadTime": "2024-01-11T23:28:38",
-      "views": 3481,
+      "views": 3483,
       "hotScore": 2.0987921321763903,
       "title": "火蓝之心·复刻 - OF-8 - 汐斯塔狂想曲 令单核",
       "stageName": "a003_08",
@@ -80476,7 +80476,7 @@
     {
       "id": 31757,
       "uploadTime": "2024-01-11T19:19:01",
-      "views": 2907,
+      "views": 2908,
       "hotScore": 1.918079227709061,
       "title": "火蓝之心·复刻 - OF-2 - 演出继续 令单核",
       "stageName": "a003_02",
@@ -82867,7 +82867,7 @@
     {
       "id": 31225,
       "uploadTime": "2023-12-21T23:39:04",
-      "views": 4948,
+      "views": 4955,
       "hotScore": 0.038721660979975425,
       "title": "照我以火 - FC-TR-2 - 蔓延",
       "stageName": "act22side_tr02",
@@ -82892,7 +82892,7 @@
     {
       "id": 31224,
       "uploadTime": "2023-12-21T23:05:23",
-      "views": 4693,
+      "views": 4700,
       "hotScore": 0.03210238387514404,
       "title": "照我以火 - FC-TR-1 - 潮湿泥土",
       "stageName": "act22side_tr01",
@@ -83016,7 +83016,7 @@
     {
       "id": 30899,
       "uploadTime": "2023-12-15T20:59:08",
-      "views": 68930,
+      "views": 68933,
       "hotScore": 0.050953896801022525,
       "title": "银心湖列车 - RS-EX-8 - 环形回车道",
       "stageName": "act30side_ex08",
@@ -83083,7 +83083,7 @@
     {
       "id": 30896,
       "uploadTime": "2023-12-13T08:20:35",
-      "views": 50002,
+      "views": 50003,
       "hotScore": 0.047614849973566686,
       "title": "银心湖列车 - RS-EX-7 - 道岔",
       "stageName": "act30side_ex07",
@@ -83136,7 +83136,7 @@
     {
       "id": 30892,
       "uploadTime": "2023-12-13T08:10:12",
-      "views": 49443,
+      "views": 49444,
       "hotScore": 0.047498622115398105,
       "title": "银心湖列车 - RS-EX-6 - 道口",
       "stageName": "act30side_ex06",
@@ -83196,7 +83196,7 @@
     {
       "id": 30890,
       "uploadTime": "2023-12-13T08:10:24",
-      "views": 43182,
+      "views": 43184,
       "hotScore": 0.046102062786999104,
       "title": "银心湖列车 - RS-EX-5 - 展线",
       "stageName": "act30side_ex05",
@@ -83235,7 +83235,7 @@
     {
       "id": 30889,
       "uploadTime": "2023-12-13T21:34:29",
-      "views": 45641,
+      "views": 45642,
       "hotScore": 0.04667261761420408,
       "title": "银心湖列车 - RS-EX-4 - 挡车器",
       "stageName": "act30side_ex04",
@@ -83281,7 +83281,7 @@
     {
       "id": 30888,
       "uploadTime": "2023-12-13T18:15:41",
-      "views": 44740,
+      "views": 44741,
       "hotScore": 0.046467103569537496,
       "title": "银心湖列车 - RS-EX-3 - 待避",
       "stageName": "act30side_ex03",
@@ -83340,7 +83340,7 @@
     {
       "id": 30887,
       "uploadTime": "2023-12-12T21:38:42",
-      "views": 51045,
+      "views": 51046,
       "hotScore": 0.04774209007213256,
       "title": "银心湖列车 - RS-EX-2 - 信号灯",
       "stageName": "act30side_ex02",
@@ -83379,7 +83379,7 @@
     {
       "id": 30886,
       "uploadTime": "2023-12-13T08:11:33",
-      "views": 69513,
+      "views": 69515,
       "hotScore": 0.05104208567282868,
       "title": "银心湖列车 - RS-EX-1 - 枕木",
       "stageName": "act30side_ex01",
@@ -83601,7 +83601,7 @@
     {
       "id": 30710,
       "uploadTime": "2023-12-05T21:31:19",
-      "views": 6153,
+      "views": 6154,
       "hotScore": 2.619746125150458,
       "title": "第十一章 淬火尘霾 - 11-6（标准） - 演绎文明 焰影苇草模组“赠予红龙的花冠”解锁任务",
       "stageName": "main_11-05",
@@ -83640,7 +83640,7 @@
     {
       "id": 30706,
       "uploadTime": "2023-12-05T19:55:04",
-      "views": 44346,
+      "views": 44348,
       "hotScore": 0.0462046175632895,
       "title": "银心湖列车 - RS-8 - 极限时速",
       "stageName": "act30side_08",
@@ -83793,7 +83793,7 @@
     {
       "id": 30689,
       "uploadTime": "2023-12-05T17:16:43",
-      "views": 30681,
+      "views": 30683,
       "hotScore": 0.04242911672850533,
       "title": "银心湖列车 - RS-7 - 制动失灵",
       "stageName": "act30side_07",
@@ -83832,7 +83832,7 @@
     {
       "id": 30688,
       "uploadTime": "2023-12-05T17:03:54",
-      "views": 29962,
+      "views": 29963,
       "hotScore": 0.042187154641181675,
       "title": "银心湖列车 - RS-6 - 补票！",
       "stageName": "act30side_06",
@@ -83857,7 +83857,7 @@
     {
       "id": 30686,
       "uploadTime": "2023-12-06T00:45:56",
-      "views": 30045,
+      "views": 30046,
       "hotScore": 0.042215375145068554,
       "title": "银心湖列车 - RS-5 - 逃票？",
       "stageName": "act30side_05",
@@ -83882,7 +83882,7 @@
     {
       "id": 30685,
       "uploadTime": "2023-12-05T16:49:03",
-      "views": 26264,
+      "views": 26265,
       "hotScore": 0.040845028530276384,
       "title": "银心湖列车 - RS-4 - 重回正轨",
       "stageName": "act30side_04",
@@ -83907,7 +83907,7 @@
     {
       "id": 30684,
       "uploadTime": "2023-12-05T16:42:48",
-      "views": 25356,
+      "views": 25357,
       "hotScore": 0.04048709665277112,
       "title": "银心湖列车 - RS-3 - 临时停车",
       "stageName": "act30side_03",
@@ -83925,7 +83925,7 @@
     {
       "id": 30683,
       "uploadTime": "2023-12-05T16:42:17",
-      "views": 25722,
+      "views": 25723,
       "hotScore": 0.04063247022160579,
       "title": "银心湖列车 - RS-2 - 同车异图",
       "stageName": "act30side_02",
@@ -83950,7 +83950,7 @@
     {
       "id": 30682,
       "uploadTime": "2023-12-05T16:41:59",
-      "views": 27946,
+      "views": 27947,
       "hotScore": 0.04147706608547006,
       "title": "银心湖列车 - RS-1 - 注意事项",
       "stageName": "act30side_01",
@@ -83975,7 +83975,7 @@
     {
       "id": 30681,
       "uploadTime": "2023-12-10T22:30:52",
-      "views": 11240,
+      "views": 11242,
       "hotScore": 0.036433473901930136,
       "title": "银心湖列车 - RS-TR-1 - 安全线内",
       "stageName": "act30side_tr01",
@@ -84039,7 +84039,7 @@
     {
       "id": 30671,
       "uploadTime": "2023-12-05T22:43:49",
-      "views": 7385,
+      "views": 7393,
       "hotScore": 2.8029480290893005,
       "title": "风雪过境·复刻 - BI-6 - 歧路 锏模组“过往的注脚”任务",
       "stageName": "act14side_06",
@@ -84078,7 +84078,7 @@
     {
       "id": 30670,
       "uploadTime": "2023-12-05T13:43:08",
-      "views": 5389,
+      "views": 5391,
       "hotScore": 2.4866534446656123,
       "title": "生于黑夜·复刻 - DM-EX-1 - 交锋 铃兰模组孩子们解锁任务",
       "stageName": "act9d0_ex01",
@@ -84131,7 +84131,7 @@
     {
       "id": 30667,
       "uploadTime": "2023-12-05T21:33:59",
-      "views": 23672,
+      "views": 23676,
       "hotScore": 3.9788569906108187,
       "title": "第八章 怒号光明 - R8-8 - 人心，向背无常 澄闪模组“辛劳之翼”解锁任务",
       "stageName": "main_08-08",
@@ -84738,7 +84738,7 @@
     {
       "id": 30418,
       "uploadTime": "2023-11-28T21:36:41",
-      "views": 74555,
+      "views": 74556,
       "hotScore": 0.0515164245552306,
       "title": "危机合约 灰烬泽地 620 看简介",
       "stageName": "level_crisis_v2_01-01",
@@ -85098,7 +85098,7 @@
     {
       "id": 30365,
       "uploadTime": "2024-05-23T17:46:53",
-      "views": 16948,
+      "views": 16952,
       "hotScore": 3.871376064202075,
       "title": "第十二章 惊霆无声 - H12-4（标准） - 惊霆行动-4 使用前看简介 低练度勿抄",
       "stageName": "hard_12-04",
@@ -85333,7 +85333,7 @@
     {
       "id": 30203,
       "uploadTime": "2024-11-26T20:38:59",
-      "views": 15059,
+      "views": 15060,
       "hotScore": 4.053210505980954,
       "title": "崔林特尔梅之金 - ZT-S-5 - 王座厅 仅普通 纯艾版 重岳注意换三技能",
       "stageName": "act29side_s05",
@@ -85420,7 +85420,7 @@
     {
       "id": 30198,
       "uploadTime": "2024-11-26T21:45:04",
-      "views": 26572,
+      "views": 26574,
       "hotScore": 4.632908103947855,
       "title": "崔林特尔梅之金 - ZT-S-5 - 王座厅 仅突袭 重岳注意换三技能",
       "stageName": "act29side_s05",
@@ -85552,7 +85552,7 @@
     {
       "id": 30196,
       "uploadTime": "2024-11-26T21:44:09",
-      "views": 10804,
+      "views": 10805,
       "hotScore": 3.7168767141568626,
       "title": "崔林特尔梅之金 - ZT-S-5 - 王座厅 仅普通 流明版 重岳注意换三技能",
       "stageName": "act29side_s05",
@@ -85849,7 +85849,7 @@
     {
       "id": 30164,
       "uploadTime": "2024-11-26T21:40:28",
-      "views": 52342,
+      "views": 52344,
       "hotScore": 5.3371451005769375,
       "title": "崔林特尔梅之金 - ZT-S-2 - 管乐团",
       "stageName": "act29side_s02",
@@ -85941,7 +85941,7 @@
     {
       "id": 30162,
       "uploadTime": "2024-11-26T21:39:48",
-      "views": 66970,
+      "views": 66971,
       "hotScore": 5.598517281046412,
       "title": "崔林特尔梅之金 - ZT-S-1 - 司律者",
       "stageName": "act29side_s01",
@@ -86236,7 +86236,7 @@
     {
       "id": 29927,
       "uploadTime": "2024-11-26T21:30:35",
-      "views": 62937,
+      "views": 62938,
       "hotScore": 0.05532291443059953,
       "title": "崔林特尔梅之金 - ZT-EX-8 - 永恒主题（使用前看简介）",
       "stageName": "act29side_ex08",
@@ -86349,7 +86349,7 @@
     {
       "id": 29926,
       "uploadTime": "2024-11-26T21:18:07",
-      "views": 50543,
+      "views": 50544,
       "hotScore": 0.05300334737348496,
       "title": "崔林特尔梅之金 - ZT-EX-7 - 无调性",
       "stageName": "act29side_ex07",
@@ -86441,7 +86441,7 @@
     {
       "id": 29925,
       "uploadTime": "2023-11-10T13:56:37",
-      "views": 46946,
+      "views": 46947,
       "hotScore": 0.04653912296669554,
       "title": "崔林特尔梅之金 - ZT-EX-6 - 术式转换",
       "stageName": "act29side_ex06",
@@ -86501,7 +86501,7 @@
     {
       "id": 29924,
       "uploadTime": "2024-11-26T21:17:06",
-      "views": 44942,
+      "views": 44943,
       "hotScore": 0.051771677416537855,
       "title": "崔林特尔梅之金 - ZT-EX-5 - 和谐进行",
       "stageName": "act29side_ex05",
@@ -86553,7 +86553,7 @@
     {
       "id": 29923,
       "uploadTime": "2024-11-26T21:15:13",
-      "views": 45726,
+      "views": 45727,
       "hotScore": 0.051952620360160795,
       "title": "崔林特尔梅之金 - ZT-EX-4 - 序列法",
       "stageName": "act29side_ex04",
@@ -86612,7 +86612,7 @@
     {
       "id": 29922,
       "uploadTime": "2023-11-10T09:16:59",
-      "views": 45742,
+      "views": 45743,
       "hotScore": 0.04627139099442868,
       "title": "崔林特尔梅之金 - ZT-EX-3 - 跳进",
       "stageName": "act29side_ex03",
@@ -86658,7 +86658,7 @@
     {
       "id": 29921,
       "uploadTime": "2023-11-10T09:16:45",
-      "views": 43666,
+      "views": 43667,
       "hotScore": 0.04579326164166941,
       "title": "崔林特尔梅之金 - ZT-EX-2 - 对位法",
       "stageName": "act29side_ex02",
@@ -86690,7 +86690,7 @@
     {
       "id": 29920,
       "uploadTime": "2023-11-10T09:16:17",
-      "views": 83805,
+      "views": 83807,
       "hotScore": 0.0525764371491915,
       "title": "崔林特尔梅之金 - ZT-EX-1 - 急板",
       "stageName": "act29side_ex01",
@@ -86994,7 +86994,7 @@
     {
       "id": 29632,
       "uploadTime": "2024-11-25T20:15:36",
-      "views": 13525,
+      "views": 13530,
       "hotScore": 0.04651224834539392,
       "title": "崔林特尔梅之金 - ZT-TR-2 - 创作手法",
       "stageName": "act29side_tr02",
@@ -87029,7 +87029,7 @@
     {
       "id": 29629,
       "uploadTime": "2024-11-26T20:58:59",
-      "views": 8287,
+      "views": 8288,
       "hotScore": 0.0344907993274646,
       "title": "崔林特尔梅之金 - ZT-7 - 协奏曲“复活”（关卡存在bug）",
       "stageName": "act29side_07",
@@ -87074,7 +87074,7 @@
     {
       "id": 29628,
       "uploadTime": "2023-11-02T18:57:10",
-      "views": 11487,
+      "views": 11488,
       "hotScore": 0.03214652507219797,
       "title": "崔林特尔梅之金 - ZT-6 - 华尔兹“假面”（关卡存在bug）",
       "stageName": "act29side_06",
@@ -87233,7 +87233,7 @@
     {
       "id": 29620,
       "uploadTime": "2024-11-25T20:09:00",
-      "views": 5927,
+      "views": 5931,
       "hotScore": 0.03519820753853378,
       "title": "崔林特尔梅之金 - ZT-TR-1 - 指挥技巧",
       "stageName": "act29side_tr01",
@@ -87425,7 +87425,7 @@
     {
       "id": 29580,
       "uploadTime": "2023-10-30T22:58:06",
-      "views": 4604,
+      "views": 4605,
       "hotScore": 2.2878003929595385,
       "title": "汐斯塔 - 潮没海滨 - 潮没海滨",
       "stageName": "camp_r_04",
@@ -87665,7 +87665,7 @@
     {
       "id": 29513,
       "uploadTime": "2023-10-30T06:54:40",
-      "views": 14063,
+      "views": 14064,
       "hotScore": 3.410564344780221,
       "title": "维多利亚 - 腐烂荒野 - 腐烂荒野",
       "stageName": "camp_r_19",
@@ -87725,7 +87725,7 @@
     {
       "id": 29512,
       "uploadTime": "2023-10-30T20:35:09",
-      "views": 36907,
+      "views": 36909,
       "hotScore": 4.390224366229513,
       "title": "维多利亚 - 腐烂荒野 - 腐烂荒野",
       "stageName": "camp_r_19",
@@ -88230,7 +88230,7 @@
     {
       "id": 29256,
       "uploadTime": "2023-10-22T23:02:40",
-      "views": 4329,
+      "views": 4331,
       "hotScore": 0.022180272309275297,
       "title": "叙拉古人 - IS-5 - 恒久法则 拉普兰德线剧情 后巷 击败与我无关",
       "stageName": "act21side_05",
@@ -88689,7 +88689,7 @@
     {
       "id": 29102,
       "uploadTime": "2024-05-10T13:39:06",
-      "views": 49450,
+      "views": 49454,
       "hotScore": 4.947694278658021,
       "title": "第十三章 恶兆湍流 - H13-4（标准） - 湍流行动-4【萧然Q】",
       "stageName": "hard_13-04",
@@ -88770,7 +88770,7 @@
     {
       "id": 29078,
       "uploadTime": "2023-10-15T21:55:01",
-      "views": 26786,
+      "views": 26788,
       "hotScore": 4.047015224380776,
       "title": "第十三章 恶兆湍流 - H13-3（标准） - 湍流行动-3",
       "stageName": "hard_13-03",
@@ -88858,7 +88858,7 @@
     {
       "id": 29075,
       "uploadTime": "2023-10-15T19:07:28",
-      "views": 29073,
+      "views": 29078,
       "hotScore": 4.130376757685045,
       "title": "第十三章 恶兆湍流 - H13-2（标准） - 湍流行动-2",
       "stageName": "hard_13-02",
@@ -88957,7 +88957,7 @@
     {
       "id": 29073,
       "uploadTime": "2023-10-15T18:28:24",
-      "views": 36151,
+      "views": 36156,
       "hotScore": 3.6480816551017,
       "title": "第十三章 恶兆湍流 - H13-1（标准） - 湍流行动-1",
       "stageName": "hard_13-01",
@@ -89038,7 +89038,7 @@
     {
       "id": 29063,
       "uploadTime": "2023-10-19T09:21:11",
-      "views": 31022,
+      "views": 31026,
       "hotScore": 4.204575702124039,
       "title": "近卫 - 煌 - 一夫当关",
       "stageName": "mem_huang_1",
@@ -89063,7 +89063,7 @@
     {
       "id": 29061,
       "uploadTime": "2023-10-14T18:27:24",
-      "views": 399,
+      "views": 400,
       "hotScore": 1.186906939087548,
       "title": "愚人号 - SN-2 - 广场南路 海沫模组“启航”解锁任务",
       "stageName": "act17side_02",
@@ -89088,7 +89088,7 @@
     {
       "id": 29059,
       "uploadTime": "2023-10-14T17:48:46",
-      "views": 961,
+      "views": 962,
       "hotScore": 1.1872671954978045,
       "title": "第四章 急性衰竭 - 4-1 - 免费拥抱 迷迭香模组“记事”解锁任务",
       "stageName": "main_04-01",
@@ -89173,7 +89173,7 @@
     {
       "id": 29056,
       "uploadTime": "2023-10-14T16:55:38",
-      "views": 890,
+      "views": 893,
       "hotScore": 1.1872216826772917,
       "title": "第三章 二次呼吸 - S3-2 - 潜伏-2 孑模组精钢刀具套组解锁任务",
       "stageName": "sub_03-1-2",
@@ -89347,7 +89347,7 @@
     {
       "id": 29031,
       "uploadTime": "2023-10-13T17:11:19",
-      "views": 1687,
+      "views": 1688,
       "hotScore": 1.2659985624155745,
       "title": "第十一章 淬火尘霾 - 11-7（标准） - 卷入洪流 刻俄柏模组我打的刀解锁任务",
       "stageName": "main_11-06",
@@ -89393,7 +89393,7 @@
     {
       "id": 29027,
       "uploadTime": "2023-10-13T16:28:32",
-      "views": 2541,
+      "views": 2542,
       "hotScore": 1.6761518990872064,
       "title": "第十一章 淬火尘霾 - 11-12（标准） - 汹涌而来 黑键模组朽坏传承解锁任务",
       "stageName": "main_11-10",
@@ -89432,7 +89432,7 @@
     {
       "id": 29025,
       "uploadTime": "2023-10-13T15:34:44",
-      "views": 1142,
+      "views": 1143,
       "hotScore": 1.18738322113883,
       "title": "第七章 苦难摇篮 - 7-9 - 沉默者之怒-2 早露模组攻城器械训练装置解锁任务",
       "stageName": "main_07-07",
@@ -89549,7 +89549,7 @@
     {
       "id": 29005,
       "uploadTime": "2023-10-13T15:46:38",
-      "views": 3137,
+      "views": 3138,
       "hotScore": 1.8872431752397716,
       "title": "第三章 二次呼吸 - 3-7 - 轰鸣 麒麟R夜刀模组训练用木桩解锁任务",
       "stageName": "main_03-07",
@@ -89588,7 +89588,7 @@
     {
       "id": 28977,
       "uploadTime": "2023-10-12T19:29:36",
-      "views": 15560,
+      "views": 15562,
       "hotScore": 3.4966432263199376,
       "title": "狙击 - 陨星 -  狙击高地",
       "stageName": "mem_meteo_1",
@@ -89606,7 +89606,7 @@
     {
       "id": 28951,
       "uploadTime": "2023-10-12T13:03:04",
-      "views": 5344,
+      "views": 5345,
       "hotScore": 2.421177641570967,
       "title": "第十章 破碎日冕 - H10-2（标准） - 日晕行动-2",
       "stageName": "hard_10-02",
@@ -89672,7 +89672,7 @@
     {
       "id": 28943,
       "uploadTime": "2023-10-12T13:06:52",
-      "views": 10343,
+      "views": 10345,
       "hotScore": 3.08480810974885,
       "title": "第十章 破碎日冕 - H10-1（标准） - 日晕行动-1",
       "stageName": "hard_10-01",
@@ -89773,7 +89773,7 @@
     {
       "id": 28937,
       "uploadTime": "2023-10-11T17:04:44",
-      "views": 9125,
+      "views": 9126,
       "hotScore": 2.9588326070382474,
       "title": "第十章 破碎日冕 - 10-14（磨难） - 瞄准",
       "stageName": "tough_10-12",
@@ -89812,7 +89812,7 @@
     {
       "id": 28932,
       "uploadTime": "2023-10-11T15:38:00",
-      "views": 30097,
+      "views": 30110,
       "hotScore": 4.165616060261733,
       "title": "特种 - 阿 - \t别问了，快吃",
       "stageName": "mem_haak_1",
@@ -89830,7 +89830,7 @@
     {
       "id": 28923,
       "uploadTime": "2023-10-11T13:25:05",
-      "views": 10418,
+      "views": 10419,
       "hotScore": 3.092081999700209,
       "title": "号角模组“典范之人”解锁任务 两个任务一起完成",
       "stageName": "main_07-13",
@@ -89862,7 +89862,7 @@
     {
       "id": 28904,
       "uploadTime": "2023-10-10T21:07:13",
-      "views": 1902,
+      "views": 1917,
       "hotScore": 0.013776782095302918,
       "title": "喧闹法则·复刻 - CB-5 - 8:31P.M. 莫斯提马模组锁与匙之家解锁任务",
       "stageName": "act5d0_05",
@@ -89921,7 +89921,7 @@
     {
       "id": 28900,
       "uploadTime": "2023-10-10T20:04:41",
-      "views": 3881,
+      "views": 3882,
       "hotScore": 2.0923938092133216,
       "title": "第十一章 淬火尘霾 - 11-2（标准） - 一丝光亮 推进之王模组“初诺”解锁任务",
       "stageName": "main_11-02",
@@ -90253,7 +90253,7 @@
     {
       "id": 28823,
       "uploadTime": "2023-10-09T16:03:27",
-      "views": 7380,
+      "views": 7381,
       "hotScore": 2.7374254460747514,
       "title": "第十三章 恶兆湍流 - 13-17（磨难） - 谁来倾诉",
       "stageName": "tough_13-15",
@@ -90386,7 +90386,7 @@
     {
       "id": 28818,
       "uploadTime": "2023-10-09T14:53:40",
-      "views": 9120,
+      "views": 9121,
       "hotScore": 2.9503660392822137,
       "title": "第十三章 恶兆湍流 - 13-15（磨难） - 短暂齐聚",
       "stageName": "tough_13-13",
@@ -90460,7 +90460,7 @@
     {
       "id": 28816,
       "uploadTime": "2023-10-09T14:33:20",
-      "views": 7618,
+      "views": 7620,
       "hotScore": 2.769453415354297,
       "title": "第十三章 恶兆湍流 - 13-14（磨难） - 猩红烟火",
       "stageName": "tough_13-12",
@@ -90531,7 +90531,7 @@
     {
       "id": 28815,
       "uploadTime": "2023-10-09T14:54:05",
-      "views": 11733,
+      "views": 11734,
       "hotScore": 3.2038800805786947,
       "title": "第十三章 恶兆湍流 - 13-13（磨难） - 骸骨之中",
       "stageName": "tough_13-11",
@@ -90570,7 +90570,7 @@
     {
       "id": 28807,
       "uploadTime": "2023-10-09T13:54:12",
-      "views": 2375,
+      "views": 2376,
       "hotScore": 1.6005974943386294,
       "title": "第十三章 恶兆湍流 - 13-12（磨难） - 破碎温室",
       "stageName": "tough_13-10",
@@ -90623,7 +90623,7 @@
     {
       "id": 28803,
       "uploadTime": "2023-10-09T10:20:27",
-      "views": 11821,
+      "views": 11824,
       "hotScore": 3.211408992396856,
       "title": "第十三章 恶兆湍流 - 13-11（磨难） - 小镇翳云",
       "stageName": "tough_13-09",
@@ -90722,7 +90722,7 @@
     {
       "id": 28801,
       "uploadTime": "2023-10-12T14:10:56",
-      "views": 10519,
+      "views": 10521,
       "hotScore": 3.1018914430704188,
       "title": "第十三章 恶兆湍流 - 13-8（磨难） - 不虞之会",
       "stageName": "tough_13-07",
@@ -90795,7 +90795,7 @@
     {
       "id": 28800,
       "uploadTime": "2023-10-09T08:24:43",
-      "views": 5510,
+      "views": 5511,
       "hotScore": 2.4441614953034723,
       "title": "第十三章 恶兆湍流 - 13-7（磨难） - 唤血祭坛",
       "stageName": "tough_13-06",
@@ -90847,7 +90847,7 @@
     {
       "id": 28762,
       "uploadTime": "2025-04-12T23:38:09",
-      "views": 4575,
+      "views": 4576,
       "hotScore": 3.148104653876298,
       "title": "第十三章 恶兆湍流 - 13-6（磨难） - 典范之名",
       "stageName": "tough_13-05",
@@ -90893,7 +90893,7 @@
     {
       "id": 28760,
       "uploadTime": "2025-04-12T23:48:59",
-      "views": 4508,
+      "views": 4509,
       "hotScore": 3.133265653890446,
       "title": "第十三章 恶兆湍流 - 13-5（磨难） - 苦厄盘桓",
       "stageName": "tough_13-04",
@@ -91088,7 +91088,7 @@
     {
       "id": 28647,
       "uploadTime": "2023-10-05T20:50:44",
-      "views": 4887,
+      "views": 4888,
       "hotScore": 2.3235733927448985,
       "title": "第十二章 惊霆无声 - TR-23 - 恶魔诱惑",
       "stageName": "TR-23",
@@ -91113,7 +91113,7 @@
     {
       "id": 28631,
       "uploadTime": "2023-10-05T11:01:37",
-      "views": 6292,
+      "views": 6298,
       "hotScore": 3.274368551885213,
       "title": "第十二章 惊霆无声 - TR-22 - 明辨是非",
       "stageName": "TR-22",
@@ -91123,7 +91123,7 @@
     {
       "id": 28629,
       "uploadTime": "2023-10-05T21:17:04",
-      "views": 4595,
+      "views": 4597,
       "hotScore": 2.261982825398529,
       "title": "第十一章 淬火尘霾 - 11-20（磨难） - 最后的蒸汽骑士",
       "stageName": "tough_11-18",
@@ -91197,7 +91197,7 @@
     {
       "id": 28628,
       "uploadTime": "2023-10-05T09:17:35",
-      "views": 11226,
+      "views": 11229,
       "hotScore": 3.4986225598402765,
       "title": "第十一章 淬火尘霾 - 11-19（标准） - 直指命运",
       "stageName": "main_11-17",
@@ -91246,7 +91246,7 @@
     {
       "id": 28616,
       "uploadTime": "2023-10-04T19:39:16",
-      "views": 14300,
+      "views": 14308,
       "hotScore": 3.4034551355191605,
       "title": "第十一章 淬火尘霾 - 11-17（标准） - 回答我",
       "stageName": "main_11-15",
@@ -91674,7 +91674,7 @@
     {
       "id": 28578,
       "uploadTime": "2023-10-03T20:41:06",
-      "views": 5354,
+      "views": 5355,
       "hotScore": 2.4073080665212867,
       "title": "第十一章 淬火尘霾 - 11-1（磨难） - 维护荣耀",
       "stageName": "tough_11-01",
@@ -91790,7 +91790,7 @@
     {
       "id": 28513,
       "uploadTime": "2023-10-07T11:04:55",
-      "views": 44132,
+      "views": 44133,
       "hotScore": 0.045493820150367084,
       "title": "纷争演绎 S-3（测试）",
       "stageName": "level_rune_02-03",
@@ -91942,7 +91942,7 @@
     {
       "id": 28458,
       "uploadTime": "2023-10-12T14:28:18",
-      "views": 9289,
+      "views": 9290,
       "hotScore": 2.9767507401802042,
       "title": "第九章 风暴瞭望 - H9-5（标准） - 急雨行动-2",
       "stageName": "hard_09-05",
@@ -92016,7 +92016,7 @@
     {
       "id": 28449,
       "uploadTime": "2023-09-28T15:09:11",
-      "views": 4475,
+      "views": 4476,
       "hotScore": 2.2276015706343295,
       "title": "第九章 风暴瞭望 - H9-6（标准） - 急雨行动-3",
       "stageName": "hard_09-06",
@@ -92104,7 +92104,7 @@
     {
       "id": 28432,
       "uploadTime": "2023-10-06T10:05:10",
-      "views": 35102,
+      "views": 35106,
       "hotScore": 4.73131803346231,
       "title": "重装 - 号角 - 号声响起",
       "stageName": "mem_horn_1",
@@ -92941,7 +92941,7 @@
     {
       "id": 28239,
       "uploadTime": "2023-09-27T08:57:48",
-      "views": 8892,
+      "views": 8893,
       "hotScore": 2.9170427846297144,
       "title": "第八章 怒号光明 - M8-6 - 再见，只为再见突袭",
       "stageName": "main_08-09",

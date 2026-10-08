@@ -1,23 +1,47 @@
 import {
+    CHARACTER_TABLE_URL,
+    ITEM_INFO_URL,
+    LEVEL_COST_TABLE_URL,
     OPERATOR_META_URL,
     RECENT_WINDOW_DAYS,
     SKILL_SPRITE_URL,
     SKLAND_COMMAND,
 } from "./config.js";
+import { attachMaterials, buildCostIndex } from "./cost.js";
 import { computeTrainingList, standardizeAssignments } from "./compare.js";
 import { fetchAllAssignments, fetchAssignmentsSnapshot } from "./maa.js";
 import { closeDialog, openDialog, readLastVisit, shouldShowIntro, writeLastVisit } from "./notice.js";
 import { fetchBindingList, formatSklandCharacters, getSklandOperatorData, parseCredential } from "./skland.js";
-import { renderBindingButtons, renderSummary, renderTrainingTable } from "./view.js";
+import { renderBindingButtons, renderMaterialSection, renderSummary, renderTrainingTable } from "./view.js";
+import { scoreTier } from "./util.js";
+
+// item_info.json 缺失的模组升级证章（会被一图流材料过滤逻辑丢弃，这里补齐名称与稀有度用于展示）
+// 键名来自游戏材料 id，非驼峰命名
+/* eslint-disable camelcase */
+const ITEM_INFO_PATCH = {
+    mod_update_token_1: { itemId: "mod_update_token_1", itemName: "数据增补条", rarity: 4 },
+    mod_update_token_2: { itemId: "mod_update_token_2", itemName: "数据增补仪", rarity: 5 },
+};
+/* eslint-enable camelcase */
+
+// 复制按钮「已复制」状态的保持时长
+export const COPY_RESET_DELAY_MS = 2000;
 
 const createState = () => ({
     operatorMeta: null,
     skillSprite: null,
+    costIndex: null,
+    itemInfoMap: null,
+    levelCostTable: null,
     assignments: [],
     assignmentSource: "",
     generatedAt: "",
     userOperators: [],
     result: null,
+    // 养成材料计算的勾选集合（row.name）；null 表示尚未初始化（首次分析后默认全选）
+    materialSelection: null,
+    // 材料总计卡片中各养成方向是否计入合计
+    directionTotals: { evolve: true, mastery: true, module: true },
     cred: "",
     token: "",
     bindingList: [],
@@ -26,7 +50,7 @@ const createState = () => ({
     filterText: "",
     onlyPending: false,
     onlyMissing: false,
-    requireModule: false,
+    requireModule: true,
     recentOnly: false,
     standardMode: false,
 });
@@ -43,7 +67,13 @@ const collectElements = (doc) => ({
     status: requireElement(doc, "status"),
     error: requireElement(doc, "error"),
     summary: requireElement(doc, "summary"),
+    materialDetail: requireElement(doc, "material-detail"),
+    materialTitle: requireElement(doc, "material-title"),
+    materialFilters: requireElement(doc, "material-filters"),
+    materialSelectAll: requireElement(doc, "material-select-all"),
+    materialClear: requireElement(doc, "material-clear"),
     trainingTable: requireElement(doc, "training-table"),
+    trainingTitle: requireElement(doc, "training-title"),
     refreshButton: requireElement(doc, "refresh-button"),
     sklandForm: requireElement(doc, "skland-form"),
     credInput: requireElement(doc, "cred-input"),
@@ -52,6 +82,8 @@ const collectElements = (doc) => ({
     bindingList: requireElement(doc, "binding-list"),
     importButton: requireElement(doc, "import-button"),
     importInput: requireElement(doc, "import-input"),
+    importFileInput: requireElement(doc, "import-file-input"),
+    uploadFileButton: requireElement(doc, "upload-file-button"),
     exportJsonButton: requireElement(doc, "export-json-button"),
     exportCsvButton: requireElement(doc, "export-csv-button"),
     exportPlanButton: requireElement(doc, "export-plan-button"),
@@ -131,7 +163,9 @@ export const normalizeImportedOperators = (raw, operatorMeta) => {
         const equipmentInfo = raw?.data?.equipmentInfoMap || raw?.equipmentInfoMap || {};
         return formatSklandCharacters(list, operatorMeta, equipmentInfo);
     }
-    return list.map((item) => {
+    return list.map((rawItem) => {
+        // 兼容本页导出的结果行：练度数据嵌套在 user 字段中
+        const item = rawItem?.user && typeof rawItem.user === "object" ? rawItem.user : rawItem;
         const charId = item.charId || operatorMeta?.nameToCharId?.[item.name] || "";
         const meta = operatorMeta?.operators?.[charId];
         return {
@@ -228,18 +262,64 @@ const createApp = (deps, elements) => {
         setError("");
     };
 
+    // 复制成功后按钮短暂显示「已复制」，到时恢复原文
     const handleCopyCommand = async () => {
         clearError();
         try {
             await navigator.clipboard.writeText(SKLAND_COMMAND);
             setStatus("命令已复制");
+            elements.copyCommandButton.textContent = "已复制";
+            setTimeout(() => {
+                elements.copyCommandButton.textContent = "复制命令";
+            }, COPY_RESET_DELAY_MS);
         } catch {
             setError("复制失败，请手动复制下方命令");
         }
     };
 
+    // 干员星级：优先用森空岛数据，未拥有时查元数据
+    const rowRarity = (row) => {
+        if (row.user?.rarity) {
+            return Number(row.user.rarity);
+        }
+        const charId = row.user?.charId || state.operatorMeta?.nameToCharId?.[row.name];
+        return Number(state.operatorMeta?.operators?.[charId]?.rarity) || 0;
+    };
+
+    // 读取筛选区激活的星级与养成优先级
+    const activeMaterialFilters = () => {
+        const rarities = new Set();
+        const tiers = new Set();
+        for (const input of elements.materialFilters.querySelectorAll("input:checked")) {
+            if (input.dataset.rarity) {
+                rarities.add(Number(input.dataset.rarity));
+            }
+            if (input.dataset.tier) {
+                tiers.add(input.dataset.tier);
+            }
+        }
+        return { rarities, tiers };
+    };
+
+    // 单行是否命中星级/养成优先级筛选
+    const rowMatchesMaterialFilters = (row, { rarities, tiers }) => {
+        const rarity = rowRarity(row);
+        if (rarities.size > 0) {
+            // 「3星及以下」按 rarity <= 3 匹配
+            const hit = [...rarities].some((value) => value === 3 ? rarity <= 3 : rarity === value);
+            if (!hit) {
+                return false;
+            }
+        }
+        if (tiers.size > 0 && !tiers.has(scoreTier(row.score))) {
+            return false;
+        }
+        return true;
+    };
+
     const filterRows = () => {
         let rows = state.result?.rows || [];
+        const filters = activeMaterialFilters();
         if (state.filterText) {
             rows = rows.filter((row) => row.name.includes(state.filterText));
         }
@@ -249,6 +329,7 @@ const createApp = (deps, elements) => {
         if (state.onlyPending) {
             rows = rows.filter((row) => row.user && row.totalGap > 0);
         }
+        rows = rows.filter((row) => rowMatchesMaterialFilters(row, filters));
         const sorted = [...rows];
         // 固定按“未满足必带作业”降序排列
         sorted.sort((a, b) => b.unsatisfiedCore - a.unsatisfiedCore || b.score - a.score || a.totalGap - b.totalGap || a.name.localeCompare(b.name, "zh-CN"));
@@ -280,7 +361,26 @@ const createApp = (deps, elements) => {
             operatorMeta: state.operatorMeta,
             options,
         });
+        // 附带养成成本分组；成本数据缺失时保留 rows 原样（材料区显示不可用）
+        if (state.costIndex) {
+            attachMaterials(state.result.rows, {
+                costIndex: state.costIndex,
+                levelCostTable: state.levelCostTable,
+                charIdOf: (row) => row.user?.charId || state.operatorMeta?.nameToCharId?.[row.name] || "",
+                requireModule: state.requireModule,
+            });
+        }
+        // 勾选集合：首次分析默认全选；行集合变化后保留交集
+        const names = state.result.rows.map((row) => row.name);
+        state.materialSelection = state.materialSelection === null
+            ? new Set(names)
+            : new Set(names.filter((name) => state.materialSelection.has(name)));
     };
+
+    // 参与材料计算的行：勾选且具备成本数据（勾选集合已随筛选剪枝，始终为可见行的子集）
+    const selectedMaterialRows = () => (state.result?.rows || [])
+        .filter((row) => state.materialSelection?.has(row.name) && row.costBreakdown)
+        .sort((a, b) => b.score - a.score || a.name.localeCompare(b.name, "zh-CN"));
 
     const render = () => {
         elements.status.textContent = state.status || "就绪";
@@ -288,14 +388,33 @@ const createApp = (deps, elements) => {
         elements.error.classList.toggle("is-hidden", !state.error);
         if (state.result) {
             elements.summary.innerHTML = renderSummary(state.result.summary);
+            const materialRows = selectedMaterialRows();
+            elements.materialTitle.textContent = `养成材料计算（${materialRows.length}名干员）`;
+            elements.materialDetail.innerHTML = renderMaterialSection(materialRows, {
+                itemInfoMap: state.itemInfoMap,
+                directionTotals: state.directionTotals,
+            });
+            // 清单标题实时显示筛选后的干员数量
+            elements.trainingTitle.textContent = `培养优先级清单（${filterRows().length} 名干员）`;
             elements.trainingTable.innerHTML = renderTrainingTable(filterRows(), {
                 operatorMeta: state.operatorMeta,
-                skillSprite: state.skillSprite,
+                materialSelection: state.materialSelection,
             });
         } else {
             elements.summary.innerHTML = "<div class=\"empty-state\">请先导入干员数据</div>";
+            elements.materialDetail.innerHTML = "";
+            elements.trainingTitle.textContent = "培养优先级清单";
             elements.trainingTable.innerHTML = "<div class=\"empty-state\">暂无培养清单</div>";
         }
+    };
+
+    // 筛选/搜索变化后调用：取消已从清单中消失的干员的勾选，保持勾选集合为可见行的子集
+    const pruneSelection = () => {
+        if (!state.materialSelection) {
+            return;
+        }
+        const visible = new Set(filterRows().map((row) => row.name));
+        state.materialSelection = new Set([...state.materialSelection].filter((name) => visible.has(name)));
     };
 
     // 首次访问或超过 INTRO_REMIND_DAYS 天未访问时，提示两个清单开关的含义与位置；
@@ -315,6 +434,20 @@ const createApp = (deps, elements) => {
         ]);
         state.operatorMeta = operatorMeta;
         state.skillSprite = skillSprite;
+        // 养成成本数据独立加载：失败仅材料列不可用，不影响练度清单主功能
+        try {
+            const [characters, itemInfo, levelCostTable] = await Promise.all([
+                fetchJson(deps.fetchImpl, CHARACTER_TABLE_URL),
+                fetchJson(deps.fetchImpl, ITEM_INFO_URL),
+                fetchJson(deps.fetchImpl, LEVEL_COST_TABLE_URL),
+            ]);
+            state.costIndex = buildCostIndex(characters);
+            state.itemInfoMap = Object.fromEntries(itemInfo.map((item) => [item.itemId, item]));
+            Object.assign(state.itemInfoMap, ITEM_INFO_PATCH);
+            state.levelCostTable = levelCostTable;
+        } catch {
+            setStatus("养成成本数据加载失败，材料缺口不可用");
+        }
     };
 
     const refreshAssignments = async (useLive) => {
@@ -398,14 +531,32 @@ const createApp = (deps, elements) => {
         }
     };
 
-    const handleImport = () => {
+    const importFromText = (text) => {
         clearError();
+        const raw = JSON.parse(text);
+        state.userOperators = normalizeImportedOperators(raw, state.operatorMeta);
+        runAnalysis();
+        render();
+        setStatus(`已导入 ${state.userOperators.length} 名干员`);
+    };
+
+    const handleImport = () => {
         try {
-            const raw = JSON.parse(elements.importInput.value);
-            state.userOperators = normalizeImportedOperators(raw, state.operatorMeta);
-            runAnalysis();
-            render();
-            setStatus(`已导入 ${state.userOperators.length} 名干员`);
+            importFromText(elements.importInput.value);
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
+    // 读取文件内容并回填文本框，便于查看与再次手动导入
+    const handleImportFile = async (file) => {
+        if (!file) {
+            return;
+        }
+        try {
+            const text = await file.text();
+            elements.importInput.value = text;
+            importFromText(text);
         } catch (error) {
             setError(error.message);
         }
@@ -495,6 +646,29 @@ const createApp = (deps, elements) => {
             }
         });
         elements.importButton.addEventListener("click", handleImport);
+        // 上传按钮触发系统文件选择
+        elements.uploadFileButton.addEventListener("click", () => {
+            elements.importFileInput.click();
+        });
+        elements.importFileInput.addEventListener("change", (event) => {
+            const file = event.target.files?.[0];
+            // 清空 value，保证选择同一文件也能再次触发 change
+            event.target.value = "";
+            handleImportFile(file);
+        });
+        // 拖拽到文本框时阻止浏览器默认打开文件，并切换高亮样式
+        elements.importInput.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            elements.importInput.classList.add("is-dragover");
+        });
+        elements.importInput.addEventListener("dragleave", () => {
+            elements.importInput.classList.remove("is-dragover");
+        });
+        elements.importInput.addEventListener("drop", (event) => {
+            event.preventDefault();
+            elements.importInput.classList.remove("is-dragover");
+            handleImportFile(event.dataTransfer?.files?.[0]);
+        });
         elements.exportJsonButton.addEventListener("click", handleExportJson);
         elements.exportCsvButton.addEventListener("click", handleExportCsv);
         elements.exportPlanButton.addEventListener("click", handleExportPlan);
@@ -506,16 +680,58 @@ const createApp = (deps, elements) => {
         });
         elements.copyCommandButton.addEventListener("click", handleCopyCommand);
         elements.sampleButton.addEventListener("click", loadSampleData);
+        // 清单行首复选框：切换干员是否计入材料计算
+        elements.trainingTable.addEventListener("change", (event) => {
+            const input = event.target.closest(".material-select");
+            if (!input || !state.materialSelection) {
+                return;
+            }
+            if (input.checked) {
+                state.materialSelection.add(input.dataset.name);
+            } else {
+                state.materialSelection.delete(input.dataset.name);
+            }
+            render();
+        });
+        // 材料总计卡片的方向复选框：控制计入合计的养成方向
+        elements.materialDetail.addEventListener("change", (event) => {
+            const input = event.target.closest(".direction-total-select");
+            if (!input) {
+                return;
+            }
+            state.directionTotals[input.dataset.direction] = input.checked;
+            render();
+        });
+        // 星级/优先级筛选变化：剪枝勾选集合后重渲（不影响其余勾选状态）
+        elements.materialFilters.addEventListener("change", () => {
+            pruneSelection();
+            render();
+        });
+        elements.materialSelectAll.addEventListener("click", () => {
+            if (!state.result) {
+                return;
+            }
+            // 仅勾选当前筛选命中的行，与隐藏行无法手动勾选保持一致
+            state.materialSelection = new Set(filterRows().map((row) => row.name));
+            render();
+        });
+        elements.materialClear.addEventListener("click", () => {
+            state.materialSelection = new Set();
+            render();
+        });
         elements.filterInput.addEventListener("input", (event) => {
             state.filterText = event.target.value;
+            pruneSelection();
             render();
         });
         elements.onlyPendingInput.addEventListener("change", (event) => {
             state.onlyPending = event.target.checked;
+            pruneSelection();
             render();
         });
         elements.onlyMissingInput.addEventListener("change", (event) => {
             state.onlyMissing = event.target.checked;
+            pruneSelection();
             render();
         });
         elements.requireModuleInput.addEventListener("change", (event) => {
@@ -523,17 +739,20 @@ const createApp = (deps, elements) => {
             if (state.userOperators.length) {
                 runAnalysis();
             }
+            pruneSelection();
             render();
         });
         elements.recentToggle.addEventListener("change", () => {
             state.recentOnly = elements.recentToggle.checked;
             // 切换时间窗口后重新计算并固定按“未满足必带作业”降序排列
             runAnalysis();
+            pruneSelection();
             render();
         });
         elements.standardToggle.addEventListener("change", () => {
             state.standardMode = elements.standardToggle.checked;
             runAnalysis();
+            pruneSelection();
             render();
         });
         elements.introCloseButton.addEventListener("click", () => {

@@ -66,3 +66,14 @@ export const scoreTier = (score) => {
 };
 
 export const formatNumber = (value) => Number(value || 0).toLocaleString("zh-CN");
+
+// 材料数量显示：一万以上用「万」单位（如龙门币 180000 → 18万），其余千分位
+export const formatCount = (value) => {
+    const count = Number(value) || 0;
+    if (Math.abs(count) >= 10000) {
+        const wan = count / 10000;
+        const text = Number.isInteger(wan) ? String(wan) : wan.toFixed(1);
+        return `${text}万`;
+    }
+    return formatNumber(count);
+};

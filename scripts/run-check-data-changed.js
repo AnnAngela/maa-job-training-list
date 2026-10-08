@@ -12,7 +12,10 @@ for (const file of GENERATED_FILES) {
         readFile(join(beforeDir, file), "utf8"),
         readFile(join(afterDir, file), "utf8"),
     ]);
-    const equivalent = isDataEquivalent(JSON.parse(before), JSON.parse(after));
+    // 非 JSON 镜像文件（如 sprite_item.css）直接按原文比较；JSON 文件忽略易变字段
+    const equivalent = file.endsWith(".json")
+        ? isDataEquivalent(JSON.parse(before), JSON.parse(after))
+        : before === after;
     console.log(`${file}: ${equivalent ? "unchanged (only volatile fields)" : "substantive change"}`);
     if (!equivalent) {
         changedFiles.push(file);

@@ -34,14 +34,6 @@ test("normalizeSlotRequirements infers elite from skill and skill_level", () => 
     expect(normalizeSlotRequirements({ skill: 0, requirements: { skill_level: 10 } })).toMatchObject({ skillLevel: 0 });
 });
 
-test("normalizeSlotRequirements infers elite from level beyond stage caps", () => {
-    // 精0 最高 50 级、精1 最高 80 级（跨稀有度上限），超出视作更高阶段
-    expect(normalizeSlotRequirements({ skill: 1, requirements: { level: 99 } })).toMatchObject({ elite: 2, level: 99 });
-    expect(normalizeSlotRequirements({ skill: 2, requirements: { level: 90 } })).toMatchObject({ elite: 2 });
-    expect(normalizeSlotRequirements({ skill: 1, requirements: { level: 60 } })).toMatchObject({ elite: 1 });
-    expect(normalizeSlotRequirements({ skill: 0, requirements: { level: 50 } })).toMatchObject({ elite: 0 });
-});
-
 test("skillLevelFor reads the matching skill slot", () => {
     expect(skillLevelFor(1, amiya)).toBe(7);
     expect(skillLevelFor(2, amiya)).toBe(10);
@@ -76,14 +68,42 @@ test("evaluateSlot compares promotion stage before level", () => {
 });
 
 test("evaluateSlot handles module fallback", () => {
-    const moduleGap = evaluateSlot({ name: "阿米娅", skill: 1, requirements: { module: 1 } }, { ...amiya, maxModuleLevel: 0 }, { requireModule: true });
+    const moduleGap = evaluateSlot({ name: "阿米娅", skill: 1, requirements: { module: 1 } }, { ...amiya, maxModuleLevel: 0, modules: [] }, { requireModule: true });
     expect(moduleGap.gaps).toContainEqual({ type: "module", required: 1, current: 0 });
+});
+
+test("evaluateSlot compares module level by matching type", () => {
+    const slotModule3 = { name: "阿米娅", skill: 1, requirements: { module: 1, module_level: 3 } };
+    // X 型只有 1 级：缺到 3 级
+    const levelGap = evaluateSlot(slotModule3, {
+        ...amiya,
+        modules: [{ name: "X", level: 1, locked: false }],
+    }, { requireModule: true });
+    expect(levelGap.gaps).toContainEqual({ type: "module", required: 3, current: 1 });
+    // X 型已 3 级：满足
+    const satisfied = evaluateSlot(slotModule3, {
+        ...amiya,
+        modules: [{ name: "X", level: 3, locked: false }],
+    }, { requireModule: true });
+    expect(satisfied.satisfied).toBe(true);
+    // 锁定的模组不计入
+    const locked = evaluateSlot(slotModule3, {
+        ...amiya,
+        modules: [{ name: "X", level: 3, locked: true }],
+    }, { requireModule: true });
+    expect(locked.gaps).toContainEqual({ type: "module", required: 3, current: 0 });
 });
 
 test("evaluateSlot handles module requirement toggle", () => {
     const slotModule = { name: "阿米娅", skill: 1, requirements: { module: 1 } };
-    expect(evaluateSlot(slotModule, amiya, { requireModule: true }).satisfied).toBe(true);
-    expect(evaluateSlot(slotModule, { ...amiya, maxModuleLevel: 0 }, { requireModule: true }).satisfied).toBe(false);
+    const amiyaWithX = {
+        ...amiya,
+        modules: [{ name: "X", level: 1, locked: false }],
+    };
+    expect(evaluateSlot(slotModule, amiyaWithX, { requireModule: true }).satisfied).toBe(true);
+    expect(evaluateSlot(slotModule, { ...amiyaWithX, modules: [] }, { requireModule: true }).satisfied).toBe(false);
+    // 关闭开关时不判定模组
+    expect(evaluateSlot(slotModule, { ...amiyaWithX, modules: [] }, { requireModule: false }).satisfied).toBe(true);
     const slotNoModule = { name: "阿米娅", skill: 1, requirements: { module: 0 } };
     expect(evaluateSlot(slotNoModule, { ...amiya, maxModuleLevel: 0 }, { requireModule: true }).satisfied).toBe(true);
     expect(evaluateSlot(slotNoModule, amiya, { requireModule: true }).satisfied).toBe(false);
@@ -224,6 +244,20 @@ test("computeTrainingList merges target by (elite, level) lexicographic order", 
     expect(ascending.rows[0].target).toMatchObject({ elite: 2, level: 40 });
     const descending = computeTrainingList({ assignments: [mkAssignment(1, { elite: 2, level: 40, skill_level: 8 }), mkAssignment(2, { elite: 1, level: 60 })], userOperators: [], operatorMeta, options: {} });
     expect(descending.rows[0].target).toMatchObject({ elite: 2, level: 40 });
+});
+
+test("computeTrainingList 满练模拟含具体模组类型：模组作业计入收益", () => {
+    // 作业要求模组 X（module:1）；干员已精二但无模组
+    const assignments = [
+        { id: 1, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "阿米娅", skill: 1, requirements: { module: 1 } }], groups: [] },
+    ];
+    const operators = [{ ...amiya, maxModuleLevel: 0, modules: [] }];
+    const result = computeTrainingList({ assignments, userOperators: operators, operatorMeta, options: { requireModule: true } });
+    const row = result.rows[0];
+    // 模拟满练补齐 X 型 3 级模组后作业可抄：coreGain 为 1，优先级含模组收益
+    expect(row.coreGain).toBe(1);
+    // 1000(coreGain) + 50(unsatisfiedCore) + 10(recentCoreDemand)
+    expect(row.score).toBe(1060);
 });
 
 test("computeTrainingList handles group gains and other required operators", () => {

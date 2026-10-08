@@ -9,6 +9,7 @@
     "lint:fix": "eslint . --fix",
     "test": "npm run lint && vitest run --coverage",
     "test:watch": "vitest",
+    "serve": "node scripts/serve.js",
     "generate:data": "node scripts/run-generate-data.js"
   },
   "engines": {

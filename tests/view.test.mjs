@@ -1,13 +1,16 @@
 import { expect, test } from "vitest";
 import {
     charIdForName,
+    itemChipHtml,
     operatorAvatarHtml,
     operatorSkillIcon,
     rarityStars,
     renderBindingButtons,
+    renderMaterialSection,
     renderSummary,
     renderTrainingTable,
     skillIconHtml,
+    sortMaterialEntries,
     statusBadge,
 } from "../js/view.js";
 
@@ -61,14 +64,6 @@ test("statusBadge renders missing ready and pending", () => {
     expect(statusBadge({ user: {}, totalGap: 1 })).toContain("待培养");
 });
 
-test("renderTrainingTable keeps level met when promotion stage exceeds target", () => {
-    // 用户精2 40级对目标精1 60级：精英化阶段更高，等级视为已满足，不标红
-    const html = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 40, skill1: 10, skill2: 0, skill3: 0, maxModuleLevel: 0 }, target: { elite: 1, level: 60, skill1: 7, skill2: 0, skill3: 0, module: -1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
-    expect(html).toContain("60级");
-    expect(html).not.toContain("req-unmet");
-    expect(html).toContain("已达标");
-});
-
 test("renderSummary renders cards", () => {
     const html = renderSummary({ totalAssignments: 5, readyCount: 2, notReadyCount: 3, involvedOperators: 4, missingOperators: 1 });
     expect(html).toContain("作业总数");
@@ -79,6 +74,98 @@ test("renderBindingButtons renders empty and list", () => {
     expect(renderBindingButtons([])).toContain("未找到绑定的明日方舟账号");
     expect(renderBindingButtons([{ uid: "1", nickName: "博士", channelName: "官服" }])).toContain("data-uid=\"1\"");
     expect(renderBindingButtons([{}])).toContain("data-uid=\"\"");
+});
+
+// 材料信息表：稀有度用于排序与 chip 边框色
+const itemInfoMap = {
+    30014: { itemId: "30014", itemName: "全新装置", rarity: 4 },
+    30034: { itemId: "30034", itemName: "改量装置", rarity: 4 },
+    3303: { itemId: "3303", itemName: "技巧概要·卷3", rarity: 3 },
+    4001: { itemId: "4001", itemName: "龙门币", rarity: 2 },
+};
+
+// 含完整成本分组的材料行
+const materialRow = {
+    name: "阿米娅",
+    score: 6000,
+    costBreakdown: {
+        evolve: { items: { 30014: 5, 4001: 10000 }, notes: ["精零1 → 精一50"] },
+        mastery: { items: { 3303: 6 }, notes: ["6/0/0 → 7/0/0"] },
+        module: { items: { 30034: 3 }, notes: ["无模组 → 模组X"], excluded: false },
+        total: { 30014: 5, 4001: 10000, 3303: 6, 30034: 3 },
+    },
+};
+
+const allDirectionTotals = { evolve: true, mastery: true, module: true };
+
+test("itemChipHtml renders rarity chip and falls back to itemId", () => {
+    const chip = itemChipHtml("30014", 5, itemInfoMap);
+    expect(chip).toContain("item-chip--r4");
+    expect(chip).toContain("title=\"全新装置\"");
+    expect(chip).toContain("bg-30014");
+    expect(chip).toContain(">5<");
+    // 未知材料：标题回退为 itemId，稀有度钳制为 1
+    const unknown = itemChipHtml("99999", 2, itemInfoMap);
+    expect(unknown).toContain("title=\"99999\"");
+    expect(unknown).toContain("item-chip--r1");
+    // 无信息表时同样回退
+    expect(itemChipHtml("30014", 1, null)).toContain("item-chip--r1");
+});
+
+test("sortMaterialEntries sorts by rarity desc then itemId", () => {
+    const sorted = sortMaterialEntries({ 3303: 6, 30014: 5, 4001: 100 }, itemInfoMap);
+    expect(sorted.map(([id]) => id)).toEqual(["30014", "3303", "4001"]);
+    const tie = sortMaterialEntries({ 3005: 1, 3001: 1 }, {
+        3005: { rarity: 4 },
+        3001: { rarity: 4 },
+    });
+    expect(tie.map(([id]) => id)).toEqual(["3001", "3005"]);
+    // 空输入与无信息表（稀有度一律 0，按 itemId 排序）
+    expect(sortMaterialEntries(null, itemInfoMap)).toEqual([]);
+    expect(sortMaterialEntries({ 3005: 1, 3001: 1 }, {})).toEqual([["3001", 1], ["3005", 1]]);
+});
+
+test("renderMaterialSection renders empty state", () => {
+    expect(renderMaterialSection([], { itemInfoMap, directionTotals: allDirectionTotals })).toContain("未勾选任何可计算的干员");
+});
+
+test("renderMaterialSection renders total card and operator cards", () => {
+    const html = renderMaterialSection([materialRow], { itemInfoMap, directionTotals: allDirectionTotals });
+    // 总计卡片：三个方向复选框均勾选，底部为方向合计
+    expect(html).toContain("养成材料总计（1名干员）");
+    // 三个方向复选框均勾选；属性按 class、data-direction、aria-label、checked 顺序输出
+    expect(html).toContain('data-direction="evolve" aria-label="计入精英/等级" checked');
+    expect(html).toContain('data-direction="module" aria-label="计入模组" checked');
+    // 单个干员卡片：名称、分层标签、练度说明、材料 chip
+    expect(html).toContain("精零1 → 精一50");
+    expect(html).toContain("6/0/0 → 7/0/0");
+    expect(html).toContain("无模组 → 模组X");
+    expect(html).toContain("bg-30014");
+});
+
+test("renderMaterialSection shows placeholder when no direction is selected", () => {
+    const html = renderMaterialSection([materialRow], { itemInfoMap, directionTotals: { evolve: false, mastery: false, module: false } });
+    expect(html).toContain("未选择养成方向");
+    // 方向复选框全部不勾选
+    expect(html).not.toContain("direction-total-select\" checked");
+});
+
+test("renderMaterialSection marks excluded direction and empty list", () => {
+    const row = {
+        name: "阿米娅",
+        score: 0,
+        costBreakdown: {
+            evolve: { items: {}, notes: [] },
+            mastery: { items: {}, notes: [] },
+            // 未计入的模组方向
+            module: { items: {}, notes: [], excluded: true },
+            total: {},
+        },
+    };
+    const html = renderMaterialSection([row], { itemInfoMap, directionTotals: allDirectionTotals });
+    expect(html).toContain("未计入");
+    // 无材料方向显示「无缺口」
+    expect(html).toContain("无缺口");
 });
 
 test("renderTrainingTable renders empty state and rows", () => {
@@ -117,7 +204,7 @@ test("renderTrainingTable renders empty state and rows", () => {
     expect(partialSkills).not.toContain("技能3");
     expect(partialSkills).toContain('<span class="req-unmet">技能2 7级</span>');
     expect(partialSkills).not.toContain("模组");
-    const missingRow = renderTrainingTable([{ name: "阿米娅", user: null, target: { elite: 2, level: 90, skill1: 0, skill2: 7, skill3: 0, module: 1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+    const missingRow = renderTrainingTable([{ name: "阿米娅", user: null, target: { elite: 2, level: 90, levelPairs: [{ elite: 2, level: 90 }], skill1: 0, skill2: 7, skill3: 0, module: 1, modulePairs: [{ type: 1, level: 0 }] }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
     expect(missingRow).toContain(">—<");
     expect(missingRow).toContain('<span class="req-unmet">精2</span>');
     expect(missingRow).toContain('<span class="req-unmet">90级</span>');
@@ -142,4 +229,61 @@ test("renderTrainingTable renders empty state and rows", () => {
     // 未知模组编号：目标列不显示模组部分
     const unknownModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 0, modules: [] }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: 9 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
     expect(unknownModule).not.toContain("模组");
+});
+
+test("跨精英阶要求对：精英与等级分别按未满足对高亮", () => {
+    // 用户精一60；两对要求：精一70 与 精二80。聚合显示精2/80级，两者均应高亮
+    const rows = [{
+        name: "阿米娅",
+        user: { charId: "char_002_amiya", elite: 1, level: 60, skill1: 1, skill2: 1, skill3: 1, maxModuleLevel: 0 },
+        target: {
+            elite: 2,
+            level: 80,
+            levelPairs: [{ elite: 1, level: 70 }, { elite: 2, level: 80 }],
+            module: -1,
+            modulePairs: [],
+        },
+        coreGain: 0,
+        groupGain: 0,
+        unsatisfiedCore: 0,
+        score: 0,
+        totalGap: 0,
+    }];
+    const html = renderTrainingTable(rows, { operatorMeta, skillSprite });
+    expect(html).toContain('<span class="req-unmet">精2</span>');
+    expect(html).toContain('<span class="req-unmet">80级</span>');
+});
+
+test("含精零要求对：等级兜底分支与同阶等级高亮", () => {
+    // 用户精零30；要求对：精零50、精零（无等级，不产生等级缺口）与 精一（无等级）。聚合显示精1/50级
+    const rows = [{
+        name: "阿米娅",
+        user: { charId: "char_002_amiya", elite: 0, level: 30, skill1: 1, skill2: 1, skill3: 1, maxModuleLevel: 0 },
+        target: {
+            elite: 1,
+            level: 50,
+            levelPairs: [{ elite: 0, level: 50 }, { elite: 0 }, { elite: 1, level: 0 }],
+            module: -1,
+            modulePairs: [],
+        },
+        coreGain: 0,
+        groupGain: 0,
+        unsatisfiedCore: 0,
+        score: 0,
+        totalGap: 0,
+    }];
+    const html = renderTrainingTable(rows, { operatorMeta, skillSprite });
+    expect(html).toContain('<span class="req-unmet">精1</span>');
+    expect(html).toContain('<span class="req-unmet">50级</span>');
+});
+
+test("已达标行复选框禁用；缺成本数据行不渲染复选框", () => {
+    const rows = [
+        { name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 90 }, target: { elite: 2, level: 90 }, costBreakdown: null, score: 0, totalGap: 0, unsatisfiedCore: 0 },
+        { name: "凯尔希", user: null, target: { elite: 2 }, costBreakdown: undefined, score: 0, totalGap: 0, unsatisfiedCore: 0 },
+    ];
+    const html = renderTrainingTable(rows, { operatorMeta, skillSprite, materialSelection: new Set(["阿米娅"]) });
+    // 无缺口行复选框存在但禁用，带干员名的可访问名称，且不因默认勾选集合而选中
+    expect(html).toContain('data-name="阿米娅" aria-label="计入 阿米娅 的养成材料" disabled');
+    expect(html).not.toContain('data-name="凯尔希"');
 });

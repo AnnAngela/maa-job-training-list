@@ -11,7 +11,13 @@ import {
 } from "../scripts/generate-data.js";
 
 const textResponse = (text, status = 200) => ({ ok: status >= 200 && status < 300, status, text: () => Promise.resolve(text) });
-const jsonResponse = (data, status = 200) => ({ ok: status >= 200 && status < 300, status, json: () => Promise.resolve(data) });
+const jsonResponse = (data, status = 200) => ({
+    ok: status >= 200 && status < 300,
+    status,
+    json: () => Promise.resolve(data),
+    // 镜像文件保存响应原文，generateAll 会对 JSON 响应调用 text()
+    text: () => Promise.resolve(JSON.stringify(data)),
+});
 
 test("normalizeAssignment normalizes slots and groups", () => {
     const item = {
@@ -155,6 +161,9 @@ test("generateAll writes generated data files", async () => {
         if (url.includes("sprite_skill")) {
             return Promise.resolve(textResponse(".bg-skill_icon_sk {\nbackground-image: url(\"https://example.com/s.jpg\");\nbackground-position: -0px -0px;\n}", 200));
         }
+        if (url.includes("sprite_item")) {
+            return Promise.resolve(textResponse(".bg-0 { background: url('https://example.com/i.webp'); }", 200));
+        }
         return Promise.resolve(jsonResponse({ data: { has_next: false, data: [{ id: 1, content: JSON.stringify({ doc: { title: "A" } }) }] } }, 200));
     });
     const writeFileImpl = vi.fn().mockResolvedValue(undefined);
@@ -181,4 +190,67 @@ test("generateAll throws on character or css request failure", async () => {
         return Promise.resolve(maaOk);
     });
     await expect(generateAll({ fetchImpl: cssFail, writeFileImpl: vi.fn(), now: new Date("2024-01-01T00:00:00Z") })).rejects.toThrow("skill sprite css request failed");
+});
+
+test("generateAll throws on item info or level cost request failure", async () => {
+    const maaOk = jsonResponse({ data: { has_next: false, data: [{ id: 1, content: JSON.stringify({ doc: { title: "A" } }) }] } }, 200);
+    const cssOk = textResponse("css", 200);
+    const charOk = jsonResponse({ char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] } }, 200);
+    const itemInfoFail = vi.fn((url) => {
+        if (url.includes("item_info")) {
+            return Promise.resolve(jsonResponse({}, 500));
+        }
+        if (url.includes("character_table")) {
+            return Promise.resolve(charOk);
+        }
+        if (url.includes("sprite_skill")) {
+            return Promise.resolve(cssOk);
+        }
+        return Promise.resolve(maaOk);
+    });
+    await expect(generateAll({ fetchImpl: itemInfoFail, writeFileImpl: vi.fn(), now: new Date("2024-01-01T00:00:00Z") })).rejects.toThrow("item info request failed");
+
+    const levelCostFail = vi.fn((url) => {
+        if (url.includes("level_cost")) {
+            return Promise.resolve(jsonResponse({}, 500));
+        }
+        if (url.includes("item_info")) {
+            return Promise.resolve(jsonResponse([], 200));
+        }
+        if (url.includes("character_table")) {
+            return Promise.resolve(charOk);
+        }
+        if (url.includes("sprite_skill")) {
+            return Promise.resolve(cssOk);
+        }
+        return Promise.resolve(maaOk);
+    });
+    await expect(generateAll({ fetchImpl: levelCostFail, writeFileImpl: vi.fn(), now: new Date("2024-01-01T00:00:00Z") })).rejects.toThrow("level cost table request failed");
+});
+
+test("generateAll throws on item sprite css request failure", async () => {
+    const maaOk = jsonResponse({ data: { has_next: false, data: [{ id: 1, content: JSON.stringify({ doc: { title: "A" } }) }] } }, 200);
+    const charOk = jsonResponse({ char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] } }, 200);
+    const skillCssOk = textResponse("css", 200);
+    const itemInfoOk = jsonResponse([], 200);
+    const levelCostOk = jsonResponse({}, 200);
+    const fetchImpl = vi.fn((url) => {
+        if (url.includes("sprite_item")) {
+            return Promise.resolve(textResponse("bad", 500));
+        }
+        if (url.includes("character_table")) {
+            return Promise.resolve(charOk);
+        }
+        if (url.includes("sprite_skill")) {
+            return Promise.resolve(skillCssOk);
+        }
+        if (url.includes("item_info")) {
+            return Promise.resolve(itemInfoOk);
+        }
+        if (url.includes("level_cost")) {
+            return Promise.resolve(levelCostOk);
+        }
+        return Promise.resolve(maaOk);
+    });
+    await expect(generateAll({ fetchImpl, writeFileImpl: vi.fn(), now: new Date("2024-01-01T00:00:00Z") })).rejects.toThrow("item sprite css request failed");
 });

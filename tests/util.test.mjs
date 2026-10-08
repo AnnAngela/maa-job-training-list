@@ -1,6 +1,7 @@
 import { expect, test } from "vitest";
 import {
     escapeHtml,
+    formatCount,
     formatNumber,
     normalizeOperSlot,
     operatorAvatarUrl,
@@ -77,4 +78,9 @@ test("scoreTier maps score buckets", () => {
 test("formatNumber formats numbers", () => {
     expect(formatNumber(1234)).toBe("1,234");
     expect(formatNumber(0)).toBe("0");
+});
+
+test("formatCount 非数值输入按 0 处理", () => {
+    expect(formatCount(undefined)).toBe("0");
+    expect(formatCount("abc")).toBe("0");
 });
