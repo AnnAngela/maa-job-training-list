@@ -109,6 +109,10 @@ ESLint 规则迁移自 [MoegirlPediaInterfaceCodes](https://github.com/MoegirlPe
 
 代码风格为 4 空格缩进、双引号、分号、尾随逗号（沿用共享配置），提交前请确保 `npm run lint` 无告警（CI 的 `npm test` 会守门）。
 
+### 持续集成
+
+仓库包含 .github/workflows/ci.yml，每次 push 与 pull_request 都会自动运行 `npm test`（ESLint + Vitest 全量测试 + 100% 覆盖率守门），也可手动触发。
+
 ## 数据自动更新
 
 仓库包含 .github/workflows/update-data.yml，每天北京时间 05:00 自动重新生成 data/ 下的数据文件，无需人工干预：
