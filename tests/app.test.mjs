@@ -74,6 +74,7 @@ const buildDom = () => {
         "<dialog id=\"intro-dialog\"></dialog>",
         "<button id=\"intro-close-button\"></button>",
         "<dialog id=\"plan-copy-dialog\"><textarea id=\"plan-copy-textarea\" readonly></textarea><button id=\"plan-copy-close-button\"></button></dialog>",
+        "<dialog id=\"plan-done-dialog\"><p id=\"plan-done-message\"></p><button id=\"plan-done-close-button\"></button></dialog>",
     ].join("");
 };
 
@@ -650,9 +651,13 @@ test("export plan copies owned rows of the current view to the clipboard", async
     expect(JSON.parse(writeText.mock.calls[0][0])).toEqual([
         { role: "Warrior", name: "陈", elite: 2, level: 60, skill_level: 7, skill_mastery: [0, 0, 3] },
     ]);
-    expect(app.state.status).toContain("已复制 1 名干员的培养计划");
+    // 复制成功的提示以对话框呈现（状态栏区域窄且易被忽略）
+    expect(app.elements.planDoneDialog.hasAttribute("open")).toBe(true);
+    expect(app.elements.planDoneMessage.textContent).toContain("已复制 1 名干员的培养计划");
     // 阿米娅形态 MAA 不支持、凯尔希未拥有，都要在提示里交代
-    expect(app.state.status).toContain("已跳过 1 名未拥有、1 名阿米娅形态");
+    expect(app.elements.planDoneMessage.textContent).toContain("已跳过 1 名未拥有、1 名阿米娅形态");
+    app.elements.planDoneCloseButton.dispatchEvent(new Event("click", { bubbles: true }));
+    expect(app.elements.planDoneDialog.hasAttribute("open")).toBe(false);
 });
 
 test("export plan follows the search filter", async () => {
@@ -671,7 +676,7 @@ test("export plan follows the search filter", async () => {
     const parsed = JSON.parse(writeText.mock.calls[0][0]);
     expect(parsed.map((plan) => plan.name)).toEqual(["陈"]);
     // 被筛掉的干员不应出现在跳过说明里
-    expect(app.state.status).not.toContain("已跳过");
+    expect(app.elements.planDoneMessage.textContent).not.toContain("已跳过");
 });
 
 test("export plan reports when nothing is exportable", async () => {
@@ -980,4 +985,5 @@ test("index.html markup satisfies the app element contract", async () => {
     expect(app.elements.exportPlanButton.textContent).toContain("导出培养计划");
     expect(app.elements.planCopyTextarea.readOnly).toBe(true);
     expect(app.elements.planCopyCloseButton.textContent).toContain("我知道了");
+    expect(app.elements.planDoneDialog.textContent).toContain("培养计划已复制");
 });

@@ -108,6 +108,15 @@
     </div>
   </dialog>
 
+  <!-- 复制成功的结果提示：含数量、跳过说明与 MAA 操作引导，头部状态栏窄且易被忽略，改用对话框呈现 -->
+  <dialog id="plan-done-dialog" class="intro-dialog" aria-labelledby="plan-done-dialog-title">
+    <div class="intro-dialog__card">
+      <h2 id="plan-done-dialog-title">培养计划已复制</h2>
+      <p id="plan-done-message"></p>
+      <button id="plan-done-close-button" type="button" class="button">我知道了</button>
+    </div>
+  </dialog>
+
   <script type="module">
     import { initApp } from "./js/app.js";
     initApp();

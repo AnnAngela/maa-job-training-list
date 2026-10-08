@@ -58,6 +58,9 @@ const collectElements = (doc) => ({
     planCopyDialog: requireElement(doc, "plan-copy-dialog"),
     planCopyTextarea: requireElement(doc, "plan-copy-textarea"),
     planCopyCloseButton: requireElement(doc, "plan-copy-close-button"),
+    planDoneDialog: requireElement(doc, "plan-done-dialog"),
+    planDoneMessage: requireElement(doc, "plan-done-message"),
+    planDoneCloseButton: requireElement(doc, "plan-done-close-button"),
     sampleButton: requireElement(doc, "sample-button"),
     filterInput: requireElement(doc, "filter-input"),
     onlyPendingInput: requireElement(doc, "only-pending-input"),
@@ -469,7 +472,9 @@ const createApp = (deps, elements) => {
         const skippedNote = skippedParts.length ? `（已跳过 ${skippedParts.join("、")}）` : "";
         try {
             await navigator.clipboard.writeText(text);
-            setStatus(`已复制 ${plans.length} 名干员的培养计划，请在 MAA「干员培养」中点击「从剪贴板读取」${skippedNote}`);
+            // 结果提示较长（数量、跳过说明、MAA 操作引导），状态栏放不下且易被忽略，用对话框呈现
+            elements.planDoneMessage.textContent = `已复制 ${plans.length} 名干员的培养计划，请在 MAA「干员培养」中点击「从剪贴板读取」${skippedNote}`;
+            openDialog(elements.planDoneDialog);
         } catch {
             // 剪贴板被拒或 API 不可用（如 http 非安全上下文）：弹窗兜底，textarea 打开即全选
             elements.planCopyTextarea.value = text;
@@ -495,6 +500,9 @@ const createApp = (deps, elements) => {
         elements.exportPlanButton.addEventListener("click", handleExportPlan);
         elements.planCopyCloseButton.addEventListener("click", () => {
             closeDialog(elements.planCopyDialog);
+        });
+        elements.planDoneCloseButton.addEventListener("click", () => {
+            closeDialog(elements.planDoneDialog);
         });
         elements.copyCommandButton.addEventListener("click", handleCopyCommand);
         elements.sampleButton.addEventListener("click", loadSampleData);
