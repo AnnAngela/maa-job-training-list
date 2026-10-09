@@ -1,7 +1,7 @@
 import { expect, test, vi } from "vitest";
 import {
     buildQueryUrl,
-    fetchAllAssignments,
+    fetchAssignmentsDelta,
     fetchAssignmentsPage,
     fetchAssignmentsSnapshot,
     parseAssignmentRecord,
@@ -66,22 +66,58 @@ test("fetchAssignmentsPage throws on bad shape", async () => {
     await expect(fetchAssignmentsPage(fetchImpl, 1)).rejects.toThrow("unexpected shape");
 });
 
-test("fetchAllAssignments paginates without progress", async () => {
-    const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({ data: { has_next: false, data: [] } }, 200));
-    const result = await fetchAllAssignments(fetchImpl);
-    expect(result.total).toBe(0);
+test("fetchAssignmentsDelta paginates fully without a baseline and reports progress", async () => {
+    const fetchImpl = vi.fn()
+        .mockResolvedValueOnce(jsonResponse({ data: { has_next: true, data: [{ id: 2, content: JSON.stringify({ doc: { title: "B" } }) }] } }, 200))
+        .mockResolvedValueOnce(jsonResponse({ data: { has_next: false, data: [{ id: 1, content: JSON.stringify({ doc: { title: "A" } }) }] } }, 200));
+    const onProgress = vi.fn();
+    const result = await fetchAssignmentsDelta(fetchImpl, { onProgress });
+    expect(result.total).toBe(2);
+    expect(result.assignments[0].title).toBe("B");
+    expect(result.assignments[1].title).toBe("A");
+    expect(onProgress).toHaveBeenCalledTimes(2);
 });
 
-test("fetchAllAssignments paginates and reports progress", async () => {
+test("fetchAssignmentsDelta stops within the first page at the baseline id", async () => {
+    const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({
+        data: {
+            has_next: true,
+            data: [
+                { id: 5, content: JSON.stringify({ doc: { title: "新" } }) },
+                { id: 3, content: JSON.stringify({ doc: { title: "旧-同id" } }) },
+                { id: 1, content: JSON.stringify({ doc: { title: "更旧" } }) },
+            ],
+        },
+    }, 200));
+    const result = await fetchAssignmentsDelta(fetchImpl, { knownMaxId: 3 });
+    expect(result.total).toBe(1);
+    expect(result.assignments[0].id).toBe(5);
+    // has_next 为 true 也必须在命中基线 id 的页停止，不得再翻页
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
+});
+
+test("fetchAssignmentsDelta spans pages until it reaches the baseline id", async () => {
     const fetchImpl = vi.fn()
-        .mockResolvedValueOnce(jsonResponse({ data: { has_next: true, data: [{ id: 1, content: JSON.stringify({ doc: { title: "A" } }) }] } }, 200))
-        .mockResolvedValueOnce(jsonResponse({ data: { has_next: false, data: [{ id: 2, content: JSON.stringify({ doc: { title: "B" } }) }] } }, 200));
-    const onProgress = vi.fn();
-    const result = await fetchAllAssignments(fetchImpl, { onProgress });
-    expect(result.total).toBe(2);
-    expect(result.assignments[0].title).toBe("A");
-    expect(result.assignments[1].title).toBe("B");
-    expect(onProgress).toHaveBeenCalledTimes(2);
+        .mockResolvedValueOnce(jsonResponse({ data: { has_next: true, data: [
+            { id: 5, content: JSON.stringify({ doc: { title: "新1" } }) },
+            { id: 4, content: JSON.stringify({ doc: { title: "新2" } }) },
+        ] } }, 200))
+        .mockResolvedValueOnce(jsonResponse({ data: { has_next: true, data: [
+            { id: 3, content: JSON.stringify({ doc: { title: "旧" } }) },
+        ] } }, 200));
+    const result = await fetchAssignmentsDelta(fetchImpl, { knownMaxId: 3 });
+    expect(result.assignments.map((item) => item.id)).toEqual([5, 4]);
+    expect(fetchImpl).toHaveBeenCalledTimes(2);
+});
+
+test("fetchAssignmentsDelta returns an empty delta when already up to date", async () => {
+    const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({
+        data: { has_next: true, data: [{ id: 3, content: JSON.stringify({ doc: { title: "旧" } }) }] },
+    }, 200));
+    const result = await fetchAssignmentsDelta(fetchImpl, { knownMaxId: 3 });
+    expect(result.total).toBe(0);
+    expect(result.assignments).toEqual([]);
+    expect(fetchImpl).toHaveBeenCalledTimes(1);
 });
 
 test("fetchAssignmentsSnapshot returns parsed snapshot", async () => {

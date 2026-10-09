@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
 vi.mock("../js/maa.js", () => ({
-    fetchAllAssignments: vi.fn(),
+    fetchAssignmentsDelta: vi.fn(),
     fetchAssignmentsSnapshot: vi.fn(),
 }));
 vi.mock("../js/skland.js", async (importOriginal) => ({
@@ -23,7 +23,7 @@ import {
     SKLAND_CREDENTIAL_KEY,
 } from "../js/app.js";
 import { INTRO_REMIND_DAYS, SKLAND_COMMAND } from "../js/config.js";
-import { fetchAllAssignments, fetchAssignmentsSnapshot } from "../js/maa.js";
+import { fetchAssignmentsDelta, fetchAssignmentsSnapshot } from "../js/maa.js";
 import { LAST_VISIT_KEY } from "../js/notice.js";
 import { fetchBindingList, getSklandOperatorData, parseCredential } from "../js/skland.js";
 import realOperatorMeta from "../data/operator_meta.json";
@@ -104,7 +104,6 @@ const makeFetchImpl = ({ serveCost = false } = {}) => vi.fn((url) => {
 // 建立一个已分析、含成本数据的应用：作业要求阿米娅精二90级，形成缺口；
 // 经真实导入流程（handleImport）完成分析与渲染
 const setupAnalyzedApp = async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 1, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl({ serveCost: true }) });
     app.state.assignments = [{
         id: 1,
@@ -159,34 +158,65 @@ const buildDom = () => {
 
 beforeEach(() => {
     vi.resetAllMocks();
+    // initApp 默认走「快照 + 增量」加载路径，这里给两个 mock 兜底实现；个别用例自行覆盖
+    fetchAssignmentsSnapshot.mockResolvedValue({ total: 0, assignments: [], generatedAt: "2024-01-01T00:00:00Z" });
+    fetchAssignmentsDelta.mockResolvedValue({ total: 0, assignments: [] });
     localStorage.clear();
     buildDom();
 });
 
-test("initApp bootstraps with live assignments", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
+test("initApp merges live delta onto snapshot base", async () => {
+    fetchAssignmentsSnapshot.mockResolvedValue({
+        total: 1,
+        assignments: [{ id: 1, uploadTime: "2024-01-01T00:00:00Z", required: [], groups: [] }],
+        generatedAt: "2024-01-01T00:00:00Z",
+    });
+    fetchAssignmentsDelta.mockImplementation((_fetchImpl, { knownMaxId }) => {
+        expect(knownMaxId).toBe(1);
+        return Promise.resolve({
+            total: 2,
+            assignments: [
+                { id: 3, uploadTime: "2024-01-03T00:00:00Z", required: [], groups: [] },
+                { id: 2, uploadTime: "2024-01-02T00:00:00Z", required: [], groups: [] },
+            ],
+        });
+    });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(app.state.operatorMeta).toEqual(operatorMeta);
+    // 增量前插基线，整体保持 id 降序
+    expect(app.state.assignments.map((item) => item.id)).toEqual([3, 2, 1]);
     expect(app.state.assignmentSource).toBe("live");
 });
 
-test("initApp falls back to snapshot when live fails", async () => {
-    fetchAllAssignments.mockRejectedValue(new Error("network down"));
-    fetchAssignmentsSnapshot.mockResolvedValue({ total: 0, assignments: [], generatedAt: "2024-01-01T00:00:00Z" });
+test("initApp degrades to full pull when snapshot fails", async () => {
+    fetchAssignmentsSnapshot.mockRejectedValue(new Error("snapshot down"));
+    fetchAssignmentsDelta.mockImplementation((_fetchImpl, { knownMaxId }) => {
+        // 无基线时不得携带截断 id，等价于旧的全量翻页
+        expect(knownMaxId).toBeUndefined();
+        return Promise.resolve({ total: 1, assignments: [{ id: 9, uploadTime: "2024-01-09T00:00:00Z", required: [], groups: [] }] });
+    });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    expect(app.state.assignments.map((item) => item.id)).toEqual([9]);
+    expect(app.state.assignmentSource).toBe("live");
+    // 全量兜底成功后清掉快照失败提示
+    expect(app.state.error).toBe("");
+});
+
+test("initApp falls back to snapshot when delta fails", async () => {
+    fetchAssignmentsDelta.mockRejectedValue(new Error("network down"));
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(app.state.assignmentSource).toBe("snapshot");
 });
 
 test("initApp surfaces fatal load error", async () => {
-    fetchAllAssignments.mockRejectedValue(new Error("network down"));
     fetchAssignmentsSnapshot.mockRejectedValue(new Error("snapshot down"));
+    fetchAssignmentsDelta.mockRejectedValue(new Error("network down"));
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(app.state.status).toBe("加载失败");
-    expect(app.state.error).toContain("snapshot down");
+    expect(app.state.error).toContain("network down");
 });
 
 test("initApp surfaces static data request failure", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const fetchImpl = vi.fn((_url) => Promise.resolve({ ok: false, status: 500, json: () => Promise.resolve({}) }));
     const app = await initApp({ fetchImpl });
     expect(app.state.status).toBe("加载失败");
@@ -194,12 +224,18 @@ test("initApp surfaces static data request failure", async () => {
 });
 
 test("initApp invokes live progress callback", async () => {
-    fetchAllAssignments.mockImplementation((_fetchImpl, { onProgress }) => {
-        onProgress({ page: 1, total: 3, hasNext: false });
-        return Promise.resolve({ total: 3, assignments: [] });
+    fetchAssignmentsDelta.mockImplementation((_fetchImpl, { onProgress }) => {
+        onProgress({ page: 1, total: 2, hasNext: false });
+        return Promise.resolve({
+            total: 2,
+            assignments: [
+                { id: 2, uploadTime: "2024-01-02T00:00:00Z", required: [], groups: [] },
+                { id: 1, uploadTime: "2024-01-01T00:00:00Z", required: [], groups: [] },
+            ],
+        });
     });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
-    expect(app.state.status).toContain("已加载 3 份作业");
+    expect(app.state.status).toContain("已加载 2 份作业");
 });
 
 test("initApp rejects when a required element is missing", async () => {
@@ -362,7 +398,6 @@ test("downloadFile creates and clicks a blob link", () => {
 });
 
 test("skland credential flow renders bindings", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     parseCredential.mockReturnValue({ cred: "cred", token: "token" });
     fetchBindingList.mockResolvedValue({ arkBindingList: [{ uid: "1", nickName: "博士", channelName: "官服", isOfficial: true }] });
@@ -375,7 +410,6 @@ test("skland credential flow renders bindings", async () => {
 
 test("bootstrap restores saved skland credential", async () => {
     localStorage.setItem(SKLAND_CREDENTIAL_KEY, JSON.stringify({ cred: "saved-cred", token: "saved-token" }));
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     fetchBindingList.mockResolvedValue({ arkBindingList: [{ uid: "9", nickName: "博士", channelName: "官服", isOfficial: true }] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(app.state.cred).toBe("saved-cred");
@@ -387,7 +421,6 @@ test("bootstrap restores saved skland credential", async () => {
 
 test("bootstrap ignores corrupt saved credential", async () => {
     localStorage.setItem(SKLAND_CREDENTIAL_KEY, "{not-json");
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(app.state.cred).toBe("");
     expect(fetchBindingList).not.toHaveBeenCalled();
@@ -400,7 +433,6 @@ test("bootstrap ignores corrupt saved credential", async () => {
 
 test("bootstrap surfaces saved credential restore failure", async () => {
     localStorage.setItem(SKLAND_CREDENTIAL_KEY, JSON.stringify({ cred: "c", token: "t" }));
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     fetchBindingList.mockRejectedValue(new Error("cred 失效"));
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(app.state.cred).toBe("c");
@@ -409,7 +441,6 @@ test("bootstrap surfaces saved credential restore failure", async () => {
 });
 
 test("skland credential flow shows error", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     parseCredential.mockImplementation(() => {
         throw new Error("格式错误");
@@ -419,7 +450,6 @@ test("skland credential flow shows error", async () => {
 });
 
 test("binding select reads operator data and runs analysis", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.cred = "cred";
     app.state.token = "token";
@@ -431,14 +461,12 @@ test("binding select reads operator data and runs analysis", async () => {
 });
 
 test("binding select requires credential", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     await app.handleBindingSelect("1");
     expect(app.state.error).toContain("请先输入森空岛凭证");
 });
 
 test("binding select shows error on skland failure", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.cred = "cred";
     app.state.token = "token";
@@ -448,7 +476,6 @@ test("binding select shows error on skland failure", async () => {
 });
 
 test("manual import runs analysis", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.assignments = [{ id: 1, uploadTime: new Date().toISOString(), required: [{ name: "阿米娅", skill: 1, requirements: { level: 90 } }], groups: [] }];
     app.elements.importInput.value = JSON.stringify([{ name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10 }]);
@@ -458,7 +485,6 @@ test("manual import runs analysis", async () => {
 });
 
 test("manual import shows error for invalid json", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.elements.importInput.value = "not-json";
     app.handleImport();
@@ -466,7 +492,6 @@ test("manual import shows error for invalid json", async () => {
 });
 
 test("file input change imports selected file", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     const content = JSON.stringify([{ name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10 }]);
     const file = new File([content], "operators.json", { type: "application/json" });
@@ -477,14 +502,12 @@ test("file input change imports selected file", async () => {
 });
 
 test("file input change without files is ignored", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     Reflect.defineProperty(app.elements.importFileInput, "files", { configurable: true, value: undefined });
     expect(() => app.elements.importFileInput.dispatchEvent(new Event("change", { bubbles: true }))).not.toThrow();
 });
 
 test("invalid selected file shows error", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     const file = new File(["not-json"], "operators.json", { type: "application/json" });
     Reflect.defineProperty(app.elements.importFileInput, "files", { configurable: true, value: [file] });
@@ -493,7 +516,6 @@ test("invalid selected file shows error", async () => {
 });
 
 test("upload file button triggers file input click", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     const clickSpy = vi.spyOn(app.elements.importFileInput, "click");
     app.elements.uploadFileButton.dispatchEvent(new Event("click", { bubbles: true }));
@@ -501,7 +523,6 @@ test("upload file button triggers file input click", async () => {
 });
 
 test("text area dragover and dragleave toggle highlight", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     const dragOverEvent = new Event("dragover", { bubbles: true, cancelable: true });
     app.elements.importInput.dispatchEvent(dragOverEvent);
@@ -512,13 +533,11 @@ test("text area dragover and dragleave toggle highlight", async () => {
 });
 
 test("text area drop without data is ignored", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(() => app.elements.importInput.dispatchEvent(new Event("drop", { bubbles: true }))).not.toThrow();
 });
 
 test("text area drop imports dragged file", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     const content = JSON.stringify([{ name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10 }]);
     const file = new File([content], "operators.json", { type: "application/json" });
@@ -530,7 +549,6 @@ test("text area drop imports dragged file", async () => {
 });
 
 test("sample data loads and analyzes", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.assignments = [{ id: 1, uploadTime: new Date().toISOString(), required: [{ name: "阿米娅", skill: 1, requirements: { level: 90 } }], groups: [] }];
     app.loadSampleData();
@@ -539,7 +557,6 @@ test("sample data loads and analyzes", async () => {
 });
 
 test("recent toggle filters assignments to the last 6 months", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(app.elements.recentToggle.checked).toBe(false);
     const now = Date.now();
@@ -564,7 +581,6 @@ test("recent toggle filters assignments to the last 6 months", async () => {
 });
 
 test("recent toggle re-sorts rows by unsatisfiedCore desc", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     const now = Date.now();
     const days = (n) => new Date(now - n * 24 * 60 * 60 * 1000).toISOString();
@@ -591,7 +607,6 @@ test("recent toggle re-sorts rows by unsatisfiedCore desc", async () => {
 });
 
 test("standard mode toggle overrides requirements with max training", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(app.elements.standardToggle.checked).toBe(false);
     const now = Date.now();
@@ -617,7 +632,6 @@ test("standard mode toggle overrides requirements with max training", async () =
 });
 
 test("rows are always sorted by unsatisfiedCore desc", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     const makeRow = (name, unsatisfiedCore, score) => ({ name, unsatisfiedCore, score, coreGain: 0, groupGain: 0, totalGap: 0 });
     app.state.result = {
@@ -634,7 +648,6 @@ test("rows are always sorted by unsatisfiedCore desc", async () => {
 });
 
 test("export handlers show error when result is empty", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.handleExportJson();
     expect(app.state.error).toContain("暂无结果可导出");
@@ -643,7 +656,6 @@ test("export handlers show error when result is empty", async () => {
 });
 
 test("export handlers download when result exists", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.result = {
         summary: { totalAssignments: 0, readyCount: 0, notReadyCount: 0, involvedOperators: 0, ownedOperators: 0, missingOperators: 0 },
@@ -820,14 +832,12 @@ test("buildMaaTrainingPlan returns empty plans for missing rows", () => {
 });
 
 test("export plan shows error when result is empty", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     await app.handleExportPlan();
     expect(app.state.error).toContain("暂无结果可导出");
 });
 
 test("export plan copies owned rows of the current view to the clipboard", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.result = planResult([
         planRow("陈", { user: { charId: "char_chen", profession: "WARRIOR" }, target: chenTarget, unsatisfiedCore: 1, score: 100, totalGap: 10 }),
@@ -851,7 +861,6 @@ test("export plan copies owned rows of the current view to the clipboard", async
 });
 
 test("export plan follows the search filter", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.result = planResult([
         planRow("陈", { user: { charId: "char_chen", profession: "WARRIOR" }, target: chenTarget, totalGap: 10 }),
@@ -870,7 +879,6 @@ test("export plan follows the search filter", async () => {
 });
 
 test("export plan reports when nothing is exportable", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     const writeText = vi.fn().mockResolvedValue(undefined);
     const restore = stubClipboard({ writeText });
@@ -898,7 +906,6 @@ test("export plan reports when nothing is exportable", async () => {
 });
 
 test("export plan follows the recent window toggle", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     const now = Date.now();
     const days = (n) => new Date(now - n * 24 * 60 * 60 * 1000).toISOString();
@@ -922,7 +929,6 @@ test("export plan follows the recent window toggle", async () => {
 });
 
 test("export plan matches the standard training mode", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.assignments = [
         { id: 1, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "凯尔希", skill: 1, requirements: {} }], groups: [] },
@@ -942,7 +948,6 @@ test("export plan matches the standard training mode", async () => {
 });
 
 test("export plan keeps skill-less operators out of the standard training mode", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.assignments = [
         { id: 1, uploadTime: new Date(Date.now() - 1000).toISOString(), required: [{ name: "Lancet-2", skill: 1, requirements: {} }], groups: [] },
@@ -968,7 +973,6 @@ test("export plan keeps skill-less operators out of the standard training mode",
 });
 
 test("export plan opens a manual-copy dialog when the clipboard rejects", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.result = planResult([planRow("陈", { user: { charId: "char_chen", profession: "WARRIOR" }, target: chenTarget, totalGap: 10 })]);
     const select = vi.fn();
@@ -986,7 +990,6 @@ test("export plan opens a manual-copy dialog when the clipboard rejects", async 
 });
 
 test("export plan falls back when the clipboard API is unavailable", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.result = planResult([planRow("陈", { user: { charId: "char_chen", profession: "WARRIOR" }, target: chenTarget, totalGap: 10 })]);
     const restore = stubClipboard(undefined);
@@ -997,7 +1000,6 @@ test("export plan falls back when the clipboard API is unavailable", async () =>
 });
 
 test("plan copy dialog closes via its close button", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.result = planResult([planRow("陈", { user: { charId: "char_chen", profession: "WARRIOR" }, target: chenTarget, totalGap: 10 })]);
     app.elements.planCopyTextarea.select = vi.fn();
@@ -1010,7 +1012,6 @@ test("plan copy dialog closes via its close button", async () => {
 });
 
 test("runAnalysis returns early when static data or assignments are missing", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.operatorMeta = null;
     app.state.assignments = [];
@@ -1019,7 +1020,6 @@ test("runAnalysis returns early when static data or assignments are missing", as
 });
 
 test("refreshAssignments reruns analysis when operators are loaded", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 1, assignments: [] });
     fetchAssignmentsSnapshot.mockResolvedValue({ total: 1, assignments: [{ id: 1, uploadTime: new Date().toISOString(), required: [{ name: "阿米娅", skill: 1, requirements: { level: 90 } }], groups: [] }], generatedAt: "2024-01-01T00:00:00Z" });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.userOperators = [{ charId: "char_002_amiya", name: "阿米娅", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 1 }];
@@ -1027,8 +1027,13 @@ test("refreshAssignments reruns analysis when operators are loaded", async () =>
     expect(app.state.result).not.toBeNull();
 });
 
+test("refreshAssignments without live rejects on snapshot failure", async () => {
+    fetchAssignmentsSnapshot.mockRejectedValue(new Error("snapshot down"));
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    await expect(app.refreshAssignments(false)).rejects.toThrow("snapshot down");
+});
+
 test("binding click delegation handles button and empty target", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.cred = "cred";
     app.state.token = "token";
@@ -1043,23 +1048,19 @@ test("binding click delegation handles button and empty target", async () => {
 });
 
 test("requireModule toggle does not rerun without operators", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.elements.requireModuleInput.checked = true;
     app.elements.requireModuleInput.dispatchEvent(new Event("change", { bubbles: true }));
     expect(app.state.requireModule).toBe(true);
 });
 
-test("refresh button click triggers live refresh", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 1, assignments: [] });
+test("refresh button click triggers incremental refresh", async () => {
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.elements.refreshButton.dispatchEvent(new Event("click", { bubbles: true }));
-    await Promise.resolve();
-    expect(app.state.assignmentSource).toBe("live");
+    await vi.waitFor(() => expect(app.state.assignmentSource).toBe("live"));
 });
 
 test("skland command is populated and copy succeeds", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(app.elements.sklandCommand.textContent).toBe(SKLAND_COMMAND);
     const originalClipboard = navigator.clipboard;
@@ -1078,7 +1079,6 @@ test("skland command is populated and copy succeeds", async () => {
 });
 
 test("copy command failure shows error", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     const originalClipboard = navigator.clipboard;
     Reflect.defineProperty(navigator, "clipboard", {
@@ -1091,7 +1091,6 @@ test("copy command failure shows error", async () => {
 });
 
 test("render handles missing rows and status fallback", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.status = "";
     app.state.result = {
@@ -1105,7 +1104,6 @@ test("render handles missing rows and status fallback", async () => {
 });
 
 test("filter and checkbox controls update state and render", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.assignments = [
         { id: 1, title: "阿米娅", stageName: "阿米娅", uploadTime: new Date().toISOString(), required: [{ name: "阿米娅", skill: 1, requirements: { level: 90 } }], groups: [] },
@@ -1131,7 +1129,6 @@ test("filter and checkbox controls update state and render", async () => {
 });
 
 test("first visit opens the intro dialog and records the visit", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(app.elements.introDialog.hasAttribute("open")).toBe(true);
     expect(Number(localStorage.getItem(LAST_VISIT_KEY))).toBeGreaterThan(0);
@@ -1140,7 +1137,6 @@ test("first visit opens the intro dialog and records the visit", async () => {
 test("visit within the remind window keeps the intro dialog closed", async () => {
     const before = Date.now();
     localStorage.setItem(LAST_VISIT_KEY, String(before - 10 * 24 * 60 * 60 * 1000));
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(app.elements.introDialog.hasAttribute("open")).toBe(false);
     // 未弹窗也要刷新时间戳，从最近一次访问起算
@@ -1149,34 +1145,30 @@ test("visit within the remind window keeps the intro dialog closed", async () =>
 
 test("visit older than the remind window opens the intro dialog again", async () => {
     localStorage.setItem(LAST_VISIT_KEY, String(Date.now() - (INTRO_REMIND_DAYS + 1) * 24 * 60 * 60 * 1000));
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(app.elements.introDialog.hasAttribute("open")).toBe(true);
 });
 
 test("unparsable visit timestamp is treated as a first visit", async () => {
     localStorage.setItem(LAST_VISIT_KEY, "not-a-timestamp");
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(app.elements.introDialog.hasAttribute("open")).toBe(true);
 });
 
 test("intro dialog opens even when assignments fail to load", async () => {
-    fetchAllAssignments.mockRejectedValue(new Error("network down"));
     fetchAssignmentsSnapshot.mockRejectedValue(new Error("snapshot down"));
+    fetchAssignmentsDelta.mockRejectedValue(new Error("network down"));
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(app.elements.introDialog.hasAttribute("open")).toBe(true);
 });
 
 test("intro close button dismisses the dialog", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.elements.introCloseButton.dispatchEvent(new Event("click", { bubbles: true }));
     expect(app.elements.introDialog.hasAttribute("open")).toBe(false);
 });
 
 test("intro uses the native dialog API when available", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const showModal = vi.fn();
     const close = vi.fn();
     const app = await initApp({ fetchImpl: makeFetchImpl() });
@@ -1218,7 +1210,6 @@ test("清单行首复选框：取消勾选与重新勾选更新材料区", async
 });
 
 test("勾选集合未初始化时清单复选框 change 直接忽略", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     app.state.materialSelection = null;
     app.elements.trainingTable.innerHTML = "<input type=\"checkbox\" class=\"material-select\" data-name=\"阿米娅\">";
@@ -1273,7 +1264,6 @@ test("养成优先级筛选：不匹配的干员被隐藏", async () => {
 });
 
 test("未拥有且无法解析 charId 的干员：三级回退均落空，材料行为空", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 1, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl({ serveCost: true }) });
     // 未知名称的未拥有干员：user.charId、nameToCharId 均无 -> attachMaterials 收到空 charId
     app.state.assignments = [{
@@ -1294,7 +1284,6 @@ test("未拥有且无法解析 charId 的干员：三级回退均落空，材料
 });
 
 test("材料行同分按干员名排序：排序比较实际执行", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 1, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl({ serveCost: true }) });
     // 两名3星干员在同一份作业中要求相同（精一），聚合后分数一致
     app.state.assignments = [{
@@ -1338,7 +1327,6 @@ test("筛选区变化剪枝勾选并重渲", async () => {
 });
 
 test("全部计入在无结果时直接返回，有结果时勾选当前筛选行", async () => {
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const empty = await initApp({ fetchImpl: makeFetchImpl() });
     empty.elements.materialSelectAll.dispatchEvent(new Event("click", { bubbles: true }));
     expect(empty.state.materialSelection).toBeNull();
@@ -1357,7 +1345,6 @@ test("index.html markup satisfies the app element contract", async () => {
     // import.meta.url 在 vitest 的 jsdom 环境下是 http 形式，用工作目录定位仓库里的 index.html
     const html = await readFile(resolve(process.cwd(), "index.html"), "utf8");
     document.body.innerHTML = new DOMParser().parseFromString(html, "text/html").body.innerHTML;
-    fetchAllAssignments.mockResolvedValue({ total: 0, assignments: [] });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
     expect(app.elements.introDialog).toBeInstanceOf(HTMLDialogElement);
     expect(app.elements.introDialog.hasAttribute("open")).toBe(true);

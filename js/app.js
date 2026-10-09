@@ -9,7 +9,7 @@ import {
 } from "./config.js";
 import { attachMaterials, buildCostIndex } from "./cost.js";
 import { computeTrainingList, standardizeAssignments } from "./compare.js";
-import { fetchAllAssignments, fetchAssignmentsSnapshot } from "./maa.js";
+import { fetchAssignmentsDelta, fetchAssignmentsSnapshot } from "./maa.js";
 import { closeDialog, openDialog, readLastVisit, shouldShowIntro, writeLastVisit } from "./notice.js";
 import { fetchBindingList, formatSklandCharacters, getSklandOperatorData, parseCredential } from "./skland.js";
 import { renderBindingButtons, renderMaterialSection, renderSummary, renderTrainingTable } from "./view.js";
@@ -459,32 +459,51 @@ const createApp = (deps, elements) => {
     };
 
     const refreshAssignments = async (useLive) => {
-        let data = null;
+        // 快照（GHA 每日全量生成并提交）永远是基线：既直接用于展示，又为增量拉取提供 id 截断点
+        let snapshot = null;
+        try {
+            setStatus("正在加载作业快照...");
+            snapshot = await fetchAssignmentsSnapshot(deps.fetchImpl);
+        } catch (error) {
+            // 仅快照模式下快照失败即致命；live 模式继续走无基线全量拉取
+            if (!useLive) {
+                throw error;
+            }
+            setError(`快照加载失败，改为全量拉取：${error.message}`);
+        }
+
+        let data = {
+            assignments: snapshot ? snapshot.assignments : [],
+            total: snapshot ? snapshot.assignments.length : 0,
+            source: "snapshot",
+            generatedAt: snapshot ? snapshot.generatedAt : "",
+        };
+
         if (useLive) {
-            setStatus("正在从作业站实时拉取作业...");
+            setStatus("正在从作业站拉取新增作业...");
             try {
-                const live = await fetchAllAssignments(deps.fetchImpl, {
-                    onProgress: ({ page, total }) => setStatus(`正在拉取第 ${page} 页，已获取 ${total} 份作业`),
+                // 基线最大 id 之后的才是新作业；无基线时传 undefined，fetchAssignmentsDelta 退化为全量翻页
+                const knownMaxId = data.assignments.length
+                    ? Math.max(...data.assignments.map((assignment) => assignment.id))
+                    : undefined;
+                const delta = await fetchAssignmentsDelta(deps.fetchImpl, {
+                    knownMaxId,
+                    onProgress: ({ page, total }) => setStatus(`正在拉取第 ${page} 页，已新增 ${total} 份作业`),
                 });
                 data = {
-                    assignments: live.assignments,
-                    total: live.total,
+                    assignments: [...delta.assignments, ...data.assignments],
+                    total: delta.assignments.length + data.assignments.length,
                     source: "live",
                     generatedAt: new Date().toISOString(),
                 };
             } catch (error) {
-                setError(`实时拉取失败，尝试使用快照：${error.message}`);
+                // 快照与增量双双失败才致命（与旧全量路径一致，由 bootstrap 报「加载失败」）；
+                // 仅增量失败则退回快照展示
+                if (!snapshot) {
+                    throw error;
+                }
+                setError(`增量拉取失败，使用快照：${error.message}`);
             }
-        }
-        if (!data) {
-            setStatus("正在加载作业快照...");
-            const snapshot = await fetchAssignmentsSnapshot(deps.fetchImpl);
-            data = {
-                assignments: snapshot.assignments,
-                total: snapshot.total,
-                source: "snapshot",
-                generatedAt: snapshot.generatedAt,
-            };
         }
         state.assignments = data.assignments;
         state.assignmentSource = data.source;

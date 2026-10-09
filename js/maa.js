@@ -45,15 +45,28 @@ export const fetchAssignmentsPage = async (fetchImpl, page) => {
     return data;
 };
 
-export const fetchAllAssignments = async (fetchImpl = fetch, { onProgress } = {}) => {
+// 增量拉取：作业站 id 全站自增、接口按 id 降序返回，且新上传的作业 id 必然大于
+// 基线（GHA 每日全量生成的快照）中的最大 id——因此从第 1 页翻起，命中首个
+// id <= knownMaxId 的条目即可停（同 id 即旧条目），其后整页整页都是已知数据。
+// 不传 knownMaxId 时无截断点，自动退化为全量翻页（覆盖快照缺失的兜底场景）；
+// 若基线最大 id 的作业被上游删除导致截断条件始终不满足，同样走完全部页，行为自愈。
+export const fetchAssignmentsDelta = async (fetchImpl = fetch, { knownMaxId, onProgress } = {}) => {
     const assignments = [];
     let page = 1;
     let hasNext = true;
 
     while (hasNext && page <= 100) {
         const data = await fetchAssignmentsPage(fetchImpl, page);
+        let reachedBaseline = false;
         for (const item of data.data) {
+            if (knownMaxId !== undefined && item.id <= knownMaxId) {
+                reachedBaseline = true;
+                break;
+            }
             assignments.push(parseAssignmentRecord(item));
+        }
+        if (reachedBaseline) {
+            break;
         }
         hasNext = Boolean(data.has_next);
         if (onProgress) {
