@@ -108,13 +108,21 @@ test("fetchAllAssignments throws on HTTP error and bad shape", async () => {
     await expect(fetchAllAssignments(badShape)).rejects.toThrow("unexpected shape");
 });
 
-test("fetchAllAssignments paginates", async () => {
+test("fetchAllAssignments paginates and extracts the uploader name", async () => {
     const fetchImpl = vi.fn()
-        .mockResolvedValueOnce(jsonResponse({ data: { has_next: true, data: [{ id: 1, content: JSON.stringify({ doc: { title: "A" } }) }] } }, 200))
-        .mockResolvedValueOnce(jsonResponse({ data: { has_next: false, data: [{ id: 2, content: JSON.stringify({ doc: { title: "B" } }) }] } }, 200));
+        .mockResolvedValueOnce(jsonResponse({ data: { has_next: true, data: [{ id: 1, uploader: "萨拉托加", content: JSON.stringify({ doc: { title: "A" } }) }] } }, 200))
+        .mockResolvedValueOnce(jsonResponse({ data: { has_next: false, data: [{ id: 2, uploader: "萨拉托加", content: JSON.stringify({ doc: { title: "B" } }) }] } }, 200));
     const result = await fetchAllAssignments(fetchImpl);
     expect(result.total).toBe(2);
+    expect(result.uploader).toBe("萨拉托加");
     expect(result.assignments[0].title).toBe("A");
+});
+
+test("fetchAllAssignments yields an empty uploader name for an author without assignments", async () => {
+    const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({ data: { has_next: false, data: [] } }, 200));
+    const result = await fetchAllAssignments(fetchImpl);
+    expect(result.uploader).toBe("");
+    expect(result.assignments).toEqual([]);
 });
 
 test("stripVolatileFields drops volatile keys recursively", () => {
@@ -153,6 +161,14 @@ test("isDataEquivalent ignores only volatile fields", () => {
     expect(isDataEquivalent([1, 2], [2, 1])).toBe(false);
 });
 
+test("isDataEquivalent treats an uploader rename as a substantive change", () => {
+    // 守护用例：uploader 不属于易变字段——作者改名必须产生真实数据 diff，
+    // 让 GHA 提交新快照、纯快照模式的页面文案才能跟随新名字
+    const before = { generatedAt: "2024-01-01T00:00:00Z", uploader: "萨拉托加", assignments: [{ id: 1, title: "A" }] };
+    const renamed = { generatedAt: "2024-06-06T06:06:06Z", uploader: "新名字", assignments: [{ id: 1, title: "A" }] };
+    expect(isDataEquivalent(before, renamed)).toBe(false);
+});
+
 test("generateAll writes generated data files", async () => {
     const fetchImpl = vi.fn((url) => {
         if (url.includes("character_table")) {
@@ -164,14 +180,19 @@ test("generateAll writes generated data files", async () => {
         if (url.includes("sprite_item")) {
             return Promise.resolve(textResponse(".bg-0 { background: url('https://example.com/i.webp'); }", 200));
         }
-        return Promise.resolve(jsonResponse({ data: { has_next: false, data: [{ id: 1, content: JSON.stringify({ doc: { title: "A" } }) }] } }, 200));
+        return Promise.resolve(jsonResponse({ data: { has_next: false, data: [{ id: 1, uploader: "萨拉托加", content: JSON.stringify({ doc: { title: "A" } }) }] } }, 200));
     });
     const writeFileImpl = vi.fn().mockResolvedValue(undefined);
     const result = await generateAll({ fetchImpl, writeFileImpl, now: new Date("2024-01-01T00:00:00Z") });
     expect(result.assignmentData.total).toBe(1);
+    expect(result.assignmentData.uploader).toBe("萨拉托加");
     expect(writeFileImpl).toHaveBeenCalledTimes(GENERATED_FILES.length);
     const writtenFiles = writeFileImpl.mock.calls.map(([url]) => url.pathname.split("/").pop()).sort();
     expect(writtenFiles).toEqual([...GENERATED_FILES].sort());
+    // 快照顶层记录当前作者名，供纯快照模式的页面文案使用
+    const snapshotWrite = writeFileImpl.mock.calls.map(([url, content]) => [url.pathname.split("/").pop(), content])
+        .find(([name]) => name === "assignments.snapshot.json");
+    expect(JSON.parse(snapshotWrite[1]).uploader).toBe("萨拉托加");
 });
 
 test("generateAll throws on character or css request failure", async () => {

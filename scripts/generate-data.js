@@ -75,6 +75,7 @@ export const normalizeAssignment = (item) => {
 
 export const fetchAllAssignments = async (fetchImpl = fetch) => {
     const assignments = [];
+    let uploader = "";
     let page = 1;
     let hasNext = true;
 
@@ -98,11 +99,16 @@ export const fetchAllAssignments = async (fetchImpl = fetch) => {
         for (const item of data.data) {
             assignments.push(normalizeAssignment(item));
         }
+        // 作者名取自任一条目的原始字段，随快照顶层落盘；作者改名时产生真实数据 diff
+        // （uploader 不在 VOLATILE_FIELDS 中），GHA 提交后纯快照模式的页面文案随之更新
+        if (!uploader) {
+            uploader = data.data.find((item) => item.uploader)?.uploader || "";
+        }
         hasNext = Boolean(data.has_next);
         page += 1;
     }
 
-    return { total: assignments.length, assignments };
+    return { total: assignments.length, uploader, assignments };
 };
 
 export const buildOperatorMeta = (characters) => {

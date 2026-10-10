@@ -1,4 +1,5 @@
 import { expect, test, vi } from "vitest";
+import { DEFAULT_UPLOADER_ID, resolveUploaderId } from "../js/config.js";
 import {
     buildQueryUrl,
     fetchAssignmentsDelta,
@@ -17,14 +18,34 @@ test("buildQueryUrl includes required params", () => {
     const url = buildQueryUrl(2, 50);
     expect(url).toContain("page=2");
     expect(url).toContain("limit=50");
-    expect(url).toContain("uploaderId=7661");
+    expect(url).toContain(`uploaderId=${DEFAULT_UPLOADER_ID}`);
     expect(url).toContain("desc=true");
     expect(url).toContain("orderBy=id");
+});
+
+test("buildQueryUrl accepts a custom uploader id", () => {
+    expect(buildQueryUrl(1, 20, "123")).toContain("uploaderId=123");
+    expect(buildQueryUrl(1)).toContain(`uploaderId=${DEFAULT_UPLOADER_ID}`);
+});
+
+test("resolveUploaderId parses and validates the url param", () => {
+    // 缺省 / 空白 → 使用默认作者；纯数字（容忍首尾空白）→ 自定义作者；其余视为无效
+    expect(resolveUploaderId(null)).toEqual({ value: null, invalid: false });
+    expect(resolveUploaderId(undefined)).toEqual({ value: null, invalid: false });
+    expect(resolveUploaderId("")).toEqual({ value: null, invalid: false });
+    expect(resolveUploaderId("   ")).toEqual({ value: null, invalid: false });
+    expect(resolveUploaderId("123")).toEqual({ value: "123", invalid: false });
+    expect(resolveUploaderId(" 123 ")).toEqual({ value: "123", invalid: false });
+    expect(resolveUploaderId("abc")).toEqual({ value: null, invalid: true });
+    expect(resolveUploaderId("12a")).toEqual({ value: null, invalid: true });
+    expect(resolveUploaderId("7661号")).toEqual({ value: null, invalid: true });
 });
 
 test("parseAssignmentRecord parses content and defaults", () => {
     const record = parseAssignmentRecord({
         id: 1,
+        uploader_id: "7661",
+        uploader: "萨拉托加",
         upload_time: "2024-01-01",
         views: 10,
         hot_score: 2.5,
@@ -35,7 +56,7 @@ test("parseAssignmentRecord parses content and defaults", () => {
             groups: [{ name: "奶盾", opers: [{ name: "塞雷娅" }] }],
         }),
     });
-    expect(record).toMatchObject({ id: 1, title: "标题", stageName: "1-7", views: 10, hotScore: 2.5 });
+    expect(record).toMatchObject({ id: 1, uploaderId: "7661", uploader: "萨拉托加", title: "标题", stageName: "1-7", views: 10, hotScore: 2.5 });
     expect(record.required[0]).toMatchObject({ name: "阿米娅", skill: 1 });
     expect(record.groups[0].opers[0]).toMatchObject({ name: "塞雷娅" });
 });
@@ -68,11 +89,12 @@ test("fetchAssignmentsPage throws on bad shape", async () => {
 
 test("fetchAssignmentsDelta paginates fully without a baseline and reports progress", async () => {
     const fetchImpl = vi.fn()
-        .mockResolvedValueOnce(jsonResponse({ data: { has_next: true, data: [{ id: 2, content: JSON.stringify({ doc: { title: "B" } }) }] } }, 200))
-        .mockResolvedValueOnce(jsonResponse({ data: { has_next: false, data: [{ id: 1, content: JSON.stringify({ doc: { title: "A" } }) }] } }, 200));
+        .mockResolvedValueOnce(jsonResponse({ data: { has_next: true, data: [{ id: 2, uploader: "萨拉托加", content: JSON.stringify({ doc: { title: "B" } }) }] } }, 200))
+        .mockResolvedValueOnce(jsonResponse({ data: { has_next: false, data: [{ id: 1, uploader: "萨拉托加", content: JSON.stringify({ doc: { title: "A" } }) }] } }, 200));
     const onProgress = vi.fn();
     const result = await fetchAssignmentsDelta(fetchImpl, { onProgress });
     expect(result.total).toBe(2);
+    expect(result.uploaderName).toBe("萨拉托加");
     expect(result.assignments[0].title).toBe("B");
     expect(result.assignments[1].title).toBe("A");
     expect(onProgress).toHaveBeenCalledTimes(2);
@@ -118,6 +140,35 @@ test("fetchAssignmentsDelta returns an empty delta when already up to date", asy
     expect(result.total).toBe(0);
     expect(result.assignments).toEqual([]);
     expect(fetchImpl).toHaveBeenCalledTimes(1);
+});
+
+test("fetchAssignmentsDelta extracts the uploader name and threads the uploader id", async () => {
+    const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({
+        data: { has_next: false, data: [{ id: 9, uploader: "另位作者", content: JSON.stringify({ doc: { title: "A" } }) }] },
+    }, 200));
+    const result = await fetchAssignmentsDelta(fetchImpl, { uploaderId: "123" });
+    expect(result.uploaderName).toBe("另位作者");
+    expect(fetchImpl.mock.calls[0][0]).toContain("uploaderId=123");
+});
+
+test("fetchAssignmentsDelta keeps the uploader name when every item is truncated", async () => {
+    // 改名守护用例：快照已最新时 0 条新纪录、全部条目被 knownMaxId 截断，
+    // 但作者名仍须从原始条目提取到（提取发生在截断判断之前）
+    const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({
+        data: { has_next: true, data: [
+            { id: 3, uploader: "改名后的萨拉托加", content: JSON.stringify({ doc: { title: "旧" } }) },
+        ] },
+    }, 200));
+    const result = await fetchAssignmentsDelta(fetchImpl, { knownMaxId: 3 });
+    expect(result.total).toBe(0);
+    expect(result.uploaderName).toBe("改名后的萨拉托加");
+});
+
+test("fetchAssignmentsDelta yields an empty uploader name for an author without assignments", async () => {
+    const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({ data: { has_next: false, data: [] } }, 200));
+    const result = await fetchAssignmentsDelta(fetchImpl, { uploaderId: "999" });
+    expect(result.uploaderName).toBe("");
+    expect(result.assignments).toEqual([]);
 });
 
 test("fetchAssignmentsSnapshot returns parsed snapshot", async () => {

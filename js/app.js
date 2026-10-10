@@ -1,11 +1,13 @@
 import {
     CHARACTER_TABLE_URL,
+    DEFAULT_UPLOADER_ID,
     ITEM_INFO_URL,
     LEVEL_COST_TABLE_URL,
     OPERATOR_META_URL,
     RECENT_WINDOW_DAYS,
     SKILL_SPRITE_URL,
     SKLAND_COMMAND,
+    resolveUploaderId,
 } from "./config.js";
 import { attachMaterials, buildCostIndex } from "./cost.js";
 import { computeTrainingList, standardizeAssignments } from "./compare.js";
@@ -27,7 +29,11 @@ const ITEM_INFO_PATCH = {
 // 复制按钮「已复制」状态的保持时长
 export const COPY_RESET_DELAY_MS = 2000;
 
-const createState = () => ({
+// 页面初始化时从 ?uploaderId= 解析出的作者 id；整个页面存续期间不再变化（URL 即持久化与分享方式）
+const createState = (uploaderId = DEFAULT_UPLOADER_ID) => ({
+    uploaderId,
+    // 从拉取数据实时提取的作者名（增量响应 → 快照顶层字段），拿不到时为空串、页面保留占位符
+    uploaderName: "",
     operatorMeta: null,
     skillSprite: null,
     costIndex: null,
@@ -66,6 +72,8 @@ const requireElement = (doc, id) => {
 const collectElements = (doc) => ({
     status: requireElement(doc, "status"),
     error: requireElement(doc, "error"),
+    pageUploaderName: requireElement(doc, "page-uploader-name"),
+    introUploaderName: requireElement(doc, "intro-uploader-name"),
     summary: requireElement(doc, "summary"),
     materialDetail: requireElement(doc, "material-detail"),
     materialTitle: requireElement(doc, "material-title"),
@@ -253,7 +261,8 @@ export const buildMaaTrainingPlan = (rows, operatorMeta) => {
 };
 
 const createApp = (deps, elements) => {
-    const state = createState();
+    // deps.uploaderId 可能为 null（参数缺省）或 undefined（直接调用 createApp），一律回默认作者
+    const state = createState(deps.uploaderId || DEFAULT_UPLOADER_ID);
 
     const setStatus = (text) => {
         state.status = text;
@@ -264,6 +273,17 @@ const createApp = (deps, elements) => {
         state.error = text;
         elements.error.textContent = text;
         elements.error.classList.toggle("is-hidden", !text);
+    };
+
+    // 作者名回填：名字来自作业站实时数据（默认作者改名后自动跟随）或快照顶层字段；
+    // 拿不到名字时不动锚点，保留 index.html 的占位符「萨拉托加」
+    const applyUploaderName = () => {
+        if (!state.uploaderName) {
+            return;
+        }
+        elements.pageUploaderName.textContent = state.uploaderName;
+        elements.introUploaderName.textContent = state.uploaderName;
+        deps.document.title = `${state.uploaderName}作业练度分析与培养清单`;
     };
 
     const clearError = () => {
@@ -459,17 +479,22 @@ const createApp = (deps, elements) => {
     };
 
     const refreshAssignments = async (useLive) => {
+        const uploaderId = state.uploaderId;
+        // 替换语义：自定义作者时快照（默认作者的数据）不可读也不可混入，跳过加载直接全量拉取
+        const isCustomUploader = uploaderId !== DEFAULT_UPLOADER_ID;
         // 快照（GHA 每日全量生成并提交）永远是基线：既直接用于展示，又为增量拉取提供 id 截断点
         let snapshot = null;
-        try {
-            setStatus("正在加载作业快照...");
-            snapshot = await fetchAssignmentsSnapshot(deps.fetchImpl);
-        } catch (error) {
-            // 仅快照模式下快照失败即致命；live 模式继续走无基线全量拉取
-            if (!useLive) {
-                throw error;
+        if (!isCustomUploader) {
+            try {
+                setStatus("正在加载作业快照...");
+                snapshot = await fetchAssignmentsSnapshot(deps.fetchImpl);
+            } catch (error) {
+                // 仅快照模式下快照失败即致命；live 模式继续走无基线全量拉取
+                if (!useLive) {
+                    throw error;
+                }
+                setError(`快照加载失败，改为全量拉取：${error.message}`);
             }
-            setError(`快照加载失败，改为全量拉取：${error.message}`);
         }
 
         let data = {
@@ -478,17 +503,22 @@ const createApp = (deps, elements) => {
             source: "snapshot",
             generatedAt: snapshot ? snapshot.generatedAt : "",
         };
+        // 增量成功时从响应提取的作者名；失败或纯快照路径保持空串，走后续回退链
+        let deltaUploaderName = "";
 
-        if (useLive) {
-            setStatus("正在从作业站拉取新增作业...");
+        // 自定义作者没有快照可退，无论 useLive 与否都按实时全量处理
+        if (useLive || isCustomUploader) {
+            setStatus(isCustomUploader ? `正在全量拉取作者 ${uploaderId} 的作业...` : "正在从作业站拉取新增作业...");
             try {
                 // 基线最大 id 之后的才是新作业；无基线时传 undefined，fetchAssignmentsDelta 退化为全量翻页
+                // （自定义作者与快照加载失败共用该路径）
                 const knownMaxId = data.assignments.length
                     ? Math.max(...data.assignments.map((assignment) => assignment.id))
                     : undefined;
                 const delta = await fetchAssignmentsDelta(deps.fetchImpl, {
                     knownMaxId,
-                    onProgress: ({ page, total }) => setStatus(`正在拉取第 ${page} 页，已新增 ${total} 份作业`),
+                    uploaderId,
+                    onProgress: ({ page, total }) => setStatus(`正在拉取第 ${page} 页，已${knownMaxId === undefined ? "获取" : "新增"} ${total} 份作业`),
                 });
                 data = {
                     assignments: [...delta.assignments, ...data.assignments],
@@ -496,6 +526,7 @@ const createApp = (deps, elements) => {
                     source: "live",
                     generatedAt: new Date().toISOString(),
                 };
+                deltaUploaderName = delta.uploaderName || "";
             } catch (error) {
                 // 快照与增量双双失败才致命（与旧全量路径一致，由 bootstrap 报「加载失败」）；
                 // 仅增量失败则退回快照展示
@@ -505,11 +536,22 @@ const createApp = (deps, elements) => {
                 setError(`增量拉取失败，使用快照：${error.message}`);
             }
         }
+        // 作者名回退链：实时响应中的名字 → 快照顶层字段（纯快照链路）→
+        // 自定义作者且一无所获时用 id 本身（占位符「萨拉托加」此时是错误信息，不能保留）
+        state.uploaderName = deltaUploaderName
+            || (snapshot ? snapshot.uploader || "" : "")
+            || (isCustomUploader ? uploaderId : "");
         state.assignments = data.assignments;
         state.assignmentSource = data.source;
         state.generatedAt = data.generatedAt;
         setError("");
-        setStatus(`已加载 ${data.total} 份作业（${data.source === "live" ? "实时" : "快照"}）`);
+        if (isCustomUploader && data.total === 0) {
+            setError(`作者 ${uploaderId} 不存在或没有作业`);
+        }
+        applyUploaderName();
+        setStatus(state.uploaderName && data.total > 0
+            ? `已加载 ${state.uploaderName}（${uploaderId}）的 ${data.total} 份作业（${data.source === "live" ? "实时" : "快照"}）`
+            : `已加载 ${data.total} 份作业（${data.source === "live" ? "实时" : "快照"}）`);
         if (state.userOperators.length) {
             runAnalysis();
         }
@@ -827,6 +869,7 @@ const createApp = (deps, elements) => {
         bootstrap,
         maybeShowIntro,
         refreshAssignments,
+        setError,
         handleSklandCredential,
         handleBindingSelect,
         handleImport,
@@ -845,9 +888,17 @@ export const initApp = async ({
 } = {}) => {
     const elements = collectElements(doc);
     elements.sklandCommand.textContent = SKLAND_COMMAND;
-    const app = createApp({ document: doc, fetchImpl, cryptoImpl }, elements);
+    // 作者参数只在初始化时读取一次：URL 即持久化与分享方式，页面存续期间不再变化
+    const rawUploaderParam = new URLSearchParams(doc.location.search).get("uploaderId");
+    const { value: uploaderId, invalid: uploaderParamInvalid } = resolveUploaderId(rawUploaderParam);
+    const app = createApp({ document: doc, fetchImpl, cryptoImpl, uploaderId }, elements);
     // 先弹提示再加载数据：数据加载失败也不影响开关说明的展示
     app.maybeShowIntro();
     await app.bootstrap();
+    // 无效参数提示放在 bootstrap 之后：refreshAssignments 成功结尾会清空错误栏；
+    // 数据加载本身失败时保留更重要的失败信息，不覆盖
+    if (uploaderParamInvalid && !app.state.error) {
+        app.setError(`uploaderId 参数无效（${rawUploaderParam}），已回退默认作者`);
+    }
     return app;
 };

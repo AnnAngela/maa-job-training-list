@@ -121,6 +121,8 @@ const setupAnalyzedApp = async () => {
 const buildDom = () => {
     document.body.innerHTML = [
         "<span id=\"status\"></span>",
+        "<span id=\"page-uploader-name\">萨拉托加</span>",
+        "<span id=\"intro-uploader-name\">萨拉托加</span>",
         "<div id=\"error\" class=\"error is-hidden\"></div>",
         "<div id=\"summary\"></div>",
         "<div id=\"material-detail\"></div>",
@@ -158,6 +160,8 @@ const buildDom = () => {
 
 beforeEach(() => {
     vi.resetAllMocks();
+    // 复位 URL：uploaderId 用例通过 replaceState 注入查询串，不得泄漏到其他用例
+    history.replaceState(null, "", "/");
     // initApp 默认走「快照 + 增量」加载路径，这里给两个 mock 兜底实现；个别用例自行覆盖
     fetchAssignmentsSnapshot.mockResolvedValue({ total: 0, assignments: [], generatedAt: "2024-01-01T00:00:00Z" });
     fetchAssignmentsDelta.mockResolvedValue({ total: 0, assignments: [] });
@@ -190,9 +194,10 @@ test("initApp merges live delta onto snapshot base", async () => {
 
 test("initApp degrades to full pull when snapshot fails", async () => {
     fetchAssignmentsSnapshot.mockRejectedValue(new Error("snapshot down"));
-    fetchAssignmentsDelta.mockImplementation((_fetchImpl, { knownMaxId }) => {
+    fetchAssignmentsDelta.mockImplementation((_fetchImpl, { knownMaxId, onProgress }) => {
         // 无基线时不得携带截断 id，等价于旧的全量翻页
         expect(knownMaxId).toBeUndefined();
+        onProgress({ page: 1, total: 1, hasNext: false });
         return Promise.resolve({ total: 1, assignments: [{ id: 9, uploadTime: "2024-01-09T00:00:00Z", required: [], groups: [] }] });
     });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
@@ -224,6 +229,12 @@ test("initApp surfaces static data request failure", async () => {
 });
 
 test("initApp invokes live progress callback", async () => {
+    // 快照有基线（id=1）时进度文案走「已新增」一支
+    fetchAssignmentsSnapshot.mockResolvedValue({
+        total: 1,
+        assignments: [{ id: 1, uploadTime: "2024-01-01T00:00:00Z", required: [], groups: [] }],
+        generatedAt: "2024-01-01T00:00:00Z",
+    });
     fetchAssignmentsDelta.mockImplementation((_fetchImpl, { onProgress }) => {
         onProgress({ page: 1, total: 2, hasNext: false });
         return Promise.resolve({
@@ -235,7 +246,101 @@ test("initApp invokes live progress callback", async () => {
         });
     });
     const app = await initApp({ fetchImpl: makeFetchImpl() });
-    expect(app.state.status).toContain("已加载 2 份作业");
+    expect(app.state.status).toContain("已加载 3 份作业");
+});
+
+test("initApp replaces the author when the url names a custom uploader", async () => {
+    history.replaceState(null, "", "/?uploaderId=123");
+    fetchAssignmentsDelta.mockResolvedValue({
+        total: 1,
+        uploaderName: "另位作者",
+        assignments: [{ id: 10, uploadTime: "2024-02-01T00:00:00Z", required: [], groups: [] }],
+    });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    // 替换语义：快照是默认作者的数据，自定义作者不得读取或混入
+    expect(fetchAssignmentsSnapshot).not.toHaveBeenCalled();
+    const [, deltaOptions] = fetchAssignmentsDelta.mock.calls[0];
+    expect(deltaOptions).toMatchObject({ uploaderId: "123" });
+    expect(deltaOptions.knownMaxId).toBeUndefined();
+    expect(app.state.assignments.map((item) => item.id)).toEqual([10]);
+    expect(app.state.assignmentSource).toBe("live");
+});
+
+test("initApp backfills the custom uploader name into the header and title", async () => {
+    history.replaceState(null, "", "/?uploaderId=123");
+    fetchAssignmentsDelta.mockResolvedValue({
+        total: 1,
+        uploaderName: "另位作者",
+        assignments: [{ id: 10, uploadTime: "2024-02-01T00:00:00Z", required: [], groups: [] }],
+    });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    expect(app.state.uploaderName).toBe("另位作者");
+    expect(app.elements.pageUploaderName.textContent).toBe("另位作者");
+    expect(app.elements.introUploaderName.textContent).toBe("另位作者");
+    expect(document.title).toBe("另位作者作业练度分析与培养清单");
+    expect(app.state.status).toContain("另位作者（123）");
+    expect(app.state.error).toBe("");
+});
+
+test("initApp reports an unknown custom uploader and shows the id in the header", async () => {
+    history.replaceState(null, "", "/?uploaderId=999");
+    // beforeEach 的 delta 兜底 mock 返回 0 份作业且无作者名
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    expect(app.state.assignments).toEqual([]);
+    expect(app.state.error).toContain("999");
+    // 拿不到名字时锚点显示 id——占位符「萨拉托加」此时是错误信息，不能保留
+    expect(app.elements.pageUploaderName.textContent).toBe("999");
+    expect(app.elements.introUploaderName.textContent).toBe("999");
+});
+
+test("initApp falls back to the default uploader for an invalid url param", async () => {
+    history.replaceState(null, "", "/?uploaderId=abc");
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    expect(app.state.uploaderId).toBe("7661");
+    expect(fetchAssignmentsSnapshot).toHaveBeenCalled();
+    expect(app.state.error).toContain("uploaderId 参数无效");
+});
+
+test("initApp treats the default uploader id param as the default path", async () => {
+    history.replaceState(null, "", "/?uploaderId=7661");
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    expect(app.state.uploaderId).toBe("7661");
+    expect(fetchAssignmentsSnapshot).toHaveBeenCalled();
+    expect(app.state.error).toBe("");
+});
+
+test("initApp backfills the default uploader name from the live delta", async () => {
+    // 改名守护用例：快照已最新（0 条新作业），默认作者的新名字仍来自增量响应
+    fetchAssignmentsSnapshot.mockResolvedValue({
+        total: 1,
+        uploader: "萨拉托加",
+        assignments: [{ id: 1, uploadTime: "2024-01-01T00:00:00Z", required: [], groups: [] }],
+        generatedAt: "2024-01-01T00:00:00Z",
+    });
+    fetchAssignmentsDelta.mockResolvedValue({ total: 0, assignments: [], uploaderName: "改名后的名字" });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    expect(app.state.uploaderName).toBe("改名后的名字");
+    expect(app.elements.pageUploaderName.textContent).toBe("改名后的名字");
+    expect(document.title).toBe("改名后的名字作业练度分析与培养清单");
+    expect(app.state.error).toBe("");
+});
+
+test("refreshAssignments(false) backfills the uploader name from the snapshot", async () => {
+    // 纯快照模式没有实时响应，作者名来自快照顶层字段（GHA 生成快照时一并抓取）
+    fetchAssignmentsSnapshot.mockResolvedValue({
+        total: 1,
+        uploader: "快照作者",
+        assignments: [{ id: 1, uploadTime: "2024-01-01T00:00:00Z", required: [], groups: [] }],
+        generatedAt: "2024-01-01T00:00:00Z",
+    });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    await app.refreshAssignments(false);
+    expect(app.state.assignmentSource).toBe("snapshot");
+    expect(app.state.uploaderName).toBe("快照作者");
+    expect(app.elements.introUploaderName.textContent).toBe("快照作者");
+    expect(document.title).toBe("快照作者作业练度分析与培养清单");
+    // 第二次刷新走纯快照路径，增量调用次数不得增加
+    expect(fetchAssignmentsDelta).toHaveBeenCalledTimes(1);
 });
 
 test("initApp rejects when a required element is missing", async () => {

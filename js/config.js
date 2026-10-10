@@ -1,5 +1,25 @@
 export const MAA_QUERY_BASE = "https://prts.maa.plus/copilot/query";
-export const UPLOADER_ID = "7661";
+// 默认作业作者（萨拉托加）；?uploaderId= 可在页面初始化时替换为其他单一作者（替换语义）
+export const DEFAULT_UPLOADER_ID = "7661";
+
+/**
+ * 解析 URL 中的 uploaderId 参数。
+ * 返回 { value, invalid }：参数缺省或空白时 value 为 null（用默认作者）；
+ * 纯数字（容忍首尾空白）时 value 为该数字字符串；其余 invalid 为 true（回退默认并提示）。
+ */
+export const resolveUploaderId = (rawParam) => {
+    if (rawParam === null || rawParam === undefined) {
+        return { value: null, invalid: false };
+    }
+    const trimmed = String(rawParam).trim();
+    if (trimmed === "") {
+        return { value: null, invalid: false };
+    }
+    if (/^\d+$/.test(trimmed)) {
+        return { value: trimmed, invalid: false };
+    }
+    return { value: null, invalid: true };
+};
 export const ASSIGNMENT_SNAPSHOT_URL = "./data/assignments.snapshot.json";
 export const OPERATOR_META_URL = "./data/operator_meta.json";
 export const SKILL_SPRITE_URL = "./data/skill_sprite.json";
