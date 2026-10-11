@@ -30,7 +30,7 @@ copy(localStorage.getItem("SK_OAUTH_CRED_KEY")+","+localStorage.getItem("SK_TOKE
 3. 将复制的 cred,token 粘贴到页面输入框，点击「获取账号列表」。
 4. 选择你的明日方舟账号，页面会自动读取干员练度并生成清单。
 
-也可以改用一图流渠道：先在[一图流「我的干员」页](https://ark.yituliu.cn/survey/operators)导入练度，再到[一图流个人中心](https://ark.yituliu.cn/account/home)的「第三方 API Token」卡片生成只读 Token，粘贴到页面「一图流获取」输入框并点击「获取练度」。注意该渠道读取的是一图流保存的练度快照（非实时，且取最近导入的游戏账号）。
+也可以改用一图流渠道：先在[一图流「我的干员」页](https://ark.yituliu.cn/survey/operators)导入练度，再到[一图流个人中心](https://ark.yituliu.cn/account/home)的「第三方 API Token」卡片生成只读 Token，粘贴到页面「一图流获取」输入框并点击「获取练度」。注意该渠道读取的是一图流保存的练度快照（非实时，且取最近导入的游戏账号）。只读 Token 会保存在浏览器 localStorage，下次打开页面自动读取快照生成清单；与森空岛凭证同时缓存时优先使用一图流（此时不再自动请求森空岛账号列表）。
 
 首次访问或超过 30 天未访问时，页面会弹出「清单开关怎么用」提示，说明「仅近6个月作业」与「标准练度」两个开关的含义与位置；关闭与否都会刷新访问时间，30 天内再次访问不再弹出。
 
@@ -172,7 +172,7 @@ gh workflow run update-data.yml
 - 作业数据：PRTS 作业站 API（https://prts.maa.plus）。
 - 干员数据：森空岛（https://zonai.skland.com）实时读取；或一图流 open-api（https://backend.yituliu.cn）读取用户主动导入的练度快照（非实时）。两者均在浏览器内直连。
 - 干员头像：PRTS 作业站静态资源（https://prts.plus）；技能图标：一图流 CDN（https://cos.yituliu.cn）。
-- 森空岛 cred/token 与一图流只读 Token 均保存在浏览器 localStorage（仅本机），下次打开页面自动恢复（森空岛恢复账号列表、一图流仅回填输入框，分析都由点击触发）；不会上传到本站或其他第三方。
+- 森空岛 cred/token 与一图流只读 Token 均保存在浏览器 localStorage（仅本机），下次打开页面自动恢复：仅有森空岛凭证时恢复账号列表，有一图流 Token 时优先自动读取快照生成清单（此时森空岛只回填输入框、不自动请求账号列表）；不会上传到本站或其他第三方。
 - 提示功能的访问时间戳保存在 localStorage（键 `maa-training-list.last-visit`），同样不会上传。
 
 ## GitHub Pages 部署

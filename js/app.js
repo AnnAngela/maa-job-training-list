@@ -633,6 +633,20 @@ const createApp = (deps, elements) => {
         }
     };
 
+    // 用一图流快照拉取练度并进入分析；空数据（有 Token 但从未在一图流导入过）抛引导文案，
+    // 由调用方决定如何呈现，且不覆盖已有练度
+    const runYituliuFetch = async (token) => {
+        setStatus("正在读取一图流练度快照...");
+        const { operators } = await getYituliuOperatorData(deps.fetchImpl, token, state.operatorMeta, state.equipmentInfoMap || {});
+        if (operators.length === 0) {
+            throw new Error("一图流还没有你的干员数据：请先在一图流「我的干员」页导入练度，再生成只读 Token");
+        }
+        state.userOperators = operators;
+        runAnalysis();
+        render();
+        setStatus(`已读取 ${operators.length} 名干员（一图流快照）`);
+    };
+
     const handleYituliuToken = async (event) => {
         event.preventDefault();
         clearError();
@@ -640,18 +654,7 @@ const createApp = (deps, elements) => {
             const token = parseYituliuToken(elements.yituliuTokenInput.value);
             state.yituliuToken = token;
             saveYituliuToken(token);
-            setStatus("正在读取一图流练度快照...");
-            const { operators } = await getYituliuOperatorData(deps.fetchImpl, token, state.operatorMeta, state.equipmentInfoMap || {});
-            if (operators.length === 0) {
-                // 有 Token 但从未在一图流导入过练度（或绑定的账号无数据）：提示引导，不覆盖已有练度
-                setStatus("读取一图流练度失败");
-                setError("一图流还没有你的干员数据：请先在一图流「我的干员」页导入练度，再生成只读 Token");
-                return;
-            }
-            state.userOperators = operators;
-            runAnalysis();
-            render();
-            setStatus(`已读取 ${operators.length} 名干员（一图流快照）`);
+            await runYituliuFetch(token);
         } catch (error) {
             setError(error.message);
             setStatus("读取一图流练度失败");
@@ -891,7 +894,8 @@ const createApp = (deps, elements) => {
 
     bindEvents();
 
-    const restoreCredential = async () => {
+    // 回填森空岛凭证；autoFetch 为真时顺带自动拉取绑定账号列表（一图流 Token 未接管时才拉）
+    const restoreCredential = async ({ autoFetch = true } = {}) => {
         const saved = loadCredential();
         if (!saved) {
             return;
@@ -899,6 +903,9 @@ const createApp = (deps, elements) => {
         state.cred = saved.cred;
         state.token = saved.token;
         elements.credInput.value = saved.cred;
+        if (!autoFetch) {
+            return;
+        }
         try {
             setStatus("正在读取已保存的森空岛账号...");
             const binding = await fetchBindingList(deps.fetchImpl, saved.cred, saved.token, { cryptoImpl: deps.cryptoImpl });
@@ -910,15 +917,22 @@ const createApp = (deps, elements) => {
         }
     };
 
-    // 只回填输入框、不自动拉取：一图流是快照数据，保持「分析动作由用户点击触发」，
-    // 避免打开页面就用快照覆盖用户当前选择的森空岛/手动导入数据
-    const restoreYituliuToken = () => {
+    // 有缓存 Token 时自动读取一图流快照直接进入分析；失败只提示、不静默回退森空岛，
+    // 用户可手动点「获取账号列表」切换渠道
+    const restoreYituliuToken = async () => {
         const saved = loadYituliuToken();
         if (!saved) {
-            return;
+            return false;
         }
         state.yituliuToken = saved;
         elements.yituliuTokenInput.value = saved;
+        try {
+            await runYituliuFetch(saved);
+        } catch (error) {
+            setError(`自动读取一图流练度失败：${error.message}`);
+            setStatus("读取一图流练度失败");
+        }
+        return true;
     };
 
     const bootstrap = async () => {
@@ -926,8 +940,10 @@ const createApp = (deps, elements) => {
             setStatus("正在加载基础数据...");
             await loadStaticData();
             await refreshAssignments(true);
-            await restoreCredential();
-            restoreYituliuToken();
+            // 一图流 Token 与森空岛凭证同时缓存时优先一图流：直接用快照生成清单，
+            // 森空岛只回填凭证输入框、跳过账号列表自动请求（也降低森空岛凭据被频控的概率）
+            const usedYituliu = await restoreYituliuToken();
+            await restoreCredential({ autoFetch: !usedYituliu });
         } catch (error) {
             setError(error.message);
             setStatus("加载失败");

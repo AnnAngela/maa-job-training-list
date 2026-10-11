@@ -636,18 +636,45 @@ test("yituliu token flow prompts import when snapshot is empty", async () => {
     expect(app.state.userOperators).toHaveLength(1);
 });
 
-test("bootstrap restores yituliu token without fetching", async () => {
+test("bootstrap auto-runs yituliu snapshot over skland credential", async () => {
     localStorage.setItem(YITULIU_TOKEN_KEY, "saved-token");
-    const fetchImpl = makeFetchImpl();
-    const app = await initApp({ fetchImpl });
+    localStorage.setItem(SKLAND_CREDENTIAL_KEY, JSON.stringify({ cred: "saved-cred", token: "saved-token" }));
+    fetchAssignmentsSnapshot.mockResolvedValue({
+        total: 1,
+        assignments: [{ id: 1, uploadTime: new Date().toISOString(), required: [{ name: "凯尔希", skill: 1, requirements: { level: 90 } }], groups: [] }],
+        generatedAt: "2024-01-01T00:00:00Z",
+    });
+    const app = await initApp({ fetchImpl: makeFetchImpl({ yituliu: yituliuInfo }) });
     expect(app.state.yituliuToken).toBe("saved-token");
     expect(app.elements.yituliuTokenInput.value).toBe("saved-token");
-    // 恢复只回填输入框：分析动作仍由用户点击触发，打开页面不自动请求一图流
-    expect(fetchImpl.mock.calls.some(([url]) => url.includes("open-api/operator/info"))).toBe(false);
-    // 空白 Token 视为未保存
+    // 有缓存 Token 即自动读取快照进入分析
+    expect(app.state.userOperators).toHaveLength(3);
+    expect(app.state.result).not.toBeNull();
+    expect(app.state.status).toContain("一图流");
+    // 一图流优先时：森空岛凭证只回填输入框，不自动请求账号列表
+    expect(app.elements.credInput.value).toBe("saved-cred");
+    expect(fetchBindingList).not.toHaveBeenCalled();
+});
+
+test("bootstrap surfaces yituliu auto-restore failure", async () => {
+    localStorage.setItem(YITULIU_TOKEN_KEY, "saved-token");
+    localStorage.setItem(SKLAND_CREDENTIAL_KEY, JSON.stringify({ cred: "saved-cred", token: "saved-token" }));
+    const app = await initApp({ fetchImpl: makeFetchImpl({ yituliu: { code: 20027, msg: "用户登录凭证解析错误", data: null } }) });
+    expect(app.state.error).toContain("自动读取一图流练度失败");
+    expect(app.state.error).toContain("无效");
+    expect(app.state.userOperators).toHaveLength(0);
+    // 失败不静默回退森空岛，用户可手动点「获取账号列表」切换渠道
+    expect(fetchBindingList).not.toHaveBeenCalled();
+});
+
+test("bootstrap treats blank yituliu token as absent", async () => {
     localStorage.setItem(YITULIU_TOKEN_KEY, "   ");
-    const again = await initApp({ fetchImpl: makeFetchImpl() });
-    expect(again.state.yituliuToken).toBe("");
+    localStorage.setItem(SKLAND_CREDENTIAL_KEY, JSON.stringify({ cred: "saved-cred", token: "saved-token" }));
+    fetchBindingList.mockResolvedValue({ arkBindingList: [] });
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    expect(app.state.yituliuToken).toBe("");
+    // 空白 Token 视为未保存，森空岛照常自动恢复账号列表
+    expect(fetchBindingList).toHaveBeenCalled();
 });
 
 test("manual import runs analysis", async () => {
