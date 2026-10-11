@@ -32,6 +32,10 @@ export const SKLAND_BASE = "https://zonai.skland.com";
 export const BINDING_PATH = "/api/v1/game/player/binding";
 export const PLAYER_INFO_PATH = "/api/v1/game/player/info";
 
+// 一图流 open-api：鉴权为 Authorization 头携带用户生成的只读 Token 原文（无 Bearer 前缀），
+// 后端恒返回 HTTP 200，业务结果只能看响应体 code（200 成功 / 20010 权限不足 / 20027 Token 无效）
+export const YITULIU_OPERATOR_INFO_URL = "https://backend.yituliu.cn/open-api/operator/info";
+
 // 一图流头像 CDN（cos.yituliu.cn）已于 2025-11-01 停更，特限异格与后续新干员全部 404；
 // 改用 PRTS 作业站静态资源，其 /assets/operator-avatars/webp32/ 覆盖全部在用干员（阿米娅近卫/医疗形态除外，页面不渲染）
 export const AVATAR_BASE = "https://prts.plus/assets/operator-avatars/webp32";

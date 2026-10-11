@@ -55,6 +55,8 @@ a:hover { text-decoration: underline; }
 
 .data-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .data-panel { background: var(--surface-alt); border-radius: 12px; padding: 14px; }
+/* 一图流面板占满整行：内容单一，作为第三渠道与上方两个主渠道区分层级 */
+.data-panel--full { grid-column: 1 / -1; }
 .hint { color: var(--muted); font-size: 13px; margin: 0 0 10px; }
 .skland-form { display: flex; gap: 8px; }
 .skland-form input, .controls input[type="search"], .data-panel textarea {

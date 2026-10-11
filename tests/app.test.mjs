@@ -21,6 +21,7 @@ import {
     initApp,
     normalizeImportedOperators,
     SKLAND_CREDENTIAL_KEY,
+    YITULIU_TOKEN_KEY,
 } from "../js/app.js";
 import { INTRO_REMIND_DAYS, SKLAND_COMMAND } from "../js/config.js";
 import { fetchAssignmentsDelta, fetchAssignmentsSnapshot } from "../js/maa.js";
@@ -28,6 +29,7 @@ import { LAST_VISIT_KEY } from "../js/notice.js";
 import { fetchBindingList, getSklandOperatorData, parseCredential } from "../js/skland.js";
 import realOperatorMeta from "../data/operator_meta.json";
 import playerInfo from "./fixtures/skland-player-info.json";
+import yituliuInfo from "./fixtures/yituliu-operator-info.json";
 
 const operatorMeta = {
     nameToCharId: { 阿米娅: "char_002_amiya", 陈: "char_chen", 凯尔希: "char_003_kalts", "Lancet-2": "char_285_medic2", 芬: "char_123_fang" },
@@ -82,9 +84,12 @@ const levelCostTable = {
     elite2: Array.from({ length: 90 }, () => ({ exp: 500, gold: 500 })),
 };
 
-const makeFetchImpl = ({ serveCost = false } = {}) => vi.fn((url) => {
+const makeFetchImpl = ({ serveCost = false, yituliu = null } = {}) => vi.fn((url) => {
     if (url.includes("operator_meta")) {
         return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(operatorMeta) });
+    }
+    if (yituliu && url.includes("open-api/operator/info")) {
+        return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(yituliu) });
     }
     if (url.includes("skill_sprite")) {
         return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(skillSprite) });
@@ -137,6 +142,7 @@ const buildDom = () => {
         "<code id=\"skland-command\"></code>",
         "<button id=\"copy-command-button\"></button>",
         "<div id=\"binding-list\"></div>",
+        "<form id=\"yituliu-form\"><input id=\"yituliu-token-input\" type=\"password\"></form>",
         "<button id=\"import-button\"></button>",
         "<textarea id=\"import-input\"></textarea>",
         "<button id=\"upload-file-button\"></button>",
@@ -462,6 +468,17 @@ test("normalizeImportedOperators imports the fixture player/info payload", () =>
     expect(amiya.modules).toContainEqual({ id: "uniequip_002_amiya", name: "Y", level: 1, locked: true });
 });
 
+test("normalizeImportedOperators accepts raw yituliu open-api payload", () => {
+    // 一图流响应与森空岛共享 evolvePhase/potentialRank 键，靠 mainSkillLevel/equips 区分并优先进一图流分支
+    const rows = normalizeImportedOperators(yituliuInfo, operatorMeta, { uniequip_002_kalts: { typeName2: "X" } });
+    expect(rows).toHaveLength(3);
+    const kalts = rows.find((row) => row.charId === "char_003_kalts");
+    expect(kalts).toMatchObject({ name: "凯尔希", skill3: 10 });
+    // 模组名查 equipmentInfo 补齐，查不到留空
+    expect(kalts.modules.map((module) => module.name)).toEqual(["X", "", ""]);
+    expect(rows.find((row) => row.charId === "char_002_amiya").skill2).toBe(7);
+});
+
 test("normalizeImportedOperators fills every missing field", () => {
     const rows = normalizeImportedOperators([{ charId: "", name: "", rarity: 0, profession: "", elite: 0, level: 0, skill1: 0, skill2: 0, skill3: 0, maxModuleLevel: 0 }], operatorMeta);
     expect(rows[0]).toMatchObject({ charId: "", name: "", rarity: 0, profession: "", elite: 0, level: 0, skill1: 0, skill2: 0, skill3: 0, maxModuleLevel: 0 });
@@ -578,6 +595,59 @@ test("binding select shows error on skland failure", async () => {
     getSklandOperatorData.mockRejectedValue(new Error("读取失败"));
     await app.handleBindingSelect("1");
     expect(app.state.error).toBe("读取失败");
+});
+
+test("yituliu token flow reads operators and runs analysis", async () => {
+    const app = await initApp({ fetchImpl: makeFetchImpl({ serveCost: true, yituliu: yituliuInfo }) });
+    app.state.assignments = [{ id: 1, uploadTime: new Date().toISOString(), required: [{ name: "凯尔希", skill: 1, requirements: { level: 90 } }], groups: [] }];
+    app.elements.yituliuTokenInput.value = "  tok  ";
+    await app.handleYituliuToken({ preventDefault: vi.fn() });
+    expect(app.state.userOperators).toHaveLength(3);
+    expect(app.state.userOperators.find((item) => item.charId === "char_003_kalts").skill3).toBe(10);
+    expect(app.state.result).not.toBeNull();
+    // 提交时 Token 去除首尾空白后写入 localStorage（仅本机）
+    expect(localStorage.getItem(YITULIU_TOKEN_KEY)).toBe("tok");
+    expect(app.state.status).toContain("一图流");
+});
+
+test("yituliu token flow requires token input", async () => {
+    const app = await initApp({ fetchImpl: makeFetchImpl() });
+    await app.handleYituliuToken({ preventDefault: vi.fn() });
+    expect(app.state.error).toContain("请先输入");
+    expect(app.state.status).toBe("读取一图流练度失败");
+});
+
+test("yituliu token flow shows business error message", async () => {
+    const app = await initApp({ fetchImpl: makeFetchImpl({ yituliu: { code: 20027, msg: "用户登录凭证解析错误", data: null } }) });
+    app.elements.yituliuTokenInput.value = "tok";
+    await app.handleYituliuToken({ preventDefault: vi.fn() });
+    expect(app.state.error).toContain("无效");
+    expect(app.state.userOperators).toHaveLength(0);
+});
+
+test("yituliu token flow prompts import when snapshot is empty", async () => {
+    const app = await initApp({ fetchImpl: makeFetchImpl({ yituliu: { code: 200, msg: "操作成功", data: [] } }) });
+    app.state.assignments = [{ id: 1, uploadTime: new Date().toISOString(), required: [{ name: "阿米娅", skill: 1, requirements: { level: 90 } }], groups: [] }];
+    app.state.userOperators = [{ charId: "char_002_amiya", name: "阿米娅", rarity: 5, profession: "CASTER", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 0 }];
+    app.elements.yituliuTokenInput.value = "tok";
+    await app.handleYituliuToken({ preventDefault: vi.fn() });
+    expect(app.state.error).toContain("我的干员");
+    // 空快照不覆盖已有练度数据
+    expect(app.state.userOperators).toHaveLength(1);
+});
+
+test("bootstrap restores yituliu token without fetching", async () => {
+    localStorage.setItem(YITULIU_TOKEN_KEY, "saved-token");
+    const fetchImpl = makeFetchImpl();
+    const app = await initApp({ fetchImpl });
+    expect(app.state.yituliuToken).toBe("saved-token");
+    expect(app.elements.yituliuTokenInput.value).toBe("saved-token");
+    // 恢复只回填输入框：分析动作仍由用户点击触发，打开页面不自动请求一图流
+    expect(fetchImpl.mock.calls.some(([url]) => url.includes("open-api/operator/info"))).toBe(false);
+    // 空白 Token 视为未保存
+    localStorage.setItem(YITULIU_TOKEN_KEY, "   ");
+    const again = await initApp({ fetchImpl: makeFetchImpl() });
+    expect(again.state.yituliuToken).toBe("");
 });
 
 test("manual import runs analysis", async () => {

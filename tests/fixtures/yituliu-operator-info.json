@@ -1,0 +1,99 @@
+{
+    "code": 200,
+    "msg": "操作成功",
+    "data": [
+        {
+            "id": "char_002_amiya",
+            "level": 60,
+            "evolvePhase": 2,
+            "mainSkillLevel": 7,
+            "skills": [
+                {
+                    "id": "skcom_magic_rage[3]",
+                    "level": 0
+                },
+                {
+                    "id": "skchr_amiya_2",
+                    "level": 0
+                },
+                {
+                    "id": "skchr_amiya_3",
+                    "level": 0
+                }
+            ],
+            "equips": [
+                {
+                    "id": "uniequip_002_amiya",
+                    "type": "Y",
+                    "level": 0
+                }
+            ],
+            "potentialRank": 6
+        },
+        {
+            "id": "char_003_kalts",
+            "level": 90,
+            "evolvePhase": 2,
+            "mainSkillLevel": 7,
+            "skills": [
+                {
+                    "id": "skchr_kalts_1",
+                    "level": 0
+                },
+                {
+                    "id": "skchr_kalts_2",
+                    "level": 0
+                },
+                {
+                    "id": "skchr_kalts_3",
+                    "level": 3
+                }
+            ],
+            "equips": [
+                {
+                    "id": "uniequip_002_kalts",
+                    "type": "X",
+                    "level": 3
+                },
+                {
+                    "id": "uniequip_003_kalts",
+                    "type": "Y",
+                    "level": 0
+                },
+                {
+                    "id": "uniequip_004_kalts",
+                    "type": "A",
+                    "level": 3
+                }
+            ],
+            "potentialRank": 2
+        },
+        {
+            "id": "char_123_fang",
+            "level": 55,
+            "evolvePhase": 1,
+            "mainSkillLevel": 4,
+            "skills": [
+                {
+                    "id": "skchr_fang_1",
+                    "level": 0
+                },
+                {
+                    "id": "skchr_fang_2",
+                    "level": 2
+                }
+            ],
+            "equips": [],
+            "potentialRank": 3
+        },
+        {
+            "id": "char_999_nobody",
+            "level": 1,
+            "evolvePhase": 0,
+            "mainSkillLevel": 1,
+            "skills": [],
+            "equips": [],
+            "potentialRank": 0
+        }
+    ]
+}

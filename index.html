@@ -52,6 +52,20 @@
           </div>
           <input id="import-file-input" type="file" accept=".json,application/json" hidden>
         </div>
+        <div class="data-panel data-panel--full">
+          <h3>一图流获取</h3>
+          <p class="hint">读取你在「<a href="https://ark.yituliu.cn/survey/operators" target="_blank" rel="noreferrer">一图流·我的干员</a>」导入的练度快照（非实时，取最近导入的游戏账号）：先在一图流导入干员，再到个人中心生成只读 Token 粘贴到这里。</p>
+          <div class="skland-actions">
+            <div class="skland-button-row">
+              <a class="button button--ghost" href="https://ark.yituliu.cn/survey/operators" target="_blank" rel="noreferrer">去一图流导入练度</a>
+              <a class="button button--ghost" href="https://ark.yituliu.cn/account/home" target="_blank" rel="noreferrer">打开一图流个人中心</a>
+            </div>
+          </div>
+          <form id="yituliu-form" class="skland-form">
+            <input id="yituliu-token-input" type="password" autocomplete="off" placeholder="只读 Token">
+            <button type="submit" class="button">获取练度</button>
+          </form>
+        </div>
       </div>
       <div class="export-row">
         <button id="export-json-button" type="button" class="button button--ghost">导出 JSON</button>

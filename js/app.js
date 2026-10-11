@@ -14,6 +14,7 @@ import { computeTrainingList, standardizeAssignments } from "./compare.js";
 import { fetchAssignmentsDelta, fetchAssignmentsSnapshot } from "./maa.js";
 import { closeDialog, openDialog, readLastVisit, shouldShowIntro, writeLastVisit } from "./notice.js";
 import { fetchBindingList, formatSklandCharacters, getSklandOperatorData, parseCredential } from "./skland.js";
+import { buildEquipmentInfoMap, formatYituliuCharacters, getYituliuOperatorData, parseYituliuToken } from "./yituliu.js";
 import { renderBindingButtons, renderMaterialSection, renderSummary, renderTrainingTable } from "./view.js";
 import { scoreTier } from "./util.js";
 
@@ -37,6 +38,8 @@ const createState = (uploaderId = DEFAULT_UPLOADER_ID) => ({
     operatorMeta: null,
     skillSprite: null,
     costIndex: null,
+    // 一图流渠道的模组名映射（uniequip id → typeName2），随成本数据一起从 v2 干员表构建
+    equipmentInfoMap: null,
     itemInfoMap: null,
     levelCostTable: null,
     assignments: [],
@@ -50,6 +53,7 @@ const createState = (uploaderId = DEFAULT_UPLOADER_ID) => ({
     directionTotals: { evolve: true, mastery: true, module: true },
     cred: "",
     token: "",
+    yituliuToken: "",
     bindingList: [],
     status: "就绪",
     error: "",
@@ -88,6 +92,8 @@ const collectElements = (doc) => ({
     sklandCommand: requireElement(doc, "skland-command"),
     copyCommandButton: requireElement(doc, "copy-command-button"),
     bindingList: requireElement(doc, "binding-list"),
+    yituliuForm: requireElement(doc, "yituliu-form"),
+    yituliuTokenInput: requireElement(doc, "yituliu-token-input"),
     importButton: requireElement(doc, "import-button"),
     importInput: requireElement(doc, "import-input"),
     importFileInput: requireElement(doc, "import-file-input"),
@@ -113,6 +119,7 @@ const collectElements = (doc) => ({
 });
 
 export const SKLAND_CREDENTIAL_KEY = "maa-training-list.skland-credential";
+export const YITULIU_TOKEN_KEY = "maa-training-list.yituliu-token";
 
 const saveCredential = (cred, token) => {
     try {
@@ -135,6 +142,21 @@ const loadCredential = () => {
     }
 };
 
+const saveYituliuToken = (token) => {
+    try {
+        localStorage.setItem(YITULIU_TOKEN_KEY, token);
+    } catch {
+    // localStorage 不可用时静默失败，Token 仅保留在内存
+    }
+};
+
+// Token 为纯字符串，无 JSON 解析环节；空白视为未保存
+const loadYituliuToken = () => {
+    const raw = localStorage.getItem(YITULIU_TOKEN_KEY) || "";
+    const trimmed = raw.trim();
+    return trimmed ? trimmed : null;
+};
+
 const fetchJson = async (fetchImpl, url) => {
     const response = await fetchImpl(url);
     if (!response.ok) {
@@ -143,7 +165,7 @@ const fetchJson = async (fetchImpl, url) => {
     return response.json();
 };
 
-export const normalizeImportedOperators = (raw, operatorMeta) => {
+export const normalizeImportedOperators = (raw, operatorMeta, equipmentInfo = {}) => {
     let list;
     if (Array.isArray(raw)) {
         list = raw;
@@ -155,11 +177,21 @@ export const normalizeImportedOperators = (raw, operatorMeta) => {
         list = raw.chars;
     } else if (Array.isArray(raw?.data?.chars)) {
         list = raw.data.chars;
+    } else if (Array.isArray(raw?.data)) {
+        list = raw.data;
     }
     if (!Array.isArray(list)) {
-        throw new Error("导入数据应为数组、包含 operators 数组的对象，或森空岛 player/info 原始响应");
+        throw new Error("导入数据应为数组、包含 operators 数组的对象、森空岛 player/info 原始响应，或一图流 open-api 原始响应");
     }
     const first = list[0];
+    // 一图流 open-api 响应：data 直接是干员数组，元素键为 mainSkillLevel/equips（森空岛是 mainSkillLvl/equip）；
+    // 两种格式共享 evolvePhase/potentialRank 键，一图流探测必须在前，否则会被森空岛分支抢先误判
+    const isRawYituliu = !!first
+        && (Object.hasOwn(first, "mainSkillLevel")
+            || Object.hasOwn(first, "equips"));
+    if (isRawYituliu) {
+        return formatYituliuCharacters(list, operatorMeta, equipmentInfo);
+    }
     const isRawSkland = Boolean(
         first
         && (Object.hasOwn(first, "evolvePhase")
@@ -470,6 +502,7 @@ const createApp = (deps, elements) => {
                 fetchJson(deps.fetchImpl, LEVEL_COST_TABLE_URL),
             ]);
             state.costIndex = buildCostIndex(characters);
+            state.equipmentInfoMap = buildEquipmentInfoMap(characters);
             state.itemInfoMap = Object.fromEntries(itemInfo.map((item) => [item.itemId, item]));
             Object.assign(state.itemInfoMap, ITEM_INFO_PATCH);
             state.levelCostTable = levelCostTable;
@@ -600,10 +633,35 @@ const createApp = (deps, elements) => {
         }
     };
 
+    const handleYituliuToken = async (event) => {
+        event.preventDefault();
+        clearError();
+        try {
+            const token = parseYituliuToken(elements.yituliuTokenInput.value);
+            state.yituliuToken = token;
+            saveYituliuToken(token);
+            setStatus("正在读取一图流练度快照...");
+            const { operators } = await getYituliuOperatorData(deps.fetchImpl, token, state.operatorMeta, state.equipmentInfoMap || {});
+            if (operators.length === 0) {
+                // 有 Token 但从未在一图流导入过练度（或绑定的账号无数据）：提示引导，不覆盖已有练度
+                setStatus("读取一图流练度失败");
+                setError("一图流还没有你的干员数据：请先在一图流「我的干员」页导入练度，再生成只读 Token");
+                return;
+            }
+            state.userOperators = operators;
+            runAnalysis();
+            render();
+            setStatus(`已读取 ${operators.length} 名干员（一图流快照）`);
+        } catch (error) {
+            setError(error.message);
+            setStatus("读取一图流练度失败");
+        }
+    };
+
     const importFromText = (text) => {
         clearError();
         const raw = JSON.parse(text);
-        state.userOperators = normalizeImportedOperators(raw, state.operatorMeta);
+        state.userOperators = normalizeImportedOperators(raw, state.operatorMeta, state.equipmentInfoMap || {});
         runAnalysis();
         render();
         setStatus(`已导入 ${state.userOperators.length} 名干员`);
@@ -709,6 +767,7 @@ const createApp = (deps, elements) => {
     const bindEvents = () => {
         elements.refreshButton.addEventListener("click", () => refreshAssignments(true));
         elements.sklandForm.addEventListener("submit", handleSklandCredential);
+        elements.yituliuForm.addEventListener("submit", handleYituliuToken);
         elements.bindingList.addEventListener("click", (event) => {
             const button = event.target.closest(".binding-button");
             if (button) {
@@ -851,12 +910,24 @@ const createApp = (deps, elements) => {
         }
     };
 
+    // 只回填输入框、不自动拉取：一图流是快照数据，保持「分析动作由用户点击触发」，
+    // 避免打开页面就用快照覆盖用户当前选择的森空岛/手动导入数据
+    const restoreYituliuToken = () => {
+        const saved = loadYituliuToken();
+        if (!saved) {
+            return;
+        }
+        state.yituliuToken = saved;
+        elements.yituliuTokenInput.value = saved;
+    };
+
     const bootstrap = async () => {
         try {
             setStatus("正在加载基础数据...");
             await loadStaticData();
             await refreshAssignments(true);
             await restoreCredential();
+            restoreYituliuToken();
         } catch (error) {
             setError(error.message);
             setStatus("加载失败");
@@ -872,6 +943,7 @@ const createApp = (deps, elements) => {
         setError,
         handleSklandCredential,
         handleBindingSelect,
+        handleYituliuToken,
         handleImport,
         loadSampleData,
         handleExportJson,
