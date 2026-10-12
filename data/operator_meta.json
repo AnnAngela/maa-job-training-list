@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T00:09:17.603Z",
+  "generatedAt": "2026-10-12T00:18:20.895Z",
   "operators": {
     "char_145_prove": {
       "name": "普罗旺斯",
@@ -54,6 +54,23 @@
           "skillId": "skchr_spikes_2",
           "skillIcon": "skchr_spikes_2",
           "skillName": "致命恶作剧"
+        }
+      ]
+    },
+    "char_4232_hbound": {
+      "name": "旅骨",
+      "rarity": 5,
+      "profession": "SPECIAL",
+      "skills": [
+        {
+          "skillId": "skchr_hbound_1",
+          "skillIcon": "skchr_hbound_1",
+          "skillName": "触礁"
+        },
+        {
+          "skillId": "skchr_hbound_2",
+          "skillIcon": "skchr_hbound_2",
+          "skillName": "座浅"
         }
       ]
     },
@@ -5273,6 +5290,28 @@
         }
       ]
     },
+    "char_4231_clemnt": {
+      "name": "克莱门莎",
+      "rarity": 6,
+      "profession": "WARRIOR",
+      "skills": [
+        {
+          "skillId": "skchr_clemnt_1",
+          "skillIcon": "skchr_clemnt_1",
+          "skillName": "冲蚀"
+        },
+        {
+          "skillId": "skchr_clemnt_2",
+          "skillIcon": "skchr_clemnt_2",
+          "skillName": "风暴潮"
+        },
+        {
+          "skillId": "skchr_clemnt_3",
+          "skillIcon": "skchr_clemnt_3",
+          "skillName": "与海为敌"
+        }
+      ]
+    },
     "char_4017_puzzle": {
       "name": "谜图",
       "rarity": 5,
@@ -7326,6 +7365,23 @@
         }
       ]
     },
+    "char_393_toledo": {
+      "name": "德·托莱多",
+      "rarity": 5,
+      "profession": "SUPPORT",
+      "skills": [
+        {
+          "skillId": "skchr_toledo_1",
+          "skillIcon": "skchr_toledo_1",
+          "skillName": "以假乱真"
+        },
+        {
+          "skillId": "skchr_toledo_2",
+          "skillIcon": "skchr_toledo_2",
+          "skillName": "危言耸听"
+        }
+      ]
+    },
     "char_427_vigil": {
       "name": "伺夜",
       "rarity": 6,
@@ -7751,6 +7807,7 @@
     "普罗旺斯": "char_145_prove",
     "丰川祥子": "char_4182_oblvns",
     "芳汀": "char_271_spikes",
+    "旅骨": "char_4232_hbound",
     "熔泉": "char_363_toddi",
     "钼铅": "char_4171_wulfen",
     "风絮": "char_4222_taraxa",
@@ -8043,6 +8100,7 @@
     "娜仁图亚": "char_4138_narant",
     "白雪": "char_118_yuki",
     "焰尾": "char_420_flamtl",
+    "克莱门莎": "char_4231_clemnt",
     "谜图": "char_4017_puzzle",
     "和弦": "char_297_hamoni",
     "霜叶": "char_193_frostl",
@@ -8156,6 +8214,7 @@
     "跃跃": "char_4100_caper",
     "蜜蜡": "char_344_beewax",
     "矩": "char_4221_ju",
+    "德·托莱多": "char_393_toledo",
     "伺夜": "char_427_vigil",
     "布洛卡": "char_356_broca",
     "铃兰": "char_358_lisa",
