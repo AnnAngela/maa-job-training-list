@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-27T00:16:28.617Z",
+  "generatedAt": "2026-11-02T00:25:15.235Z",
   "operators": {
     "char_285_medic2": {
       "name": "Lancet-2",
@@ -946,6 +946,23 @@
         }
       ]
     },
+    "char_4170_hdbell": {
+      "name": "行铃",
+      "rarity": 4,
+      "profession": "SPECIAL",
+      "skills": [
+        {
+          "skillId": "skchr_hdbell_1",
+          "skillIcon": "skchr_hdbell_1",
+          "skillName": "花椰菜冲击"
+        },
+        {
+          "skillId": "skchr_hdbell_2",
+          "skillIcon": "skchr_hdbell_2",
+          "skillName": "蔬菜大拼盘"
+        }
+      ]
+    },
     "char_117_myrrh": {
       "name": "末药",
       "rarity": 4,
@@ -1708,6 +1725,23 @@
           "skillId": "skchr_rdoc_2",
           "skillIcon": "skchr_rdoc_2",
           "skillName": "激素手枪"
+        }
+      ]
+    },
+    "char_4245_alga": {
+      "name": "奥尔佳",
+      "rarity": 5,
+      "profession": "WARRIOR",
+      "skills": [
+        {
+          "skillId": "skchr_alga_1",
+          "skillIcon": "skchr_alga_1",
+          "skillName": "交叉施压"
+        },
+        {
+          "skillId": "skchr_alga_2",
+          "skillIcon": "skchr_alga_2",
+          "skillName": "只为我的答案"
         }
       ]
     },
@@ -3671,6 +3705,23 @@
         }
       ]
     },
+    "char_4169_caledo": {
+      "name": "镜匠",
+      "rarity": 5,
+      "profession": "TANK",
+      "skills": [
+        {
+          "skillId": "skchr_caledo_1",
+          "skillIcon": "skchr_caledo_1",
+          "skillName": "无公差切割"
+        },
+        {
+          "skillId": "skchr_caledo_2",
+          "skillIcon": "skchr_caledo_2",
+          "skillName": "“多面镜”"
+        }
+      ]
+    },
     "char_145_prove": {
       "name": "普罗旺斯",
       "rarity": 5,
@@ -4348,6 +4399,28 @@
           "skillId": "skchr_pedro_2",
           "skillIcon": "skchr_pedro_2",
           "skillName": "交替撤离"
+        }
+      ]
+    },
+    "char_4244_tocka": {
+      "name": "冻河",
+      "rarity": 6,
+      "profession": "SUPPORT",
+      "skills": [
+        {
+          "skillId": "skchr_tocka_1",
+          "skillIcon": "skchr_tocka_1",
+          "skillName": "一无所有之人"
+        },
+        {
+          "skillId": "skchr_tocka_2",
+          "skillIcon": "skchr_tocka_2",
+          "skillName": "意欲呼啸之心"
+        },
+        {
+          "skillId": "skchr_tocka_3",
+          "skillIcon": "skchr_tocka_3",
+          "skillName": "踽踽独行之春"
         }
       ]
     },
@@ -6278,6 +6351,28 @@
         }
       ]
     },
+    "char_4246_dminon": {
+      "name": "国度",
+      "rarity": 6,
+      "profession": "SPECIAL",
+      "skills": [
+        {
+          "skillId": "skchr_dminon_1",
+          "skillIcon": "skchr_dminon_1",
+          "skillName": "停步"
+        },
+        {
+          "skillId": "skchr_dminon_2",
+          "skillIcon": "skchr_dminon_2",
+          "skillName": "受戮"
+        },
+        {
+          "skillId": "skchr_dminon_3",
+          "skillIcon": "skchr_dminon_3",
+          "skillName": "无人的国度"
+        }
+      ]
+    },
     "char_1023_ghost2": {
       "name": "归溟幽灵鲨",
       "rarity": 6,
@@ -7598,6 +7693,28 @@
         }
       ]
     },
+    "char_4247_oxi": {
+      "name": "塔露拉",
+      "rarity": 6,
+      "profession": "WARRIOR",
+      "skills": [
+        {
+          "skillId": "skchr_oxi_1",
+          "skillIcon": "skchr_oxi_1",
+          "skillName": "照霎白夜"
+        },
+        {
+          "skillId": "skchr_oxi_2",
+          "skillIcon": "skchr_oxi_2",
+          "skillName": "阂断骤雪"
+        },
+        {
+          "skillId": "skchr_oxi_3",
+          "skillIcon": "skchr_oxi_3",
+          "skillName": "日冕重烈"
+        }
+      ]
+    },
     "char_4231_clemnt": {
       "name": "克莱门莎",
       "rarity": 6,
@@ -7875,6 +7992,7 @@
     "砾": "char_237_gravel",
     "孑": "char_272_strong",
     "暗索": "char_236_rope",
+    "行铃": "char_4170_hdbell",
     "末药": "char_117_myrrh",
     "嘉维尔": "char_187_ccheal",
     "苏苏洛": "char_298_susuro",
@@ -7920,6 +8038,7 @@
     "鞭刃": "char_265_sophia",
     "苍苔": "char_4106_bryota",
     "医生": "char_4125_rdoc",
+    "奥尔佳": "char_4245_alga",
     "芙兰卡": "char_106_franka",
     "炎客": "char_131_flameb",
     "摩根": "char_154_morgan",
@@ -8035,6 +8154,7 @@
     "洋灰": "char_464_cement",
     "菲莱": "char_4148_philae",
     "裂响": "char_4225_tanya",
+    "镜匠": "char_4169_caledo",
     "普罗旺斯": "char_145_prove",
     "玫拉": "char_4006_melnte",
     "守林人": "char_158_milu",
@@ -8075,6 +8195,7 @@
     "伯塔尼": "char_4223_botany",
     "岳羽由加莉": "char_4219_yukari",
     "佩德洛": "char_4234_pedro",
+    "冻河": "char_4244_tocka",
     "狮蝎": "char_215_mantic",
     "绮良": "char_478_kirara",
     "八幡海铃": "char_4186_tmoris",
@@ -8166,6 +8287,7 @@
     "歌蕾蒂娅": "char_474_glady",
     "水月": "char_437_mizuki",
     "阿斯卡纶": "char_4132_ascln",
+    "国度": "char_4246_dminon",
     "归溟幽灵鲨": "char_1023_ghost2",
     "结城理": "char_4217_makoto",
     "多萝西": "char_4048_doroth",
@@ -8226,6 +8348,7 @@
     "隐德来希": "char_4010_etlchi",
     "玛恩纳": "char_4064_mlynar",
     "司霆惊蛰": "char_1043_leizi2",
+    "塔露拉": "char_4247_oxi",
     "克莱门莎": "char_4231_clemnt",
     "响石": "char_4214_cairn",
     "暴行": "char_230_savage",
