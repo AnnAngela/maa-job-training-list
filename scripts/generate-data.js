@@ -1,8 +1,7 @@
 import { writeFile } from "node:fs/promises";
 export const MAA_QUERY_BASE = "https://prts.maa.plus/copilot/query";
 export const UPLOADER_ID = "7661";
-export const SKILL_SPRITE_CSS_URL
-    = "https://raw.githubusercontent.com/Arknights-yituliu/frontend-v2-plus/dev/src/assets/css/sprite/sprite_skill.css";
+// skill 雪碧图 CSS 已随上游 2026-11-08 的死代码清理删除（前端改为 COS 单图直连），本仓库同步退役该链路
 export const ITEM_SPRITE_CSS_URL
     = "https://raw.githubusercontent.com/Arknights-yituliu/frontend-v2-plus/dev/src/assets/css/sprite/sprite_item.css";
 // 养成成本数据源（原样镜像，不构造中间格式）：v2 干员表含 elite/allSkill/专精/模组成本
@@ -16,7 +15,7 @@ export const LEVEL_COST_TABLE_URL
 // 生成到 data/ 下的文件清单；run-check-data-changed.js 复用同一清单做新旧对比，避免两处漂移。
 // MIRROR_FILES 保存上游响应原文（含非 JSON 的 item CSS），其余文件由本脚本构造。
 export const MIRROR_FILES = ["character_table_simple.v2.json", "item_info.json", "level_cost_table.json", "sprite_item.css"];
-export const GENERATED_FILES = ["operator_meta.json", "skill_sprite.json", "assignments.snapshot.json", ...MIRROR_FILES];
+export const GENERATED_FILES = ["operator_meta.json", "assignments.snapshot.json", ...MIRROR_FILES];
 
 // 每次抓取都会变化且页面不使用的字段：generatedAt 是生成时刻，views/hotScore 是作业站热度统计。
 // 判断新旧数据是否实质变化时忽略它们，否则每天都会产生无意义提交。
@@ -141,37 +140,13 @@ export const buildOperatorMeta = (characters) => {
     return { operators, nameToCharId };
 };
 
-export const parseSkillSpriteCss = (css) => {
-    const urlMatch = css.match(/background-image:\s*url\("([^"]+)"\)/);
-    const spriteUrl = urlMatch?.[1] || "";
-    const entries = {};
-    const classPattern = /\.bg-skill_icon_([A-Za-z0-9_]+)\s*\{/g;
-    for (const classMatch of css.matchAll(classPattern)) {
-        const blockStart = classMatch.index + classMatch[0].length;
-        const blockEnd = css.indexOf("}", blockStart);
-        if (blockEnd === -1) {
-            continue;
-        }
-        const block = css.slice(blockStart, blockEnd);
-        const positionMatch = block.match(/background-position:\s*(-?\d+)px\s+(-?\d+)px/);
-        if (positionMatch) {
-            entries[classMatch[1]] = {
-                x: Math.abs(Number(positionMatch[1])),
-                y: Math.abs(Number(positionMatch[2])),
-            };
-        }
-    }
-    return { spriteUrl, size: 128, entries };
-};
-
 export const generateAll = async ({
     fetchImpl = fetch,
     writeFileImpl = writeFile,
     now = new Date(),
 } = {}) => {
-    const [charactersResponse, cssResponse, itemInfoResponse, levelCostResponse, itemSpriteCssResponse, assignmentData] = await Promise.all([
+    const [charactersResponse, itemInfoResponse, levelCostResponse, itemSpriteCssResponse, assignmentData] = await Promise.all([
         fetchImpl(CHARACTER_TABLE_URL),
-        fetchImpl(SKILL_SPRITE_CSS_URL),
         fetchImpl(ITEM_INFO_URL),
         fetchImpl(LEVEL_COST_TABLE_URL),
         fetchImpl(ITEM_SPRITE_CSS_URL),
@@ -180,9 +155,6 @@ export const generateAll = async ({
 
     if (!charactersResponse.ok) {
         throw new Error(`character table request failed with HTTP ${charactersResponse.status}`);
-    }
-    if (!cssResponse.ok) {
-        throw new Error(`skill sprite css request failed with HTTP ${cssResponse.status}`);
     }
     if (!itemInfoResponse.ok) {
         throw new Error(`item info request failed with HTTP ${itemInfoResponse.status}`);
@@ -195,9 +167,8 @@ export const generateAll = async ({
     }
 
     // 镜像文件保存上游响应原文；operator_meta 等构造文件另行序列化
-    const [charactersText, css, itemInfoText, levelCostText, itemSpriteCss] = await Promise.all([
+    const [charactersText, itemInfoText, levelCostText, itemSpriteCss] = await Promise.all([
         charactersResponse.text(),
-        cssResponse.text(),
         itemInfoResponse.text(),
         levelCostResponse.text(),
         itemSpriteCssResponse.text(),
@@ -205,11 +176,9 @@ export const generateAll = async ({
     const characters = JSON.parse(charactersText);
     const generatedAt = now.toISOString();
     const operatorMeta = buildOperatorMeta(characters);
-    const skillSprite = parseSkillSpriteCss(css);
 
     const payloads = {
         "operator_meta.json": { generatedAt, ...operatorMeta },
-        "skill_sprite.json": { generatedAt, ...skillSprite },
         "assignments.snapshot.json": { generatedAt, ...assignmentData },
     };
     const mirrorTexts = {
@@ -227,5 +196,5 @@ export const generateAll = async ({
         await writeFileImpl(new URL(file, new URL("../data/", import.meta.url)), content);
     }
 
-    return { generatedAt, operatorMeta, skillSprite, assignmentData };
+    return { generatedAt, operatorMeta, assignmentData };
 };

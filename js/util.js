@@ -18,17 +18,6 @@ export const normalizeOperSlot = (oper) => ({
 
 export const operatorAvatarUrl = (charId) => `${AVATAR_BASE}/${charId}.webp`;
 
-export const skillSpriteStyle = (skillSprite, skillIcon, size = 24) => {
-    const entry = skillSprite?.entries?.[skillIcon];
-    if (!entry) {
-        return "";
-    }
-    const scale = size / (skillSprite.size || 128);
-    const offsetX = entry.x * scale;
-    const offsetY = entry.y * scale;
-    return `width:${size}px;height:${size}px;background-image:url("${skillSprite.spriteUrl}");background-size:${size * 16}px ${size * 16}px;background-position:-${offsetX}px -${offsetY}px;`;
-};
-
 export const escapeHtml = (value) => String(value ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")

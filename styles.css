@@ -161,8 +161,6 @@ a:hover { text-decoration: underline; }
 .operator-avatar { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
 .operator-avatar--grayscale { filter: grayscale(1); opacity: 0.55; }
 .operator-avatar.is-hidden { display: none; }
-.skill-icon { display: inline-block; vertical-align: middle; border-radius: 4px; background-color: #0f172a; }
-.skill-icon--empty { display: inline-grid; place-items: center; background: #cbd5e1; color: #334155; font-size: 12px; }
 .binding-list { display: grid; gap: 8px; margin-top: 10px; }
 .binding-button { border: 1px solid var(--border); background: #fff; border-radius: 10px; padding: 10px 12px; text-align: left; cursor: pointer; }
 .binding-button:hover { border-color: var(--primary); }

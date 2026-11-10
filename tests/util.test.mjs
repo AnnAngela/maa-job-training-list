@@ -8,7 +8,6 @@ import {
     parseJsonContent,
     scoreTier,
     skillLevelLabel,
-    skillSpriteStyle,
 } from "../js/util.js";
 
 test("parseJsonContent returns parsed object or null", () => {
@@ -35,24 +34,6 @@ test("normalizeOperSlot fills defaults", () => {
 
 test("operatorAvatarUrl builds avatar URL", () => {
     expect(operatorAvatarUrl("char_002_amiya")).toBe("https://prts.plus/assets/operator-avatars/webp32/char_002_amiya.webp");
-});
-
-test("skillSpriteStyle returns empty for missing entry", () => {
-    expect(skillSpriteStyle({ entries: {} }, "missing")).toBe("");
-    expect(skillSpriteStyle(undefined, "missing")).toBe("");
-});
-
-test("skillSpriteStyle returns positioned sprite style", () => {
-    const style = skillSpriteStyle(
-        { spriteUrl: "https://example.com/sprite.jpg", size: 128, entries: { sk: { x: 128, y: 256 } } },
-        "sk",
-        32,
-    );
-    expect(style).toContain("width:32px;height:32px");
-    expect(style).toContain("background-position:-32px -64px");
-    expect(style).toContain("background-size:512px 512px");
-    const defaultSize = skillSpriteStyle({ spriteUrl: "https://example.com/sprite.jpg", entries: { sk: { x: 0, y: 0 } } }, "sk", 24);
-    expect(defaultSize).toContain("background-size:384px 384px");
 });
 
 test("escapeHtml escapes html characters", () => {

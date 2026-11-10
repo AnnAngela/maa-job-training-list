@@ -5,7 +5,6 @@ import {
     LEVEL_COST_TABLE_URL,
     OPERATOR_META_URL,
     RECENT_WINDOW_DAYS,
-    SKILL_SPRITE_URL,
     SKLAND_COMMAND,
     resolveUploaderId,
 } from "./config.js";
@@ -36,7 +35,6 @@ const createState = (uploaderId = DEFAULT_UPLOADER_ID) => ({
     // 从拉取数据实时提取的作者名（增量响应 → 快照顶层字段），拿不到时为空串、页面保留占位符
     uploaderName: "",
     operatorMeta: null,
-    skillSprite: null,
     costIndex: null,
     // 一图流渠道的模组名映射（uniequip id → typeName2），随成本数据一起从 v2 干员表构建
     equipmentInfoMap: null,
@@ -488,12 +486,7 @@ const createApp = (deps, elements) => {
     };
 
     const loadStaticData = async () => {
-        const [operatorMeta, skillSprite] = await Promise.all([
-            fetchJson(deps.fetchImpl, OPERATOR_META_URL),
-            fetchJson(deps.fetchImpl, SKILL_SPRITE_URL),
-        ]);
-        state.operatorMeta = operatorMeta;
-        state.skillSprite = skillSprite;
+        state.operatorMeta = await fetchJson(deps.fetchImpl, OPERATOR_META_URL);
         // 养成成本数据独立加载：失败仅材料列不可用，不影响练度清单主功能
         try {
             const [characters, itemInfo, levelCostTable] = await Promise.all([

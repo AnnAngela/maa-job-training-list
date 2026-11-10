@@ -1,5 +1,5 @@
 import { MODULE_TYPE_NAMES, aggregateMaterials } from "./cost.js";
-import { escapeHtml, formatCount, formatNumber, operatorAvatarUrl, scoreTier, skillLevelLabel, skillSpriteStyle } from "./util.js";
+import { escapeHtml, formatCount, formatNumber, operatorAvatarUrl, scoreTier, skillLevelLabel } from "./util.js";
 
 const skillTriplet = (user) => [1, 2, 3].map((index) => Number(user?.[`skill${index}`]) || 0);
 
@@ -80,27 +80,6 @@ export const operatorAvatarHtml = (name, charId, { size = 32, grayscale = false 
         return `<span class="avatar-wrap"><span class="avatar-fallback">${fallback}</span></span>`;
     }
     return `<span class="avatar-wrap"><span class="avatar-fallback is-hidden">${fallback}</span><img class="${className}" width="${size}" height="${size}" src="${escapeHtml(operatorAvatarUrl(charId))}" alt="${escapeHtml(name || "")}" loading="lazy" referrerpolicy="no-referrer" onerror="this.classList.add('is-hidden');this.previousElementSibling.classList.remove('is-hidden')"></span>`;
-};
-
-export const skillIconHtml = (skillSprite, skillIcon, { size = 22, title = "" } = {}) => {
-    const safeTitle = escapeHtml(title);
-    if (!skillIcon) {
-        return `<span class="skill-icon skill-icon--empty" title="${safeTitle}">技</span>`;
-    }
-    const style = skillSpriteStyle(skillSprite, skillIcon, size);
-    if (!style) {
-        return `<span class="skill-icon skill-icon--empty" title="${safeTitle}">技</span>`;
-    }
-    return `<span class="skill-icon" style="${style}" title="${safeTitle}"></span>`;
-};
-
-export const operatorSkillIcon = (operatorMeta, skillSprite, charId, skillIndex, { size = 20 } = {}) => {
-    if (!charId || !skillIndex) {
-        return "";
-    }
-    const skills = operatorMeta?.operators?.[charId]?.skills;
-    const skill = skills?.[skillIndex - 1];
-    return skillIconHtml(skillSprite, skill?.skillIcon, { size, title: skill?.skillName || `技能${skillIndex}` });
 };
 
 export const rarityStars = (rarity) => "★".repeat(Math.min(6, Math.max(1, Number(rarity) || 1)));

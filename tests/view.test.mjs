@@ -3,13 +3,11 @@ import {
     charIdForName,
     itemChipHtml,
     operatorAvatarHtml,
-    operatorSkillIcon,
     rarityStars,
     renderBindingButtons,
     renderMaterialSection,
     renderSummary,
     renderTrainingTable,
-    skillIconHtml,
     sortMaterialEntries,
     statusBadge,
 } from "../js/view.js";
@@ -21,8 +19,6 @@ const operatorMeta = {
         char_285_medic2: { name: "Lancet-2", rarity: 1, profession: "MEDIC", skills: [] },
     },
 };
-
-const skillSprite = { spriteUrl: "https://example.com/sprite.jpg", size: 128, entries: { sk_amiya_1: { x: 0, y: 0 } } };
 
 test("charIdForName returns charId or empty", () => {
     expect(charIdForName("阿米娅", operatorMeta)).toBe("char_002_amiya");
@@ -38,20 +34,6 @@ test("operatorAvatarHtml renders with and without charId", () => {
     expect(operatorAvatarHtml("阿米娅", "char_002_amiya")).toContain("avatar-fallback is-hidden");
     expect(operatorAvatarHtml("阿米娅", "char_002_amiya")).toContain("previousElementSibling.classList.remove('is-hidden')");
     expect(operatorAvatarHtml("阿米娅", "")).not.toContain("is-hidden");
-});
-
-test("skillIconHtml renders empty and sprite variants", () => {
-    expect(skillIconHtml(skillSprite, "")).toContain("skill-icon--empty");
-    expect(skillIconHtml(skillSprite, "missing")).toContain("skill-icon--empty");
-    expect(skillIconHtml(skillSprite, "sk_amiya_1")).toContain("background-position:-0px -0px");
-});
-
-test("operatorSkillIcon returns empty or icon", () => {
-    expect(operatorSkillIcon(operatorMeta, skillSprite, "", 1)).toBe("");
-    expect(operatorSkillIcon(operatorMeta, skillSprite, "char_002_amiya", 0)).toBe("");
-    expect(operatorSkillIcon(operatorMeta, skillSprite, "char_002_amiya", 1)).toContain("skill-icon");
-    const noSkills = operatorSkillIcon({ operators: { char_002_amiya: { name: "阿米娅", skills: [] } } }, skillSprite, "char_002_amiya", 1);
-    expect(noSkills).toContain("技能1");
 });
 
 test("rarityStars clamps rarity", () => {
@@ -76,7 +58,7 @@ test("renderTrainingTable hides the skill triplet for skill-less operators", () 
         unsatisfiedCore: 0,
         score: 0,
         totalGap: 0,
-    }], { operatorMeta, skillSprite });
+    }], { operatorMeta });
     expect(html).toContain("精0 30级");
     expect(html).not.toContain("技能");
 });
@@ -186,7 +168,7 @@ test("renderMaterialSection marks excluded direction and empty list", () => {
 });
 
 test("renderTrainingTable renders empty state and rows", () => {
-    expect(renderTrainingTable([], { operatorMeta, skillSprite })).toContain("暂无培养需求");
+    expect(renderTrainingTable([], { operatorMeta })).toContain("暂无培养需求");
     const rows = [{
         name: "阿米娅",
         user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 1 },
@@ -197,7 +179,7 @@ test("renderTrainingTable renders empty state and rows", () => {
         score: 6000,
         totalGap: 20,
     }];
-    const html = renderTrainingTable(rows, { operatorMeta, skillSprite });
+    const html = renderTrainingTable(rows, { operatorMeta });
     expect(html).toContain("阿米娅");
     expect(html).toContain("极高");
     expect(html).toContain("精2 60级");
@@ -210,41 +192,41 @@ test("renderTrainingTable renders empty state and rows", () => {
     // module 3 = A 型；用户没有该模组 -> 警告
     expect(html).toContain('<span class="req-unmet">模组 A</span>');
     const sparseRows = [{ name: "阿米娅", user: { elite: 0, level: 0 }, target: undefined, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 1 }];
-    const sparseHtml = renderTrainingTable(sparseRows, { operatorMeta, skillSprite });
+    const sparseHtml = renderTrainingTable(sparseRows, { operatorMeta });
     expect(sparseHtml).toContain("char_002_amiya");
     expect(sparseHtml).toContain("精0 0级");
     expect(sparseHtml).toContain("—");
     expect(sparseHtml).toContain("待培养");
-    const partialSkills = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 5, skill3: 10, maxModuleLevel: 0 }, target: { elite: 2, level: 60, skill1: 0, skill2: 7, skill3: 0, module: -1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+    const partialSkills = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 5, skill3: 10, maxModuleLevel: 0 }, target: { elite: 2, level: 60, skill1: 0, skill2: 7, skill3: 0, module: -1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta });
     expect(partialSkills).toContain("技能2 7级");
     expect(partialSkills).not.toContain("技能1");
     expect(partialSkills).not.toContain("技能3");
     expect(partialSkills).toContain('<span class="req-unmet">技能2 7级</span>');
     expect(partialSkills).not.toContain("模组");
-    const missingRow = renderTrainingTable([{ name: "阿米娅", user: null, target: { elite: 2, level: 90, levelPairs: [{ elite: 2, level: 90 }], skill1: 0, skill2: 7, skill3: 0, module: 1, modulePairs: [{ type: 1, level: 0 }] }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+    const missingRow = renderTrainingTable([{ name: "阿米娅", user: null, target: { elite: 2, level: 90, levelPairs: [{ elite: 2, level: 90 }], skill1: 0, skill2: 7, skill3: 0, module: 1, modulePairs: [{ type: 1, level: 0 }] }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta });
     expect(missingRow).toContain(">—<");
     expect(missingRow).toContain('<span class="req-unmet">精2</span>');
     expect(missingRow).toContain('<span class="req-unmet">90级</span>');
     expect(missingRow).toContain('<span class="req-unmet">技能2 7级</span>');
     expect(missingRow).toContain('<span class="req-unmet">模组 X</span>');
-    const satisfiedModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 3, modules: [{ id: "uniequip_001_amiya", name: "X", level: 1, locked: false }] }, target: { elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, module: 1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+    const satisfiedModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 3, modules: [{ id: "uniequip_001_amiya", name: "X", level: 1, locked: false }] }, target: { elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, module: 1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta });
     expect(satisfiedModule).toContain("模组 X");
     expect(satisfiedModule).not.toContain("req-unmet");
-    const zeroModuleUser = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 0 }, target: { elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, module: 1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+    const zeroModuleUser = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 0 }, target: { elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, module: 1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta });
     expect(zeroModuleUser).toContain('<span class="req-unmet">模组 X</span>');
     // 多模组：当前列只显示有 typeName2 且已解锁的模组（证章不显示）
-    const multiModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 3, modules: [{ id: "uniequip_001_amiya", name: "", level: 1, locked: false }, { id: "uniequip_002_amiya", name: "X", level: 2, locked: false }, { id: "uniequip_003_amiya", name: "Y", level: 3, locked: false }] }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: -1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+    const multiModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 3, modules: [{ id: "uniequip_001_amiya", name: "", level: 1, locked: false }, { id: "uniequip_002_amiya", name: "X", level: 2, locked: false }, { id: "uniequip_003_amiya", name: "Y", level: 3, locked: false }] }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: -1 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta });
     expect(multiModule).toContain("模组 X 2级");
     expect(multiModule).toContain("模组 Y 3级");
     expect(multiModule).not.toContain("模组  1级");
     // module 4 = D 型；用户没有 D 型 -> 警告
-    const anyModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 1 }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: 4 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+    const anyModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 1 }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: 4 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta });
     expect(anyModule).toContain('<span class="req-unmet">模组 D</span>');
     // 目标列显示模组类型，标准模式带等级
-    const namedModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 1, modules: [{ id: "uniequip_001_amiya", name: "", level: 1, locked: false }, { id: "uniequip_002_amiya", name: "Y", level: 1, locked: false }] }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: 2, moduleLevel: 3 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+    const namedModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 1, modules: [{ id: "uniequip_001_amiya", name: "", level: 1, locked: false }, { id: "uniequip_002_amiya", name: "Y", level: 1, locked: false }] }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: 2, moduleLevel: 3 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta });
     expect(namedModule).toContain('<span class="req-unmet">模组 Y 3级</span>');
     // 未知模组编号：目标列不显示模组部分
-    const unknownModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 0, modules: [] }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: 9 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta, skillSprite });
+    const unknownModule = renderTrainingTable([{ name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 60, skill1: 7, skill2: 10, skill3: 10, maxModuleLevel: 0, modules: [] }, target: { elite: 2, level: 60, skill1: 0, skill2: 0, skill3: 0, module: 9 }, coreGain: 0, groupGain: 0, unsatisfiedCore: 0, score: 0, totalGap: 0 }], { operatorMeta });
     expect(unknownModule).not.toContain("模组");
 });
 
@@ -266,7 +248,7 @@ test("跨精英阶要求对：精英与等级分别按未满足对高亮", () =>
         score: 0,
         totalGap: 0,
     }];
-    const html = renderTrainingTable(rows, { operatorMeta, skillSprite });
+    const html = renderTrainingTable(rows, { operatorMeta });
     expect(html).toContain('<span class="req-unmet">精2</span>');
     expect(html).toContain('<span class="req-unmet">80级</span>');
 });
@@ -289,7 +271,7 @@ test("含精零要求对：等级兜底分支与同阶等级高亮", () => {
         score: 0,
         totalGap: 0,
     }];
-    const html = renderTrainingTable(rows, { operatorMeta, skillSprite });
+    const html = renderTrainingTable(rows, { operatorMeta });
     expect(html).toContain('<span class="req-unmet">精1</span>');
     expect(html).toContain('<span class="req-unmet">50级</span>');
 });
@@ -299,7 +281,7 @@ test("已达标行复选框禁用；缺成本数据行不渲染复选框", () =>
         { name: "阿米娅", user: { charId: "char_002_amiya", elite: 2, level: 90 }, target: { elite: 2, level: 90 }, costBreakdown: null, score: 0, totalGap: 0, unsatisfiedCore: 0 },
         { name: "凯尔希", user: null, target: { elite: 2 }, costBreakdown: undefined, score: 0, totalGap: 0, unsatisfiedCore: 0 },
     ];
-    const html = renderTrainingTable(rows, { operatorMeta, skillSprite, materialSelection: new Set(["阿米娅"]) });
+    const html = renderTrainingTable(rows, { operatorMeta, materialSelection: new Set(["阿米娅"]) });
     // 无缺口行复选框存在但禁用，带干员名的可访问名称，且不因默认勾选集合而选中
     expect(html).toContain('data-name="阿米娅" aria-label="计入 阿米娅 的养成材料" disabled');
     expect(html).not.toContain('data-name="凯尔希"');

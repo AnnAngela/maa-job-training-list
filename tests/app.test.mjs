@@ -41,7 +41,6 @@ const operatorMeta = {
         char_123_fang: { name: "芬", rarity: 3, profession: "PIONEER", skills: [] },
     },
 };
-const skillSprite = { spriteUrl: "https://example.com/s.jpg", size: 128, entries: {} };
 
 // 养成成本数据（仅构造分析所需最小结构）
 const costCharacterTable = {
@@ -90,9 +89,6 @@ const makeFetchImpl = ({ serveCost = false, yituliu = null } = {}) => vi.fn((url
     }
     if (yituliu && url.includes("open-api/operator/info")) {
         return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(yituliu) });
-    }
-    if (url.includes("skill_sprite")) {
-        return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(skillSprite) });
     }
     if (serveCost && url.includes("character_table")) {
         return Promise.resolve({ ok: true, status: 200, json: () => Promise.resolve(costCharacterTable) });

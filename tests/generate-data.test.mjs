@@ -6,7 +6,6 @@ import {
     generateAll,
     isDataEquivalent,
     normalizeAssignment,
-    parseSkillSpriteCss,
     stripVolatileFields,
 } from "../scripts/generate-data.js";
 
@@ -74,31 +73,6 @@ test("buildOperatorMeta builds operators and name index", () => {
     expect(meta.nameToCharId[""]).toBeUndefined();
     const emptySkills = buildOperatorMeta({ char_x: { name: "X", rarity: 1, profession: "P", skills: [{}, { skillId: "", skillIcon: "", skillName: "" }] } });
     expect(emptySkills.operators.char_x.skills).toEqual([{ skillId: "", skillIcon: "", skillName: "" }, { skillId: "", skillIcon: "", skillName: "" }]);
-});
-
-test("parseSkillSpriteCss parses sprite url and entries", () => {
-    const css = [
-        ".bg-skill_icon_sk_a {",
-        "  background-image: url(\"https://example.com/s.jpg\");",
-        "  background-position: -0px -256px;",
-        "}",
-        ".bg-skill_icon_sk_b {",
-        "  background-position: -128px -384px;",
-        "}",
-    ].join("\n");
-    const sprite = parseSkillSpriteCss(css);
-    expect(sprite.spriteUrl).toBe("https://example.com/s.jpg");
-    expect(sprite.size).toBe(128);
-    expect(sprite.entries.sk_a).toEqual({ x: 0, y: 256 });
-    expect(sprite.entries.sk_b).toEqual({ x: 128, y: 384 });
-});
-
-test("parseSkillSpriteCss skips blocks without close or position", () => {
-    const sprite = parseSkillSpriteCss(".bg-skill_icon_open {\n  background-position: -0px -0px;\n");
-    expect(sprite.spriteUrl).toBe("");
-    expect(sprite.entries).toEqual({});
-    const noPosition = parseSkillSpriteCss(".bg-skill_icon_nopos {\n  width: 128px;\n}");
-    expect(noPosition.entries).toEqual({});
 });
 
 test("fetchAllAssignments throws on HTTP error and bad shape", async () => {
@@ -174,9 +148,6 @@ test("generateAll writes generated data files", async () => {
         if (url.includes("character_table")) {
             return Promise.resolve(jsonResponse({ char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] } }, 200));
         }
-        if (url.includes("sprite_skill")) {
-            return Promise.resolve(textResponse(".bg-skill_icon_sk {\nbackground-image: url(\"https://example.com/s.jpg\");\nbackground-position: -0px -0px;\n}", 200));
-        }
         if (url.includes("sprite_item")) {
             return Promise.resolve(textResponse(".bg-0 { background: url('https://example.com/i.webp'); }", 200));
         }
@@ -195,27 +166,16 @@ test("generateAll writes generated data files", async () => {
     expect(JSON.parse(snapshotWrite[1]).uploader).toBe("萨拉托加");
 });
 
-test("generateAll throws on character or css request failure", async () => {
+test("generateAll throws on character table request failure", async () => {
     const maaOk = jsonResponse({ data: { has_next: false, data: [{ id: 1, content: JSON.stringify({ doc: { title: "A" } }) }] } }, 200);
     const charFail = vi.fn((url) => url.includes("character_table")
         ? Promise.resolve(jsonResponse({}, 500))
-        : Promise.resolve(url.includes("sprite_skill") ? textResponse("css", 200) : maaOk));
+        : Promise.resolve(maaOk));
     await expect(generateAll({ fetchImpl: charFail, writeFileImpl: vi.fn(), now: new Date("2024-01-01T00:00:00Z") })).rejects.toThrow("character table request failed");
-    const cssFail = vi.fn((url) => {
-        if (url.includes("character_table")) {
-            return Promise.resolve(jsonResponse({ char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] } }, 200));
-        }
-        if (url.includes("sprite_skill")) {
-            return Promise.resolve(textResponse("bad", 500));
-        }
-        return Promise.resolve(maaOk);
-    });
-    await expect(generateAll({ fetchImpl: cssFail, writeFileImpl: vi.fn(), now: new Date("2024-01-01T00:00:00Z") })).rejects.toThrow("skill sprite css request failed");
 });
 
 test("generateAll throws on item info or level cost request failure", async () => {
     const maaOk = jsonResponse({ data: { has_next: false, data: [{ id: 1, content: JSON.stringify({ doc: { title: "A" } }) }] } }, 200);
-    const cssOk = textResponse("css", 200);
     const charOk = jsonResponse({ char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] } }, 200);
     const itemInfoFail = vi.fn((url) => {
         if (url.includes("item_info")) {
@@ -223,9 +183,6 @@ test("generateAll throws on item info or level cost request failure", async () =
         }
         if (url.includes("character_table")) {
             return Promise.resolve(charOk);
-        }
-        if (url.includes("sprite_skill")) {
-            return Promise.resolve(cssOk);
         }
         return Promise.resolve(maaOk);
     });
@@ -241,9 +198,6 @@ test("generateAll throws on item info or level cost request failure", async () =
         if (url.includes("character_table")) {
             return Promise.resolve(charOk);
         }
-        if (url.includes("sprite_skill")) {
-            return Promise.resolve(cssOk);
-        }
         return Promise.resolve(maaOk);
     });
     await expect(generateAll({ fetchImpl: levelCostFail, writeFileImpl: vi.fn(), now: new Date("2024-01-01T00:00:00Z") })).rejects.toThrow("level cost table request failed");
@@ -252,7 +206,6 @@ test("generateAll throws on item info or level cost request failure", async () =
 test("generateAll throws on item sprite css request failure", async () => {
     const maaOk = jsonResponse({ data: { has_next: false, data: [{ id: 1, content: JSON.stringify({ doc: { title: "A" } }) }] } }, 200);
     const charOk = jsonResponse({ char_002_amiya: { name: "阿米娅", rarity: 5, profession: "CASTER", skills: [] } }, 200);
-    const skillCssOk = textResponse("css", 200);
     const itemInfoOk = jsonResponse([], 200);
     const levelCostOk = jsonResponse({}, 200);
     const fetchImpl = vi.fn((url) => {
@@ -261,9 +214,6 @@ test("generateAll throws on item sprite css request failure", async () => {
         }
         if (url.includes("character_table")) {
             return Promise.resolve(charOk);
-        }
-        if (url.includes("sprite_skill")) {
-            return Promise.resolve(skillCssOk);
         }
         if (url.includes("item_info")) {
             return Promise.resolve(itemInfoOk);
